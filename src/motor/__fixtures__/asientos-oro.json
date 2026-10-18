@@ -1,0 +1,2561 @@
+[
+ {
+  "nombre": "33 simple",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "100",
+   "neto": 100000,
+   "exento": 0,
+   "iva": 19000,
+   "total": 119000,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 100000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°100 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 100000,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 19000,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 119000,
+     "desc": "Proveedor SpA · Factura Electrónica N°100",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "100",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "100",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 100000,
+    "totalDocumento": 119000,
+    "totalProveedor": 119000,
+    "totalInformado": 119000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 19000,
+    "recuperable": 19000,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 119000,
+    "haber": 119000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "33 dos líneas con CC",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "101",
+   "neto": 150000,
+   "exento": 0,
+   "iva": 28500,
+   "total": 178500,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 100000,
+     "cc": "CC01",
+     "desc": "Línea A"
+    },
+    {
+     "cuenta": "3202011",
+     "monto": 50000,
+     "cc": "CC02",
+     "desc": "Línea B"
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°101 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 100000,
+     "haber": 0,
+     "docId": "d1",
+     "cc": "CC01",
+     "desc": "Línea A · CC: CC01"
+    },
+    {
+     "cd": "3202011",
+     "nm": "GASTOS DE LOCOMOCIÓN VENTAS",
+     "debe": 50000,
+     "haber": 0,
+     "docId": "d1",
+     "cc": "CC02",
+     "desc": "Línea B · CC: CC02"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 28500,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 178500,
+     "desc": "Proveedor SpA · Factura Electrónica N°101",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "101",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "101",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 150000,
+    "totalDocumento": 178500,
+    "totalProveedor": 178500,
+    "totalInformado": 178500,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 28500,
+    "recuperable": 28500,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 178500,
+    "haber": 178500,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "33 neto + exento",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "102",
+   "neto": 100000,
+   "exento": 50000,
+   "iva": 19000,
+   "total": 169000,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 150000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°102 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 150000,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 19000,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 169000,
+     "desc": "Proveedor SpA · Factura Electrónica N°102",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "102",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "102",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 150000,
+    "totalDocumento": 169000,
+    "totalProveedor": 169000,
+    "totalInformado": 169000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 19000,
+    "recuperable": 19000,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 169000,
+    "haber": 169000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "33 histórico sólo neto en dist",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "103",
+   "neto": 100000,
+   "exento": 20000,
+   "iva": 19000,
+   "total": 139000,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 100000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°103 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 120000,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 19000,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 139000,
+     "desc": "Proveedor SpA · Factura Electrónica N°103",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "103",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "103",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 120000,
+    "totalDocumento": 139000,
+    "totalProveedor": 139000,
+    "totalInformado": 139000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 19000,
+    "recuperable": 19000,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 139000,
+    "haber": 139000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "34 exenta",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 34,
+   "numero": "104",
+   "neto": 0,
+   "exento": 80000,
+   "iva": 0,
+   "total": 80000,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 80000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Exenta Electrónica N°104 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 80000,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 80000,
+     "desc": "Proveedor SpA · Factura Exenta Electrónica N°104",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "104",
+     "tipoDTE": 34,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 34,
+   "folio": "104",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 80000,
+    "totalDocumento": 80000,
+    "totalProveedor": 80000,
+    "totalInformado": 80000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 80000,
+    "haber": 80000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "61 nota de crédito",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 61,
+   "numero": "4",
+   "neto": 10000,
+   "exento": 0,
+   "iva": 1900,
+   "total": 11900,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 10000
+    }
+   ],
+   "referencia": {
+    "tipoDTE": 33,
+    "folio": "100"
+   }
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Nota de Crédito N°4 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 0,
+     "haber": 10000,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 0,
+     "haber": 1900,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 11900,
+     "haber": 0,
+     "desc": "Proveedor SpA · Nota de Crédito N°4",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "4",
+     "tipoDTE": 61,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 61,
+   "folio": "4",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 10000,
+    "totalDocumento": 11900,
+    "totalProveedor": 11900,
+    "totalInformado": 11900,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 1900,
+    "recuperable": 1900,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 11900,
+    "haber": 11900,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "46 factura de compra total sin retención",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 46,
+   "numero": "7",
+   "neto": 200000,
+   "exento": 0,
+   "iva": 38000,
+   "total": 200000,
+   "dist": [
+    {
+     "cuenta": "3103003",
+     "monto": 200000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura de Compra Electrónica N°7 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3103003",
+     "nm": "COMBUSTIBLE Y LUBRICANTES",
+     "debe": 200000,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 38000,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 200000,
+     "desc": "Proveedor SpA · Factura de Compra Electrónica N°7",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "7",
+     "tipoDTE": 46,
+     "docId": "d1"
+    },
+    {
+     "cd": "2103005",
+     "nm": "IVA RETENIDO FACTURAS DE COMPRA",
+     "debe": 0,
+     "haber": 38000,
+     "desc": "IVA retenido factura de compra",
+     "docId": "d1",
+     "tributo": "iva_retenido"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 46,
+   "folio": "7",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": true,
+    "ivaRetenido": 38000,
+    "base": 200000,
+    "totalDocumento": 238000,
+    "totalProveedor": 200000,
+    "totalInformado": 200000,
+    "totalIncluyeRetencion": false,
+    "diferenciaTotal": 0,
+    "totalInterpretado": "proveedor"
+   },
+   "ivaClasificacion": {
+    "total": 38000,
+    "recuperable": 38000,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 238000,
+    "haber": 238000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "46 total con retención",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 46,
+   "numero": "8",
+   "neto": 200000,
+   "exento": 0,
+   "iva": 38000,
+   "total": 238000,
+   "dist": [
+    {
+     "cuenta": "3103003",
+     "monto": 200000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura de Compra Electrónica N°8 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3103003",
+     "nm": "COMBUSTIBLE Y LUBRICANTES",
+     "debe": 200000,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 38000,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 200000,
+     "desc": "Proveedor SpA · Factura de Compra Electrónica N°8",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "8",
+     "tipoDTE": 46,
+     "docId": "d1"
+    },
+    {
+     "cd": "2103005",
+     "nm": "IVA RETENIDO FACTURAS DE COMPRA",
+     "debe": 0,
+     "haber": 38000,
+     "desc": "IVA retenido factura de compra",
+     "docId": "d1",
+     "tributo": "iva_retenido"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 46,
+   "folio": "8",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": true,
+    "ivaRetenido": 38000,
+    "base": 200000,
+    "totalDocumento": 238000,
+    "totalProveedor": 200000,
+    "totalInformado": 238000,
+    "totalIncluyeRetencion": true,
+    "diferenciaTotal": 0,
+    "totalInterpretado": "documento"
+   },
+   "ivaClasificacion": {
+    "total": 38000,
+    "recuperable": 38000,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 238000,
+    "haber": 238000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "otros impuestos costo sin cuenta",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "584509",
+   "neto": 51776,
+   "exento": 0,
+   "iva": 9838,
+   "otrosImpuestos": 21363,
+   "total": 82977,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 51776
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°584509 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 73139,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 9838,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 82977,
+     "desc": "Proveedor SpA · Factura Electrónica N°584509",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "584509",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "584509",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 73139,
+    "totalDocumento": 82977,
+    "totalProveedor": 82977,
+    "totalInformado": 82977,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 9838,
+    "recuperable": 9838,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 21363,
+    "recuperable": 0,
+    "costo": 21363,
+    "costoCuenta": 0,
+    "detalle": [
+     {
+      "tipo": "otro",
+      "nombre": "Otros impuestos",
+      "monto": 21363,
+      "tratamiento": "costo",
+      "codigoF29": ""
+     }
+    ]
+   },
+   "cuadre": {
+    "debe": 82977,
+    "haber": 82977,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "otros impuestos con cuenta propia",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "584510",
+   "neto": 51776,
+   "exento": 0,
+   "iva": 9838,
+   "otrosImpuestos": 21363,
+   "total": 82977,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 51776,
+     "cc": "CC01"
+    }
+   ],
+   "otrosImpuestosDetalle": [
+    {
+     "tipo": "28",
+     "nombre": "IEC",
+     "monto": 21363,
+     "tratamiento": "costo",
+     "cuenta": "3202011",
+     "cc": "CC02",
+     "desc": "Impuesto específico"
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°584510 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 51776,
+     "haber": 0,
+     "docId": "d1",
+     "cc": "CC01",
+     "desc": "CC: CC01"
+    },
+    {
+     "cd": "3202011",
+     "nm": "GASTOS DE LOCOMOCIÓN VENTAS",
+     "debe": 21363,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "otro_impuesto_costo",
+     "cc": "CC02",
+     "desc": "Impuesto específico · CC: CC02"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 9838,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 82977,
+     "desc": "Proveedor SpA · Factura Electrónica N°584510",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "584510",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "584510",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 73139,
+    "totalDocumento": 82977,
+    "totalProveedor": 82977,
+    "totalInformado": 82977,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 9838,
+    "recuperable": 9838,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 21363,
+    "recuperable": 0,
+    "costo": 21363,
+    "costoCuenta": 21363,
+    "detalle": [
+     {
+      "tipo": "28",
+      "nombre": "IEC",
+      "monto": 21363,
+      "tratamiento": "costo",
+      "codigoF29": "",
+      "cuenta": "3202011",
+      "cc": "CC02",
+      "desc": "Impuesto específico"
+     }
+    ]
+   },
+   "cuadre": {
+    "debe": 82977,
+    "haber": 82977,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "otros impuestos recuperable",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "584511",
+   "neto": 51776,
+   "exento": 0,
+   "iva": 9838,
+   "otrosImpuestos": 21363,
+   "total": 82977,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 51776
+    }
+   ],
+   "otrosImpuestosDetalle": [
+    {
+     "tipo": "28",
+     "monto": 21363,
+     "tratamiento": "recuperable"
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°584511 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 51776,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 9838,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "1108006",
+     "nm": "OTROS IMPUESTOS POR RECUPERAR",
+     "debe": 21363,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "impuesto_adicional_recuperable"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 82977,
+     "desc": "Proveedor SpA · Factura Electrónica N°584511",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "584511",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "584511",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 73139,
+    "totalDocumento": 82977,
+    "totalProveedor": 82977,
+    "totalInformado": 82977,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 9838,
+    "recuperable": 9838,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 21363,
+    "recuperable": 21363,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": [
+     {
+      "tipo": "28",
+      "nombre": "Otro impuesto",
+      "monto": 21363,
+      "tratamiento": "recuperable",
+      "codigoF29": ""
+     }
+    ]
+   },
+   "cuadre": {
+    "debe": 82977,
+    "haber": 82977,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "IVA no recuperable",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "200",
+   "neto": 100000,
+   "exento": 0,
+   "iva": 19000,
+   "total": 119000,
+   "tratamientoIVA": "no_recuperable",
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 60000
+    },
+    {
+     "cuenta": "3202011",
+     "monto": 40000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°200 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 71400,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "3202011",
+     "nm": "GASTOS DE LOCOMOCIÓN VENTAS",
+     "debe": 47600,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 119000,
+     "desc": "Proveedor SpA · Factura Electrónica N°200",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "200",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "200",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 100000,
+    "totalDocumento": 119000,
+    "totalProveedor": 119000,
+    "totalInformado": 119000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 19000,
+    "recuperable": 0,
+    "noRecuperable": 19000,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 0
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 119000,
+    "haber": 119000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "IVA proporcional 60%",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "201",
+   "neto": 100000,
+   "exento": 0,
+   "iva": 19000,
+   "total": 119000,
+   "tratamientoIVA": "proporcional",
+   "porcentajeIvaRecuperable": 60,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 100000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°201 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 107600,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 11400,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 119000,
+     "desc": "Proveedor SpA · Factura Electrónica N°201",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "201",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "201",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 100000,
+    "totalDocumento": 119000,
+    "totalProveedor": 119000,
+    "totalInformado": 119000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 19000,
+    "recuperable": 11400,
+    "noRecuperable": 7600,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 60
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 119000,
+    "haber": 119000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "IVA uso común",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "202",
+   "neto": 100000,
+   "exento": 0,
+   "iva": 19000,
+   "total": 119000,
+   "ivaUsoComun": 19000,
+   "porcentajeIvaRecuperable": 40,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 100000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°202 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 111400,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 7600,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 119000,
+     "desc": "Proveedor SpA · Factura Electrónica N°202",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "202",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "202",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 100000,
+    "totalDocumento": 119000,
+    "totalProveedor": 119000,
+    "totalInformado": 119000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 19000,
+    "recuperable": 7600,
+    "noRecuperable": 11400,
+    "activoFijo": 0,
+    "usoComun": 19000,
+    "porcentajeRecuperable": 40
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 119000,
+    "haber": 119000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "IVA explícito RCV",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "203",
+   "neto": 100000,
+   "exento": 0,
+   "iva": 19000,
+   "total": 119000,
+   "ivaRecuperable": 12000,
+   "ivaNoRecuperable": 7001,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 100000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°203 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 107001,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 11999,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 119000,
+     "desc": "Proveedor SpA · Factura Electrónica N°203",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "203",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "203",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 100000,
+    "totalDocumento": 119000,
+    "totalProveedor": 119000,
+    "totalInformado": 119000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 19000,
+    "recuperable": 11999,
+    "noRecuperable": 7001,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 119000,
+    "haber": 119000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "IVA activo fijo",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "204",
+   "neto": 1000000,
+   "exento": 0,
+   "iva": 190000,
+   "total": 1190000,
+   "tratamientoIVA": "activo_fijo",
+   "dist": [
+    {
+     "cuenta": "1203001",
+     "monto": 1000000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°204 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "1203001",
+     "nm": "INVERSIONES FINANCIERAS A LARGO PLAZO",
+     "debe": 1000000,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108008",
+     "nm": "IVA CRÉDITO FISCAL ACTIVO FIJO",
+     "debe": 190000,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito_activo_fijo"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 1190000,
+     "desc": "Proveedor SpA · Factura Electrónica N°204",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "204",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "204",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 1000000,
+    "totalDocumento": 1190000,
+    "totalProveedor": 1190000,
+    "totalInformado": 1190000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 190000,
+    "recuperable": 190000,
+    "noRecuperable": 0,
+    "activoFijo": 190000,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 1190000,
+    "haber": 1190000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "redondeo $1",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "205",
+   "neto": 51776,
+   "exento": 0,
+   "iva": 9838,
+   "total": 61615,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 51776
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°205 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 51777,
+     "haber": 0,
+     "docId": "d1",
+     "ajusteRedondeoDte": 1,
+     "desc": "Ajuste redondeo DTE +1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 9838,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 61615,
+     "desc": "Proveedor SpA · Factura Electrónica N°205",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "205",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "205",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 51776,
+    "totalDocumento": 61615,
+    "totalProveedor": 61615,
+    "totalInformado": 61615,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 9838,
+    "recuperable": 9838,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 61615,
+    "haber": 61615,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "combustible residual mayor",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "206",
+   "neto": 500000,
+   "exento": 0,
+   "iva": 95000,
+   "total": 640000,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 500000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°206 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 545000,
+     "haber": 0,
+     "docId": "d1",
+     "ajusteRedondeoDte": 45000,
+     "desc": "Ajuste a Total RCV +45000"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 95000,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 640000,
+     "desc": "Proveedor SpA · Factura Electrónica N°206",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "206",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "206",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 500000,
+    "totalDocumento": 640000,
+    "totalProveedor": 640000,
+    "totalInformado": 640000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 95000,
+    "recuperable": 95000,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 640000,
+    "haber": 640000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "combustible recuperación",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "207",
+   "neto": 500000,
+   "exento": 0,
+   "iva": 95000,
+   "total": 570000,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 500000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°207 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 475000,
+     "haber": 0,
+     "docId": "d1",
+     "ajusteRedondeoDte": -25000,
+     "desc": "Ajuste a Total RCV -25000"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 95000,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 570000,
+     "desc": "Proveedor SpA · Factura Electrónica N°207",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "207",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "207",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 500000,
+    "totalDocumento": 570000,
+    "totalProveedor": 570000,
+    "totalInformado": 570000,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 95000,
+    "recuperable": 95000,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 570000,
+    "haber": 570000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "gasto rechazado",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 33,
+   "numero": "208",
+   "neto": 10000,
+   "exento": 0,
+   "iva": 1900,
+   "total": 11900,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 10000,
+     "tratamientoTributario": "rechazado"
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Factura Electrónica N°208 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 10000,
+     "haber": 0,
+     "docId": "d1",
+     "tributario": "gasto_rechazado",
+     "motivoTributario": "Marcado como gasto rechazado en documento de compra"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 1900,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 11900,
+     "desc": "Proveedor SpA · Factura Electrónica N°208",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "208",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "208",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 10000,
+    "totalDocumento": 11900,
+    "totalProveedor": 11900,
+    "totalInformado": 11900,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 1900,
+    "recuperable": 1900,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 11900,
+    "haber": 11900,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "mes anterior al día 1",
+  "tipo": "compra",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-04-30",
+   "tipoDTE": 33,
+   "numero": "209",
+   "periodoContable": "2026-05",
+   "neto": 10000,
+   "exento": 0,
+   "iva": 1900,
+   "total": 11900,
+   "dist": [
+    {
+     "cuenta": "3202010",
+     "monto": 10000
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-01",
+   "glosa": "Factura Electrónica N°209 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202010",
+     "nm": "GASTOS IMPRENTA",
+     "debe": 10000,
+     "haber": 0,
+     "docId": "d1"
+    },
+    {
+     "cd": "1108002",
+     "nm": "IVA CRÉDITO FISCAL",
+     "debe": 1900,
+     "haber": 0,
+     "docId": "d1",
+     "tributo": "iva_credito"
+    },
+    {
+     "cd": "2102001",
+     "nm": "PROVEEDORES NACIONALES",
+     "debe": 0,
+     "haber": 11900,
+     "desc": "Proveedor SpA · Factura Electrónica N°209",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "209",
+     "tipoDTE": 33,
+     "docId": "d1"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 33,
+   "folio": "209",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "facturaCompra": false,
+    "ivaRetenido": 0,
+    "base": 10000,
+    "totalDocumento": 11900,
+    "totalProveedor": 11900,
+    "totalInformado": 11900,
+    "diferenciaTotal": 0
+   },
+   "ivaClasificacion": {
+    "total": 1900,
+    "recuperable": 1900,
+    "noRecuperable": 0,
+    "activoFijo": 0,
+    "usoComun": 0,
+    "porcentajeRecuperable": 100
+   },
+   "otrosImpuestosClasificacion": {
+    "total": 0,
+    "recuperable": 0,
+    "costo": 0,
+    "costoCuenta": 0,
+    "detalle": []
+   },
+   "cuadre": {
+    "debe": 11900,
+    "haber": 11900,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "honorario 70 con retención",
+  "tipo": "honorarioDoc",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 70,
+   "numero": "55",
+   "bruto": 500000,
+   "tasaRetencion": 0.1525,
+   "dist": [
+    {
+     "cuenta": "3202019",
+     "monto": 500000,
+     "cc": "CC01"
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Boleta de Honorarios (con retención) N°55 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202019",
+     "nm": "HONORARIOS PROFESIONALES",
+     "debe": 500000,
+     "haber": 0,
+     "docId": "d1",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "55",
+     "tipoDTE": 70,
+     "desc": "Proveedor SpA · Boleta de Honorarios (con retención) N°55",
+     "cc": "CC01"
+    },
+    {
+     "cd": "2103002",
+     "nm": "RETENCIÓN 2º CATEGORÍA",
+     "debe": 0,
+     "haber": 76250,
+     "docId": "d1",
+     "desc": "Retención honorarios",
+     "tributo": "retencion_honorarios"
+    },
+    {
+     "cd": "2102006",
+     "nm": "HONORARIOS POR PAGAR",
+     "debe": 0,
+     "haber": 423750,
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "55",
+     "tipoDTE": 70,
+     "docId": "d1",
+     "desc": "Proveedor SpA · Boleta de Honorarios (con retención) N°55"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 70,
+   "folio": "55",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "honorario": true,
+    "bruto": 500000,
+    "retencion": 76250,
+    "liquido": 423750
+   },
+   "cuadre": {
+    "debe": 500000,
+    "haber": 500000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "honorario 71 sin retención",
+  "tipo": "honorarioDoc",
+  "d": {
+   "id": "d1",
+   "rutCodigo": "76151704",
+   "rutDV": "K",
+   "razonSocial": "Proveedor SpA",
+   "fecha": "2026-05-10",
+   "tipoDTE": 71,
+   "numero": "56",
+   "total": 300000
+  },
+  "resultado": {
+   "fecha": "2026-05-10",
+   "glosa": "Boleta de Honorarios (sin retención) N°56 — Proveedor SpA",
+   "movs": [
+    {
+     "cd": "3202019",
+     "nm": "HONORARIOS PROFESIONALES",
+     "debe": 300000,
+     "haber": 0,
+     "docId": "d1",
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "56",
+     "tipoDTE": 71,
+     "desc": "Proveedor SpA · Boleta de Honorarios (sin retención) N°56"
+    },
+    {
+     "cd": "2102006",
+     "nm": "HONORARIOS POR PAGAR",
+     "debe": 0,
+     "haber": 300000,
+     "rutCodigo": "76151704",
+     "rutDV": "K",
+     "folio": "56",
+     "tipoDTE": 71,
+     "docId": "d1",
+     "desc": "Proveedor SpA · Boleta de Honorarios (sin retención) N°56"
+    }
+   ],
+   "fuente": "compras",
+   "docId": "d1",
+   "tipoDTE": 71,
+   "folio": "56",
+   "rutCodigo": "76151704",
+   "tributacion": {
+    "honorario": true,
+    "bruto": 300000,
+    "retencion": 0,
+    "liquido": 300000
+   },
+   "cuadre": {
+    "debe": 300000,
+    "haber": 300000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "venta 33",
+  "tipo": "venta",
+  "d": {
+   "id": "v1",
+   "tipoDTE": 33,
+   "numero": "55",
+   "rutCodigo": "77000000",
+   "rutDV": "K",
+   "razonSocial": "Cliente",
+   "neto": 300000,
+   "exento": 0,
+   "iva": 57000,
+   "otrosImpuestos": 0,
+   "total": 357000,
+   "fecha": "2026-10-10"
+  },
+  "resultado": {
+   "fecha": "2026-10-10",
+   "glosa": "Factura Electrónica N°55 — Cliente",
+   "movs": [
+    {
+     "cd": "1104001",
+     "nm": "FACTURAS POR COBRAR",
+     "debe": 357000,
+     "haber": 0,
+     "desc": "Cliente · Factura Electrónica N°55",
+     "rutCodigo": "77000000",
+     "rutDV": "K",
+     "folio": "55",
+     "tipoDTE": 33,
+     "docId": "v1"
+    },
+    {
+     "cd": "4101002",
+     "nm": "INGRESOS POR VENTA PROVEEDORES",
+     "debe": 0,
+     "haber": 300000,
+     "docId": "v1"
+    },
+    {
+     "cd": "2103003",
+     "nm": "IVA DÉBITO FISCAL",
+     "debe": 0,
+     "haber": 57000,
+     "docId": "v1"
+    }
+   ],
+   "fuente": "ventas",
+   "docId": "v1",
+   "tipoDTE": 33,
+   "folio": "55",
+   "rutCodigo": "77000000",
+   "cuadre": {
+    "debe": 357000,
+    "haber": 357000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "venta 33 con dist",
+  "tipo": "venta",
+  "d": {
+   "id": "v2",
+   "tipoDTE": 33,
+   "numero": "56",
+   "rutCodigo": "77000000",
+   "rutDV": "K",
+   "razonSocial": "Cliente",
+   "neto": 300000,
+   "exento": 0,
+   "iva": 57000,
+   "otrosImpuestos": 0,
+   "total": 357000,
+   "fecha": "2026-10-10",
+   "dist": [
+    {
+     "cuenta": "4101002",
+     "monto": 200000,
+     "cc": "CC01",
+     "desc": "Madera"
+    },
+    {
+     "cuenta": "4101003",
+     "monto": 100000,
+     "cc": "CC02",
+     "desc": "Cerezas"
+    }
+   ]
+  },
+  "resultado": {
+   "fecha": "2026-10-10",
+   "glosa": "Factura Electrónica N°56 — Cliente",
+   "movs": [
+    {
+     "cd": "1104001",
+     "nm": "FACTURAS POR COBRAR",
+     "debe": 357000,
+     "haber": 0,
+     "desc": "Cliente · Factura Electrónica N°56",
+     "rutCodigo": "77000000",
+     "rutDV": "K",
+     "folio": "56",
+     "tipoDTE": 33,
+     "docId": "v2"
+    },
+    {
+     "cd": "4101002",
+     "nm": "INGRESOS POR VENTA PROVEEDORES",
+     "debe": 0,
+     "haber": 200000,
+     "docId": "v2",
+     "desc": "Madera · CC: CC01",
+     "cc": "CC01"
+    },
+    {
+     "cd": "4101003",
+     "nm": "INGRESOS POR VENTA PLANTACIONES",
+     "debe": 0,
+     "haber": 100000,
+     "docId": "v2",
+     "desc": "Cerezas · CC: CC02",
+     "cc": "CC02"
+    },
+    {
+     "cd": "2103003",
+     "nm": "IVA DÉBITO FISCAL",
+     "debe": 0,
+     "haber": 57000,
+     "docId": "v2"
+    }
+   ],
+   "fuente": "ventas",
+   "docId": "v2",
+   "tipoDTE": 33,
+   "folio": "56",
+   "rutCodigo": "77000000",
+   "cuadre": {
+    "debe": 357000,
+    "haber": 357000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "venta 61",
+  "tipo": "venta",
+  "d": {
+   "id": "v3",
+   "tipoDTE": 61,
+   "numero": "9",
+   "rutCodigo": "77000000",
+   "rutDV": "K",
+   "razonSocial": "Cliente",
+   "neto": 10000,
+   "exento": 0,
+   "iva": 1900,
+   "total": 11900,
+   "fecha": "2026-10-11"
+  },
+  "resultado": {
+   "fecha": "2026-10-11",
+   "glosa": "Nota de Crédito N°9 — Cliente",
+   "movs": [
+    {
+     "cd": "1104001",
+     "nm": "FACTURAS POR COBRAR",
+     "debe": 0,
+     "haber": 11900,
+     "desc": "Cliente · Nota de Crédito N°9",
+     "rutCodigo": "77000000",
+     "rutDV": "K",
+     "folio": "9",
+     "tipoDTE": 61,
+     "docId": "v3"
+    },
+    {
+     "cd": "4101002",
+     "nm": "INGRESOS POR VENTA PROVEEDORES",
+     "debe": 10000,
+     "haber": 0,
+     "docId": "v3"
+    },
+    {
+     "cd": "2103003",
+     "nm": "IVA DÉBITO FISCAL",
+     "debe": 1900,
+     "haber": 0,
+     "docId": "v3"
+    }
+   ],
+   "fuente": "ventas",
+   "docId": "v3",
+   "tipoDTE": 61,
+   "folio": "9",
+   "rutCodigo": "77000000",
+   "cuadre": {
+    "debe": 11900,
+    "haber": 11900,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "venta banco redondeo",
+  "tipo": "venta",
+  "d": {
+   "id": "v4",
+   "tipoDTE": 33,
+   "numero": "57",
+   "rutCodigo": "77000000",
+   "rutDV": "K",
+   "razonSocial": "Cliente",
+   "neto": 51776,
+   "exento": 0,
+   "iva": 9838,
+   "total": 61615,
+   "fecha": "2026-10-12",
+   "formaPago": "banco"
+  },
+  "resultado": {
+   "fecha": "2026-10-12",
+   "glosa": "Factura Electrónica N°57 — Cliente",
+   "movs": [
+    {
+     "cd": "1101201",
+     "nm": "BANCO ESTADO",
+     "debe": 61615,
+     "haber": 0,
+     "docId": "v4"
+    },
+    {
+     "cd": "4101002",
+     "nm": "INGRESOS POR VENTA PROVEEDORES",
+     "debe": 0,
+     "haber": 51777,
+     "docId": "v4"
+    },
+    {
+     "cd": "2103003",
+     "nm": "IVA DÉBITO FISCAL",
+     "debe": 0,
+     "haber": 9838,
+     "docId": "v4"
+    }
+   ],
+   "fuente": "ventas",
+   "docId": "v4",
+   "tipoDTE": 33,
+   "folio": "57",
+   "rutCodigo": "77000000",
+   "cuadre": {
+    "debe": 61615,
+    "haber": 61615,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "honorario manual",
+  "tipo": "honorario",
+  "d": {
+   "id": "h1",
+   "rut": "12.345.678-5",
+   "nombre": "Ana",
+   "bruto": 400000,
+   "tasaRetencion": 0.1525,
+   "numero": "12",
+   "mes": 3,
+   "cc": "CC01"
+  },
+  "extra": {
+   "anio": 2026
+  },
+  "resultado": {
+   "fecha": "2026-03-28",
+   "glosa": "Boleta de honorarios N°12 — Ana",
+   "movs": [
+    {
+     "cd": "3202019",
+     "nm": "HONORARIOS PROFESIONALES",
+     "debe": 400000,
+     "haber": 0,
+     "rutCodigo": "12345678",
+     "rutDV": "5",
+     "docId": "h1",
+     "folio": "12",
+     "tipoAux": "honorario",
+     "desc": "Ana",
+     "cc": "CC01"
+    },
+    {
+     "cd": "2103002",
+     "nm": "RETENCIÓN 2º CATEGORÍA",
+     "debe": 0,
+     "haber": 61000,
+     "docId": "h1",
+     "tributo": "retencion_honorarios"
+    },
+    {
+     "cd": "2102006",
+     "nm": "HONORARIOS POR PAGAR",
+     "debe": 0,
+     "haber": 339000,
+     "rutCodigo": "12345678",
+     "rutDV": "5",
+     "docId": "h1",
+     "folio": "12",
+     "tipoAux": "honorario",
+     "desc": "Ana"
+    }
+   ],
+   "fuente": "honorarios",
+   "docId": "h1",
+   "rutCodigo": "12345678",
+   "retencion": 61000,
+   "liquido": 339000,
+   "cuadre": {
+    "debe": 400000,
+    "haber": 400000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ },
+ {
+  "nombre": "pago honorario",
+  "tipo": "pagoHonorario",
+  "d": {
+   "id": "h1",
+   "rut": "12.345.678-5",
+   "nombre": "Ana",
+   "bruto": 400000,
+   "tasaRetencion": 0.1525,
+   "numero": "12",
+   "fechaPago": "2026-04-05"
+  },
+  "extra": {
+   "anio": 2026
+  },
+  "resultado": {
+   "fecha": "2026-04-05",
+   "glosa": "Pago boleta de honorarios N°12 — Ana",
+   "movs": [
+    {
+     "cd": "2102006",
+     "nm": "HONORARIOS POR PAGAR",
+     "debe": 339000,
+     "haber": 0,
+     "rutCodigo": "12345678",
+     "rutDV": "5",
+     "docId": "h1",
+     "folio": "12",
+     "tipoAux": "honorario",
+     "desc": "Ana"
+    },
+    {
+     "cd": "1101201",
+     "nm": "BANCO ESTADO",
+     "debe": 0,
+     "haber": 339000,
+     "docId": "h1",
+     "desc": "Pago honorario Ana"
+    }
+   ],
+   "fuente": "honorarios",
+   "docId": "h1",
+   "cuentaPago": "1101201",
+   "cuadre": {
+    "debe": 339000,
+    "haber": 339000,
+    "diferencia": 0,
+    "ok": true
+   }
+  }
+ }
+]

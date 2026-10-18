@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+/* Paleta del sistema actual (tema oscuro) */
+:root {
+  --fondo: #0d1117;
+  --panel: #161b22;
+  --panel-2: #1c2330;
+  --borde: #2b3442;
+  --texto: #e6edf3;
+  --tenue: #8b98a9;
+  --acento: #3fb68b;
+  --acento-2: #2f9a74;
+  --peligro: #f0616d;
+  --aviso: #e3b341;
+}
+
+@theme inline {
+  --color-fondo: var(--fondo);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-borde: var(--borde);
+  --color-texto: var(--texto);
+  --color-tenue: var(--tenue);
+  --color-acento: var(--acento);
+  --color-acento-2: var(--acento-2);
+  --color-peligro: var(--peligro);
+  --color-aviso: var(--aviso);
+  --font-sans: 'Sora Variable', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+body {
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+@layer components {
+  .campo {
+    @apply w-full rounded-md border border-borde bg-panel-2 px-3 py-2 text-sm text-texto outline-none placeholder:text-tenue focus:border-acento;
+  }
+  .etiqueta {
+    @apply mb-1 block text-xs font-medium uppercase tracking-wide text-tenue;
+  }
+  .boton {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-acento px-4 py-2 text-sm font-semibold text-[#06281c] hover:bg-acento-2 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .boton-sec {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-borde px-3 py-1.5 text-sm text-texto hover:bg-panel-2;
+  }
+  .tarjeta {
+    @apply rounded-lg border border-borde bg-panel;
+  }
+  .num {
+    @apply font-mono tabular-nums;
+  }
+}
