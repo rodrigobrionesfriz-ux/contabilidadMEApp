@@ -40,10 +40,7 @@ export default async function InicioEmpresa({ params }: PageProps<'/e/[empresaId
           <div className="text-sm text-tenue">Sube el respaldo Excel de cada año y compara el balance en ambos sistemas.</div>
         </Link>
       )}
-      <p className="text-sm text-tenue">
-        Versión en migración. Compras, ventas, honorarios y remuneraciones se agregan en las próximas fases.
-        El sistema actual sigue siendo el oficial.
-      </p>
+      <p className="text-sm text-tenue">Marcha blanca: mientras se comparan las cifras, el sistema actual sigue siendo el oficial.</p>
     </div>
   );
 }

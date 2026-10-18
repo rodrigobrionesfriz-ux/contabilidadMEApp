@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { requerirUsuario, requerirEmpresa } from '@/lib/auth';
 import { NOMBRE_ROL } from '@/lib/formato';
@@ -16,8 +17,10 @@ export default async function EmpresaLayout({ children, params }: LayoutProps<'/
           <span className="ml-2 text-xs text-tenue">{NOMBRE_ROL[empresa.rol]}</span>
         </Link>
       </BarraUsuario>
-      <div className="flex flex-1 flex-col md:flex-row">
-        <div className="no-print md:flex md:w-56 md:shrink-0 md:flex-col"><div className="border-b border-borde bg-panel p-2 md:border-r"><Buscador empresaId={empresaId} /></div><Navegacion base={`/e/${empresaId}`} rol={empresa.rol} /></div>
+      <div className="flex flex-1 flex-col md:flex-row md:items-start">
+        <Suspense>
+          <Navegacion base={`/e/${empresaId}`} rol={empresa.rol} empresa={empresa.razon_social} buscador={<Buscador empresaId={empresaId} />} />
+        </Suspense>
         <main className="min-w-0 flex-1 px-4 py-6 md:px-8">{children}</main>
       </div>
     </>

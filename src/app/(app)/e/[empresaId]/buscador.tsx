@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { createPortal } from 'react-dom';
 import { buscarGlobal, type ResultadoBusqueda } from './buscar-acciones';
 
 const ICONO: Record<string, string> = { documento: '🧾', asiento: '✍️', trabajador: '👷', cuenta: '📒', activo: '🏗️', producto: '📦' };
@@ -41,8 +42,9 @@ export function Buscador({ empresaId }: { empresaId: string }) {
       <button type="button" onClick={() => setAbierto(true)} className="no-print flex w-full items-center gap-2 rounded-md border border-borde px-3 py-1.5 text-left text-sm text-tenue hover:text-texto" title="Búsqueda global (Ctrl+K)">
         🔍 <span className="flex-1">Buscar…</span><kbd className="hidden rounded border border-borde px-1 text-[10px] md:inline">Ctrl K</kbd>
       </button>
-      {abierto && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 p-4 pt-[10vh]" role="dialog" aria-modal="true" aria-label="Búsqueda global" onClick={cerrar}>
+      {/* En portal: dentro de la barra lateral (que usa transform) un «fixed» quedaría encerrado en ella */}
+      {abierto && createPortal(
+        <div className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 p-4 pt-[10vh]" role="dialog" aria-modal="true" aria-label="Búsqueda global" onClick={cerrar}>
           <div className="tarjeta w-full max-w-2xl p-2" onClick={(e) => e.stopPropagation()}>
             <input ref={input} className="campo text-base" value={q} placeholder="Busca documentos, asientos, trabajadores, cuentas, activos o productos…" aria-label="Texto a buscar"
               onChange={(e) => cambiar(e.target.value)}
@@ -63,7 +65,8 @@ export function Buscador({ empresaId }: { empresaId: string }) {
                 )) : <p className="p-4 text-center text-sm text-tenue">{buscando ? 'Buscando…' : `Sin resultados para «${q}».`}</p>}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );
