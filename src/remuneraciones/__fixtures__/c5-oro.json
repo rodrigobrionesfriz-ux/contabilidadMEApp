@@ -1,0 +1,3437 @@
+{
+ "uf": 41247.63,
+ "utm": 72151,
+ "empresa": {
+  "anio": 2026,
+  "nombre": "Agrícola Prueba SpA",
+  "rut": "76.151.704-K",
+  "domicilio": "Camino Huequén km 3",
+  "giro": "Agrícola",
+  "codigo": "",
+  "ciudad": "Angol",
+  "comuna": "Angol",
+  "rep": "Rodrigo Briones",
+  "rutrep": "12.345.678-5",
+  "indicadores": {},
+  "previsional": {}
+ },
+ "trabajadores": [
+  {
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 20000,
+   "colacion": 50000,
+   "movilizacion": 40000,
+   "plan": 0,
+   "id": "t1",
+   "nombre": "Ana María Soto Pérez",
+   "nombres": "Ana María",
+   "apellidoPaterno": "Soto",
+   "apellidoMaterno": "Pérez",
+   "sexo": "F",
+   "nacionalidad": "0",
+   "rut": "11.111.111-1",
+   "cargo": "Operaria",
+   "base": 600000,
+   "afp": "habitat",
+   "salud": "fonasa",
+   "contrato": "indefinido",
+   "lre": {
+    "fechaInicio": "2026-03-02"
+   },
+   "contratoDT": {
+    "fechaNacimiento": "1990-05-04",
+    "domComuna": "301",
+    "domCalle": "Los Aromos",
+    "domNumero": "123",
+    "domDpto": "4B",
+    "email": "ana@x.cl",
+    "telefono": "+56 9 1234 5678",
+    "funciones": "Selección y embalaje de fruta"
+   }
+  },
+  {
+   "gratifModo": "monto",
+   "gratifPct": 25,
+   "otros": 0,
+   "colacion": 0,
+   "movilizacion": 0,
+   "plan": 0,
+   "id": "t2",
+   "nombre": "Beto Plazo",
+   "nombres": "Beto",
+   "apellidoPaterno": "Plazo",
+   "sexo": "M",
+   "rut": "22222222-2",
+   "cargo": "Temporero",
+   "base": 540000,
+   "grat": 80000,
+   "afp": "modelo",
+   "salud": "banmedica",
+   "contrato": "plazo",
+   "lre": {
+    "fechaInicio": "2026-01-05",
+    "fechaTermino": "2026-04-30"
+   },
+   "contratoDT": {
+    "fechaSuscripcion": "2026-01-03",
+    "fechaNacimiento": "1985-12-31",
+    "nacionalidad": "308",
+    "domComuna": "301",
+    "domCalle": "Pasaje 2",
+    "tipoJornada": 2,
+    "duracion": "45",
+    "horarioPropio": true,
+    "horario": {
+     "lu": [
+      "07:00",
+      "16:00"
+     ],
+     "ma": [
+      "07:00",
+      "16:00"
+     ],
+     "mi": [
+      "07:00",
+      "16:00"
+     ],
+     "ju": [
+      "07:00",
+      "16:00"
+     ],
+     "vi": [
+      "07:00",
+      "16:00"
+     ],
+     "sa": [
+      "08:00",
+      "13:00"
+     ],
+     "do": [
+      "",
+      ""
+     ]
+    },
+    "colacion": "45",
+    "formaPago": 1,
+    "anticipo": 5,
+    "diaPago": 5
+   }
+  },
+  {
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 0,
+   "colacion": 0,
+   "movilizacion": 0,
+   "plan": 0,
+   "id": "t3",
+   "nombre": "Cata Excepcional",
+   "nombres": "Catalina",
+   "apellidoPaterno": "Excepcional",
+   "sexo": "F",
+   "rut": "33333333-3",
+   "cargo": "Guardia",
+   "base": 700000,
+   "afp": "uno",
+   "salud": "esencial",
+   "contrato": "indefinido",
+   "lre": {
+    "fechaInicio": "2026-02-01",
+    "discapacidad": "2"
+   },
+   "contratoDT": {
+    "fechaNacimiento": "1979-01-01",
+    "domComuna": "301",
+    "domCalle": "Av. Siempre Viva",
+    "tipoJornada": 6,
+    "subcontratacion": 1,
+    "gratForma": 3,
+    "colacionImputable": true
+   }
+  },
+  {
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 0,
+   "colacion": 0,
+   "movilizacion": 0,
+   "plan": 0,
+   "id": "t4",
+   "nombre": "Dani Hora",
+   "sexo": "",
+   "rut": "",
+   "cargo": "",
+   "tipoPago": "hora",
+   "valorHora": 5000,
+   "horasMes": 80,
+   "afp": "",
+   "salud": "fonasa",
+   "contrato": "indefinido",
+   "lre": {},
+   "contratoDT": {
+    "dni": "P1234567",
+    "tipoJornada": 7,
+    "funciones": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   }
+  },
+  {
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 0,
+   "colacion": 0,
+   "movilizacion": 0,
+   "plan": 0,
+   "id": "t5",
+   "nombre": "Eli Art38",
+   "nombres": "Elías",
+   "apellidoPaterno": "Treinta",
+   "sexo": "M",
+   "rut": "55555555-5",
+   "cargo": "Operaria",
+   "base": 650000,
+   "afp": "provida",
+   "salud": "fonasa",
+   "contrato": "indefinido",
+   "lre": {
+    "fechaInicio": "2026-03-10"
+   },
+   "contratoDT": {
+    "fechaNacimiento": "2000-02-29",
+    "domComuna": "301",
+    "domCalle": "Calle",
+    "tipoJornada": 8,
+    "duracion": "40",
+    "horarioPropio": true,
+    "horario": {
+     "lu": [
+      "09:00",
+      "18:00"
+     ],
+     "ma": [
+      "09:00",
+      "18:00"
+     ],
+     "mi": [
+      "",
+      ""
+     ],
+     "ju": [
+      "09:00",
+      "18:00"
+     ],
+     "vi": [
+      "09:00",
+      "18:00"
+     ],
+     "sa": [
+      "09:00",
+      "14:00"
+     ],
+     "do": [
+      "09:00",
+      "14:00"
+     ]
+    },
+    "informado": "2026-03-15"
+   }
+  }
+ ],
+ "comunas": 346,
+ "nacionalidades": 114,
+ "columnas": [
+  "CATEGORIA_CONTRATO",
+  "COMUNA_CELEBRACION",
+  "FECHA_SUSCRPCION",
+  "RUT_TRABAJADOR",
+  "DNI_TRABAJADOR",
+  "FECHA_NACIMIENTO",
+  "NOMBRES",
+  "APELLIDOS",
+  "SEXO",
+  "NACIONALIDAD",
+  "EMAIL",
+  "TELEFONO",
+  "COMUNA",
+  "CALLE",
+  "NUMERO",
+  "DPTO",
+  "DECLARACION_DISCAPACIDAD",
+  "DECLARACION_INVALIDEZ",
+  "FUNCIONES",
+  "SUBCONTRATACION",
+  "RUT_EMPRESA_PRINCIPAL",
+  "EST",
+  "RUT_EMPRESA_USUARIA",
+  "FAENA_COMUNA",
+  "FAENA_CALLE",
+  "FAENA_NUMERO",
+  "FAENA_DPTO",
+  "ZONA_GEOGRAFICA_1",
+  "ZONA_GEOGRAFICA_2",
+  "ZONA_GEOGRAFICA_3",
+  "ZONA_GEOGRAFICA_4",
+  "ZONA_GEOGRAFICA_5",
+  "SUELDO_BASE",
+  "MONTO_IMPONIBLE",
+  "HABER_1",
+  "MONTO_1",
+  "PER_DEVENGAMIENTO_1",
+  "HABER_2",
+  "MONTO_2",
+  "PER_DEVENGAMIENTO_2",
+  "HABER_3",
+  "MONTO_3",
+  "PER_DEVENGAMIENTO_3",
+  "HABER_4",
+  "MONTO_4",
+  "PER_DEVENGAMIENTO_4",
+  "HABER_5",
+  "MONTO_5",
+  "PER_DEVENGAMIENTO_5",
+  "GRAT_FORMA_PAGO",
+  "GRAT_MODALIDAD",
+  "GRAT_PERIODO_PAGO",
+  "REM_PERIODO_PAGO",
+  "REM_FECHA_PAGO",
+  "REM_FORMA_PAGO",
+  "REM_ANTICIPO",
+  "REM_AFP",
+  "REM_SALUD",
+  "REM_OTROS_PACTOS",
+  "TIPO_JORNADA",
+  "NRO_RESOLUCION",
+  "FECHA_RESOLUCION",
+  "DURACION_JORNADA",
+  "TURNOS",
+  "TIEMPO_COLACION",
+  "T_COLACION_IMP",
+  "T_COLACION_NO_IMP",
+  "ROTACION",
+  "NRO_DIAS_DIST_JOR",
+  "LUNES_HORA_INICIO",
+  "LUNES_HORA_TERMINO",
+  "MARTES_HORA_INICIO",
+  "MARTES_HORA_TERMINO",
+  "MIERCOLES_HORA_INICIO",
+  "MIERCOLES_HORA_TERMINO",
+  "JUEVES_HORA_INICIO",
+  "JUEVES_HORA_TERMINO",
+  "VIERNES_HORA_INICIO",
+  "VIERNES_HORA_TERMINO",
+  "SABADO_HORA_INICIO",
+  "SABADO_HORA_TERMINO",
+  "DOMINGO_HORA_INICIO",
+  "DOMINGO_HORA_TERMINO",
+  "TIPO_CONTRATO",
+  "FECHA_INI_RELABORAL",
+  "FECHA_FIN_RELABORAL",
+  "OTROS_INDEMNIZACIONES",
+  "OTROS_FERIADOS",
+  "OTROS_NEGOCIACIONES",
+  "OTROS_PROPINTELECTUAL",
+  "OTROS_LICMEDICA",
+  "OTROS_SALACUNA",
+  "OTROS_PERMISOS",
+  "OTROS_CONESPECIALES",
+  "OTROS_SEGUROS",
+  "OTROS_STOCK",
+  "OTROS_INSTCOLECTIVO",
+  "AFECTO_A",
+  "FECHA_INI_INSTCOLECTIVO",
+  "FECHA_FIN_INSTCOLECTIVO"
+ ],
+ "casos": [
+  {
+   "id": "t1",
+   "dc": {
+    "fechaSuscripcion": "2026-03-02",
+    "fechaInicio": "2026-03-02",
+    "fechaFin": "",
+    "tipoContrato": 1,
+    "fechaNacimiento": "1990-05-04",
+    "nacionalidad": "320",
+    "dni": "",
+    "email": "ana@x.cl",
+    "telefono": "+56 9 1234 5678",
+    "domComuna": "301",
+    "domCalle": "Los Aromos",
+    "domNumero": "123",
+    "domDpto": "4B",
+    "funciones": "Selección y embalaje de fruta",
+    "comunaCelebracion": "226",
+    "zona1": "226",
+    "tipoJornada": 1,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 42,
+    "turnos": 1,
+    "colacion": 60,
+    "colacionImputable": false,
+    "horario": {
+     "lu": [
+      "08:00",
+      "17:30"
+     ],
+     "ma": [
+      "08:00",
+      "17:30"
+     ],
+     "mi": [
+      "08:00",
+      "17:30"
+     ],
+     "ju": [
+      "08:00",
+      "17:30"
+     ],
+     "vi": [
+      "08:00",
+      "16:30"
+     ],
+     "sa": [
+      "",
+      ""
+     ],
+     "do": [
+      "",
+      ""
+     ]
+    },
+    "horarioPropio": false,
+    "diaPago": 30,
+    "formaPago": 5,
+    "anticipo": 1,
+    "gratForma": 4,
+    "gratModalidad": "",
+    "subcontratacion": 0,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": ""
+   },
+   "val": {
+    "ok": true,
+    "faltan": [],
+    "avisos": [],
+    "dc": {
+     "fechaSuscripcion": "2026-03-02",
+     "fechaInicio": "2026-03-02",
+     "fechaFin": "",
+     "tipoContrato": 1,
+     "fechaNacimiento": "1990-05-04",
+     "nacionalidad": "320",
+     "dni": "",
+     "email": "ana@x.cl",
+     "telefono": "+56 9 1234 5678",
+     "domComuna": "301",
+     "domCalle": "Los Aromos",
+     "domNumero": "123",
+     "domDpto": "4B",
+     "funciones": "Selección y embalaje de fruta",
+     "comunaCelebracion": "226",
+     "zona1": "226",
+     "tipoJornada": 1,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 42,
+     "turnos": 1,
+     "colacion": 60,
+     "colacionImputable": false,
+     "horario": {
+      "lu": [
+       "08:00",
+       "17:30"
+      ],
+      "ma": [
+       "08:00",
+       "17:30"
+      ],
+      "mi": [
+       "08:00",
+       "17:30"
+      ],
+      "ju": [
+       "08:00",
+       "17:30"
+      ],
+      "vi": [
+       "08:00",
+       "16:30"
+      ],
+      "sa": [
+       "",
+       ""
+      ],
+      "do": [
+       "",
+       ""
+      ]
+     },
+     "horarioPropio": false,
+     "diaPago": 30,
+     "formaPago": 5,
+     "anticipo": 1,
+     "gratForma": 4,
+     "gratModalidad": "",
+     "subcontratacion": 0,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": ""
+    }
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "226",
+    "FECHA_SUSCRPCION": "02/03/2026",
+    "RUT_TRABAJADOR": "11111111-1",
+    "DNI_TRABAJADOR": "",
+    "FECHA_NACIMIENTO": "04/05/1990",
+    "NOMBRES": "Ana María",
+    "APELLIDOS": "Soto Pérez",
+    "SEXO": "1",
+    "NACIONALIDAD": "320",
+    "EMAIL": "ana@x.cl",
+    "TELEFONO": "+56912345678",
+    "COMUNA": "301",
+    "CALLE": "Los Aromos",
+    "NUMERO": "123",
+    "DPTO": "4B",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "0",
+    "FUNCIONES": "Selección y embalaje de fruta",
+    "SUBCONTRATACION": "0",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "226",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "600000",
+    "MONTO_IMPONIBLE": "775000",
+    "HABER_1": "30",
+    "MONTO_1": "50000",
+    "PER_DEVENGAMIENTO_1": "5",
+    "HABER_2": "31",
+    "MONTO_2": "40000",
+    "PER_DEVENGAMIENTO_2": "5",
+    "HABER_3": "11",
+    "MONTO_3": "20000",
+    "PER_DEVENGAMIENTO_3": "5",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "4",
+    "GRAT_MODALIDAD": "",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "30",
+    "REM_FORMA_PAGO": "5",
+    "REM_ANTICIPO": "1",
+    "REM_AFP": "14",
+    "REM_SALUD": "102",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "1",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "42",
+    "TURNOS": "1",
+    "TIEMPO_COLACION": "60",
+    "T_COLACION_IMP": "0",
+    "T_COLACION_NO_IMP": "60",
+    "ROTACION": "1",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "08:00",
+    "LUNES_HORA_TERMINO": "17:30",
+    "MARTES_HORA_INICIO": "08:00",
+    "MARTES_HORA_TERMINO": "17:30",
+    "MIERCOLES_HORA_INICIO": "08:00",
+    "MIERCOLES_HORA_TERMINO": "17:30",
+    "JUEVES_HORA_INICIO": "08:00",
+    "JUEVES_HORA_TERMINO": "17:30",
+    "VIERNES_HORA_INICIO": "08:00",
+    "VIERNES_HORA_TERMINO": "16:30",
+    "SABADO_HORA_INICIO": "",
+    "SABADO_HORA_TERMINO": "",
+    "DOMINGO_HORA_INICIO": "",
+    "DOMINGO_HORA_TERMINO": "",
+    "TIPO_CONTRATO": "1",
+    "FECHA_INI_RELABORAL": "02/03/2026",
+    "FECHA_FIN_RELABORAL": "",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "horas": {
+    "horas": 41.5,
+    "dias": 5
+   },
+   "vals": {
+    "ciudad": "Angol",
+    "fecha_contrato": "2 de marzo de 2026",
+    "empresa": "Agrícola Prueba SpA",
+    "rut_empresa": "76.151.704-K",
+    "giro": "Agrícola",
+    "domicilio_empresa": "Camino Huequén km 3, Angol",
+    "representante": "Rodrigo Briones",
+    "rut_representante": "12.345.678-5",
+    "trabajador": "ANA MARÍA SOTO PÉREZ",
+    "rut_trabajador": "11.111.111-1",
+    "nacionalidad": "chilena",
+    "fecha_nacimiento": "4 de mayo de 1990",
+    "domicilio_trabajador": "Los Aromos 123, depto. 4B, Macul",
+    "email_trabajador": "ana@x.cl",
+    "telefono_trabajador": "+56 9 1234 5678",
+    "cargo": "Operaria",
+    "funciones": "Selección y embalaje de fruta",
+    "lugar_trabajo": "Angol",
+    "fecha_inicio": "2 de marzo de 2026",
+    "fecha_termino": "",
+    "tipo_contrato": "indefinido",
+    "sueldo_base": "$600.000",
+    "sueldo_base_palabras": "Seiscientos mil pesos",
+    "gratificacion": "El empleador pagará al trabajador una gratificación anual equivalente al veinticinco por ciento de lo devengado en el respectivo ejercicio comercial por concepto de remuneraciones mensuales, con un tope de cuatro coma setenta y cinco ingresos mínimos mensuales, conforme al artículo 50 del Código del Trabajo. Esta gratificación se anticipará mensualmente, a cuenta de la que corresponda al término del ejercicio",
+    "colacion": "$50.000",
+    "movilizacion": "$40.000",
+    "otros_haberes": "$20.000",
+    "beneficios": "Además, el empleador pagará al trabajador una asignación de colación de $50.000 mensuales, una asignación de movilización de $40.000 mensuales y otros haberes imponibles fijos por $20.000 mensuales, asignaciones que no constituyen remuneración conforme al artículo 41 del Código del Trabajo en la parte que corresponda.",
+    "remuneracion_imponible": "$775.000",
+    "dia_pago": "30",
+    "forma_pago": "mediante transferencia electrónica a la cuenta bancaria del trabajador",
+    "anticipo": "",
+    "jornada_horas": "42",
+    "jornada_tipo": "semanal ordinaria",
+    "distribucion_jornada": "lunes a jueves de 08:00 a 17:30 horas y viernes de 08:00 a 16:30 horas",
+    "colacion_minutos": "60",
+    "turno": "horario fijo, sin sistema de turnos",
+    "afp": "AFP Habitat",
+    "salud": "Fonasa",
+    "otros_pactos": ""
+   },
+   "sugerida": "indefinido",
+   "vence": "2026-03-23"
+  },
+  {
+   "id": "t2",
+   "dc": {
+    "fechaSuscripcion": "2026-01-03",
+    "fechaInicio": "2026-01-05",
+    "fechaFin": "2026-04-30",
+    "tipoContrato": 2,
+    "fechaNacimiento": "1985-12-31",
+    "nacionalidad": "308",
+    "dni": "",
+    "email": "",
+    "telefono": "",
+    "domComuna": "301",
+    "domCalle": "Pasaje 2",
+    "domNumero": "",
+    "domDpto": "",
+    "funciones": "Temporero",
+    "comunaCelebracion": "226",
+    "zona1": "226",
+    "tipoJornada": 2,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 45,
+    "turnos": 1,
+    "colacion": 45,
+    "colacionImputable": false,
+    "horario": {
+     "lu": [
+      "07:00",
+      "16:00"
+     ],
+     "ma": [
+      "07:00",
+      "16:00"
+     ],
+     "mi": [
+      "07:00",
+      "16:00"
+     ],
+     "ju": [
+      "07:00",
+      "16:00"
+     ],
+     "vi": [
+      "07:00",
+      "16:00"
+     ],
+     "sa": [
+      "08:00",
+      "13:00"
+     ],
+     "do": [
+      "",
+      ""
+     ]
+    },
+    "horarioPropio": true,
+    "diaPago": 5,
+    "formaPago": 1,
+    "anticipo": 5,
+    "gratForma": 3,
+    "gratModalidad": "Gratificación mensual fija de $80.000",
+    "subcontratacion": 0,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": ""
+   },
+   "val": {
+    "ok": true,
+    "faltan": [],
+    "avisos": [],
+    "dc": {
+     "fechaSuscripcion": "2026-01-03",
+     "fechaInicio": "2026-01-05",
+     "fechaFin": "2026-04-30",
+     "tipoContrato": 2,
+     "fechaNacimiento": "1985-12-31",
+     "nacionalidad": "308",
+     "dni": "",
+     "email": "",
+     "telefono": "",
+     "domComuna": "301",
+     "domCalle": "Pasaje 2",
+     "domNumero": "",
+     "domDpto": "",
+     "funciones": "Temporero",
+     "comunaCelebracion": "226",
+     "zona1": "226",
+     "tipoJornada": 2,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 45,
+     "turnos": 1,
+     "colacion": 45,
+     "colacionImputable": false,
+     "horario": {
+      "lu": [
+       "07:00",
+       "16:00"
+      ],
+      "ma": [
+       "07:00",
+       "16:00"
+      ],
+      "mi": [
+       "07:00",
+       "16:00"
+      ],
+      "ju": [
+       "07:00",
+       "16:00"
+      ],
+      "vi": [
+       "07:00",
+       "16:00"
+      ],
+      "sa": [
+       "08:00",
+       "13:00"
+      ],
+      "do": [
+       "",
+       ""
+      ]
+     },
+     "horarioPropio": true,
+     "diaPago": 5,
+     "formaPago": 1,
+     "anticipo": 5,
+     "gratForma": 3,
+     "gratModalidad": "Gratificación mensual fija de $80.000",
+     "subcontratacion": 0,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": ""
+    }
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "226",
+    "FECHA_SUSCRPCION": "03/01/2026",
+    "RUT_TRABAJADOR": "22222222-2",
+    "DNI_TRABAJADOR": "",
+    "FECHA_NACIMIENTO": "31/12/1985",
+    "NOMBRES": "Beto",
+    "APELLIDOS": "Plazo",
+    "SEXO": "2",
+    "NACIONALIDAD": "308",
+    "EMAIL": "",
+    "TELEFONO": "",
+    "COMUNA": "301",
+    "CALLE": "Pasaje 2",
+    "NUMERO": "",
+    "DPTO": "",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "0",
+    "FUNCIONES": "Temporero",
+    "SUBCONTRATACION": "0",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "226",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "540000",
+    "MONTO_IMPONIBLE": "620000",
+    "HABER_1": "",
+    "MONTO_1": "",
+    "PER_DEVENGAMIENTO_1": "",
+    "HABER_2": "",
+    "MONTO_2": "",
+    "PER_DEVENGAMIENTO_2": "",
+    "HABER_3": "",
+    "MONTO_3": "",
+    "PER_DEVENGAMIENTO_3": "",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "3",
+    "GRAT_MODALIDAD": "Gratificación mensual fija de $80.000",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "5",
+    "REM_FORMA_PAGO": "1",
+    "REM_ANTICIPO": "5",
+    "REM_AFP": "103",
+    "REM_SALUD": "3",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "2",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "45",
+    "TURNOS": "1",
+    "TIEMPO_COLACION": "45",
+    "T_COLACION_IMP": "0",
+    "T_COLACION_NO_IMP": "45",
+    "ROTACION": "1",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "07:00",
+    "LUNES_HORA_TERMINO": "16:00",
+    "MARTES_HORA_INICIO": "07:00",
+    "MARTES_HORA_TERMINO": "16:00",
+    "MIERCOLES_HORA_INICIO": "07:00",
+    "MIERCOLES_HORA_TERMINO": "16:00",
+    "JUEVES_HORA_INICIO": "07:00",
+    "JUEVES_HORA_TERMINO": "16:00",
+    "VIERNES_HORA_INICIO": "07:00",
+    "VIERNES_HORA_TERMINO": "16:00",
+    "SABADO_HORA_INICIO": "08:00",
+    "SABADO_HORA_TERMINO": "13:00",
+    "DOMINGO_HORA_INICIO": "",
+    "DOMINGO_HORA_TERMINO": "",
+    "TIPO_CONTRATO": "2",
+    "FECHA_INI_RELABORAL": "05/01/2026",
+    "FECHA_FIN_RELABORAL": "30/04/2026",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "horas": {
+    "horas": 45.5,
+    "dias": 6
+   },
+   "vals": {
+    "ciudad": "Angol",
+    "fecha_contrato": "3 de enero de 2026",
+    "empresa": "Agrícola Prueba SpA",
+    "rut_empresa": "76.151.704-K",
+    "giro": "Agrícola",
+    "domicilio_empresa": "Camino Huequén km 3, Angol",
+    "representante": "Rodrigo Briones",
+    "rut_representante": "12.345.678-5",
+    "trabajador": "BETO PLAZO",
+    "rut_trabajador": "22222222-2",
+    "nacionalidad": "peruana",
+    "fecha_nacimiento": "31 de diciembre de 1985",
+    "domicilio_trabajador": "Pasaje 2, Macul",
+    "email_trabajador": "",
+    "telefono_trabajador": "",
+    "cargo": "Temporero",
+    "funciones": "Temporero",
+    "lugar_trabajo": "Angol",
+    "fecha_inicio": "5 de enero de 2026",
+    "fecha_termino": "30 de abril de 2026",
+    "tipo_contrato": "a plazo fijo",
+    "sueldo_base": "$540.000",
+    "sueldo_base_palabras": "Quinientos cuarenta mil pesos",
+    "gratificacion": "Las partes acuerdan la siguiente gratificación convencional, que no es inferior a la legal: Gratificación mensual fija de $80.000",
+    "colacion": "",
+    "movilizacion": "",
+    "otros_haberes": "",
+    "beneficios": "",
+    "remuneracion_imponible": "$620.000",
+    "dia_pago": "5",
+    "forma_pago": "en dinero efectivo",
+    "anticipo": "Las partes pactan un anticipo quincenal de remuneraciones, que se descontará en la liquidación del mes.",
+    "jornada_horas": "45",
+    "jornada_tipo": "semanal extendida",
+    "distribucion_jornada": "lunes a viernes de 07:00 a 16:00 horas y sábado de 08:00 a 13:00 horas",
+    "colacion_minutos": "45",
+    "turno": "horario fijo, sin sistema de turnos",
+    "afp": "AFP Modelo",
+    "salud": "Isapre Banmédica",
+    "otros_pactos": ""
+   },
+   "sugerida": "temporada",
+   "vence": "2026-01-23"
+  },
+  {
+   "id": "t3",
+   "dc": {
+    "fechaSuscripcion": "2026-02-01",
+    "fechaInicio": "2026-02-01",
+    "fechaFin": "",
+    "tipoContrato": 1,
+    "fechaNacimiento": "1979-01-01",
+    "nacionalidad": "320",
+    "dni": "",
+    "email": "",
+    "telefono": "",
+    "domComuna": "301",
+    "domCalle": "Av. Siempre Viva",
+    "domNumero": "",
+    "domDpto": "",
+    "funciones": "Guardia",
+    "comunaCelebracion": "226",
+    "zona1": "226",
+    "tipoJornada": 6,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 42,
+    "turnos": 1,
+    "colacion": 60,
+    "colacionImputable": true,
+    "horario": {
+     "lu": [
+      "08:00",
+      "17:30"
+     ],
+     "ma": [
+      "08:00",
+      "17:30"
+     ],
+     "mi": [
+      "08:00",
+      "17:30"
+     ],
+     "ju": [
+      "08:00",
+      "17:30"
+     ],
+     "vi": [
+      "08:00",
+      "16:30"
+     ],
+     "sa": [
+      "",
+      ""
+     ],
+     "do": [
+      "",
+      ""
+     ]
+    },
+    "horarioPropio": false,
+    "diaPago": 30,
+    "formaPago": 5,
+    "anticipo": 1,
+    "gratForma": 3,
+    "gratModalidad": "",
+    "subcontratacion": 1,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": ""
+   },
+   "val": {
+    "ok": false,
+    "faltan": [
+     "institución de salud con código DT (esencial no figura en la tabla DT)",
+     "resolución de jornada excepcional (número y fecha)",
+     "RUT de la empresa principal (subcontratación)",
+     "modalidad de la gratificación convencional"
+    ],
+    "avisos": [],
+    "dc": {
+     "fechaSuscripcion": "2026-02-01",
+     "fechaInicio": "2026-02-01",
+     "fechaFin": "",
+     "tipoContrato": 1,
+     "fechaNacimiento": "1979-01-01",
+     "nacionalidad": "320",
+     "dni": "",
+     "email": "",
+     "telefono": "",
+     "domComuna": "301",
+     "domCalle": "Av. Siempre Viva",
+     "domNumero": "",
+     "domDpto": "",
+     "funciones": "Guardia",
+     "comunaCelebracion": "226",
+     "zona1": "226",
+     "tipoJornada": 6,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 42,
+     "turnos": 1,
+     "colacion": 60,
+     "colacionImputable": true,
+     "horario": {
+      "lu": [
+       "08:00",
+       "17:30"
+      ],
+      "ma": [
+       "08:00",
+       "17:30"
+      ],
+      "mi": [
+       "08:00",
+       "17:30"
+      ],
+      "ju": [
+       "08:00",
+       "17:30"
+      ],
+      "vi": [
+       "08:00",
+       "16:30"
+      ],
+      "sa": [
+       "",
+       ""
+      ],
+      "do": [
+       "",
+       ""
+      ]
+     },
+     "horarioPropio": false,
+     "diaPago": 30,
+     "formaPago": 5,
+     "anticipo": 1,
+     "gratForma": 3,
+     "gratModalidad": "",
+     "subcontratacion": 1,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": ""
+    }
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "226",
+    "FECHA_SUSCRPCION": "01/02/2026",
+    "RUT_TRABAJADOR": "33333333-3",
+    "DNI_TRABAJADOR": "",
+    "FECHA_NACIMIENTO": "01/01/1979",
+    "NOMBRES": "Catalina",
+    "APELLIDOS": "Excepcional",
+    "SEXO": "1",
+    "NACIONALIDAD": "320",
+    "EMAIL": "",
+    "TELEFONO": "",
+    "COMUNA": "301",
+    "CALLE": "Av. Siempre Viva",
+    "NUMERO": "",
+    "DPTO": "",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "1",
+    "FUNCIONES": "Guardia",
+    "SUBCONTRATACION": "1",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "226",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "700000",
+    "MONTO_IMPONIBLE": "875000",
+    "HABER_1": "",
+    "MONTO_1": "",
+    "PER_DEVENGAMIENTO_1": "",
+    "HABER_2": "",
+    "MONTO_2": "",
+    "PER_DEVENGAMIENTO_2": "",
+    "HABER_3": "",
+    "MONTO_3": "",
+    "PER_DEVENGAMIENTO_3": "",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "3",
+    "GRAT_MODALIDAD": "",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "30",
+    "REM_FORMA_PAGO": "5",
+    "REM_ANTICIPO": "1",
+    "REM_AFP": "19",
+    "REM_SALUD": "",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "6",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "",
+    "TURNOS": "",
+    "TIEMPO_COLACION": "",
+    "T_COLACION_IMP": "",
+    "T_COLACION_NO_IMP": "",
+    "ROTACION": "",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "",
+    "LUNES_HORA_TERMINO": "",
+    "MARTES_HORA_INICIO": "",
+    "MARTES_HORA_TERMINO": "",
+    "MIERCOLES_HORA_INICIO": "",
+    "MIERCOLES_HORA_TERMINO": "",
+    "JUEVES_HORA_INICIO": "",
+    "JUEVES_HORA_TERMINO": "",
+    "VIERNES_HORA_INICIO": "",
+    "VIERNES_HORA_TERMINO": "",
+    "SABADO_HORA_INICIO": "",
+    "SABADO_HORA_TERMINO": "",
+    "DOMINGO_HORA_INICIO": "",
+    "DOMINGO_HORA_TERMINO": "",
+    "TIPO_CONTRATO": "1",
+    "FECHA_INI_RELABORAL": "01/02/2026",
+    "FECHA_FIN_RELABORAL": "",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "horas": {
+    "horas": 46.5,
+    "dias": 5
+   },
+   "vals": {
+    "ciudad": "Angol",
+    "fecha_contrato": "1 de febrero de 2026",
+    "empresa": "Agrícola Prueba SpA",
+    "rut_empresa": "76.151.704-K",
+    "giro": "Agrícola",
+    "domicilio_empresa": "Camino Huequén km 3, Angol",
+    "representante": "Rodrigo Briones",
+    "rut_representante": "12.345.678-5",
+    "trabajador": "CATALINA EXCEPCIONAL",
+    "rut_trabajador": "33333333-3",
+    "nacionalidad": "chilena",
+    "fecha_nacimiento": "1 de enero de 1979",
+    "domicilio_trabajador": "Av. Siempre Viva, Macul",
+    "email_trabajador": "",
+    "telefono_trabajador": "",
+    "cargo": "Guardia",
+    "funciones": "Guardia",
+    "lugar_trabajo": "Angol",
+    "fecha_inicio": "1 de febrero de 2026",
+    "fecha_termino": "",
+    "tipo_contrato": "indefinido",
+    "sueldo_base": "$700.000",
+    "sueldo_base_palabras": "Setecientos mil pesos",
+    "gratificacion": "Las partes acuerdan la siguiente gratificación convencional, que no es inferior a la legal: (describir la modalidad pactada)",
+    "colacion": "",
+    "movilizacion": "",
+    "otros_haberes": "",
+    "beneficios": "",
+    "remuneracion_imponible": "$875.000",
+    "dia_pago": "30",
+    "forma_pago": "mediante transferencia electrónica a la cuenta bancaria del trabajador",
+    "anticipo": "",
+    "jornada_horas": "42",
+    "jornada_tipo": "excepcional",
+    "distribucion_jornada": "lunes a jueves de 08:00 a 17:30 horas y viernes de 08:00 a 16:30 horas",
+    "colacion_minutos": "60",
+    "turno": "horario fijo, sin sistema de turnos",
+    "afp": "AFP Uno",
+    "salud": "Isapre Esencial",
+    "otros_pactos": ""
+   },
+   "sugerida": "indefinido",
+   "vence": "2026-02-20"
+  },
+  {
+   "id": "t4",
+   "dc": {
+    "fechaSuscripcion": "",
+    "fechaInicio": "",
+    "fechaFin": "",
+    "tipoContrato": 1,
+    "fechaNacimiento": "",
+    "nacionalidad": "320",
+    "dni": "P1234567",
+    "email": "",
+    "telefono": "",
+    "domComuna": "",
+    "domCalle": "",
+    "domNumero": "",
+    "domDpto": "",
+    "funciones": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "comunaCelebracion": "226",
+    "zona1": "226",
+    "tipoJornada": 7,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 42,
+    "turnos": 1,
+    "colacion": 60,
+    "colacionImputable": false,
+    "horario": {
+     "lu": [
+      "08:00",
+      "17:30"
+     ],
+     "ma": [
+      "08:00",
+      "17:30"
+     ],
+     "mi": [
+      "08:00",
+      "17:30"
+     ],
+     "ju": [
+      "08:00",
+      "17:30"
+     ],
+     "vi": [
+      "08:00",
+      "16:30"
+     ],
+     "sa": [
+      "",
+      ""
+     ],
+     "do": [
+      "",
+      ""
+     ]
+    },
+    "horarioPropio": false,
+    "diaPago": 30,
+    "formaPago": 5,
+    "anticipo": 1,
+    "gratForma": 4,
+    "gratModalidad": "",
+    "subcontratacion": 0,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": ""
+   },
+   "val": {
+    "ok": false,
+    "faltan": [
+     "fecha de suscripción del contrato",
+     "fecha de inicio de la relación laboral (ficha → LRE)",
+     "fecha de nacimiento",
+     "apellidos (ficha)",
+     "sexo (ficha)",
+     "domicilio del trabajador (comuna y calle)",
+     "funciones: máximo 300 caracteres",
+     "AFP con código DT"
+    ],
+    "avisos": [],
+    "dc": {
+     "fechaSuscripcion": "",
+     "fechaInicio": "",
+     "fechaFin": "",
+     "tipoContrato": 1,
+     "fechaNacimiento": "",
+     "nacionalidad": "320",
+     "dni": "P1234567",
+     "email": "",
+     "telefono": "",
+     "domComuna": "",
+     "domCalle": "",
+     "domNumero": "",
+     "domDpto": "",
+     "funciones": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "comunaCelebracion": "226",
+     "zona1": "226",
+     "tipoJornada": 7,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 42,
+     "turnos": 1,
+     "colacion": 60,
+     "colacionImputable": false,
+     "horario": {
+      "lu": [
+       "08:00",
+       "17:30"
+      ],
+      "ma": [
+       "08:00",
+       "17:30"
+      ],
+      "mi": [
+       "08:00",
+       "17:30"
+      ],
+      "ju": [
+       "08:00",
+       "17:30"
+      ],
+      "vi": [
+       "08:00",
+       "16:30"
+      ],
+      "sa": [
+       "",
+       ""
+      ],
+      "do": [
+       "",
+       ""
+      ]
+     },
+     "horarioPropio": false,
+     "diaPago": 30,
+     "formaPago": 5,
+     "anticipo": 1,
+     "gratForma": 4,
+     "gratModalidad": "",
+     "subcontratacion": 0,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": ""
+    }
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "226",
+    "FECHA_SUSCRPCION": "",
+    "RUT_TRABAJADOR": "",
+    "DNI_TRABAJADOR": "P1234567",
+    "FECHA_NACIMIENTO": "",
+    "NOMBRES": "Dani Hora",
+    "APELLIDOS": "",
+    "SEXO": "",
+    "NACIONALIDAD": "320",
+    "EMAIL": "",
+    "TELEFONO": "",
+    "COMUNA": "",
+    "CALLE": "",
+    "NUMERO": "",
+    "DPTO": "",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "0",
+    "FUNCIONES": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "SUBCONTRATACION": "0",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "226",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "0",
+    "MONTO_IMPONIBLE": "500000",
+    "HABER_1": "",
+    "MONTO_1": "",
+    "PER_DEVENGAMIENTO_1": "",
+    "HABER_2": "",
+    "MONTO_2": "",
+    "PER_DEVENGAMIENTO_2": "",
+    "HABER_3": "",
+    "MONTO_3": "",
+    "PER_DEVENGAMIENTO_3": "",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "4",
+    "GRAT_MODALIDAD": "",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "30",
+    "REM_FORMA_PAGO": "5",
+    "REM_ANTICIPO": "1",
+    "REM_AFP": "",
+    "REM_SALUD": "102",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "7",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "",
+    "TURNOS": "",
+    "TIEMPO_COLACION": "",
+    "T_COLACION_IMP": "",
+    "T_COLACION_NO_IMP": "",
+    "ROTACION": "",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "",
+    "LUNES_HORA_TERMINO": "",
+    "MARTES_HORA_INICIO": "",
+    "MARTES_HORA_TERMINO": "",
+    "MIERCOLES_HORA_INICIO": "",
+    "MIERCOLES_HORA_TERMINO": "",
+    "JUEVES_HORA_INICIO": "",
+    "JUEVES_HORA_TERMINO": "",
+    "VIERNES_HORA_INICIO": "",
+    "VIERNES_HORA_TERMINO": "",
+    "SABADO_HORA_INICIO": "",
+    "SABADO_HORA_TERMINO": "",
+    "DOMINGO_HORA_INICIO": "",
+    "DOMINGO_HORA_TERMINO": "",
+    "TIPO_CONTRATO": "1",
+    "FECHA_INI_RELABORAL": "",
+    "FECHA_FIN_RELABORAL": "",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "horas": {
+    "horas": 41.5,
+    "dias": 5
+   },
+   "vals": {
+    "ciudad": "Angol",
+    "fecha_contrato": "",
+    "empresa": "Agrícola Prueba SpA",
+    "rut_empresa": "76.151.704-K",
+    "giro": "Agrícola",
+    "domicilio_empresa": "Camino Huequén km 3, Angol",
+    "representante": "Rodrigo Briones",
+    "rut_representante": "12.345.678-5",
+    "trabajador": "DANI HORA",
+    "rut_trabajador": "DNI P1234567",
+    "nacionalidad": "chilena",
+    "fecha_nacimiento": "",
+    "domicilio_trabajador": "",
+    "email_trabajador": "",
+    "telefono_trabajador": "",
+    "cargo": "",
+    "funciones": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "lugar_trabajo": "Angol",
+    "fecha_inicio": "",
+    "fecha_termino": "",
+    "tipo_contrato": "indefinido",
+    "sueldo_base": "$0",
+    "sueldo_base_palabras": "Cero pesos",
+    "gratificacion": "El empleador pagará al trabajador una gratificación anual equivalente al veinticinco por ciento de lo devengado en el respectivo ejercicio comercial por concepto de remuneraciones mensuales, con un tope de cuatro coma setenta y cinco ingresos mínimos mensuales, conforme al artículo 50 del Código del Trabajo. Esta gratificación se anticipará mensualmente, a cuenta de la que corresponda al término del ejercicio",
+    "colacion": "",
+    "movilizacion": "",
+    "otros_haberes": "",
+    "beneficios": "",
+    "remuneracion_imponible": "$500.000",
+    "dia_pago": "30",
+    "forma_pago": "mediante transferencia electrónica a la cuenta bancaria del trabajador",
+    "anticipo": "",
+    "jornada_horas": "42",
+    "jornada_tipo": "sin límite de jornada (artículo 22 inciso segundo del Código del Trabajo)",
+    "distribucion_jornada": "lunes a jueves de 08:00 a 17:30 horas y viernes de 08:00 a 16:30 horas",
+    "colacion_minutos": "60",
+    "turno": "horario fijo, sin sistema de turnos",
+    "afp": "",
+    "salud": "Fonasa",
+    "otros_pactos": ""
+   },
+   "sugerida": "indefinido",
+   "vence": ""
+  },
+  {
+   "id": "t5",
+   "dc": {
+    "fechaSuscripcion": "2026-03-10",
+    "fechaInicio": "2026-03-10",
+    "fechaFin": "",
+    "tipoContrato": 1,
+    "fechaNacimiento": "2000-02-29",
+    "nacionalidad": "320",
+    "dni": "",
+    "email": "",
+    "telefono": "",
+    "domComuna": "301",
+    "domCalle": "Calle",
+    "domNumero": "",
+    "domDpto": "",
+    "funciones": "Operaria",
+    "comunaCelebracion": "226",
+    "zona1": "226",
+    "tipoJornada": 8,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 40,
+    "turnos": 1,
+    "colacion": 60,
+    "colacionImputable": false,
+    "horario": {
+     "lu": [
+      "09:00",
+      "18:00"
+     ],
+     "ma": [
+      "09:00",
+      "18:00"
+     ],
+     "mi": [
+      "",
+      ""
+     ],
+     "ju": [
+      "09:00",
+      "18:00"
+     ],
+     "vi": [
+      "09:00",
+      "18:00"
+     ],
+     "sa": [
+      "09:00",
+      "14:00"
+     ],
+     "do": [
+      "09:00",
+      "14:00"
+     ]
+    },
+    "horarioPropio": true,
+    "diaPago": 30,
+    "formaPago": 5,
+    "anticipo": 1,
+    "gratForma": 4,
+    "gratModalidad": "",
+    "subcontratacion": 0,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": "2026-03-15"
+   },
+   "val": {
+    "ok": true,
+    "faltan": [],
+    "avisos": [],
+    "dc": {
+     "fechaSuscripcion": "2026-03-10",
+     "fechaInicio": "2026-03-10",
+     "fechaFin": "",
+     "tipoContrato": 1,
+     "fechaNacimiento": "2000-02-29",
+     "nacionalidad": "320",
+     "dni": "",
+     "email": "",
+     "telefono": "",
+     "domComuna": "301",
+     "domCalle": "Calle",
+     "domNumero": "",
+     "domDpto": "",
+     "funciones": "Operaria",
+     "comunaCelebracion": "226",
+     "zona1": "226",
+     "tipoJornada": 8,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 40,
+     "turnos": 1,
+     "colacion": 60,
+     "colacionImputable": false,
+     "horario": {
+      "lu": [
+       "09:00",
+       "18:00"
+      ],
+      "ma": [
+       "09:00",
+       "18:00"
+      ],
+      "mi": [
+       "",
+       ""
+      ],
+      "ju": [
+       "09:00",
+       "18:00"
+      ],
+      "vi": [
+       "09:00",
+       "18:00"
+      ],
+      "sa": [
+       "09:00",
+       "14:00"
+      ],
+      "do": [
+       "09:00",
+       "14:00"
+      ]
+     },
+     "horarioPropio": true,
+     "diaPago": 30,
+     "formaPago": 5,
+     "anticipo": 1,
+     "gratForma": 4,
+     "gratModalidad": "",
+     "subcontratacion": 0,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": "2026-03-15"
+    }
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "226",
+    "FECHA_SUSCRPCION": "10/03/2026",
+    "RUT_TRABAJADOR": "55555555-5",
+    "DNI_TRABAJADOR": "",
+    "FECHA_NACIMIENTO": "29/02/2000",
+    "NOMBRES": "Elías",
+    "APELLIDOS": "Treinta",
+    "SEXO": "2",
+    "NACIONALIDAD": "320",
+    "EMAIL": "",
+    "TELEFONO": "",
+    "COMUNA": "301",
+    "CALLE": "Calle",
+    "NUMERO": "",
+    "DPTO": "",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "0",
+    "FUNCIONES": "Operaria",
+    "SUBCONTRATACION": "0",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "226",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "650000",
+    "MONTO_IMPONIBLE": "812500",
+    "HABER_1": "",
+    "MONTO_1": "",
+    "PER_DEVENGAMIENTO_1": "",
+    "HABER_2": "",
+    "MONTO_2": "",
+    "PER_DEVENGAMIENTO_2": "",
+    "HABER_3": "",
+    "MONTO_3": "",
+    "PER_DEVENGAMIENTO_3": "",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "4",
+    "GRAT_MODALIDAD": "",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "30",
+    "REM_FORMA_PAGO": "5",
+    "REM_ANTICIPO": "1",
+    "REM_AFP": "6",
+    "REM_SALUD": "102",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "8",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "40",
+    "TURNOS": "1",
+    "TIEMPO_COLACION": "60",
+    "T_COLACION_IMP": "0",
+    "T_COLACION_NO_IMP": "60",
+    "ROTACION": "1",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "09:00",
+    "LUNES_HORA_TERMINO": "18:00",
+    "MARTES_HORA_INICIO": "09:00",
+    "MARTES_HORA_TERMINO": "18:00",
+    "MIERCOLES_HORA_INICIO": "",
+    "MIERCOLES_HORA_TERMINO": "",
+    "JUEVES_HORA_INICIO": "09:00",
+    "JUEVES_HORA_TERMINO": "18:00",
+    "VIERNES_HORA_INICIO": "09:00",
+    "VIERNES_HORA_TERMINO": "18:00",
+    "SABADO_HORA_INICIO": "09:00",
+    "SABADO_HORA_TERMINO": "14:00",
+    "DOMINGO_HORA_INICIO": "09:00",
+    "DOMINGO_HORA_TERMINO": "14:00",
+    "TIPO_CONTRATO": "1",
+    "FECHA_INI_RELABORAL": "10/03/2026",
+    "FECHA_FIN_RELABORAL": "",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "horas": {
+    "horas": 40,
+    "dias": 6
+   },
+   "vals": {
+    "ciudad": "Angol",
+    "fecha_contrato": "10 de marzo de 2026",
+    "empresa": "Agrícola Prueba SpA",
+    "rut_empresa": "76.151.704-K",
+    "giro": "Agrícola",
+    "domicilio_empresa": "Camino Huequén km 3, Angol",
+    "representante": "Rodrigo Briones",
+    "rut_representante": "12.345.678-5",
+    "trabajador": "ELÍAS TREINTA",
+    "rut_trabajador": "55555555-5",
+    "nacionalidad": "chilena",
+    "fecha_nacimiento": "29 de febrero de 2000",
+    "domicilio_trabajador": "Calle, Macul",
+    "email_trabajador": "",
+    "telefono_trabajador": "",
+    "cargo": "Operaria",
+    "funciones": "Operaria",
+    "lugar_trabajo": "Angol",
+    "fecha_inicio": "10 de marzo de 2026",
+    "fecha_termino": "",
+    "tipo_contrato": "indefinido",
+    "sueldo_base": "$650.000",
+    "sueldo_base_palabras": "Seiscientos cincuenta mil pesos",
+    "gratificacion": "El empleador pagará al trabajador una gratificación anual equivalente al veinticinco por ciento de lo devengado en el respectivo ejercicio comercial por concepto de remuneraciones mensuales, con un tope de cuatro coma setenta y cinco ingresos mínimos mensuales, conforme al artículo 50 del Código del Trabajo. Esta gratificación se anticipará mensualmente, a cuenta de la que corresponda al término del ejercicio",
+    "colacion": "",
+    "movilizacion": "",
+    "otros_haberes": "",
+    "beneficios": "",
+    "remuneracion_imponible": "$812.500",
+    "dia_pago": "30",
+    "forma_pago": "mediante transferencia electrónica a la cuenta bancaria del trabajador",
+    "anticipo": "",
+    "jornada_horas": "40",
+    "jornada_tipo": "semanal ordinaria (artículo 38)",
+    "distribucion_jornada": "lunes a martes de 09:00 a 18:00 horas, jueves a viernes de 09:00 a 18:00 horas y sábado a domingo de 09:00 a 14:00 horas",
+    "colacion_minutos": "60",
+    "turno": "horario fijo, sin sistema de turnos",
+    "afp": "AFP ProVida",
+    "salud": "Fonasa",
+    "otros_pactos": ""
+   },
+   "sugerida": "indefinido",
+   "vence": "2026-03-31"
+  }
+ ],
+ "csv": "CATEGORIA_CONTRATO;COMUNA_CELEBRACION;FECHA_SUSCRPCION;RUT_TRABAJADOR;DNI_TRABAJADOR;FECHA_NACIMIENTO;NOMBRES;APELLIDOS;SEXO;NACIONALIDAD;EMAIL;TELEFONO;COMUNA;CALLE;NUMERO;DPTO;DECLARACION_DISCAPACIDAD;DECLARACION_INVALIDEZ;FUNCIONES;SUBCONTRATACION;RUT_EMPRESA_PRINCIPAL;EST;RUT_EMPRESA_USUARIA;FAENA_COMUNA;FAENA_CALLE;FAENA_NUMERO;FAENA_DPTO;ZONA_GEOGRAFICA_1;ZONA_GEOGRAFICA_2;ZONA_GEOGRAFICA_3;ZONA_GEOGRAFICA_4;ZONA_GEOGRAFICA_5;SUELDO_BASE;MONTO_IMPONIBLE;HABER_1;MONTO_1;PER_DEVENGAMIENTO_1;HABER_2;MONTO_2;PER_DEVENGAMIENTO_2;HABER_3;MONTO_3;PER_DEVENGAMIENTO_3;HABER_4;MONTO_4;PER_DEVENGAMIENTO_4;HABER_5;MONTO_5;PER_DEVENGAMIENTO_5;GRAT_FORMA_PAGO;GRAT_MODALIDAD;GRAT_PERIODO_PAGO;REM_PERIODO_PAGO;REM_FECHA_PAGO;REM_FORMA_PAGO;REM_ANTICIPO;REM_AFP;REM_SALUD;REM_OTROS_PACTOS;TIPO_JORNADA;NRO_RESOLUCION;FECHA_RESOLUCION;DURACION_JORNADA;TURNOS;TIEMPO_COLACION;T_COLACION_IMP;T_COLACION_NO_IMP;ROTACION;NRO_DIAS_DIST_JOR;LUNES_HORA_INICIO;LUNES_HORA_TERMINO;MARTES_HORA_INICIO;MARTES_HORA_TERMINO;MIERCOLES_HORA_INICIO;MIERCOLES_HORA_TERMINO;JUEVES_HORA_INICIO;JUEVES_HORA_TERMINO;VIERNES_HORA_INICIO;VIERNES_HORA_TERMINO;SABADO_HORA_INICIO;SABADO_HORA_TERMINO;DOMINGO_HORA_INICIO;DOMINGO_HORA_TERMINO;TIPO_CONTRATO;FECHA_INI_RELABORAL;FECHA_FIN_RELABORAL;OTROS_INDEMNIZACIONES;OTROS_FERIADOS;OTROS_NEGOCIACIONES;OTROS_PROPINTELECTUAL;OTROS_LICMEDICA;OTROS_SALACUNA;OTROS_PERMISOS;OTROS_CONESPECIALES;OTROS_SEGUROS;OTROS_STOCK;OTROS_INSTCOLECTIVO;AFECTO_A;FECHA_INI_INSTCOLECTIVO;FECHA_FIN_INSTCOLECTIVO\r\n1;226;02/03/2026;11111111-1;;04/05/1990;Ana María;Soto Pérez;1;320;ana@x.cl;+56912345678;301;Los Aromos;123;4B;0;0;Selección y embalaje de fruta;0;;0;;;;;;226;;;;;600000;775000;30;50000;5;31;40000;5;11;20000;5;;;;;;;4;;1;1;30;5;1;14;102;;1;;;42;1;60;0;60;1;;08:00;17:30;08:00;17:30;08:00;17:30;08:00;17:30;08:00;16:30;;;;;1;02/03/2026;;0;0;0;0;0;0;0;0;0;0;0;;;\r\n1;226;03/01/2026;22222222-2;;31/12/1985;Beto;Plazo;2;308;;;301;Pasaje 2;;;0;0;Temporero;0;;0;;;;;;226;;;;;540000;620000;;;;;;;;;;;;;;;;3;Gratificación mensual fija de $80.000;1;1;5;1;5;103;3;;2;;;45;1;45;0;45;1;;07:00;16:00;07:00;16:00;07:00;16:00;07:00;16:00;07:00;16:00;08:00;13:00;;;2;05/01/2026;30/04/2026;0;0;0;0;0;0;0;0;0;0;0;;;\r\n1;226;01/02/2026;33333333-3;;01/01/1979;Catalina;Excepcional;1;320;;;301;Av. Siempre Viva;;;0;1;Guardia;1;;0;;;;;;226;;;;;700000;875000;;;;;;;;;;;;;;;;3;;1;1;30;5;1;19;;;6;;;;;;;;;;;;;;;;;;;;;;;;1;01/02/2026;;0;0;0;0;0;0;0;0;0;0;0;;;\r\n",
+ "defaults": {
+  "comunaCelebracion": "303",
+  "zona1": "304",
+  "tipoJornada": 1,
+  "duracion": 44,
+  "turnos": 2,
+  "colacion": 30,
+  "colacionImputable": true,
+  "horario": {
+   "lu": [
+    "08:30",
+    "18:00"
+   ],
+   "ma": [
+    "08:30",
+    "18:00"
+   ],
+   "mi": [
+    "08:30",
+    "18:00"
+   ],
+   "ju": [
+    "08:30",
+    "18:00"
+   ],
+   "vi": [
+    "08:30",
+    "17:00"
+   ],
+   "sa": [
+    "",
+    ""
+   ],
+   "do": [
+    "",
+    ""
+   ]
+  },
+  "diaPago": 28,
+  "formaPago": 4,
+  "anticipo": 5
+ },
+ "casosDef": [
+  {
+   "id": "t1",
+   "dc": {
+    "fechaSuscripcion": "2026-03-02",
+    "fechaInicio": "2026-03-02",
+    "fechaFin": "",
+    "tipoContrato": 1,
+    "fechaNacimiento": "1990-05-04",
+    "nacionalidad": "320",
+    "dni": "",
+    "email": "ana@x.cl",
+    "telefono": "+56 9 1234 5678",
+    "domComuna": "301",
+    "domCalle": "Los Aromos",
+    "domNumero": "123",
+    "domDpto": "4B",
+    "funciones": "Selección y embalaje de fruta",
+    "comunaCelebracion": "303",
+    "zona1": "304",
+    "tipoJornada": 1,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 44,
+    "turnos": 2,
+    "colacion": 30,
+    "colacionImputable": true,
+    "horario": {
+     "lu": [
+      "08:30",
+      "18:00"
+     ],
+     "ma": [
+      "08:30",
+      "18:00"
+     ],
+     "mi": [
+      "08:30",
+      "18:00"
+     ],
+     "ju": [
+      "08:30",
+      "18:00"
+     ],
+     "vi": [
+      "08:30",
+      "17:00"
+     ],
+     "sa": [
+      "",
+      ""
+     ],
+     "do": [
+      "",
+      ""
+     ]
+    },
+    "horarioPropio": false,
+    "diaPago": 28,
+    "formaPago": 4,
+    "anticipo": 5,
+    "gratForma": 4,
+    "gratModalidad": "",
+    "subcontratacion": 0,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": ""
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "303",
+    "FECHA_SUSCRPCION": "02/03/2026",
+    "RUT_TRABAJADOR": "11111111-1",
+    "DNI_TRABAJADOR": "",
+    "FECHA_NACIMIENTO": "04/05/1990",
+    "NOMBRES": "Ana María",
+    "APELLIDOS": "Soto Pérez",
+    "SEXO": "1",
+    "NACIONALIDAD": "320",
+    "EMAIL": "ana@x.cl",
+    "TELEFONO": "+56912345678",
+    "COMUNA": "301",
+    "CALLE": "Los Aromos",
+    "NUMERO": "123",
+    "DPTO": "4B",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "0",
+    "FUNCIONES": "Selección y embalaje de fruta",
+    "SUBCONTRATACION": "0",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "304",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "600000",
+    "MONTO_IMPONIBLE": "775000",
+    "HABER_1": "30",
+    "MONTO_1": "50000",
+    "PER_DEVENGAMIENTO_1": "5",
+    "HABER_2": "31",
+    "MONTO_2": "40000",
+    "PER_DEVENGAMIENTO_2": "5",
+    "HABER_3": "11",
+    "MONTO_3": "20000",
+    "PER_DEVENGAMIENTO_3": "5",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "4",
+    "GRAT_MODALIDAD": "",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "28",
+    "REM_FORMA_PAGO": "4",
+    "REM_ANTICIPO": "5",
+    "REM_AFP": "14",
+    "REM_SALUD": "102",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "1",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "44",
+    "TURNOS": "2",
+    "TIEMPO_COLACION": "30",
+    "T_COLACION_IMP": "30",
+    "T_COLACION_NO_IMP": "0",
+    "ROTACION": "2",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "08:30",
+    "LUNES_HORA_TERMINO": "18:00",
+    "MARTES_HORA_INICIO": "08:30",
+    "MARTES_HORA_TERMINO": "18:00",
+    "MIERCOLES_HORA_INICIO": "08:30",
+    "MIERCOLES_HORA_TERMINO": "18:00",
+    "JUEVES_HORA_INICIO": "08:30",
+    "JUEVES_HORA_TERMINO": "18:00",
+    "VIERNES_HORA_INICIO": "08:30",
+    "VIERNES_HORA_TERMINO": "17:00",
+    "SABADO_HORA_INICIO": "",
+    "SABADO_HORA_TERMINO": "",
+    "DOMINGO_HORA_INICIO": "",
+    "DOMINGO_HORA_TERMINO": "",
+    "TIPO_CONTRATO": "1",
+    "FECHA_INI_RELABORAL": "02/03/2026",
+    "FECHA_FIN_RELABORAL": "",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "val": {
+    "ok": true,
+    "faltan": [],
+    "avisos": [
+     "el horario suma 46,5 h semanales y la jornada pactada es 44 h"
+    ],
+    "dc": {
+     "fechaSuscripcion": "2026-03-02",
+     "fechaInicio": "2026-03-02",
+     "fechaFin": "",
+     "tipoContrato": 1,
+     "fechaNacimiento": "1990-05-04",
+     "nacionalidad": "320",
+     "dni": "",
+     "email": "ana@x.cl",
+     "telefono": "+56 9 1234 5678",
+     "domComuna": "301",
+     "domCalle": "Los Aromos",
+     "domNumero": "123",
+     "domDpto": "4B",
+     "funciones": "Selección y embalaje de fruta",
+     "comunaCelebracion": "303",
+     "zona1": "304",
+     "tipoJornada": 1,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 44,
+     "turnos": 2,
+     "colacion": 30,
+     "colacionImputable": true,
+     "horario": {
+      "lu": [
+       "08:30",
+       "18:00"
+      ],
+      "ma": [
+       "08:30",
+       "18:00"
+      ],
+      "mi": [
+       "08:30",
+       "18:00"
+      ],
+      "ju": [
+       "08:30",
+       "18:00"
+      ],
+      "vi": [
+       "08:30",
+       "17:00"
+      ],
+      "sa": [
+       "",
+       ""
+      ],
+      "do": [
+       "",
+       ""
+      ]
+     },
+     "horarioPropio": false,
+     "diaPago": 28,
+     "formaPago": 4,
+     "anticipo": 5,
+     "gratForma": 4,
+     "gratModalidad": "",
+     "subcontratacion": 0,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": ""
+    }
+   }
+  },
+  {
+   "id": "t2",
+   "dc": {
+    "fechaSuscripcion": "2026-01-03",
+    "fechaInicio": "2026-01-05",
+    "fechaFin": "2026-04-30",
+    "tipoContrato": 2,
+    "fechaNacimiento": "1985-12-31",
+    "nacionalidad": "308",
+    "dni": "",
+    "email": "",
+    "telefono": "",
+    "domComuna": "301",
+    "domCalle": "Pasaje 2",
+    "domNumero": "",
+    "domDpto": "",
+    "funciones": "Temporero",
+    "comunaCelebracion": "303",
+    "zona1": "304",
+    "tipoJornada": 2,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 45,
+    "turnos": 2,
+    "colacion": 45,
+    "colacionImputable": true,
+    "horario": {
+     "lu": [
+      "07:00",
+      "16:00"
+     ],
+     "ma": [
+      "07:00",
+      "16:00"
+     ],
+     "mi": [
+      "07:00",
+      "16:00"
+     ],
+     "ju": [
+      "07:00",
+      "16:00"
+     ],
+     "vi": [
+      "07:00",
+      "16:00"
+     ],
+     "sa": [
+      "08:00",
+      "13:00"
+     ],
+     "do": [
+      "",
+      ""
+     ]
+    },
+    "horarioPropio": true,
+    "diaPago": 5,
+    "formaPago": 1,
+    "anticipo": 5,
+    "gratForma": 3,
+    "gratModalidad": "Gratificación mensual fija de $80.000",
+    "subcontratacion": 0,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": ""
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "303",
+    "FECHA_SUSCRPCION": "03/01/2026",
+    "RUT_TRABAJADOR": "22222222-2",
+    "DNI_TRABAJADOR": "",
+    "FECHA_NACIMIENTO": "31/12/1985",
+    "NOMBRES": "Beto",
+    "APELLIDOS": "Plazo",
+    "SEXO": "2",
+    "NACIONALIDAD": "308",
+    "EMAIL": "",
+    "TELEFONO": "",
+    "COMUNA": "301",
+    "CALLE": "Pasaje 2",
+    "NUMERO": "",
+    "DPTO": "",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "0",
+    "FUNCIONES": "Temporero",
+    "SUBCONTRATACION": "0",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "304",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "540000",
+    "MONTO_IMPONIBLE": "620000",
+    "HABER_1": "",
+    "MONTO_1": "",
+    "PER_DEVENGAMIENTO_1": "",
+    "HABER_2": "",
+    "MONTO_2": "",
+    "PER_DEVENGAMIENTO_2": "",
+    "HABER_3": "",
+    "MONTO_3": "",
+    "PER_DEVENGAMIENTO_3": "",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "3",
+    "GRAT_MODALIDAD": "Gratificación mensual fija de $80.000",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "5",
+    "REM_FORMA_PAGO": "1",
+    "REM_ANTICIPO": "5",
+    "REM_AFP": "103",
+    "REM_SALUD": "3",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "2",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "45",
+    "TURNOS": "2",
+    "TIEMPO_COLACION": "45",
+    "T_COLACION_IMP": "45",
+    "T_COLACION_NO_IMP": "0",
+    "ROTACION": "2",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "07:00",
+    "LUNES_HORA_TERMINO": "16:00",
+    "MARTES_HORA_INICIO": "07:00",
+    "MARTES_HORA_TERMINO": "16:00",
+    "MIERCOLES_HORA_INICIO": "07:00",
+    "MIERCOLES_HORA_TERMINO": "16:00",
+    "JUEVES_HORA_INICIO": "07:00",
+    "JUEVES_HORA_TERMINO": "16:00",
+    "VIERNES_HORA_INICIO": "07:00",
+    "VIERNES_HORA_TERMINO": "16:00",
+    "SABADO_HORA_INICIO": "08:00",
+    "SABADO_HORA_TERMINO": "13:00",
+    "DOMINGO_HORA_INICIO": "",
+    "DOMINGO_HORA_TERMINO": "",
+    "TIPO_CONTRATO": "2",
+    "FECHA_INI_RELABORAL": "05/01/2026",
+    "FECHA_FIN_RELABORAL": "30/04/2026",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "val": {
+    "ok": true,
+    "faltan": [],
+    "avisos": [
+     "el horario suma 50 h semanales y la jornada pactada es 45 h"
+    ],
+    "dc": {
+     "fechaSuscripcion": "2026-01-03",
+     "fechaInicio": "2026-01-05",
+     "fechaFin": "2026-04-30",
+     "tipoContrato": 2,
+     "fechaNacimiento": "1985-12-31",
+     "nacionalidad": "308",
+     "dni": "",
+     "email": "",
+     "telefono": "",
+     "domComuna": "301",
+     "domCalle": "Pasaje 2",
+     "domNumero": "",
+     "domDpto": "",
+     "funciones": "Temporero",
+     "comunaCelebracion": "303",
+     "zona1": "304",
+     "tipoJornada": 2,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 45,
+     "turnos": 2,
+     "colacion": 45,
+     "colacionImputable": true,
+     "horario": {
+      "lu": [
+       "07:00",
+       "16:00"
+      ],
+      "ma": [
+       "07:00",
+       "16:00"
+      ],
+      "mi": [
+       "07:00",
+       "16:00"
+      ],
+      "ju": [
+       "07:00",
+       "16:00"
+      ],
+      "vi": [
+       "07:00",
+       "16:00"
+      ],
+      "sa": [
+       "08:00",
+       "13:00"
+      ],
+      "do": [
+       "",
+       ""
+      ]
+     },
+     "horarioPropio": true,
+     "diaPago": 5,
+     "formaPago": 1,
+     "anticipo": 5,
+     "gratForma": 3,
+     "gratModalidad": "Gratificación mensual fija de $80.000",
+     "subcontratacion": 0,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": ""
+    }
+   }
+  },
+  {
+   "id": "t3",
+   "dc": {
+    "fechaSuscripcion": "2026-02-01",
+    "fechaInicio": "2026-02-01",
+    "fechaFin": "",
+    "tipoContrato": 1,
+    "fechaNacimiento": "1979-01-01",
+    "nacionalidad": "320",
+    "dni": "",
+    "email": "",
+    "telefono": "",
+    "domComuna": "301",
+    "domCalle": "Av. Siempre Viva",
+    "domNumero": "",
+    "domDpto": "",
+    "funciones": "Guardia",
+    "comunaCelebracion": "303",
+    "zona1": "304",
+    "tipoJornada": 6,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 44,
+    "turnos": 2,
+    "colacion": 30,
+    "colacionImputable": true,
+    "horario": {
+     "lu": [
+      "08:30",
+      "18:00"
+     ],
+     "ma": [
+      "08:30",
+      "18:00"
+     ],
+     "mi": [
+      "08:30",
+      "18:00"
+     ],
+     "ju": [
+      "08:30",
+      "18:00"
+     ],
+     "vi": [
+      "08:30",
+      "17:00"
+     ],
+     "sa": [
+      "",
+      ""
+     ],
+     "do": [
+      "",
+      ""
+     ]
+    },
+    "horarioPropio": false,
+    "diaPago": 28,
+    "formaPago": 4,
+    "anticipo": 5,
+    "gratForma": 3,
+    "gratModalidad": "",
+    "subcontratacion": 1,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": ""
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "303",
+    "FECHA_SUSCRPCION": "01/02/2026",
+    "RUT_TRABAJADOR": "33333333-3",
+    "DNI_TRABAJADOR": "",
+    "FECHA_NACIMIENTO": "01/01/1979",
+    "NOMBRES": "Catalina",
+    "APELLIDOS": "Excepcional",
+    "SEXO": "1",
+    "NACIONALIDAD": "320",
+    "EMAIL": "",
+    "TELEFONO": "",
+    "COMUNA": "301",
+    "CALLE": "Av. Siempre Viva",
+    "NUMERO": "",
+    "DPTO": "",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "1",
+    "FUNCIONES": "Guardia",
+    "SUBCONTRATACION": "1",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "304",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "700000",
+    "MONTO_IMPONIBLE": "875000",
+    "HABER_1": "",
+    "MONTO_1": "",
+    "PER_DEVENGAMIENTO_1": "",
+    "HABER_2": "",
+    "MONTO_2": "",
+    "PER_DEVENGAMIENTO_2": "",
+    "HABER_3": "",
+    "MONTO_3": "",
+    "PER_DEVENGAMIENTO_3": "",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "3",
+    "GRAT_MODALIDAD": "",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "28",
+    "REM_FORMA_PAGO": "4",
+    "REM_ANTICIPO": "5",
+    "REM_AFP": "19",
+    "REM_SALUD": "",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "6",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "",
+    "TURNOS": "",
+    "TIEMPO_COLACION": "",
+    "T_COLACION_IMP": "",
+    "T_COLACION_NO_IMP": "",
+    "ROTACION": "",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "",
+    "LUNES_HORA_TERMINO": "",
+    "MARTES_HORA_INICIO": "",
+    "MARTES_HORA_TERMINO": "",
+    "MIERCOLES_HORA_INICIO": "",
+    "MIERCOLES_HORA_TERMINO": "",
+    "JUEVES_HORA_INICIO": "",
+    "JUEVES_HORA_TERMINO": "",
+    "VIERNES_HORA_INICIO": "",
+    "VIERNES_HORA_TERMINO": "",
+    "SABADO_HORA_INICIO": "",
+    "SABADO_HORA_TERMINO": "",
+    "DOMINGO_HORA_INICIO": "",
+    "DOMINGO_HORA_TERMINO": "",
+    "TIPO_CONTRATO": "1",
+    "FECHA_INI_RELABORAL": "01/02/2026",
+    "FECHA_FIN_RELABORAL": "",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "val": {
+    "ok": false,
+    "faltan": [
+     "institución de salud con código DT (esencial no figura en la tabla DT)",
+     "resolución de jornada excepcional (número y fecha)",
+     "RUT de la empresa principal (subcontratación)",
+     "modalidad de la gratificación convencional"
+    ],
+    "avisos": [],
+    "dc": {
+     "fechaSuscripcion": "2026-02-01",
+     "fechaInicio": "2026-02-01",
+     "fechaFin": "",
+     "tipoContrato": 1,
+     "fechaNacimiento": "1979-01-01",
+     "nacionalidad": "320",
+     "dni": "",
+     "email": "",
+     "telefono": "",
+     "domComuna": "301",
+     "domCalle": "Av. Siempre Viva",
+     "domNumero": "",
+     "domDpto": "",
+     "funciones": "Guardia",
+     "comunaCelebracion": "303",
+     "zona1": "304",
+     "tipoJornada": 6,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 44,
+     "turnos": 2,
+     "colacion": 30,
+     "colacionImputable": true,
+     "horario": {
+      "lu": [
+       "08:30",
+       "18:00"
+      ],
+      "ma": [
+       "08:30",
+       "18:00"
+      ],
+      "mi": [
+       "08:30",
+       "18:00"
+      ],
+      "ju": [
+       "08:30",
+       "18:00"
+      ],
+      "vi": [
+       "08:30",
+       "17:00"
+      ],
+      "sa": [
+       "",
+       ""
+      ],
+      "do": [
+       "",
+       ""
+      ]
+     },
+     "horarioPropio": false,
+     "diaPago": 28,
+     "formaPago": 4,
+     "anticipo": 5,
+     "gratForma": 3,
+     "gratModalidad": "",
+     "subcontratacion": 1,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": ""
+    }
+   }
+  },
+  {
+   "id": "t4",
+   "dc": {
+    "fechaSuscripcion": "",
+    "fechaInicio": "",
+    "fechaFin": "",
+    "tipoContrato": 1,
+    "fechaNacimiento": "",
+    "nacionalidad": "320",
+    "dni": "P1234567",
+    "email": "",
+    "telefono": "",
+    "domComuna": "",
+    "domCalle": "",
+    "domNumero": "",
+    "domDpto": "",
+    "funciones": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "comunaCelebracion": "303",
+    "zona1": "304",
+    "tipoJornada": 7,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 44,
+    "turnos": 2,
+    "colacion": 30,
+    "colacionImputable": true,
+    "horario": {
+     "lu": [
+      "08:30",
+      "18:00"
+     ],
+     "ma": [
+      "08:30",
+      "18:00"
+     ],
+     "mi": [
+      "08:30",
+      "18:00"
+     ],
+     "ju": [
+      "08:30",
+      "18:00"
+     ],
+     "vi": [
+      "08:30",
+      "17:00"
+     ],
+     "sa": [
+      "",
+      ""
+     ],
+     "do": [
+      "",
+      ""
+     ]
+    },
+    "horarioPropio": false,
+    "diaPago": 28,
+    "formaPago": 4,
+    "anticipo": 5,
+    "gratForma": 4,
+    "gratModalidad": "",
+    "subcontratacion": 0,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": ""
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "303",
+    "FECHA_SUSCRPCION": "",
+    "RUT_TRABAJADOR": "",
+    "DNI_TRABAJADOR": "P1234567",
+    "FECHA_NACIMIENTO": "",
+    "NOMBRES": "Dani Hora",
+    "APELLIDOS": "",
+    "SEXO": "",
+    "NACIONALIDAD": "320",
+    "EMAIL": "",
+    "TELEFONO": "",
+    "COMUNA": "",
+    "CALLE": "",
+    "NUMERO": "",
+    "DPTO": "",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "0",
+    "FUNCIONES": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "SUBCONTRATACION": "0",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "304",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "0",
+    "MONTO_IMPONIBLE": "500000",
+    "HABER_1": "",
+    "MONTO_1": "",
+    "PER_DEVENGAMIENTO_1": "",
+    "HABER_2": "",
+    "MONTO_2": "",
+    "PER_DEVENGAMIENTO_2": "",
+    "HABER_3": "",
+    "MONTO_3": "",
+    "PER_DEVENGAMIENTO_3": "",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "4",
+    "GRAT_MODALIDAD": "",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "28",
+    "REM_FORMA_PAGO": "4",
+    "REM_ANTICIPO": "5",
+    "REM_AFP": "",
+    "REM_SALUD": "102",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "7",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "",
+    "TURNOS": "",
+    "TIEMPO_COLACION": "",
+    "T_COLACION_IMP": "",
+    "T_COLACION_NO_IMP": "",
+    "ROTACION": "",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "",
+    "LUNES_HORA_TERMINO": "",
+    "MARTES_HORA_INICIO": "",
+    "MARTES_HORA_TERMINO": "",
+    "MIERCOLES_HORA_INICIO": "",
+    "MIERCOLES_HORA_TERMINO": "",
+    "JUEVES_HORA_INICIO": "",
+    "JUEVES_HORA_TERMINO": "",
+    "VIERNES_HORA_INICIO": "",
+    "VIERNES_HORA_TERMINO": "",
+    "SABADO_HORA_INICIO": "",
+    "SABADO_HORA_TERMINO": "",
+    "DOMINGO_HORA_INICIO": "",
+    "DOMINGO_HORA_TERMINO": "",
+    "TIPO_CONTRATO": "1",
+    "FECHA_INI_RELABORAL": "",
+    "FECHA_FIN_RELABORAL": "",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "val": {
+    "ok": false,
+    "faltan": [
+     "fecha de suscripción del contrato",
+     "fecha de inicio de la relación laboral (ficha → LRE)",
+     "fecha de nacimiento",
+     "apellidos (ficha)",
+     "sexo (ficha)",
+     "domicilio del trabajador (comuna y calle)",
+     "funciones: máximo 300 caracteres",
+     "AFP con código DT"
+    ],
+    "avisos": [],
+    "dc": {
+     "fechaSuscripcion": "",
+     "fechaInicio": "",
+     "fechaFin": "",
+     "tipoContrato": 1,
+     "fechaNacimiento": "",
+     "nacionalidad": "320",
+     "dni": "P1234567",
+     "email": "",
+     "telefono": "",
+     "domComuna": "",
+     "domCalle": "",
+     "domNumero": "",
+     "domDpto": "",
+     "funciones": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "comunaCelebracion": "303",
+     "zona1": "304",
+     "tipoJornada": 7,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 44,
+     "turnos": 2,
+     "colacion": 30,
+     "colacionImputable": true,
+     "horario": {
+      "lu": [
+       "08:30",
+       "18:00"
+      ],
+      "ma": [
+       "08:30",
+       "18:00"
+      ],
+      "mi": [
+       "08:30",
+       "18:00"
+      ],
+      "ju": [
+       "08:30",
+       "18:00"
+      ],
+      "vi": [
+       "08:30",
+       "17:00"
+      ],
+      "sa": [
+       "",
+       ""
+      ],
+      "do": [
+       "",
+       ""
+      ]
+     },
+     "horarioPropio": false,
+     "diaPago": 28,
+     "formaPago": 4,
+     "anticipo": 5,
+     "gratForma": 4,
+     "gratModalidad": "",
+     "subcontratacion": 0,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": ""
+    }
+   }
+  },
+  {
+   "id": "t5",
+   "dc": {
+    "fechaSuscripcion": "2026-03-10",
+    "fechaInicio": "2026-03-10",
+    "fechaFin": "",
+    "tipoContrato": 1,
+    "fechaNacimiento": "2000-02-29",
+    "nacionalidad": "320",
+    "dni": "",
+    "email": "",
+    "telefono": "",
+    "domComuna": "301",
+    "domCalle": "Calle",
+    "domNumero": "",
+    "domDpto": "",
+    "funciones": "Operaria",
+    "comunaCelebracion": "303",
+    "zona1": "304",
+    "tipoJornada": 8,
+    "nroResolucion": "",
+    "fechaResolucion": "",
+    "duracion": 40,
+    "turnos": 2,
+    "colacion": 30,
+    "colacionImputable": true,
+    "horario": {
+     "lu": [
+      "09:00",
+      "18:00"
+     ],
+     "ma": [
+      "09:00",
+      "18:00"
+     ],
+     "mi": [
+      "",
+      ""
+     ],
+     "ju": [
+      "09:00",
+      "18:00"
+     ],
+     "vi": [
+      "09:00",
+      "18:00"
+     ],
+     "sa": [
+      "09:00",
+      "14:00"
+     ],
+     "do": [
+      "09:00",
+      "14:00"
+     ]
+    },
+    "horarioPropio": true,
+    "diaPago": 28,
+    "formaPago": 4,
+    "anticipo": 5,
+    "gratForma": 4,
+    "gratModalidad": "",
+    "subcontratacion": 0,
+    "rutPrincipal": "",
+    "otrosPactos": "",
+    "informado": "2026-03-15"
+   },
+   "fila": {
+    "CATEGORIA_CONTRATO": "1",
+    "COMUNA_CELEBRACION": "303",
+    "FECHA_SUSCRPCION": "10/03/2026",
+    "RUT_TRABAJADOR": "55555555-5",
+    "DNI_TRABAJADOR": "",
+    "FECHA_NACIMIENTO": "29/02/2000",
+    "NOMBRES": "Elías",
+    "APELLIDOS": "Treinta",
+    "SEXO": "2",
+    "NACIONALIDAD": "320",
+    "EMAIL": "",
+    "TELEFONO": "",
+    "COMUNA": "301",
+    "CALLE": "Calle",
+    "NUMERO": "",
+    "DPTO": "",
+    "DECLARACION_DISCAPACIDAD": "0",
+    "DECLARACION_INVALIDEZ": "0",
+    "FUNCIONES": "Operaria",
+    "SUBCONTRATACION": "0",
+    "RUT_EMPRESA_PRINCIPAL": "",
+    "EST": "0",
+    "RUT_EMPRESA_USUARIA": "",
+    "FAENA_COMUNA": "",
+    "FAENA_CALLE": "",
+    "FAENA_NUMERO": "",
+    "FAENA_DPTO": "",
+    "ZONA_GEOGRAFICA_1": "304",
+    "ZONA_GEOGRAFICA_2": "",
+    "ZONA_GEOGRAFICA_3": "",
+    "ZONA_GEOGRAFICA_4": "",
+    "ZONA_GEOGRAFICA_5": "",
+    "SUELDO_BASE": "650000",
+    "MONTO_IMPONIBLE": "812500",
+    "HABER_1": "",
+    "MONTO_1": "",
+    "PER_DEVENGAMIENTO_1": "",
+    "HABER_2": "",
+    "MONTO_2": "",
+    "PER_DEVENGAMIENTO_2": "",
+    "HABER_3": "",
+    "MONTO_3": "",
+    "PER_DEVENGAMIENTO_3": "",
+    "HABER_4": "",
+    "MONTO_4": "",
+    "PER_DEVENGAMIENTO_4": "",
+    "HABER_5": "",
+    "MONTO_5": "",
+    "PER_DEVENGAMIENTO_5": "",
+    "GRAT_FORMA_PAGO": "4",
+    "GRAT_MODALIDAD": "",
+    "GRAT_PERIODO_PAGO": "1",
+    "REM_PERIODO_PAGO": "1",
+    "REM_FECHA_PAGO": "28",
+    "REM_FORMA_PAGO": "4",
+    "REM_ANTICIPO": "5",
+    "REM_AFP": "6",
+    "REM_SALUD": "102",
+    "REM_OTROS_PACTOS": "",
+    "TIPO_JORNADA": "8",
+    "NRO_RESOLUCION": "",
+    "FECHA_RESOLUCION": "",
+    "DURACION_JORNADA": "40",
+    "TURNOS": "2",
+    "TIEMPO_COLACION": "30",
+    "T_COLACION_IMP": "30",
+    "T_COLACION_NO_IMP": "0",
+    "ROTACION": "2",
+    "NRO_DIAS_DIST_JOR": "",
+    "LUNES_HORA_INICIO": "09:00",
+    "LUNES_HORA_TERMINO": "18:00",
+    "MARTES_HORA_INICIO": "09:00",
+    "MARTES_HORA_TERMINO": "18:00",
+    "MIERCOLES_HORA_INICIO": "",
+    "MIERCOLES_HORA_TERMINO": "",
+    "JUEVES_HORA_INICIO": "09:00",
+    "JUEVES_HORA_TERMINO": "18:00",
+    "VIERNES_HORA_INICIO": "09:00",
+    "VIERNES_HORA_TERMINO": "18:00",
+    "SABADO_HORA_INICIO": "09:00",
+    "SABADO_HORA_TERMINO": "14:00",
+    "DOMINGO_HORA_INICIO": "09:00",
+    "DOMINGO_HORA_TERMINO": "14:00",
+    "TIPO_CONTRATO": "1",
+    "FECHA_INI_RELABORAL": "10/03/2026",
+    "FECHA_FIN_RELABORAL": "",
+    "OTROS_INDEMNIZACIONES": "0",
+    "OTROS_FERIADOS": "0",
+    "OTROS_NEGOCIACIONES": "0",
+    "OTROS_PROPINTELECTUAL": "0",
+    "OTROS_LICMEDICA": "0",
+    "OTROS_SALACUNA": "0",
+    "OTROS_PERMISOS": "0",
+    "OTROS_CONESPECIALES": "0",
+    "OTROS_SEGUROS": "0",
+    "OTROS_STOCK": "0",
+    "OTROS_INSTCOLECTIVO": "0",
+    "AFECTO_A": "",
+    "FECHA_INI_INSTCOLECTIVO": "",
+    "FECHA_FIN_INSTCOLECTIVO": ""
+   },
+   "val": {
+    "ok": true,
+    "faltan": [],
+    "avisos": [
+     "el horario suma 46 h semanales y la jornada pactada es 40 h"
+    ],
+    "dc": {
+     "fechaSuscripcion": "2026-03-10",
+     "fechaInicio": "2026-03-10",
+     "fechaFin": "",
+     "tipoContrato": 1,
+     "fechaNacimiento": "2000-02-29",
+     "nacionalidad": "320",
+     "dni": "",
+     "email": "",
+     "telefono": "",
+     "domComuna": "301",
+     "domCalle": "Calle",
+     "domNumero": "",
+     "domDpto": "",
+     "funciones": "Operaria",
+     "comunaCelebracion": "303",
+     "zona1": "304",
+     "tipoJornada": 8,
+     "nroResolucion": "",
+     "fechaResolucion": "",
+     "duracion": 40,
+     "turnos": 2,
+     "colacion": 30,
+     "colacionImputable": true,
+     "horario": {
+      "lu": [
+       "09:00",
+       "18:00"
+      ],
+      "ma": [
+       "09:00",
+       "18:00"
+      ],
+      "mi": [
+       "",
+       ""
+      ],
+      "ju": [
+       "09:00",
+       "18:00"
+      ],
+      "vi": [
+       "09:00",
+       "18:00"
+      ],
+      "sa": [
+       "09:00",
+       "14:00"
+      ],
+      "do": [
+       "09:00",
+       "14:00"
+      ]
+     },
+     "horarioPropio": true,
+     "diaPago": 28,
+     "formaPago": 4,
+     "anticipo": 5,
+     "gratForma": 4,
+     "gratModalidad": "",
+     "subcontratacion": 0,
+     "rutPrincipal": "",
+     "otrosPactos": "",
+     "informado": "2026-03-15"
+    }
+   }
+  }
+ ],
+ "plantillas": [
+  {
+   "id": "indefinido",
+   "nombre": "Contrato indefinido · general",
+   "tipoContrato": 1,
+   "cargos": "",
+   "texto": "CONTRATO DE TRABAJO\n\nEn {{ciudad}}, a {{fecha_contrato}}, entre {{empresa}}, RUT {{rut_empresa}}, giro {{giro}}, representada por {{representante}}, RUT {{rut_representante}}, ambos con domicilio en {{domicilio_empresa}}, en adelante \"el empleador\", y don(ña) {{trabajador}}, RUT {{rut_trabajador}}, de nacionalidad {{nacionalidad}}, nacido(a) el {{fecha_nacimiento}}, con domicilio en {{domicilio_trabajador}}, en adelante \"el trabajador\", se ha convenido el siguiente contrato de trabajo:\n\nPRIMERO: NATURALEZA DE LOS SERVICIOS. El trabajador se obliga a desempeñarse como {{cargo}}, realizando las siguientes funciones: {{funciones}}. Los servicios se prestarán en la comuna de {{lugar_trabajo}}, sin perjuicio de que el empleador pueda alterar la naturaleza de los servicios o el sitio en que deban prestarse dentro del mismo lugar o ciudad, en los términos del artículo 12 del Código del Trabajo.\n\nSEGUNDO: JORNADA DE TRABAJO. La jornada ordinaria de trabajo será de {{jornada_horas}} horas semanales, de tipo {{jornada_tipo}}, distribuidas de {{distribucion_jornada}}, con {{colacion_minutos}} minutos de colación que no se imputan a la jornada, en {{turno}}. Las horas extraordinarias sólo podrán trabajarse previo pacto escrito y se pagarán con el recargo legal.\n\nTERCERO: REMUNERACIÓN. El trabajador percibirá un sueldo base mensual de {{sueldo_base}} ({{sueldo_base_palabras}}), que se pagará por mes vencido el día {{dia_pago}} de cada mes o el día hábil anterior, {{forma_pago}}. De las remuneraciones se deducirán los impuestos, las cotizaciones de seguridad social y los demás descuentos legales o autorizados por escrito por el trabajador. {{anticipo}}\n\nCUARTO: GRATIFICACIÓN Y BENEFICIOS. {{gratificacion}}. {{beneficios}}\n\nQUINTO: OBLIGACIONES DEL TRABAJADOR. El trabajador se obliga a cumplir fielmente las labores convenidas, las instrucciones de su jefatura y las normas de higiene y seguridad, y a guardar reserva de la información de la empresa a que tenga acceso con motivo de su trabajo.\n\nSEXTO: DURACIÓN. El presente contrato es de duración indefinida. El trabajador ingresó a prestar servicios el {{fecha_inicio}}.\n\nSÉPTIMO: PREVISIÓN Y SALUD. El trabajador declara estar afiliado a {{afp}} y a {{salud}}, instituciones a las que el empleador enterará las cotizaciones que correspondan.\n\nOCTAVO: REGLAMENTO INTERNO Y PROTOCOLO. El trabajador declara recibir en este acto un ejemplar del Reglamento Interno de Orden, Higiene y Seguridad y del protocolo de prevención del acoso sexual, laboral y la violencia en el trabajo (Ley N° 21.643), y se obliga a cumplirlos.\n\nNOVENO: OTROS PACTOS. Las partes no acuerdan otros pactos distintos de los señalados en este contrato. {{otros_pactos}}\n\nDÉCIMO: EJEMPLARES. El presente contrato se firma en dos ejemplares de igual tenor, quedando uno en poder de cada parte. El trabajador declara recibir su ejemplar a entera conformidad."
+  },
+  {
+   "id": "plazo",
+   "nombre": "Contrato a plazo fijo",
+   "tipoContrato": 2,
+   "cargos": "",
+   "texto": "CONTRATO DE TRABAJO A PLAZO FIJO\n\nEn {{ciudad}}, a {{fecha_contrato}}, entre {{empresa}}, RUT {{rut_empresa}}, giro {{giro}}, representada por {{representante}}, RUT {{rut_representante}}, ambos con domicilio en {{domicilio_empresa}}, en adelante \"el empleador\", y don(ña) {{trabajador}}, RUT {{rut_trabajador}}, de nacionalidad {{nacionalidad}}, nacido(a) el {{fecha_nacimiento}}, con domicilio en {{domicilio_trabajador}}, en adelante \"el trabajador\", se ha convenido el siguiente contrato de trabajo:\n\nPRIMERO: NATURALEZA DE LOS SERVICIOS. El trabajador se obliga a desempeñarse como {{cargo}}, realizando las siguientes funciones: {{funciones}}, en la comuna de {{lugar_trabajo}}.\n\nSEGUNDO: JORNADA DE TRABAJO. La jornada ordinaria de trabajo será de {{jornada_horas}} horas semanales, de tipo {{jornada_tipo}}, distribuidas de {{distribucion_jornada}}, con {{colacion_minutos}} minutos de colación que no se imputan a la jornada, en {{turno}}. Las horas extraordinarias sólo podrán trabajarse previo pacto escrito y se pagarán con el recargo legal.\n\nTERCERO: REMUNERACIÓN. El trabajador percibirá un sueldo base mensual de {{sueldo_base}} ({{sueldo_base_palabras}}), que se pagará por mes vencido el día {{dia_pago}} de cada mes o el día hábil anterior, {{forma_pago}}. De las remuneraciones se deducirán los impuestos, las cotizaciones de seguridad social y los demás descuentos legales o autorizados por escrito por el trabajador. {{anticipo}}\n\nCUARTO: GRATIFICACIÓN Y BENEFICIOS. {{gratificacion}}. {{beneficios}}\n\nQUINTO: OBLIGACIONES DEL TRABAJADOR. El trabajador se obliga a cumplir fielmente las labores convenidas, las instrucciones de su jefatura y las normas de higiene y seguridad.\n\nSEXTO: DURACIÓN. El presente contrato regirá desde el {{fecha_inicio}} hasta el {{fecha_termino}}, fecha en que terminará por vencimiento del plazo convenido, conforme al artículo 159 N° 4 del Código del Trabajo. Si el trabajador continúa prestando servicios con conocimiento del empleador después de esa fecha, el contrato se transformará en indefinido en los casos que señala la ley.\n\nSÉPTIMO: PREVISIÓN Y SALUD. El trabajador declara estar afiliado a {{afp}} y a {{salud}}, instituciones a las que el empleador enterará las cotizaciones que correspondan.\n\nOCTAVO: REGLAMENTO INTERNO Y PROTOCOLO. El trabajador declara recibir en este acto un ejemplar del Reglamento Interno de Orden, Higiene y Seguridad y del protocolo de prevención del acoso sexual, laboral y la violencia en el trabajo (Ley N° 21.643), y se obliga a cumplirlos.\n\nNOVENO: OTROS PACTOS. Las partes no acuerdan otros pactos distintos de los señalados en este contrato. {{otros_pactos}}\n\nDÉCIMO: EJEMPLARES. El presente contrato se firma en dos ejemplares de igual tenor, quedando uno en poder de cada parte. El trabajador declara recibir su ejemplar a entera conformidad."
+  },
+  {
+   "id": "obra",
+   "nombre": "Contrato por obra o faena",
+   "tipoContrato": 3,
+   "cargos": "",
+   "texto": "CONTRATO DE TRABAJO POR OBRA O FAENA\n\nEn {{ciudad}}, a {{fecha_contrato}}, entre {{empresa}}, RUT {{rut_empresa}}, giro {{giro}}, representada por {{representante}}, RUT {{rut_representante}}, ambos con domicilio en {{domicilio_empresa}}, en adelante \"el empleador\", y don(ña) {{trabajador}}, RUT {{rut_trabajador}}, de nacionalidad {{nacionalidad}}, nacido(a) el {{fecha_nacimiento}}, con domicilio en {{domicilio_trabajador}}, en adelante \"el trabajador\", se ha convenido el siguiente contrato de trabajo:\n\nPRIMERO: NATURALEZA DE LOS SERVICIOS. El trabajador se obliga a desempeñarse como {{cargo}} en la siguiente obra o faena: {{funciones}}, que se ejecutará en la comuna de {{lugar_trabajo}}.\n\nSEGUNDO: JORNADA DE TRABAJO. La jornada ordinaria de trabajo será de {{jornada_horas}} horas semanales, de tipo {{jornada_tipo}}, distribuidas de {{distribucion_jornada}}, con {{colacion_minutos}} minutos de colación que no se imputan a la jornada, en {{turno}}. Las horas extraordinarias sólo podrán trabajarse previo pacto escrito y se pagarán con el recargo legal.\n\nTERCERO: REMUNERACIÓN. El trabajador percibirá un sueldo base mensual de {{sueldo_base}} ({{sueldo_base_palabras}}), que se pagará por mes vencido el día {{dia_pago}} de cada mes o el día hábil anterior, {{forma_pago}}. De las remuneraciones se deducirán los impuestos, las cotizaciones de seguridad social y los demás descuentos legales o autorizados por escrito por el trabajador. {{anticipo}}\n\nCUARTO: GRATIFICACIÓN Y BENEFICIOS. {{gratificacion}}. {{beneficios}}\n\nQUINTO: OBLIGACIONES DEL TRABAJADOR. El trabajador se obliga a cumplir fielmente las labores convenidas, las instrucciones de su jefatura y las normas de higiene y seguridad propias de la faena.\n\nSEXTO: DURACIÓN. El presente contrato regirá desde el {{fecha_inicio}} y durará hasta la conclusión de la obra o faena señalada en la cláusula primera, conforme al artículo 159 N° 5 del Código del Trabajo. Al término, el trabajador tendrá derecho a la indemnización que corresponda según el artículo 163 bis del mismo código.\n\nSÉPTIMO: PREVISIÓN Y SALUD. El trabajador declara estar afiliado a {{afp}} y a {{salud}}, instituciones a las que el empleador enterará las cotizaciones que correspondan.\n\nOCTAVO: REGLAMENTO INTERNO Y PROTOCOLO. El trabajador declara recibir en este acto un ejemplar del Reglamento Interno de Orden, Higiene y Seguridad y del protocolo de prevención del acoso sexual, laboral y la violencia en el trabajo (Ley N° 21.643), y se obliga a cumplirlos.\n\nNOVENO: OTROS PACTOS. Las partes no acuerdan otros pactos distintos de los señalados en este contrato. {{otros_pactos}}\n\nDÉCIMO: EJEMPLARES. El presente contrato se firma en dos ejemplares de igual tenor, quedando uno en poder de cada parte. El trabajador declara recibir su ejemplar a entera conformidad."
+  },
+  {
+   "id": "temporada",
+   "nombre": "Trabajador agrícola de temporada",
+   "tipoContrato": 3,
+   "cargos": "Temporero, Cosechero, Trabajador agrícola de temporada",
+   "texto": "CONTRATO DE TRABAJO AGRÍCOLA DE TEMPORADA\n\nEn {{ciudad}}, a {{fecha_contrato}}, entre {{empresa}}, RUT {{rut_empresa}}, giro {{giro}}, representada por {{representante}}, RUT {{rut_representante}}, ambos con domicilio en {{domicilio_empresa}}, en adelante \"el empleador\", y don(ña) {{trabajador}}, RUT {{rut_trabajador}}, de nacionalidad {{nacionalidad}}, nacido(a) el {{fecha_nacimiento}}, con domicilio en {{domicilio_trabajador}}, en adelante \"el trabajador\", se ha convenido el siguiente contrato de trabajo:\n\nPRIMERO: NATURALEZA DE LOS SERVICIOS. El trabajador se obliga a desempeñarse como {{cargo}} en labores agrícolas de temporada, en especial: {{funciones}}, en los predios del empleador ubicados en la comuna de {{lugar_trabajo}}. Este contrato se rige por los artículos 93 y siguientes del Código del Trabajo.\n\nSEGUNDO: JORNADA DE TRABAJO. La jornada ordinaria de trabajo será de {{jornada_horas}} horas semanales, de tipo {{jornada_tipo}}, distribuidas de {{distribucion_jornada}}, con {{colacion_minutos}} minutos de colación que no se imputan a la jornada, en {{turno}}. Las horas extraordinarias sólo podrán trabajarse previo pacto escrito y se pagarán con el recargo legal.\n\nTERCERO: REMUNERACIÓN. El trabajador percibirá un sueldo base mensual de {{sueldo_base}} ({{sueldo_base_palabras}}), que se pagará por mes vencido el día {{dia_pago}} de cada mes o el día hábil anterior, {{forma_pago}}. De las remuneraciones se deducirán los impuestos, las cotizaciones de seguridad social y los demás descuentos legales o autorizados por escrito por el trabajador. {{anticipo}}\n\nCUARTO: GRATIFICACIÓN Y BENEFICIOS. {{gratificacion}}. {{beneficios}}\n\nQUINTO: CONDICIONES DE TRABAJO. El empleador proporcionará al trabajador condiciones higiénicas y adecuadas para mantener, preparar y consumir sus alimentos, y los elementos de protección personal que requieran las labores. El trabajador se obliga a usarlos y a cumplir las normas de seguridad en la aplicación de productos fitosanitarios.\n\nSEXTO: DURACIÓN. El presente contrato regirá desde el {{fecha_inicio}} y durará hasta el término de la temporada o de las labores señaladas en la cláusula primera, conforme al artículo 159 N° 5 del Código del Trabajo.\n\nSÉPTIMO: PREVISIÓN Y SALUD. El trabajador declara estar afiliado a {{afp}} y a {{salud}}, instituciones a las que el empleador enterará las cotizaciones que correspondan.\n\nOCTAVO: REGLAMENTO INTERNO Y PROTOCOLO. El trabajador declara recibir en este acto un ejemplar del Reglamento Interno de Orden, Higiene y Seguridad y del protocolo de prevención del acoso sexual, laboral y la violencia en el trabajo (Ley N° 21.643), y se obliga a cumplirlos.\n\nNOVENO: OTROS PACTOS. Las partes no acuerdan otros pactos distintos de los señalados en este contrato. {{otros_pactos}}\n\nDÉCIMO: EJEMPLARES. El presente contrato se firma en dos ejemplares de igual tenor, quedando uno en poder de cada parte. El trabajador declara recibir su ejemplar a entera conformidad."
+  }
+ ],
+ "marcadores": [
+  [
+   "ciudad",
+   "Ciudad donde se firma"
+  ],
+  [
+   "fecha_contrato",
+   "Fecha de firma (en palabras)"
+  ],
+  [
+   "empresa",
+   "Razón social del empleador"
+  ],
+  [
+   "rut_empresa",
+   "RUT del empleador"
+  ],
+  [
+   "giro",
+   "Giro del empleador"
+  ],
+  [
+   "domicilio_empresa",
+   "Domicilio del empleador"
+  ],
+  [
+   "representante",
+   "Representante legal"
+  ],
+  [
+   "rut_representante",
+   "RUT del representante"
+  ],
+  [
+   "trabajador",
+   "Nombre completo del trabajador"
+  ],
+  [
+   "rut_trabajador",
+   "RUT (o DNI) del trabajador"
+  ],
+  [
+   "nacionalidad",
+   "Nacionalidad"
+  ],
+  [
+   "fecha_nacimiento",
+   "Fecha de nacimiento (en palabras)"
+  ],
+  [
+   "domicilio_trabajador",
+   "Domicilio del trabajador"
+  ],
+  [
+   "email_trabajador",
+   "Email del trabajador"
+  ],
+  [
+   "telefono_trabajador",
+   "Teléfono del trabajador"
+  ],
+  [
+   "cargo",
+   "Cargo"
+  ],
+  [
+   "funciones",
+   "Funciones pactadas"
+  ],
+  [
+   "lugar_trabajo",
+   "Comuna donde se prestan los servicios"
+  ],
+  [
+   "fecha_inicio",
+   "Fecha de inicio de la relación laboral"
+  ],
+  [
+   "fecha_termino",
+   "Fecha de término (plazo fijo)"
+  ],
+  [
+   "tipo_contrato",
+   "Tipo de contrato"
+  ],
+  [
+   "sueldo_base",
+   "Sueldo base"
+  ],
+  [
+   "sueldo_base_palabras",
+   "Sueldo base en palabras"
+  ],
+  [
+   "gratificacion",
+   "Cláusula de gratificación según lo pactado"
+  ],
+  [
+   "colacion",
+   "Asignación de colación"
+  ],
+  [
+   "movilizacion",
+   "Asignación de movilización"
+  ],
+  [
+   "otros_haberes",
+   "Otros haberes imponibles fijos"
+  ],
+  [
+   "beneficios",
+   "Colación, movilización y otros haberes en una frase"
+  ],
+  [
+   "remuneracion_imponible",
+   "Remuneración imponible mensual"
+  ],
+  [
+   "dia_pago",
+   "Día de pago"
+  ],
+  [
+   "forma_pago",
+   "Forma de pago"
+  ],
+  [
+   "anticipo",
+   "Anticipo pactado"
+  ],
+  [
+   "jornada_horas",
+   "Horas semanales"
+  ],
+  [
+   "jornada_tipo",
+   "Tipo de jornada"
+  ],
+  [
+   "distribucion_jornada",
+   "Días y horario de trabajo"
+  ],
+  [
+   "colacion_minutos",
+   "Minutos de colación"
+  ],
+  [
+   "turno",
+   "Turno"
+  ],
+  [
+   "afp",
+   "AFP"
+  ],
+  [
+   "salud",
+   "Institución de salud"
+  ],
+  [
+   "otros_pactos",
+   "Otros pactos"
+  ]
+ ],
+ "esenciales": [
+  "ciudad",
+  "fecha_contrato",
+  "empresa",
+  "rut_empresa",
+  "trabajador",
+  "rut_trabajador",
+  "nacionalidad",
+  "fecha_nacimiento",
+  "cargo",
+  "lugar_trabajo",
+  "sueldo_base",
+  "jornada_horas",
+  "distribucion_jornada",
+  "fecha_inicio"
+ ],
+ "combinado": "CONTRATO DE TRABAJO\n\nEn Angol, a 2 de marzo de 2026, entre Agrícola Prueba SpA, RUT 76.151.704-K, giro Agrícola, representada por Rodrigo Briones, RUT 12.345.678-5, ambos con domicilio en Camino Huequén km 3, Angol, en adelante \"el empleador\", y don(ña) ANA MARÍA SOTO PÉREZ, RUT 11.111.111-1, de nacionalidad chilena, nacido(a) el 4 de mayo de 1990, con domicilio en Los Aromos 123, depto. 4B, Macul, en adelante \"el trabajador\", se ha convenido el siguiente contrato de trabajo:\n\nPRIMERO: NATURALEZA DE LOS SERVICIOS. El trabajador se obliga a desempeñarse como Operaria, realizando las siguientes funciones: Selección y embalaje de fruta. Los servicios se prestarán en la comuna de Angol, sin perjuicio de que el empleador pueda alterar la naturaleza de los servicios o el sitio en que deban prestarse dentro del mismo lugar o ciudad, en los términos del artículo 12 del Código del Trabajo.\n\nSEGUNDO: JORNADA DE TRABAJO. La jornada ordinaria de trabajo será de 42 horas semanales, de tipo semanal ordinaria, distribuidas de lunes a jueves de 08:00 a 17:30 horas y viernes de 08:00 a 16:30 horas, con 60 minutos de colación que no se imputan a la jornada, en horario fijo, sin sistema de turnos. Las horas extraordinarias sólo podrán trabajarse previo pacto escrito y se pagarán con el recargo legal.\n\nTERCERO: REMUNERACIÓN. El trabajador percibirá un sueldo base mensual de $600.000 (Seiscientos mil pesos), que se pagará por mes vencido el día 30 de cada mes o el día hábil anterior, mediante transferencia electrónica a la cuenta bancaria del trabajador. De las remuneraciones se deducirán los impuestos, las cotizaciones de seguridad social y los demás descuentos legales o autorizados por escrito por el trabajador. \n\nCUARTO: GRATIFICACIÓN Y BENEFICIOS. El empleador pagará al trabajador una gratificación anual equivalente al veinticinco por ciento de lo devengado en el respectivo ejercicio comercial por concepto de remuneraciones mensuales, con un tope de cuatro coma setenta y cinco ingresos mínimos mensuales, conforme al artículo 50 del Código del Trabajo. Esta gratificación se anticipará mensualmente, a cuenta de la que corresponda al término del ejercicio. Además, el empleador pagará al trabajador una asignación de colación de $50.000 mensuales, una asignación de movilización de $40.000 mensuales y otros haberes imponibles fijos por $20.000 mensuales, asignaciones que no constituyen remuneración conforme al artículo 41 del Código del Trabajo en la parte que corresponda.\n\nQUINTO: OBLIGACIONES DEL TRABAJADOR. El trabajador se obliga a cumplir fielmente las labores convenidas, las instrucciones de su jefatura y las normas de higiene y seguridad, y a guardar reserva de la información de la empresa a que tenga acceso con motivo de su trabajo.\n\nSEXTO: DURACIÓN. El presente contrato es de duración indefinida. El trabajador ingresó a prestar servicios el 2 de marzo de 2026.\n\nSÉPTIMO: PREVISIÓN Y SALUD. El trabajador declara estar afiliado a AFP Habitat y a Fonasa, instituciones a las que el empleador enterará las cotizaciones que correspondan.\n\nOCTAVO: REGLAMENTO INTERNO Y PROTOCOLO. El trabajador declara recibir en este acto un ejemplar del Reglamento Interno de Orden, Higiene y Seguridad y del protocolo de prevención del acoso sexual, laboral y la violencia en el trabajo (Ley N° 21.643), y se obliga a cumplirlos.\n\nNOVENO: OTROS PACTOS. Las partes no acuerdan otros pactos distintos de los señalados en este contrato. \n\nDÉCIMO: EJEMPLARES. El presente contrato se firma en dos ejemplares de igual tenor, quedando uno en poder de cada parte. El trabajador declara recibir su ejemplar a entera conformidad.",
+ "faltantes": [
+  [],
+  [],
+  [],
+  [
+   "Fecha de firma (en palabras)",
+   "Fecha de nacimiento (en palabras)",
+   "Domicilio del trabajador",
+   "Cargo",
+   "Fecha de inicio de la relación laboral",
+   "AFP"
+  ],
+  []
+ ],
+ "horarios": [
+  [
+   {
+    "lu": [
+     "08:00",
+     "17:30"
+    ],
+    "ma": [
+     "08:00",
+     "17:30"
+    ],
+    "mi": [
+     "08:00",
+     "17:30"
+    ],
+    "ju": [
+     "08:00",
+     "17:30"
+    ],
+    "vi": [
+     "08:00",
+     "16:30"
+    ]
+   },
+   "lunes a jueves de 08:00 a 17:30 horas y viernes de 08:00 a 16:30 horas"
+  ],
+  [
+   {
+    "lu": [
+     "08:00",
+     "12:00"
+    ],
+    "mi": [
+     "08:00",
+     "12:00"
+    ],
+    "vi": [
+     "08:00",
+     "12:00"
+    ]
+   },
+   "lunes de 08:00 a 12:00 horas, miércoles de 08:00 a 12:00 horas y viernes de 08:00 a 12:00 horas"
+  ],
+  [
+   {
+    "sa": [
+     "09:00",
+     "13:00"
+    ]
+   },
+   "sábado de 09:00 a 13:00 horas"
+  ],
+  [
+   {},
+   ""
+  ]
+ ],
+ "validaciones": [
+  [
+   "CONTRATO DE TRABAJO\n\nEn {{ciudad}}, a {{fecha_contrato}}, entre {{empresa}}, RUT {{rut_empresa}}, giro {{giro}}, representada por {{representante}}, RUT {{rut_representante}}, ambos con domicilio en {{domicilio_empresa}}, en adelante \"el empleador\", y don(ña) {{trabajador}}, RUT {{rut_trabajador}}, de nacionalidad {{nacionalidad}}, nacido(a) el {{fecha_nacimiento}}, con domicilio en {{domicilio_trabajador}}, en adelante \"el trabajador\", se ha convenido el siguiente contrato de trabajo:\n\nPRIMERO: NATURALEZA DE LOS SERVICIOS. El trabajador se obliga a desempeñarse como {{cargo}}, realizando las siguientes funciones: {{funciones}}. Los servicios se prestarán en la comuna de {{lugar_trabajo}}, sin perjuicio de que el empleador pueda alterar la naturaleza de los servicios o el sitio en que deban prestarse dentro del mismo lugar o ciudad, en los términos del artículo 12 del Código del Trabajo.\n\nSEGUNDO: JORNADA DE TRABAJO. La jornada ordinaria de trabajo será de {{jornada_horas}} horas semanales, de tipo {{jornada_tipo}}, distribuidas de {{distribucion_jornada}}, con {{colacion_minutos}} minutos de colación que no se imputan a la jornada, en {{turno}}. Las horas extraordinarias sólo podrán trabajarse previo pacto escrito y se pagarán con el recargo legal.\n\nTERCERO: REMUNERACIÓN. El trabajador percibirá un sueldo base mensual de {{sueldo_base}} ({{sueldo_base_palabras}}), que se pagará por mes vencido el día {{dia_pago}} de cada mes o el día hábil anterior, {{forma_pago}}. De las remuneraciones se deducirán los impuestos, las cotizaciones de seguridad social y los demás descuentos legales o autorizados por escrito por el trabajador. {{anticipo}}\n\nCUARTO: GRATIFICACIÓN Y BENEFICIOS. {{gratificacion}}. {{beneficios}}\n\nQUINTO: OBLIGACIONES DEL TRABAJADOR. El trabajador se obliga a cumplir fielmente las labores convenidas, las instrucciones de su jefatura y las normas de higiene y seguridad, y a guardar reserva de la información de la empresa a que tenga acceso con motivo de su trabajo.\n\nSEXTO: DURACIÓN. El presente contrato es de duración indefinida. El trabajador ingresó a prestar servicios el {{fecha_inicio}}.\n\nSÉPTIMO: PREVISIÓN Y SALUD. El trabajador declara estar afiliado a {{afp}} y a {{salud}}, instituciones a las que el empleador enterará las cotizaciones que correspondan.\n\nOCTAVO: REGLAMENTO INTERNO Y PROTOCOLO. El trabajador declara recibir en este acto un ejemplar del Reglamento Interno de Orden, Higiene y Seguridad y del protocolo de prevención del acoso sexual, laboral y la violencia en el trabajo (Ley N° 21.643), y se obliga a cumplirlos.\n\nNOVENO: OTROS PACTOS. Las partes no acuerdan otros pactos distintos de los señalados en este contrato. {{otros_pactos}}\n\nDÉCIMO: EJEMPLARES. El presente contrato se firma en dos ejemplares de igual tenor, quedando uno en poder de cada parte. El trabajador declara recibir su ejemplar a entera conformidad.",
+   null,
+   {
+    "ok": true,
+    "errores": [],
+    "avisos": [],
+    "usados": [
+     "ciudad",
+     "fecha_contrato",
+     "empresa",
+     "rut_empresa",
+     "giro",
+     "representante",
+     "rut_representante",
+     "domicilio_empresa",
+     "trabajador",
+     "rut_trabajador",
+     "nacionalidad",
+     "fecha_nacimiento",
+     "domicilio_trabajador",
+     "cargo",
+     "funciones",
+     "lugar_trabajo",
+     "jornada_horas",
+     "jornada_tipo",
+     "distribucion_jornada",
+     "colacion_minutos",
+     "turno",
+     "sueldo_base",
+     "sueldo_base_palabras",
+     "dia_pago",
+     "forma_pago",
+     "anticipo",
+     "gratificacion",
+     "beneficios",
+     "fecha_inicio",
+     "afp",
+     "salud",
+     "otros_pactos"
+    ]
+   }
+  ],
+  [
+   "Hola {{trabajadr}} {{ rut_trabajador }} {sueldo_base}} y {{empresa",
+   "{{cargo}} {{sueldo_base}}",
+   {
+    "ok": false,
+    "errores": [
+     "{{trabajadr}} no es un marcador válido; ¿quisiste decir {{trabajador}}?",
+     "Marcador incompleto o llave suelta: \"…Hola {sueldo_base}} y {{empresa…\""
+    ],
+    "avisos": [
+     "No están los marcadores de datos esenciales del contrato (Art. 10 del Código del Trabajo): {{ciudad}}, {{fecha_contrato}}, {{empresa}}, {{rut_empresa}}, {{trabajador}}, {{nacionalidad}}, {{fecha_nacimiento}}, {{cargo}}, {{lugar_trabajo}}, {{sueldo_base}}, {{jornada_horas}}, {{distribucion_jornada}}, {{fecha_inicio}}. Esos datos no se llenarán solos."
+    ],
+    "usados": [
+     "rut_trabajador"
+    ]
+   }
+  ],
+  [
+   "",
+   null,
+   {
+    "ok": false,
+    "errores": [
+     "La plantilla no tiene texto."
+    ],
+    "avisos": [
+     "No están los marcadores de datos esenciales del contrato (Art. 10 del Código del Trabajo): {{ciudad}}, {{fecha_contrato}}, {{empresa}}, {{rut_empresa}}, {{trabajador}}, {{rut_trabajador}}, {{nacionalidad}}, {{fecha_nacimiento}}, {{cargo}}, {{lugar_trabajo}}, {{sueldo_base}}, {{jornada_horas}}, {{distribucion_jornada}}, {{fecha_inicio}}. Esos datos no se llenarán solos."
+    ],
+    "usados": []
+   }
+  ],
+  [
+   "{{Trabajador}} {{fecha inicio}}",
+   null,
+   {
+    "ok": false,
+    "errores": [
+     "{{Trabajador}} no es un marcador válido; ¿quisiste decir {{trabajador}}?",
+     "{{fecha inicio}} no es un marcador válido; ¿quisiste decir {{fecha_inicio}}?"
+    ],
+    "avisos": [
+     "No están los marcadores de datos esenciales del contrato (Art. 10 del Código del Trabajo): {{ciudad}}, {{fecha_contrato}}, {{empresa}}, {{rut_empresa}}, {{trabajador}}, {{rut_trabajador}}, {{nacionalidad}}, {{fecha_nacimiento}}, {{cargo}}, {{lugar_trabajo}}, {{sueldo_base}}, {{jornada_horas}}, {{distribucion_jornada}}, {{fecha_inicio}}. Esos datos no se llenarán solos."
+    ],
+    "usados": []
+   }
+  ]
+ ],
+ "docxXml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:pPr><w:jc w:val=\"center\"/><w:spacing w:after=\"280\"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:b/><w:sz w:val=\"26\"/></w:rPr><w:t xml:space=\"preserve\">CONTRATO</w:t></w:r></w:p><w:p><w:pPr><w:jc w:val=\"both\"/><w:spacing w:after=\"160\" w:line=\"300\" w:lineRule=\"auto\"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:b/><w:sz w:val=\"22\"/></w:rPr><w:t xml:space=\"preserve\">PRIMERO:</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"22\"/></w:rPr><w:t xml:space=\"preserve\"> Hola </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:highlight w:val=\"yellow\"/><w:sz w:val=\"22\"/></w:rPr><w:t xml:space=\"preserve\">{{trabajador}}</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"22\"/></w:rPr><w:t xml:space=\"preserve\"> y </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:highlight w:val=\"yellow\"/><w:sz w:val=\"22\"/></w:rPr><w:t xml:space=\"preserve\">[dato faltante]</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"22\"/></w:rPr><w:t xml:space=\"preserve\">.</w:t></w:r><w:r><w:br/></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"22\"/></w:rPr><w:t xml:space=\"preserve\">Segunda línea</w:t></w:r></w:p><w:p><w:pPr><w:jc w:val=\"both\"/><w:spacing w:after=\"160\" w:line=\"300\" w:lineRule=\"auto\"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:b/><w:sz w:val=\"22\"/></w:rPr><w:t xml:space=\"preserve\">SEGUNDO:</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"22\"/></w:rPr><w:t xml:space=\"preserve\"> chao</w:t></w:r></w:p><w:p><w:pPr><w:spacing w:before=\"1400\"/></w:pPr></w:p><w:tbl><w:tblPr><w:tblW w:w=\"9600\" w:type=\"dxa\"/><w:jc w:val=\"center\"/><w:tblBorders><w:top w:val=\"nil\"/><w:left w:val=\"nil\"/><w:bottom w:val=\"nil\"/><w:right w:val=\"nil\"/><w:insideH w:val=\"nil\"/><w:insideV w:val=\"nil\"/></w:tblBorders></w:tblPr><w:tblGrid><w:gridCol w:w=\"4500\"/><w:gridCol w:w=\"600\"/><w:gridCol w:w=\"4500\"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:tcW w:w=\"4500\" w:type=\"dxa\"/></w:tcPr><w:p><w:pPr><w:pBdr><w:top w:val=\"single\" w:sz=\"6\" w:space=\"4\" w:color=\"000000\"/></w:pBdr><w:jc w:val=\"center\"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\">EMPRESA</w:t></w:r><w:r><w:br/></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\">RUT 1</w:t></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"600\" w:type=\"dxa\"/></w:tcPr><w:p/></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4500\" w:type=\"dxa\"/></w:tcPr><w:p><w:pPr><w:pBdr><w:top w:val=\"single\" w:sz=\"6\" w:space=\"4\" w:color=\"000000\"/></w:pBdr><w:jc w:val=\"center\"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\">ANA</w:t></w:r><w:r><w:br/></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\">RUT 2</w:t></w:r><w:r><w:br/></w:r><w:r><w:rPr><w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:cs=\"Arial\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\">TRABAJADOR</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:sectPr><w:pgSz w:w=\"12240\" w:h=\"15840\"/><w:pgMar w:top=\"1247\" w:right=\"1247\" w:bottom=\"1247\" w:left=\"1247\" w:header=\"708\" w:footer=\"708\" w:gutter=\"0\"/></w:sectPr></w:body></w:document>"
+}

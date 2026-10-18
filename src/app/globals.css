@@ -54,3 +54,12 @@ body {
     @apply font-mono tabular-nums;
   }
 }
+
+/* Impresión (liquidaciones): sólo el documento */
+@media print {
+  header, nav, .no-print { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  main { padding: 0 !important; }
+  .hoja { border: none !important; background: #fff !important; color: #000 !important; box-shadow: none !important; }
+  .hoja * { color: #000 !important; border-color: #999 !important; }
+}

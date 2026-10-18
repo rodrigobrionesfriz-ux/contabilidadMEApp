@@ -1,0 +1,17 @@
+Registro de Compras - Detalle;;;
+Periodo: 2026-03;;;
+Nro;Tipo Doc;Tipo Compra;RUT Proveedor;Razon Social;Folio;Fecha Docto;Fecha Recepcion;Fecha Acuse;Monto Exento;Monto Neto;Monto IVA Recuperable;Monto Iva No Recuperable;Codigo IVA No Rec.;Monto Total;Monto Neto Activo Fijo;IVA Activo Fijo;IVA uso Comun;Impto. Sin Derecho a Credito;IVA No Retenido;Codigo Otro Impuesto;Valor Otro Impuesto;Tasa Otro Impuesto
+1;33;Del Giro;76151704-K;Proveedor Uno SpA;100;05/03/2026;06/03/2026 10:00:00;;0;100000;19000;0;;119000;0;0;0;0;0;;;
+2;33;Del Giro;76.151.704-K;"Combustibles, Ltda";584509;28/02/2026;01/03/2026;;0;51776;9838;0;;82977;0;0;0;0;0;28;21363;63
+3;33;Del Giro;77684700-3;Ferretería Dos;2001;10/03/2026;;;20000;80000;15200;0;;115200;0;0;0;0;0;;;
+;;;;;;;;;;;;;;;;;;;;271;1500;0
+4;46;Del Giro;15488555-2;Agricultor Persona;7;12/03/2026;;;0;200000;38000;0;;200000;0;0;0;0;0;15;38000;19
+5;61;Del Giro;76151704-K;Proveedor Uno SpA;5;15/03/2026;;;0;10000;1900;0;;11900;0;0;0;0;0;;;
+6;33;Del Giro;76151704-K;Proveedor Uno SpA;101;16/03/2026;;;0;300000;0;57000;1;357000;0;0;0;0;0;;;
+7;33;Activo Fijo;77684700-3;Ferretería Dos;2002;17/03/2026;;;0;1000000;190000;0;;1190000;1000000;190000;0;0;0;;;
+8;33;Del Giro;76151704-K;Proveedor Uno SpA;100;05/03/2026;;;0;100000;19000;0;;119000;0;0;0;0;0;;;
+9;34;Del Giro;77684700-3;Ferretería Dos;300;18/03/2026;;;45000;0;0;0;;45000;0;0;0;0;0;;;
+10;33;Del Giro;76151704-K;Diesel Sur;800;19/03/2026;;;0;500000;95000;0;;640000;0;0;0;45000;0;28;30000;0
+11;99;Del Giro;76151704-K;Doc raro;1;19/03/2026;;;0;1;0;0;;1;0;0;0;0;0;;;
+12;33;Del Giro;sin rut;X;2;19/03/2026;;;0;1;0;0;;1;0;0;0;0;0;;;
+13;33;Del Giro;76151704-K;"Precio ""especial""";900;2026-03-20;;;0;1.234.567;234.568;0;;1.469.135;0;0;0;0;0;;;

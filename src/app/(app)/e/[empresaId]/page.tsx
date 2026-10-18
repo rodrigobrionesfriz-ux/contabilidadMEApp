@@ -34,8 +34,14 @@ export default async function InicioEmpresa({ params }: PageProps<'/e/[empresaId
         <Link href={`/e/${empresaId}/diario`} className="boton-sec">📖 Ver libro diario</Link>
         {puedeEscribir(empresa.rol) && <Link href={`/e/${empresaId}/asientos/nuevo`} className="boton">✍️ Nuevo asiento</Link>}
       </div>
+      {empresa.rol === 'admin' && !asientos.count && (
+        <Link href={`/e/${empresaId}/importar`} className="tarjeta block border-acento/50 p-4 hover:border-acento">
+          <div className="font-semibold text-acento">📥 Trae tus datos del sistema actual</div>
+          <div className="text-sm text-tenue">Sube el respaldo Excel de cada año y compara el balance en ambos sistemas.</div>
+        </Link>
+      )}
       <p className="text-sm text-tenue">
-        Versión en migración (fase 0). Los módulos de compras, ventas, honorarios, remuneraciones y reportes se agregarán por fases.
+        Versión en migración. Compras, ventas, honorarios y remuneraciones se agregan en las próximas fases.
         El sistema actual sigue siendo el oficial.
       </p>
     </div>

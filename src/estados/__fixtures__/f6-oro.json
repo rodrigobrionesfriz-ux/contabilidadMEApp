@@ -1,0 +1,1179 @@
+{
+ "regimenes": [
+  {
+   "k": "14D3",
+   "nm": "Pro Pyme General",
+   "art": "Art. 14 letra D) N°3 LIR",
+   "corto": "14 D N°3",
+   "desc": "Régimen general de las Pymes. Contabilidad completa, depreciación instantánea del activo fijo, liberado de corrección monetaria y crédito del 100% del IDPC contra los impuestos finales de los dueños.",
+   "tasaBase": 25,
+   "tasasPorAnio": {
+    "2025": 12.5,
+    "2026": 12.5,
+    "2027": 12.5,
+    "2028": 15
+   },
+   "ppmBase": 0.25,
+   "ppmPorAnio": {
+    "2025": 0.125,
+    "2026": 0.125,
+    "2027": 0.125
+   },
+   "contabilidad": "completa",
+   "correccionMonetaria": false,
+   "deprInstantanea": true,
+   "creditoIDPC": 100,
+   "rentaPresunta": false,
+   "topeIngresosUF": 75000,
+   "topeIngresosAnualUF": 85000,
+   "topeCapitalUF": 85000,
+   "recuadro": 17,
+   "linea": 53,
+   "codLinea": 63,
+   "cod": {
+    "ingresos": "1545",
+    "gastos": "1546",
+    "base": "1728"
+   },
+   "secciones": {
+    "correccion": false,
+    "activofijo": true,
+    "provisiones": true,
+    "cierre": true
+   },
+   "nota": "Promedio de ingresos de los últimos 3 años ≤ 75.000 UF, sin superar 85.000 UF en ningún año."
+  },
+  {
+   "k": "14D8",
+   "nm": "Pro Pyme Transparente",
+   "art": "Art. 14 letra D) N°8 LIR",
+   "corto": "14 D N°8",
+   "desc": "La empresa queda liberada del Impuesto de Primera Categoría: su base imponible se atribuye a los dueños, que la declaran en su Global Complementario. Los PPM también se les atribuyen.",
+   "tasaBase": 0,
+   "tasasPorAnio": {},
+   "ppmBase": 0.25,
+   "ppmPorAnio": {
+    "2025": 0.125,
+    "2026": 0.125,
+    "2027": 0.125
+   },
+   "contabilidad": "simplificada",
+   "correccionMonetaria": false,
+   "deprInstantanea": true,
+   "creditoIDPC": 0,
+   "rentaPresunta": false,
+   "topeIngresosUF": 75000,
+   "topeIngresosAnualUF": 85000,
+   "topeCapitalUF": 85000,
+   "recuadro": 22,
+   "linea": 0,
+   "codLinea": 0,
+   "cod": {
+    "ingresos": "1545",
+    "gastos": "1546",
+    "base": "1728"
+   },
+   "secciones": {
+    "correccion": false,
+    "activofijo": true,
+    "provisiones": true,
+    "cierre": true
+   },
+   "nota": "Sólo si TODOS los dueños son contribuyentes de impuestos finales (personas naturales o sin domicilio en Chile)."
+  },
+  {
+   "k": "14A",
+   "nm": "Régimen General (Semi Integrado)",
+   "art": "Art. 14 letra A) LIR",
+   "corto": "14 A",
+   "desc": "Régimen de la gran empresa. Contabilidad completa obligatoria, corrección monetaria del Art. 41, depreciación según vida útil y crédito parcial: los dueños sólo imputan el 65% del IDPC contra sus impuestos finales.",
+   "tasaBase": 27,
+   "tasasPorAnio": {},
+   "ppmBase": null,
+   "ppmPorAnio": {},
+   "contabilidad": "completa",
+   "correccionMonetaria": true,
+   "deprInstantanea": false,
+   "creditoIDPC": 65,
+   "rentaPresunta": false,
+   "topeIngresosUF": null,
+   "topeIngresosAnualUF": null,
+   "topeCapitalUF": null,
+   "recuadro": 12,
+   "linea": 52,
+   "codLinea": 58,
+   "cod": {
+    "ingresos": "1698",
+    "gastos": "1717",
+    "base": "643"
+   },
+   "secciones": {
+    "correccion": true,
+    "activofijo": true,
+    "provisiones": true,
+    "cierre": true
+   },
+   "nota": "Sin límite de ingresos. Es el régimen por defecto de quien no cumple los requisitos Pyme."
+  },
+  {
+   "k": "34AGRI",
+   "nm": "Agrícola",
+   "art": "Art. 34 N°2 letra b) LIR",
+   "corto": "Renta Presunta",
+   "desc": "La renta no se determina: se presume en un 10% del avalúo fiscal del predio al 1 de enero del año de la declaración. No exige contabilidad completa, pero sí el registro de compras y ventas para el IVA.",
+   "tasaBase": 25,
+   "tasasPorAnio": {},
+   "ppmBase": 0.25,
+   "ppmPorAnio": {},
+   "contabilidad": "simplificada",
+   "correccionMonetaria": false,
+   "deprInstantanea": false,
+   "creditoIDPC": 100,
+   "rentaPresunta": true,
+   "presuncion": {
+    "base": "avaluo",
+    "pct": 10,
+    "lbl": "Avalúo fiscal del predio al 1 de enero"
+   },
+   "topeIngresosUF": 9000,
+   "topeIngresosAnualUF": 9000,
+   "topeCapitalUF": 18000,
+   "recuadro": 0,
+   "linea": 51,
+   "codLinea": 57,
+   "cod": {
+    "ingresos": "",
+    "gastos": "",
+    "base": "808"
+   },
+   "secciones": {
+    "correccion": false,
+    "activofijo": false,
+    "provisiones": false,
+    "cierre": false
+   },
+   "nota": "Ventas netas anuales ≤ 9.000 UF (sumando las de las empresas relacionadas). Excluye a las sociedades anónimas."
+  },
+  {
+   "k": "34TRANS",
+   "nm": "Transporte terrestre",
+   "art": "Art. 34 N°2 letra c) LIR",
+   "corto": "Renta Presunta",
+   "desc": "La renta se presume en un 10% del valor corriente en plaza de cada vehículo destinado al transporte terrestre de carga o pasajeros.",
+   "tasaBase": 25,
+   "tasasPorAnio": {},
+   "ppmBase": 0.3,
+   "ppmPorAnio": {},
+   "contabilidad": "simplificada",
+   "correccionMonetaria": false,
+   "deprInstantanea": false,
+   "creditoIDPC": 100,
+   "rentaPresunta": true,
+   "presuncion": {
+    "base": "vehiculos",
+    "pct": 10,
+    "lbl": "Valor corriente en plaza de los vehículos"
+   },
+   "topeIngresosUF": 5000,
+   "topeIngresosAnualUF": 5000,
+   "topeCapitalUF": 10000,
+   "recuadro": 0,
+   "linea": 51,
+   "codLinea": 57,
+   "cod": {
+    "ingresos": "",
+    "gastos": "",
+    "base": "809"
+   },
+   "secciones": {
+    "correccion": false,
+    "activofijo": false,
+    "provisiones": false,
+    "cierre": false
+   },
+   "nota": "Ventas netas anuales ≤ 5.000 UF."
+  },
+  {
+   "k": "34MIN",
+   "nm": "Minería",
+   "art": "Art. 34 N°2 letra a) LIR",
+   "corto": "Renta Presunta",
+   "desc": "La renta se presume sobre las ventas netas anuales, con un porcentaje escalonado que sube con el precio promedio de la libra de cobre (de 4% a 20%).",
+   "tasaBase": 25,
+   "tasasPorAnio": {},
+   "ppmBase": 0.3,
+   "ppmPorAnio": {},
+   "contabilidad": "simplificada",
+   "correccionMonetaria": false,
+   "deprInstantanea": false,
+   "creditoIDPC": 100,
+   "rentaPresunta": true,
+   "presuncion": {
+    "base": "ventas",
+    "pct": 6,
+    "lbl": "Ventas netas anuales de minerales",
+    "escala": true
+   },
+   "topeIngresosUF": 17000,
+   "topeIngresosAnualUF": 17000,
+   "topeCapitalUF": 34000,
+   "recuadro": 0,
+   "linea": 51,
+   "codLinea": 57,
+   "cod": {
+    "ingresos": "",
+    "gastos": "",
+    "base": "807"
+   },
+   "secciones": {
+    "correccion": false,
+    "activofijo": false,
+    "provisiones": false,
+    "cierre": false
+   },
+   "nota": "Ventas netas anuales ≤ 17.000 UF. El porcentaje va de 4% a 20% según el precio del cobre: ajústalo a mano cada año."
+  },
+  {
+   "k": "NOSUJ",
+   "nm": "No sujeto al Art. 14 LIR",
+   "art": "Art. 14 letra G) LIR",
+   "corto": "No sujeto",
+   "desc": "Contribuyentes sin propietarios afectos a impuestos finales: corporaciones, fundaciones, empresas del Estado y similares. Llevan contabilidad completa y tributan con IDPC, pero no hay atribución de rentas a dueños.",
+   "tasaBase": 25,
+   "tasasPorAnio": {},
+   "ppmBase": null,
+   "ppmPorAnio": {},
+   "contabilidad": "completa",
+   "correccionMonetaria": true,
+   "deprInstantanea": false,
+   "creditoIDPC": 0,
+   "rentaPresunta": false,
+   "topeIngresosUF": null,
+   "topeIngresosAnualUF": null,
+   "topeCapitalUF": null,
+   "recuadro": 12,
+   "linea": 52,
+   "codLinea": 58,
+   "cod": {
+    "ingresos": "1698",
+    "gastos": "1717",
+    "base": "643"
+   },
+   "secciones": {
+    "correccion": true,
+    "activofijo": true,
+    "provisiones": true,
+    "cierre": true
+   },
+   "nota": "No genera crédito de IDPC porque no hay propietarios que lo imputen."
+  }
+ ],
+ "escenarios": {
+  "normal:14D3": {
+   "saldos": {
+    "1101201": {
+     "nm": "C1101201",
+     "saldo": -1700000
+    },
+    "1101202": {
+     "nm": "C1101202",
+     "saldo": -170000
+    },
+    "1102001": {
+     "nm": "C1102001",
+     "saldo": 0
+    },
+    "1104001": {
+     "nm": "C1104001",
+     "saldo": 11900000
+    },
+    "1105001": {
+     "nm": "C1105001",
+     "saldo": -100000
+    },
+    "1201001": {
+     "nm": "C1201001",
+     "saldo": 8000000
+    },
+    "1201202": {
+     "nm": "C1201202",
+     "saldo": -1500000
+    },
+    "2102001": {
+     "nm": "C2102001",
+     "saldo": -2000000
+    },
+    "2103003": {
+     "nm": "C2103003",
+     "saldo": -1900000
+    },
+    "2301001": {
+     "nm": "C2301001",
+     "saldo": -9000000
+    },
+    "2303001": {
+     "nm": "C2303001",
+     "saldo": -500000
+    },
+    "3101001": {
+     "nm": "C3101001",
+     "saldo": 4000000
+    },
+    "3201001": {
+     "nm": "C3201001",
+     "saldo": 2500000
+    },
+    "3202019": {
+     "nm": "C3202019",
+     "saldo": 300000
+    },
+    "3301001": {
+     "nm": "C3301001",
+     "saldo": 80000
+    },
+    "3302001": {
+     "nm": "C3302001",
+     "saldo": 190000
+    },
+    "3401001": {
+     "nm": "C3401001",
+     "saldo": 120000
+    },
+    "3501001": {
+     "nm": "C3501001",
+     "saldo": 30000
+    },
+    "4101003": {
+     "nm": "C4101003",
+     "saldo": -10000000
+    },
+    "4201001": {
+     "nm": "C4201001",
+     "saldo": -200000
+    },
+    "4301001": {
+     "nm": "C4301001",
+     "saldo": -50000
+    }
+   },
+   "eerr": {
+    "Ingresos de explotación": 10000000,
+    "Costo de explotación": 4000000,
+    "= MARGEN BRUTO": 6000000,
+    "Gastos de administración y ventas": 2800000,
+    "Otros gastos operacionales": 270000,
+    "= RESULTADO OPERACIONAL": 2930000,
+    "Ingresos fuera de explotación": 200000,
+    "Ingresos financieros": 50000,
+    "Gastos no operacionales": 120000,
+    "Corrección monetaria": 30000,
+    "= RESULTADO ANTES DE IMPUESTO": 3030000,
+    "Impuesto a la renta": 378750,
+    "UTILIDAD NETA DEL EJERCICIO": 2651250
+   },
+   "bal": {
+    "Total Activos Corrientes": 9930000,
+    "Total Activos No Corrientes": 6500000,
+    "TOTAL ACTIVOS": 16430000,
+    "Total Pasivos Corrientes": 3900000,
+    "Total Pasivos No Corrientes": 0,
+    "Total Pasivos<": 3900000,
+    "Resultado del Ejercicio": 3030000,
+    "Total Patrimonio": 12530000,
+    "TOTAL PASIVOS + PATRIMONIO": 16430000
+   },
+   "tasa": 12.5,
+   "estimado": true,
+   "cuadra": true,
+   "invertidas": null,
+   "resultado": {
+    "ingresos": 10250000,
+    "gastos": 7220000,
+    "resultado": 3030000,
+    "cuentas": [
+     "3101001",
+     "3201001",
+     "3202019",
+     "3301001",
+     "3302001",
+     "3401001",
+     "3501001",
+     "4101003",
+     "4201001",
+     "4301001"
+    ]
+   },
+   "totales": {
+    "ingresos": 10250000,
+    "costos": 7220000,
+    "activos": 16430000,
+    "pasivos": 3900000,
+    "capital": 9500000
+   }
+  },
+  "normal:14A": {
+   "saldos": {
+    "1101201": {
+     "nm": "C1101201",
+     "saldo": -1700000
+    },
+    "1101202": {
+     "nm": "C1101202",
+     "saldo": -170000
+    },
+    "1102001": {
+     "nm": "C1102001",
+     "saldo": 0
+    },
+    "1104001": {
+     "nm": "C1104001",
+     "saldo": 11900000
+    },
+    "1105001": {
+     "nm": "C1105001",
+     "saldo": -100000
+    },
+    "1201001": {
+     "nm": "C1201001",
+     "saldo": 8000000
+    },
+    "1201202": {
+     "nm": "C1201202",
+     "saldo": -1500000
+    },
+    "2102001": {
+     "nm": "C2102001",
+     "saldo": -2000000
+    },
+    "2103003": {
+     "nm": "C2103003",
+     "saldo": -1900000
+    },
+    "2301001": {
+     "nm": "C2301001",
+     "saldo": -9000000
+    },
+    "2303001": {
+     "nm": "C2303001",
+     "saldo": -500000
+    },
+    "3101001": {
+     "nm": "C3101001",
+     "saldo": 4000000
+    },
+    "3201001": {
+     "nm": "C3201001",
+     "saldo": 2500000
+    },
+    "3202019": {
+     "nm": "C3202019",
+     "saldo": 300000
+    },
+    "3301001": {
+     "nm": "C3301001",
+     "saldo": 80000
+    },
+    "3302001": {
+     "nm": "C3302001",
+     "saldo": 190000
+    },
+    "3401001": {
+     "nm": "C3401001",
+     "saldo": 120000
+    },
+    "3501001": {
+     "nm": "C3501001",
+     "saldo": 30000
+    },
+    "4101003": {
+     "nm": "C4101003",
+     "saldo": -10000000
+    },
+    "4201001": {
+     "nm": "C4201001",
+     "saldo": -200000
+    },
+    "4301001": {
+     "nm": "C4301001",
+     "saldo": -50000
+    }
+   },
+   "eerr": {
+    "Ingresos de explotación": 10000000,
+    "Costo de explotación": 4000000,
+    "= MARGEN BRUTO": 6000000,
+    "Gastos de administración y ventas": 2800000,
+    "Otros gastos operacionales": 270000,
+    "= RESULTADO OPERACIONAL": 2930000,
+    "Ingresos fuera de explotación": 200000,
+    "Ingresos financieros": 50000,
+    "Gastos no operacionales": 120000,
+    "Corrección monetaria": 30000,
+    "= RESULTADO ANTES DE IMPUESTO": 3030000,
+    "Impuesto a la renta": 818100,
+    "UTILIDAD NETA DEL EJERCICIO": 2211900
+   },
+   "bal": {
+    "Total Activos Corrientes": 9930000,
+    "Total Activos No Corrientes": 6500000,
+    "TOTAL ACTIVOS": 16430000,
+    "Total Pasivos Corrientes": 3900000,
+    "Total Pasivos No Corrientes": 0,
+    "Total Pasivos<": 3900000,
+    "Resultado del Ejercicio": 3030000,
+    "Total Patrimonio": 12530000,
+    "TOTAL PASIVOS + PATRIMONIO": 16430000
+   },
+   "tasa": 27,
+   "estimado": true,
+   "cuadra": true,
+   "invertidas": null,
+   "resultado": {
+    "ingresos": 10250000,
+    "gastos": 7220000,
+    "resultado": 3030000,
+    "cuentas": [
+     "3101001",
+     "3201001",
+     "3202019",
+     "3301001",
+     "3302001",
+     "3401001",
+     "3501001",
+     "4101003",
+     "4201001",
+     "4301001"
+    ]
+   },
+   "totales": {
+    "ingresos": 10250000,
+    "costos": 7220000,
+    "activos": 16430000,
+    "pasivos": 3900000,
+    "capital": 9500000
+   }
+  },
+  "normal:14D8": {
+   "saldos": {
+    "1101201": {
+     "nm": "C1101201",
+     "saldo": -1700000
+    },
+    "1101202": {
+     "nm": "C1101202",
+     "saldo": -170000
+    },
+    "1102001": {
+     "nm": "C1102001",
+     "saldo": 0
+    },
+    "1104001": {
+     "nm": "C1104001",
+     "saldo": 11900000
+    },
+    "1105001": {
+     "nm": "C1105001",
+     "saldo": -100000
+    },
+    "1201001": {
+     "nm": "C1201001",
+     "saldo": 8000000
+    },
+    "1201202": {
+     "nm": "C1201202",
+     "saldo": -1500000
+    },
+    "2102001": {
+     "nm": "C2102001",
+     "saldo": -2000000
+    },
+    "2103003": {
+     "nm": "C2103003",
+     "saldo": -1900000
+    },
+    "2301001": {
+     "nm": "C2301001",
+     "saldo": -9000000
+    },
+    "2303001": {
+     "nm": "C2303001",
+     "saldo": -500000
+    },
+    "3101001": {
+     "nm": "C3101001",
+     "saldo": 4000000
+    },
+    "3201001": {
+     "nm": "C3201001",
+     "saldo": 2500000
+    },
+    "3202019": {
+     "nm": "C3202019",
+     "saldo": 300000
+    },
+    "3301001": {
+     "nm": "C3301001",
+     "saldo": 80000
+    },
+    "3302001": {
+     "nm": "C3302001",
+     "saldo": 190000
+    },
+    "3401001": {
+     "nm": "C3401001",
+     "saldo": 120000
+    },
+    "3501001": {
+     "nm": "C3501001",
+     "saldo": 30000
+    },
+    "4101003": {
+     "nm": "C4101003",
+     "saldo": -10000000
+    },
+    "4201001": {
+     "nm": "C4201001",
+     "saldo": -200000
+    },
+    "4301001": {
+     "nm": "C4301001",
+     "saldo": -50000
+    }
+   },
+   "eerr": {
+    "Ingresos de explotación": 10000000,
+    "Costo de explotación": 4000000,
+    "= MARGEN BRUTO": 6000000,
+    "Gastos de administración y ventas": 2800000,
+    "Otros gastos operacionales": 270000,
+    "= RESULTADO OPERACIONAL": 2930000,
+    "Ingresos fuera de explotación": 200000,
+    "Ingresos financieros": 50000,
+    "Gastos no operacionales": 120000,
+    "Corrección monetaria": 30000,
+    "= RESULTADO ANTES DE IMPUESTO": 3030000,
+    "Impuesto a la renta": 0,
+    "UTILIDAD NETA DEL EJERCICIO": 3030000
+   },
+   "bal": {
+    "Total Activos Corrientes": 9930000,
+    "Total Activos No Corrientes": 6500000,
+    "TOTAL ACTIVOS": 16430000,
+    "Total Pasivos Corrientes": 3900000,
+    "Total Pasivos No Corrientes": 0,
+    "Total Pasivos<": 3900000,
+    "Resultado del Ejercicio": 3030000,
+    "Total Patrimonio": 12530000,
+    "TOTAL PASIVOS + PATRIMONIO": 16430000
+   },
+   "tasa": 0,
+   "estimado": true,
+   "cuadra": true,
+   "invertidas": null,
+   "resultado": {
+    "ingresos": 10250000,
+    "gastos": 7220000,
+    "resultado": 3030000,
+    "cuentas": [
+     "3101001",
+     "3201001",
+     "3202019",
+     "3301001",
+     "3302001",
+     "3401001",
+     "3501001",
+     "4101003",
+     "4201001",
+     "4301001"
+    ]
+   },
+   "totales": {
+    "ingresos": 10250000,
+    "costos": 7220000,
+    "activos": 16430000,
+    "pasivos": 3900000,
+    "capital": 9500000
+   }
+  },
+  "conImpuesto:14D3": {
+   "saldos": {
+    "1101201": {
+     "nm": "C1101201",
+     "saldo": 3000000
+    },
+    "2104003": {
+     "nm": "C2104003",
+     "saldo": -500000
+    },
+    "2301001": {
+     "nm": "C2301001",
+     "saldo": -1000000
+    },
+    "3201001": {
+     "nm": "C3201001",
+     "saldo": 1000000
+    },
+    "3601001": {
+     "nm": "C3601001",
+     "saldo": 500000
+    },
+    "4101002": {
+     "nm": "C4101002",
+     "saldo": -3000000
+    }
+   },
+   "eerr": {
+    "Ingresos de explotación": 3000000,
+    "Costo de explotación": 0,
+    "= MARGEN BRUTO": 3000000,
+    "Gastos de administración y ventas": 1000000,
+    "Otros gastos operacionales": 0,
+    "= RESULTADO OPERACIONAL": 2000000,
+    "Ingresos fuera de explotación": 0,
+    "Ingresos financieros": 0,
+    "Gastos no operacionales": 0,
+    "Corrección monetaria": 0,
+    "= RESULTADO ANTES DE IMPUESTO": 2000000,
+    "Impuesto a la renta": 500000,
+    "UTILIDAD NETA DEL EJERCICIO": 1500000
+   },
+   "bal": {
+    "Total Activos Corrientes": 3000000,
+    "Total Activos No Corrientes": 0,
+    "TOTAL ACTIVOS": 3000000,
+    "Total Pasivos Corrientes": 500000,
+    "Total Pasivos No Corrientes": 0,
+    "Total Pasivos<": 500000,
+    "Resultado del Ejercicio": 1500000,
+    "Total Patrimonio": 2500000,
+    "TOTAL PASIVOS + PATRIMONIO": 3000000
+   },
+   "tasa": 12.5,
+   "estimado": false,
+   "cuadra": true,
+   "invertidas": null,
+   "resultado": {
+    "ingresos": 3000000,
+    "gastos": 1500000,
+    "resultado": 1500000,
+    "cuentas": [
+     "3201001",
+     "3601001",
+     "4101002"
+    ]
+   },
+   "totales": {
+    "ingresos": 3000000,
+    "costos": 1500000,
+    "activos": 3000000,
+    "pasivos": 500000,
+    "capital": 1000000
+   }
+  },
+  "conImpuesto:14A": {
+   "saldos": {
+    "1101201": {
+     "nm": "C1101201",
+     "saldo": 3000000
+    },
+    "2104003": {
+     "nm": "C2104003",
+     "saldo": -500000
+    },
+    "2301001": {
+     "nm": "C2301001",
+     "saldo": -1000000
+    },
+    "3201001": {
+     "nm": "C3201001",
+     "saldo": 1000000
+    },
+    "3601001": {
+     "nm": "C3601001",
+     "saldo": 500000
+    },
+    "4101002": {
+     "nm": "C4101002",
+     "saldo": -3000000
+    }
+   },
+   "eerr": {
+    "Ingresos de explotación": 3000000,
+    "Costo de explotación": 0,
+    "= MARGEN BRUTO": 3000000,
+    "Gastos de administración y ventas": 1000000,
+    "Otros gastos operacionales": 0,
+    "= RESULTADO OPERACIONAL": 2000000,
+    "Ingresos fuera de explotación": 0,
+    "Ingresos financieros": 0,
+    "Gastos no operacionales": 0,
+    "Corrección monetaria": 0,
+    "= RESULTADO ANTES DE IMPUESTO": 2000000,
+    "Impuesto a la renta": 500000,
+    "UTILIDAD NETA DEL EJERCICIO": 1500000
+   },
+   "bal": {
+    "Total Activos Corrientes": 3000000,
+    "Total Activos No Corrientes": 0,
+    "TOTAL ACTIVOS": 3000000,
+    "Total Pasivos Corrientes": 500000,
+    "Total Pasivos No Corrientes": 0,
+    "Total Pasivos<": 500000,
+    "Resultado del Ejercicio": 1500000,
+    "Total Patrimonio": 2500000,
+    "TOTAL PASIVOS + PATRIMONIO": 3000000
+   },
+   "tasa": 27,
+   "estimado": false,
+   "cuadra": true,
+   "invertidas": null,
+   "resultado": {
+    "ingresos": 3000000,
+    "gastos": 1500000,
+    "resultado": 1500000,
+    "cuentas": [
+     "3201001",
+     "3601001",
+     "4101002"
+    ]
+   },
+   "totales": {
+    "ingresos": 3000000,
+    "costos": 1500000,
+    "activos": 3000000,
+    "pasivos": 500000,
+    "capital": 1000000
+   }
+  },
+  "conImpuesto:14D8": {
+   "saldos": {
+    "1101201": {
+     "nm": "C1101201",
+     "saldo": 3000000
+    },
+    "2104003": {
+     "nm": "C2104003",
+     "saldo": -500000
+    },
+    "2301001": {
+     "nm": "C2301001",
+     "saldo": -1000000
+    },
+    "3201001": {
+     "nm": "C3201001",
+     "saldo": 1000000
+    },
+    "3601001": {
+     "nm": "C3601001",
+     "saldo": 500000
+    },
+    "4101002": {
+     "nm": "C4101002",
+     "saldo": -3000000
+    }
+   },
+   "eerr": {
+    "Ingresos de explotación": 3000000,
+    "Costo de explotación": 0,
+    "= MARGEN BRUTO": 3000000,
+    "Gastos de administración y ventas": 1000000,
+    "Otros gastos operacionales": 0,
+    "= RESULTADO OPERACIONAL": 2000000,
+    "Ingresos fuera de explotación": 0,
+    "Ingresos financieros": 0,
+    "Gastos no operacionales": 0,
+    "Corrección monetaria": 0,
+    "= RESULTADO ANTES DE IMPUESTO": 2000000,
+    "Impuesto a la renta": 500000,
+    "UTILIDAD NETA DEL EJERCICIO": 1500000
+   },
+   "bal": {
+    "Total Activos Corrientes": 3000000,
+    "Total Activos No Corrientes": 0,
+    "TOTAL ACTIVOS": 3000000,
+    "Total Pasivos Corrientes": 500000,
+    "Total Pasivos No Corrientes": 0,
+    "Total Pasivos<": 500000,
+    "Resultado del Ejercicio": 1500000,
+    "Total Patrimonio": 2500000,
+    "TOTAL PASIVOS + PATRIMONIO": 3000000
+   },
+   "tasa": 0,
+   "estimado": false,
+   "cuadra": true,
+   "invertidas": null,
+   "resultado": {
+    "ingresos": 3000000,
+    "gastos": 1500000,
+    "resultado": 1500000,
+    "cuentas": [
+     "3201001",
+     "3601001",
+     "4101002"
+    ]
+   },
+   "totales": {
+    "ingresos": 3000000,
+    "costos": 1500000,
+    "activos": 3000000,
+    "pasivos": 500000,
+    "capital": 1000000
+   }
+  },
+  "perdida:14D3": {
+   "saldos": {
+    "1101201": {
+     "nm": "C1101201",
+     "saldo": 300000
+    },
+    "2201001": {
+     "nm": "C2201001",
+     "saldo": -800000
+    },
+    "2301001": {
+     "nm": "C2301001",
+     "saldo": -1000000
+    },
+    "3201001": {
+     "nm": "C3201001",
+     "saldo": 1500000
+    }
+   },
+   "eerr": {
+    "Ingresos de explotación": 0,
+    "Costo de explotación": 0,
+    "= MARGEN BRUTO": 0,
+    "Gastos de administración y ventas": 1500000,
+    "Otros gastos operacionales": 0,
+    "= RESULTADO OPERACIONAL": -1500000,
+    "Ingresos fuera de explotación": 0,
+    "Ingresos financieros": 0,
+    "Gastos no operacionales": 0,
+    "Corrección monetaria": 0,
+    "= RESULTADO ANTES DE IMPUESTO": -1500000,
+    "Impuesto a la renta": 0,
+    "UTILIDAD NETA DEL EJERCICIO": -1500000
+   },
+   "bal": {
+    "Total Activos Corrientes": 300000,
+    "Total Activos No Corrientes": 0,
+    "TOTAL ACTIVOS": 300000,
+    "Total Pasivos Corrientes": 0,
+    "Total Pasivos No Corrientes": 800000,
+    "Total Pasivos<": 800000,
+    "Resultado del Ejercicio": -1500000,
+    "Total Patrimonio": -500000,
+    "TOTAL PASIVOS + PATRIMONIO": 300000
+   },
+   "tasa": 12.5,
+   "estimado": false,
+   "cuadra": true,
+   "invertidas": null,
+   "resultado": {
+    "ingresos": 0,
+    "gastos": 1500000,
+    "resultado": -1500000,
+    "cuentas": [
+     "3201001"
+    ]
+   },
+   "totales": {
+    "ingresos": 0,
+    "costos": 1500000,
+    "activos": 300000,
+    "pasivos": 800000,
+    "capital": 1000000
+   }
+  },
+  "perdida:14A": {
+   "saldos": {
+    "1101201": {
+     "nm": "C1101201",
+     "saldo": 300000
+    },
+    "2201001": {
+     "nm": "C2201001",
+     "saldo": -800000
+    },
+    "2301001": {
+     "nm": "C2301001",
+     "saldo": -1000000
+    },
+    "3201001": {
+     "nm": "C3201001",
+     "saldo": 1500000
+    }
+   },
+   "eerr": {
+    "Ingresos de explotación": 0,
+    "Costo de explotación": 0,
+    "= MARGEN BRUTO": 0,
+    "Gastos de administración y ventas": 1500000,
+    "Otros gastos operacionales": 0,
+    "= RESULTADO OPERACIONAL": -1500000,
+    "Ingresos fuera de explotación": 0,
+    "Ingresos financieros": 0,
+    "Gastos no operacionales": 0,
+    "Corrección monetaria": 0,
+    "= RESULTADO ANTES DE IMPUESTO": -1500000,
+    "Impuesto a la renta": 0,
+    "UTILIDAD NETA DEL EJERCICIO": -1500000
+   },
+   "bal": {
+    "Total Activos Corrientes": 300000,
+    "Total Activos No Corrientes": 0,
+    "TOTAL ACTIVOS": 300000,
+    "Total Pasivos Corrientes": 0,
+    "Total Pasivos No Corrientes": 800000,
+    "Total Pasivos<": 800000,
+    "Resultado del Ejercicio": -1500000,
+    "Total Patrimonio": -500000,
+    "TOTAL PASIVOS + PATRIMONIO": 300000
+   },
+   "tasa": 27,
+   "estimado": false,
+   "cuadra": true,
+   "invertidas": null,
+   "resultado": {
+    "ingresos": 0,
+    "gastos": 1500000,
+    "resultado": -1500000,
+    "cuentas": [
+     "3201001"
+    ]
+   },
+   "totales": {
+    "ingresos": 0,
+    "costos": 1500000,
+    "activos": 300000,
+    "pasivos": 800000,
+    "capital": 1000000
+   }
+  },
+  "perdida:14D8": {
+   "saldos": {
+    "1101201": {
+     "nm": "C1101201",
+     "saldo": 300000
+    },
+    "2201001": {
+     "nm": "C2201001",
+     "saldo": -800000
+    },
+    "2301001": {
+     "nm": "C2301001",
+     "saldo": -1000000
+    },
+    "3201001": {
+     "nm": "C3201001",
+     "saldo": 1500000
+    }
+   },
+   "eerr": {
+    "Ingresos de explotación": 0,
+    "Costo de explotación": 0,
+    "= MARGEN BRUTO": 0,
+    "Gastos de administración y ventas": 1500000,
+    "Otros gastos operacionales": 0,
+    "= RESULTADO OPERACIONAL": -1500000,
+    "Ingresos fuera de explotación": 0,
+    "Ingresos financieros": 0,
+    "Gastos no operacionales": 0,
+    "Corrección monetaria": 0,
+    "= RESULTADO ANTES DE IMPUESTO": -1500000,
+    "Impuesto a la renta": 0,
+    "UTILIDAD NETA DEL EJERCICIO": -1500000
+   },
+   "bal": {
+    "Total Activos Corrientes": 300000,
+    "Total Activos No Corrientes": 0,
+    "TOTAL ACTIVOS": 300000,
+    "Total Pasivos Corrientes": 0,
+    "Total Pasivos No Corrientes": 800000,
+    "Total Pasivos<": 800000,
+    "Resultado del Ejercicio": -1500000,
+    "Total Patrimonio": -500000,
+    "TOTAL PASIVOS + PATRIMONIO": 300000
+   },
+   "tasa": 0,
+   "estimado": false,
+   "cuadra": true,
+   "invertidas": null,
+   "resultado": {
+    "ingresos": 0,
+    "gastos": 1500000,
+    "resultado": -1500000,
+    "cuentas": [
+     "3201001"
+    ]
+   },
+   "totales": {
+    "ingresos": 0,
+    "costos": 1500000,
+    "activos": 300000,
+    "pasivos": 800000,
+    "capital": 1000000
+   }
+  }
+ },
+ "fmtVar": [
+  [
+   100,
+   0,
+   {
+    "txt": "nuevo",
+    "color": "var(--info)",
+    "sig": true
+   }
+  ],
+  [
+   0,
+   0,
+   {
+    "txt": "–",
+    "color": "var(--mt)",
+    "sig": false
+   }
+  ],
+  [
+   120,
+   100,
+   {
+    "txt": "+20.0%",
+    "color": "var(--ach)",
+    "sig": true,
+    "dif": 20
+   }
+  ],
+  [
+   50,
+   100,
+   {
+    "txt": "-50.0%",
+    "color": "var(--err)",
+    "sig": true,
+    "dif": -50
+   }
+  ],
+  [
+   -10,
+   100,
+   {
+    "txt": "-110.0%",
+    "color": "var(--err)",
+    "sig": true,
+    "dif": -110
+   }
+  ],
+  [
+   100,
+   -50,
+   {
+    "txt": "+300.0%",
+    "color": "var(--ach)",
+    "sig": true,
+    "dif": 150
+   }
+  ]
+ ]
+}

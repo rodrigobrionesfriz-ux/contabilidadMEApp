@@ -1,0 +1,7178 @@
+{
+ "utmSII": {
+  "2023": [
+   61769,
+   61954,
+   62450,
+   62388,
+   63074,
+   63263,
+   63326,
+   63199,
+   63452,
+   63515,
+   63960,
+   64216
+  ],
+  "2024": [
+   64666,
+   64343,
+   64793,
+   65182,
+   65443,
+   65770,
+   65967,
+   65901,
+   66362,
+   66561,
+   66628,
+   67294
+  ],
+  "2025": [
+   67429,
+   67294,
+   68034,
+   68306,
+   68648,
+   68785,
+   68923,
+   68647,
+   69265,
+   69265,
+   69542,
+   69542
+  ],
+  "2026": [
+   69751,
+   69611,
+   69889,
+   69889,
+   70588,
+   71506,
+   71649,
+   71649,
+   71721,
+   72151
+  ]
+ },
+ "casos": [
+  {
+   "nombre": "sin remanente inicial, PPM 1%",
+   "entrada": {
+    "tasaPPM": 1,
+    "anterior": {},
+    "items": {},
+    "ventas": [
+     {
+      "id": "v1",
+      "tipoDTE": 33,
+      "fecha": "2026-01-10",
+      "neto": 1000000,
+      "exento": 0,
+      "iva": 190000,
+      "total": 1190000
+     },
+     {
+      "id": "v2",
+      "tipoDTE": 39,
+      "fecha": "2026-01-15",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000
+     },
+     {
+      "id": "v3",
+      "tipoDTE": 61,
+      "fecha": "2026-01-20",
+      "neto": 50000,
+      "exento": 0,
+      "iva": 9500,
+      "total": 59500
+     },
+     {
+      "id": "v4",
+      "tipoDTE": 34,
+      "fecha": "2026-02-05",
+      "neto": 0,
+      "exento": 300000,
+      "iva": 0,
+      "total": 300000
+     },
+     {
+      "id": "v5",
+      "tipoDTE": 56,
+      "fecha": "2026-02-06",
+      "neto": 10000,
+      "exento": 0,
+      "iva": 1900,
+      "total": 11900
+     },
+     {
+      "id": "v6",
+      "tipoDTE": 33,
+      "fecha": "2026-03-01",
+      "neto": 200000,
+      "exento": 0,
+      "iva": 38000,
+      "total": 238000
+     },
+     {
+      "id": "v7",
+      "tipoDTE": 33,
+      "fecha": "2026-05-01",
+      "neto": 5000000,
+      "exento": 0,
+      "iva": 950000,
+      "total": 5950000
+     }
+    ],
+    "compras": [
+     {
+      "id": "c1",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "1",
+      "fecha": "2026-01-05",
+      "neto": 3000000,
+      "exento": 0,
+      "iva": 570000,
+      "total": 3570000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 3000000
+       }
+      ]
+     },
+     {
+      "id": "c2",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "2",
+      "fecha": "2026-01-28",
+      "periodoContable": "2026-02",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c3",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "3",
+      "fecha": "2026-02-10",
+      "neto": 1000000,
+      "exento": 0,
+      "iva": 190000,
+      "total": 1190000,
+      "tratamientoIVA": "activo_fijo",
+      "ivaActivoFijo": 190000,
+      "dist": [
+       {
+        "cuenta": "1203001",
+        "monto": 1000000
+       }
+      ]
+     },
+     {
+      "id": "c4",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "4",
+      "fecha": "2026-02-11",
+      "neto": 300000,
+      "exento": 0,
+      "iva": 57000,
+      "total": 357000,
+      "ivaRecuperable": 0,
+      "ivaNoRecuperable": 57000,
+      "tratamientoIVA": "sii",
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 300000
+       }
+      ]
+     },
+     {
+      "id": "c5",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 46,
+      "numero": "7",
+      "fecha": "2026-03-12",
+      "neto": 200000,
+      "exento": 0,
+      "iva": 38000,
+      "total": 200000,
+      "ivaRetenido": 38000,
+      "totalSII": 200000,
+      "totalIncluyeRetencion": false,
+      "dist": [
+       {
+        "cuenta": "3103003",
+        "monto": 200000
+       }
+      ]
+     },
+     {
+      "id": "c6",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 61,
+      "numero": "9",
+      "fecha": "2026-03-15",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c7",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 34,
+      "numero": "10",
+      "fecha": "2026-03-16",
+      "neto": 0,
+      "exento": 45000,
+      "iva": 0,
+      "total": 45000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 45000
+       }
+      ]
+     },
+     {
+      "id": "c8",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "11",
+      "fecha": "2026-04-02",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "tratamientoIVA": "proporcional",
+      "porcentajeIvaRecuperable": 60,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c9",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "12",
+      "fecha": "2026-04-03",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "estado": "anulado",
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c10",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 70,
+      "numero": "5",
+      "fecha": "2026-04-04",
+      "total": 100000,
+      "bruto": 100000,
+      "dist": []
+     },
+     {
+      "id": "c11",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 56,
+      "numero": "13",
+      "fecha": "2026-04-05",
+      "neto": 20000,
+      "exento": 0,
+      "iva": 3800,
+      "total": 23800,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 20000
+       }
+      ]
+     }
+    ],
+    "honorarios": [
+     {
+      "id": "h1",
+      "mes": 1,
+      "bruto": 500000,
+      "estado": "pendiente"
+     },
+     {
+      "id": "h2",
+      "mes": 2,
+      "bruto": 300000,
+      "tasaRetencion": 0.1525,
+      "retencion": 45750
+     },
+     {
+      "id": "h3",
+      "mes": 2,
+      "bruto": 100000,
+      "estado": "anulado"
+     },
+     {
+      "id": "h4",
+      "mes": 3,
+      "bruto": 200000,
+      "tipoRetencion": "sin_retencion",
+      "retencion": 0
+     }
+    ],
+    "asientos": [
+     {
+      "id": "r1",
+      "tipo": "remuneraciones",
+      "fecha": "2026-01-31",
+      "periodo": "2026-01",
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 35000
+       },
+       {
+        "cd": "4101001",
+        "debe": 35000,
+        "haber": 0
+       }
+      ]
+     },
+     {
+      "id": "r2",
+      "tipo": "remuneraciones",
+      "fecha": "2026-02-28",
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 41000
+       },
+       {
+        "cd": "4101001",
+        "debe": 41000,
+        "haber": 0
+       }
+      ]
+     },
+     {
+      "id": "r3",
+      "tipo": "remuneraciones",
+      "fecha": "2026-03-31",
+      "anulado": true,
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 99999
+       },
+       {
+        "cd": "4101001",
+        "debe": 99999,
+        "haber": 0
+       }
+      ]
+     }
+    ]
+   },
+   "resultado": [
+    {
+     "m": 1,
+     "ventasNetas": 1050000,
+     "ventasExentas": 0,
+     "debito": 199500,
+     "ivaRetenido": 0,
+     "debitoTotal": 199500,
+     "comprasNetas": 3000000,
+     "credito": 570000,
+     "creditoActivoFijo": 0,
+     "creditoMes": 570000,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 0,
+     "utmPeriodo": 69751,
+     "utmImputacion": 69611,
+     "remanenteUTM": 0,
+     "creditoTotal": 570000,
+     "ivaDeterminado": -370500,
+     "ivaAPagar": 0,
+     "remanente": 370500,
+     "basePPM": 1050000,
+     "ppm": 10500,
+     "retencionHon": 76250,
+     "iusc": 35000,
+     "totalPagar": 121750,
+     "nDocsV": 3,
+     "nDocsC": 1,
+     "codigos": {
+      "39": 0,
+      "48": 35000,
+      "62": 10500,
+      "77": 370500,
+      "89": 0,
+      "91": 121750,
+      "110": 1,
+      "111": 19000,
+      "142": 0,
+      "151": 76250,
+      "502": 190000,
+      "503": 1,
+      "504": 0,
+      "509": 1,
+      "510": 9500,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 570000,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 570000,
+      "538": 199500,
+      "562": 0,
+      "563": 1050000,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 190000
+      },
+      "boletas": {
+       "n": 1,
+       "iva": 19000
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 1,
+       "iva": 9500
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 570000
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 2,
+     "ventasNetas": 10000,
+     "ventasExentas": 300000,
+     "debito": 1900,
+     "ivaRetenido": 0,
+     "debitoTotal": 1900,
+     "comprasNetas": 1400000,
+     "credito": 19000,
+     "creditoActivoFijo": 190000,
+     "creditoMes": 209000,
+     "ivaNoRecuperable": 57000,
+     "remanenteAnt": 370500,
+     "remanenteReaj": 371809,
+     "reajusteRemanente": 1309,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69611,
+     "utmPeriodo": 69611,
+     "utmImputacion": 69889,
+     "remanenteUTM": 5.32,
+     "creditoTotal": 580809,
+     "ivaDeterminado": -578909,
+     "ivaAPagar": 0,
+     "remanente": 578909,
+     "basePPM": 310000,
+     "ppm": 3100,
+     "retencionHon": 45750,
+     "iusc": 41000,
+     "totalPagar": 89850,
+     "nDocsV": 2,
+     "nDocsC": 3,
+     "codigos": {
+      "39": 0,
+      "48": 41000,
+      "62": 3100,
+      "77": 578909,
+      "89": 0,
+      "91": 89850,
+      "110": 0,
+      "111": 0,
+      "142": 300000,
+      "151": 45750,
+      "502": 0,
+      "503": 0,
+      "504": 371809,
+      "509": 0,
+      "510": 0,
+      "512": 1,
+      "513": 1900,
+      "519": 1,
+      "520": 19000,
+      "521": 300000,
+      "524": 1,
+      "525": 190000,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 580809,
+      "538": 1900,
+      "562": 0,
+      "563": 310000,
+      "564": 1,
+      "584": 0,
+      "586": 1
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 1,
+       "iva": 1900
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 1,
+       "monto": 300000
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 19000
+      },
+      "activoFijo": {
+       "n": 1,
+       "credito": 190000
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 1,
+       "neto": 300000
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 3,
+     "ventasNetas": 200000,
+     "ventasExentas": 0,
+     "debito": 38000,
+     "ivaRetenido": 38000,
+     "debitoTotal": 76000,
+     "comprasNetas": 100000,
+     "credito": 19000,
+     "creditoActivoFijo": 0,
+     "creditoMes": 19000,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 578909,
+     "remanenteReaj": 578681,
+     "reajusteRemanente": -228,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69889,
+     "utmPeriodo": 69889,
+     "utmImputacion": 69889,
+     "remanenteUTM": 8.28,
+     "creditoTotal": 597681,
+     "ivaDeterminado": -521681,
+     "ivaAPagar": 0,
+     "remanente": 521681,
+     "basePPM": 200000,
+     "ppm": 2000,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 2000,
+     "nDocsV": 1,
+     "nDocsC": 3,
+     "codigos": {
+      "39": 38000,
+      "48": 0,
+      "62": 2000,
+      "77": 521681,
+      "89": 0,
+      "91": 2000,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 38000,
+      "503": 1,
+      "504": 578681,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 38000,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 1,
+      "528": 19000,
+      "531": 0,
+      "532": 0,
+      "537": 597681,
+      "538": 38000,
+      "562": 45000,
+      "563": 200000,
+      "564": 0,
+      "584": 1,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 38000
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 38000
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 1,
+       "credito": 19000
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 1,
+       "monto": 45000
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 4,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 120000,
+     "credito": 15200,
+     "creditoActivoFijo": 0,
+     "creditoMes": 15200,
+     "ivaNoRecuperable": 7600,
+     "remanenteAnt": 521681,
+     "remanenteReaj": 526586,
+     "reajusteRemanente": 4905,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69889,
+     "utmPeriodo": 69889,
+     "utmImputacion": 70588,
+     "remanenteUTM": 7.46,
+     "creditoTotal": 541786,
+     "ivaDeterminado": -541786,
+     "ivaAPagar": 0,
+     "remanente": 541786,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 2,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 541786,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 526586,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 11400,
+      "521": 100000,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 1,
+      "532": 3800,
+      "537": 541786,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 1,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 11400
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 1,
+       "credito": 3800
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 1,
+       "neto": 100000
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 5,
+     "ventasNetas": 5000000,
+     "ventasExentas": 0,
+     "debito": 950000,
+     "ivaRetenido": 0,
+     "debitoTotal": 950000,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 541786,
+     "remanenteReaj": 549166,
+     "reajusteRemanente": 7380,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 70588,
+     "utmPeriodo": 70588,
+     "utmImputacion": 71506,
+     "remanenteUTM": 7.68,
+     "creditoTotal": 549166,
+     "ivaDeterminado": 400834,
+     "ivaAPagar": 400834,
+     "remanente": 0,
+     "basePPM": 5000000,
+     "ppm": 50000,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 450834,
+     "nDocsV": 1,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 50000,
+      "77": 0,
+      "89": 400834,
+      "91": 450834,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 950000,
+      "503": 1,
+      "504": 549166,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 549166,
+      "538": 950000,
+      "562": 0,
+      "563": 5000000,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 950000
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 6,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71506,
+     "utmPeriodo": 71506,
+     "utmImputacion": 71649,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 7,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71649,
+     "utmPeriodo": 71649,
+     "utmImputacion": 71649,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 8,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71649,
+     "utmPeriodo": 71649,
+     "utmImputacion": 71721,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 9,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71721,
+     "utmPeriodo": 71721,
+     "utmImputacion": 72151,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 10,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 72151,
+     "utmPeriodo": 72151,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 11,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 0,
+     "utmPeriodo": 0,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 12,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 0,
+     "utmPeriodo": 0,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    }
+   ]
+  },
+  {
+   "nombre": "remanente de diciembre presentado",
+   "entrada": {
+    "tasaPPM": 0.5,
+    "anterior": {
+     "2025-12": {
+      "periodo": "2025-12",
+      "estado": "presentado",
+      "declarado": {
+       "77": 500000
+      }
+     }
+    },
+    "items": {},
+    "ventas": [
+     {
+      "id": "v1",
+      "tipoDTE": 33,
+      "fecha": "2026-01-10",
+      "neto": 1000000,
+      "exento": 0,
+      "iva": 190000,
+      "total": 1190000
+     },
+     {
+      "id": "v2",
+      "tipoDTE": 39,
+      "fecha": "2026-01-15",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000
+     },
+     {
+      "id": "v3",
+      "tipoDTE": 61,
+      "fecha": "2026-01-20",
+      "neto": 50000,
+      "exento": 0,
+      "iva": 9500,
+      "total": 59500
+     },
+     {
+      "id": "v4",
+      "tipoDTE": 34,
+      "fecha": "2026-02-05",
+      "neto": 0,
+      "exento": 300000,
+      "iva": 0,
+      "total": 300000
+     },
+     {
+      "id": "v5",
+      "tipoDTE": 56,
+      "fecha": "2026-02-06",
+      "neto": 10000,
+      "exento": 0,
+      "iva": 1900,
+      "total": 11900
+     },
+     {
+      "id": "v6",
+      "tipoDTE": 33,
+      "fecha": "2026-03-01",
+      "neto": 200000,
+      "exento": 0,
+      "iva": 38000,
+      "total": 238000
+     },
+     {
+      "id": "v7",
+      "tipoDTE": 33,
+      "fecha": "2026-05-01",
+      "neto": 5000000,
+      "exento": 0,
+      "iva": 950000,
+      "total": 5950000
+     }
+    ],
+    "compras": [
+     {
+      "id": "c1",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "1",
+      "fecha": "2026-01-05",
+      "neto": 3000000,
+      "exento": 0,
+      "iva": 570000,
+      "total": 3570000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 3000000
+       }
+      ]
+     },
+     {
+      "id": "c2",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "2",
+      "fecha": "2026-01-28",
+      "periodoContable": "2026-02",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c3",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "3",
+      "fecha": "2026-02-10",
+      "neto": 1000000,
+      "exento": 0,
+      "iva": 190000,
+      "total": 1190000,
+      "tratamientoIVA": "activo_fijo",
+      "ivaActivoFijo": 190000,
+      "dist": [
+       {
+        "cuenta": "1203001",
+        "monto": 1000000
+       }
+      ]
+     },
+     {
+      "id": "c4",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "4",
+      "fecha": "2026-02-11",
+      "neto": 300000,
+      "exento": 0,
+      "iva": 57000,
+      "total": 357000,
+      "ivaRecuperable": 0,
+      "ivaNoRecuperable": 57000,
+      "tratamientoIVA": "sii",
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 300000
+       }
+      ]
+     },
+     {
+      "id": "c5",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 46,
+      "numero": "7",
+      "fecha": "2026-03-12",
+      "neto": 200000,
+      "exento": 0,
+      "iva": 38000,
+      "total": 200000,
+      "ivaRetenido": 38000,
+      "totalSII": 200000,
+      "totalIncluyeRetencion": false,
+      "dist": [
+       {
+        "cuenta": "3103003",
+        "monto": 200000
+       }
+      ]
+     },
+     {
+      "id": "c6",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 61,
+      "numero": "9",
+      "fecha": "2026-03-15",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c7",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 34,
+      "numero": "10",
+      "fecha": "2026-03-16",
+      "neto": 0,
+      "exento": 45000,
+      "iva": 0,
+      "total": 45000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 45000
+       }
+      ]
+     },
+     {
+      "id": "c8",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "11",
+      "fecha": "2026-04-02",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "tratamientoIVA": "proporcional",
+      "porcentajeIvaRecuperable": 60,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c9",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "12",
+      "fecha": "2026-04-03",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "estado": "anulado",
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c10",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 70,
+      "numero": "5",
+      "fecha": "2026-04-04",
+      "total": 100000,
+      "bruto": 100000,
+      "dist": []
+     },
+     {
+      "id": "c11",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 56,
+      "numero": "13",
+      "fecha": "2026-04-05",
+      "neto": 20000,
+      "exento": 0,
+      "iva": 3800,
+      "total": 23800,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 20000
+       }
+      ]
+     }
+    ],
+    "honorarios": [
+     {
+      "id": "h1",
+      "mes": 1,
+      "bruto": 500000,
+      "estado": "pendiente"
+     },
+     {
+      "id": "h2",
+      "mes": 2,
+      "bruto": 300000,
+      "tasaRetencion": 0.1525,
+      "retencion": 45750
+     },
+     {
+      "id": "h3",
+      "mes": 2,
+      "bruto": 100000,
+      "estado": "anulado"
+     },
+     {
+      "id": "h4",
+      "mes": 3,
+      "bruto": 200000,
+      "tipoRetencion": "sin_retencion",
+      "retencion": 0
+     }
+    ],
+    "asientos": [
+     {
+      "id": "r1",
+      "tipo": "remuneraciones",
+      "fecha": "2026-01-31",
+      "periodo": "2026-01",
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 35000
+       },
+       {
+        "cd": "4101001",
+        "debe": 35000,
+        "haber": 0
+       }
+      ]
+     },
+     {
+      "id": "r2",
+      "tipo": "remuneraciones",
+      "fecha": "2026-02-28",
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 41000
+       },
+       {
+        "cd": "4101001",
+        "debe": 41000,
+        "haber": 0
+       }
+      ]
+     },
+     {
+      "id": "r3",
+      "tipo": "remuneraciones",
+      "fecha": "2026-03-31",
+      "anulado": true,
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 99999
+       },
+       {
+        "cd": "4101001",
+        "debe": 99999,
+        "haber": 0
+       }
+      ]
+     }
+    ]
+   },
+   "resultado": [
+    {
+     "m": 1,
+     "ventasNetas": 1050000,
+     "ventasExentas": 0,
+     "debito": 199500,
+     "ivaRetenido": 0,
+     "debitoTotal": 199500,
+     "comprasNetas": 3000000,
+     "credito": 570000,
+     "creditoActivoFijo": 0,
+     "creditoMes": 570000,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 500000,
+     "remanenteReaj": 499111,
+     "reajusteRemanente": -889,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69751,
+     "utmPeriodo": 69751,
+     "utmImputacion": 69611,
+     "remanenteUTM": 7.17,
+     "creditoTotal": 1069111,
+     "ivaDeterminado": -869611,
+     "ivaAPagar": 0,
+     "remanente": 869611,
+     "basePPM": 1050000,
+     "ppm": 5250,
+     "retencionHon": 76250,
+     "iusc": 35000,
+     "totalPagar": 116500,
+     "nDocsV": 3,
+     "nDocsC": 1,
+     "codigos": {
+      "39": 0,
+      "48": 35000,
+      "62": 5250,
+      "77": 869611,
+      "89": 0,
+      "91": 116500,
+      "110": 1,
+      "111": 19000,
+      "142": 0,
+      "151": 76250,
+      "502": 190000,
+      "503": 1,
+      "504": 499111,
+      "509": 1,
+      "510": 9500,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 570000,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 1069111,
+      "538": 199500,
+      "562": 0,
+      "563": 1050000,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 190000
+      },
+      "boletas": {
+       "n": 1,
+       "iva": 19000
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 1,
+       "iva": 9500
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 570000
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 2,
+     "ventasNetas": 10000,
+     "ventasExentas": 300000,
+     "debito": 1900,
+     "ivaRetenido": 0,
+     "debitoTotal": 1900,
+     "comprasNetas": 1400000,
+     "credito": 19000,
+     "creditoActivoFijo": 190000,
+     "creditoMes": 209000,
+     "ivaNoRecuperable": 57000,
+     "remanenteAnt": 869611,
+     "remanenteReaj": 872914,
+     "reajusteRemanente": 3303,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69611,
+     "utmPeriodo": 69611,
+     "utmImputacion": 69889,
+     "remanenteUTM": 12.49,
+     "creditoTotal": 1081914,
+     "ivaDeterminado": -1080014,
+     "ivaAPagar": 0,
+     "remanente": 1080014,
+     "basePPM": 310000,
+     "ppm": 1550,
+     "retencionHon": 45750,
+     "iusc": 41000,
+     "totalPagar": 88300,
+     "nDocsV": 2,
+     "nDocsC": 3,
+     "codigos": {
+      "39": 0,
+      "48": 41000,
+      "62": 1550,
+      "77": 1080014,
+      "89": 0,
+      "91": 88300,
+      "110": 0,
+      "111": 0,
+      "142": 300000,
+      "151": 45750,
+      "502": 0,
+      "503": 0,
+      "504": 872914,
+      "509": 0,
+      "510": 0,
+      "512": 1,
+      "513": 1900,
+      "519": 1,
+      "520": 19000,
+      "521": 300000,
+      "524": 1,
+      "525": 190000,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 1081914,
+      "538": 1900,
+      "562": 0,
+      "563": 310000,
+      "564": 1,
+      "584": 0,
+      "586": 1
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 1,
+       "iva": 1900
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 1,
+       "monto": 300000
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 19000
+      },
+      "activoFijo": {
+       "n": 1,
+       "credito": 190000
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 1,
+       "neto": 300000
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 3,
+     "ventasNetas": 200000,
+     "ventasExentas": 0,
+     "debito": 38000,
+     "ivaRetenido": 38000,
+     "debitoTotal": 76000,
+     "comprasNetas": 100000,
+     "credito": 19000,
+     "creditoActivoFijo": 0,
+     "creditoMes": 19000,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 1080014,
+     "remanenteReaj": 1079785,
+     "reajusteRemanente": -229,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69889,
+     "utmPeriodo": 69889,
+     "utmImputacion": 69889,
+     "remanenteUTM": 15.45,
+     "creditoTotal": 1098785,
+     "ivaDeterminado": -1022785,
+     "ivaAPagar": 0,
+     "remanente": 1022785,
+     "basePPM": 200000,
+     "ppm": 1000,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 1000,
+     "nDocsV": 1,
+     "nDocsC": 3,
+     "codigos": {
+      "39": 38000,
+      "48": 0,
+      "62": 1000,
+      "77": 1022785,
+      "89": 0,
+      "91": 1000,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 38000,
+      "503": 1,
+      "504": 1079785,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 38000,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 1,
+      "528": 19000,
+      "531": 0,
+      "532": 0,
+      "537": 1098785,
+      "538": 38000,
+      "562": 45000,
+      "563": 200000,
+      "564": 0,
+      "584": 1,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 38000
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 38000
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 1,
+       "credito": 19000
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 1,
+       "monto": 45000
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 4,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 120000,
+     "credito": 15200,
+     "creditoActivoFijo": 0,
+     "creditoMes": 15200,
+     "ivaNoRecuperable": 7600,
+     "remanenteAnt": 1022785,
+     "remanenteReaj": 1032702,
+     "reajusteRemanente": 9917,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69889,
+     "utmPeriodo": 69889,
+     "utmImputacion": 70588,
+     "remanenteUTM": 14.63,
+     "creditoTotal": 1047902,
+     "ivaDeterminado": -1047902,
+     "ivaAPagar": 0,
+     "remanente": 1047902,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 2,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 1047902,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 1032702,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 11400,
+      "521": 100000,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 1,
+      "532": 3800,
+      "537": 1047902,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 1,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 11400
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 1,
+       "credito": 3800
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 1,
+       "neto": 100000
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 5,
+     "ventasNetas": 5000000,
+     "ventasExentas": 0,
+     "debito": 950000,
+     "ivaRetenido": 0,
+     "debitoTotal": 950000,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 1047902,
+     "remanenteReaj": 1061864,
+     "reajusteRemanente": 13962,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 70588,
+     "utmPeriodo": 70588,
+     "utmImputacion": 71506,
+     "remanenteUTM": 14.85,
+     "creditoTotal": 1061864,
+     "ivaDeterminado": -111864,
+     "ivaAPagar": 0,
+     "remanente": 111864,
+     "basePPM": 5000000,
+     "ppm": 25000,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 25000,
+     "nDocsV": 1,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 25000,
+      "77": 111864,
+      "89": 0,
+      "91": 25000,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 950000,
+      "503": 1,
+      "504": 1061864,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 1061864,
+      "538": 950000,
+      "562": 0,
+      "563": 5000000,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 950000
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 6,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 111864,
+     "remanenteReaj": 111772,
+     "reajusteRemanente": -92,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71506,
+     "utmPeriodo": 71506,
+     "utmImputacion": 71649,
+     "remanenteUTM": 1.56,
+     "creditoTotal": 111772,
+     "ivaDeterminado": -111772,
+     "ivaAPagar": 0,
+     "remanente": 111772,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 111772,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 111772,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 111772,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 7,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 111772,
+     "remanenteReaj": 111772,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71649,
+     "utmPeriodo": 71649,
+     "utmImputacion": 71649,
+     "remanenteUTM": 1.56,
+     "creditoTotal": 111772,
+     "ivaDeterminado": -111772,
+     "ivaAPagar": 0,
+     "remanente": 111772,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 111772,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 111772,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 111772,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 8,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 111772,
+     "remanenteReaj": 111885,
+     "reajusteRemanente": 113,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71649,
+     "utmPeriodo": 71649,
+     "utmImputacion": 71721,
+     "remanenteUTM": 1.56,
+     "creditoTotal": 111885,
+     "ivaDeterminado": -111885,
+     "ivaAPagar": 0,
+     "remanente": 111885,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 111885,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 111885,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 111885,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 9,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 111885,
+     "remanenteReaj": 112556,
+     "reajusteRemanente": 671,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71721,
+     "utmPeriodo": 71721,
+     "utmImputacion": 72151,
+     "remanenteUTM": 1.56,
+     "creditoTotal": 112556,
+     "ivaDeterminado": -112556,
+     "ivaAPagar": 0,
+     "remanente": 112556,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 112556,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 112556,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 112556,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 10,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 112556,
+     "remanenteReaj": 112556,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": true,
+     "utmRemanenteAnt": 72151,
+     "utmPeriodo": 72151,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 112556,
+     "ivaDeterminado": -112556,
+     "ivaAPagar": 0,
+     "remanente": 112556,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 112556,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 112556,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 112556,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 11,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 112556,
+     "remanenteReaj": 112556,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": true,
+     "utmRemanenteAnt": 0,
+     "utmPeriodo": 0,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 112556,
+     "ivaDeterminado": -112556,
+     "ivaAPagar": 0,
+     "remanente": 112556,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 112556,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 112556,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 112556,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 12,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 112556,
+     "remanenteReaj": 112556,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": true,
+     "utmRemanenteAnt": 0,
+     "utmPeriodo": 0,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 112556,
+     "ivaDeterminado": -112556,
+     "ivaAPagar": 0,
+     "remanente": 112556,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 112556,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 112556,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 112556,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    }
+   ]
+  },
+  {
+   "nombre": "remanente manual en enero y marzo presentado con 77 distinto",
+   "entrada": {
+    "tasaPPM": 0.25,
+    "anterior": {},
+    "items": {
+     "2026-01": {
+      "periodo": "2026-01",
+      "estado": "borrador",
+      "remanenteInicial": 250000,
+      "declarado": {}
+     },
+     "2026-03": {
+      "periodo": "2026-03",
+      "estado": "presentado",
+      "declarado": {
+       "77": 123456
+      }
+     }
+    },
+    "ventas": [
+     {
+      "id": "v1",
+      "tipoDTE": 33,
+      "fecha": "2026-01-10",
+      "neto": 1000000,
+      "exento": 0,
+      "iva": 190000,
+      "total": 1190000
+     },
+     {
+      "id": "v2",
+      "tipoDTE": 39,
+      "fecha": "2026-01-15",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000
+     },
+     {
+      "id": "v3",
+      "tipoDTE": 61,
+      "fecha": "2026-01-20",
+      "neto": 50000,
+      "exento": 0,
+      "iva": 9500,
+      "total": 59500
+     },
+     {
+      "id": "v4",
+      "tipoDTE": 34,
+      "fecha": "2026-02-05",
+      "neto": 0,
+      "exento": 300000,
+      "iva": 0,
+      "total": 300000
+     },
+     {
+      "id": "v5",
+      "tipoDTE": 56,
+      "fecha": "2026-02-06",
+      "neto": 10000,
+      "exento": 0,
+      "iva": 1900,
+      "total": 11900
+     },
+     {
+      "id": "v6",
+      "tipoDTE": 33,
+      "fecha": "2026-03-01",
+      "neto": 200000,
+      "exento": 0,
+      "iva": 38000,
+      "total": 238000
+     },
+     {
+      "id": "v7",
+      "tipoDTE": 33,
+      "fecha": "2026-05-01",
+      "neto": 5000000,
+      "exento": 0,
+      "iva": 950000,
+      "total": 5950000
+     }
+    ],
+    "compras": [
+     {
+      "id": "c1",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "1",
+      "fecha": "2026-01-05",
+      "neto": 3000000,
+      "exento": 0,
+      "iva": 570000,
+      "total": 3570000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 3000000
+       }
+      ]
+     },
+     {
+      "id": "c2",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "2",
+      "fecha": "2026-01-28",
+      "periodoContable": "2026-02",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c3",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "3",
+      "fecha": "2026-02-10",
+      "neto": 1000000,
+      "exento": 0,
+      "iva": 190000,
+      "total": 1190000,
+      "tratamientoIVA": "activo_fijo",
+      "ivaActivoFijo": 190000,
+      "dist": [
+       {
+        "cuenta": "1203001",
+        "monto": 1000000
+       }
+      ]
+     },
+     {
+      "id": "c4",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "4",
+      "fecha": "2026-02-11",
+      "neto": 300000,
+      "exento": 0,
+      "iva": 57000,
+      "total": 357000,
+      "ivaRecuperable": 0,
+      "ivaNoRecuperable": 57000,
+      "tratamientoIVA": "sii",
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 300000
+       }
+      ]
+     },
+     {
+      "id": "c5",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 46,
+      "numero": "7",
+      "fecha": "2026-03-12",
+      "neto": 200000,
+      "exento": 0,
+      "iva": 38000,
+      "total": 200000,
+      "ivaRetenido": 38000,
+      "totalSII": 200000,
+      "totalIncluyeRetencion": false,
+      "dist": [
+       {
+        "cuenta": "3103003",
+        "monto": 200000
+       }
+      ]
+     },
+     {
+      "id": "c6",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 61,
+      "numero": "9",
+      "fecha": "2026-03-15",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c7",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 34,
+      "numero": "10",
+      "fecha": "2026-03-16",
+      "neto": 0,
+      "exento": 45000,
+      "iva": 0,
+      "total": 45000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 45000
+       }
+      ]
+     },
+     {
+      "id": "c8",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "11",
+      "fecha": "2026-04-02",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "tratamientoIVA": "proporcional",
+      "porcentajeIvaRecuperable": 60,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c9",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "12",
+      "fecha": "2026-04-03",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "estado": "anulado",
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c10",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 70,
+      "numero": "5",
+      "fecha": "2026-04-04",
+      "total": 100000,
+      "bruto": 100000,
+      "dist": []
+     },
+     {
+      "id": "c11",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 56,
+      "numero": "13",
+      "fecha": "2026-04-05",
+      "neto": 20000,
+      "exento": 0,
+      "iva": 3800,
+      "total": 23800,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 20000
+       }
+      ]
+     }
+    ],
+    "honorarios": [
+     {
+      "id": "h1",
+      "mes": 1,
+      "bruto": 500000,
+      "estado": "pendiente"
+     },
+     {
+      "id": "h2",
+      "mes": 2,
+      "bruto": 300000,
+      "tasaRetencion": 0.1525,
+      "retencion": 45750
+     },
+     {
+      "id": "h3",
+      "mes": 2,
+      "bruto": 100000,
+      "estado": "anulado"
+     },
+     {
+      "id": "h4",
+      "mes": 3,
+      "bruto": 200000,
+      "tipoRetencion": "sin_retencion",
+      "retencion": 0
+     }
+    ],
+    "asientos": [
+     {
+      "id": "r1",
+      "tipo": "remuneraciones",
+      "fecha": "2026-01-31",
+      "periodo": "2026-01",
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 35000
+       },
+       {
+        "cd": "4101001",
+        "debe": 35000,
+        "haber": 0
+       }
+      ]
+     },
+     {
+      "id": "r2",
+      "tipo": "remuneraciones",
+      "fecha": "2026-02-28",
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 41000
+       },
+       {
+        "cd": "4101001",
+        "debe": 41000,
+        "haber": 0
+       }
+      ]
+     },
+     {
+      "id": "r3",
+      "tipo": "remuneraciones",
+      "fecha": "2026-03-31",
+      "anulado": true,
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 99999
+       },
+       {
+        "cd": "4101001",
+        "debe": 99999,
+        "haber": 0
+       }
+      ]
+     }
+    ]
+   },
+   "resultado": [
+    {
+     "m": 1,
+     "ventasNetas": 1050000,
+     "ventasExentas": 0,
+     "debito": 199500,
+     "ivaRetenido": 0,
+     "debitoTotal": 199500,
+     "comprasNetas": 3000000,
+     "credito": 570000,
+     "creditoActivoFijo": 0,
+     "creditoMes": 570000,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 250000,
+     "remanenteReaj": 249207,
+     "reajusteRemanente": -793,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69751,
+     "utmPeriodo": 69751,
+     "utmImputacion": 69611,
+     "remanenteUTM": 3.58,
+     "creditoTotal": 819207,
+     "ivaDeterminado": -619707,
+     "ivaAPagar": 0,
+     "remanente": 619707,
+     "basePPM": 1050000,
+     "ppm": 2625,
+     "retencionHon": 76250,
+     "iusc": 35000,
+     "totalPagar": 113875,
+     "nDocsV": 3,
+     "nDocsC": 1,
+     "codigos": {
+      "39": 0,
+      "48": 35000,
+      "62": 2625,
+      "77": 619707,
+      "89": 0,
+      "91": 113875,
+      "110": 1,
+      "111": 19000,
+      "142": 0,
+      "151": 76250,
+      "502": 190000,
+      "503": 1,
+      "504": 249207,
+      "509": 1,
+      "510": 9500,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 570000,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 819207,
+      "538": 199500,
+      "562": 0,
+      "563": 1050000,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 190000
+      },
+      "boletas": {
+       "n": 1,
+       "iva": 19000
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 1,
+       "iva": 9500
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 570000
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": {
+      "periodo": "2026-01",
+      "estado": "borrador",
+      "remanenteInicial": 250000,
+      "declarado": {}
+     }
+    },
+    {
+     "m": 2,
+     "ventasNetas": 10000,
+     "ventasExentas": 300000,
+     "debito": 1900,
+     "ivaRetenido": 0,
+     "debitoTotal": 1900,
+     "comprasNetas": 1400000,
+     "credito": 19000,
+     "creditoActivoFijo": 190000,
+     "creditoMes": 209000,
+     "ivaNoRecuperable": 57000,
+     "remanenteAnt": 619707,
+     "remanenteReaj": 622012,
+     "reajusteRemanente": 2305,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69611,
+     "utmPeriodo": 69611,
+     "utmImputacion": 69889,
+     "remanenteUTM": 8.9,
+     "creditoTotal": 831012,
+     "ivaDeterminado": -829112,
+     "ivaAPagar": 0,
+     "remanente": 829112,
+     "basePPM": 310000,
+     "ppm": 775,
+     "retencionHon": 45750,
+     "iusc": 41000,
+     "totalPagar": 87525,
+     "nDocsV": 2,
+     "nDocsC": 3,
+     "codigos": {
+      "39": 0,
+      "48": 41000,
+      "62": 775,
+      "77": 829112,
+      "89": 0,
+      "91": 87525,
+      "110": 0,
+      "111": 0,
+      "142": 300000,
+      "151": 45750,
+      "502": 0,
+      "503": 0,
+      "504": 622012,
+      "509": 0,
+      "510": 0,
+      "512": 1,
+      "513": 1900,
+      "519": 1,
+      "520": 19000,
+      "521": 300000,
+      "524": 1,
+      "525": 190000,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 831012,
+      "538": 1900,
+      "562": 0,
+      "563": 310000,
+      "564": 1,
+      "584": 0,
+      "586": 1
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 1,
+       "iva": 1900
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 1,
+       "monto": 300000
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 19000
+      },
+      "activoFijo": {
+       "n": 1,
+       "credito": 190000
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 1,
+       "neto": 300000
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 3,
+     "ventasNetas": 200000,
+     "ventasExentas": 0,
+     "debito": 38000,
+     "ivaRetenido": 38000,
+     "debitoTotal": 76000,
+     "comprasNetas": 100000,
+     "credito": 19000,
+     "creditoActivoFijo": 0,
+     "creditoMes": 19000,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 829112,
+     "remanenteReaj": 828884,
+     "reajusteRemanente": -228,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69889,
+     "utmPeriodo": 69889,
+     "utmImputacion": 69889,
+     "remanenteUTM": 11.86,
+     "creditoTotal": 847884,
+     "ivaDeterminado": -771884,
+     "ivaAPagar": 0,
+     "remanente": 771884,
+     "basePPM": 200000,
+     "ppm": 500,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 500,
+     "nDocsV": 1,
+     "nDocsC": 3,
+     "codigos": {
+      "39": 38000,
+      "48": 0,
+      "62": 500,
+      "77": 771884,
+      "89": 0,
+      "91": 500,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 38000,
+      "503": 1,
+      "504": 828884,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 38000,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 1,
+      "528": 19000,
+      "531": 0,
+      "532": 0,
+      "537": 847884,
+      "538": 38000,
+      "562": 45000,
+      "563": 200000,
+      "564": 0,
+      "584": 1,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 38000
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 38000
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 1,
+       "credito": 19000
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 1,
+       "monto": 45000
+      }
+     },
+     "declaracion": {
+      "periodo": "2026-03",
+      "estado": "presentado",
+      "declarado": {
+       "77": 123456
+      }
+     }
+    },
+    {
+     "m": 4,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 120000,
+     "credito": 15200,
+     "creditoActivoFijo": 0,
+     "creditoMes": 15200,
+     "ivaNoRecuperable": 7600,
+     "remanenteAnt": 123456,
+     "remanenteReaj": 124941,
+     "reajusteRemanente": 1485,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69889,
+     "utmPeriodo": 69889,
+     "utmImputacion": 70588,
+     "remanenteUTM": 1.77,
+     "creditoTotal": 140141,
+     "ivaDeterminado": -140141,
+     "ivaAPagar": 0,
+     "remanente": 140141,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 2,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 140141,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 124941,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 11400,
+      "521": 100000,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 1,
+      "532": 3800,
+      "537": 140141,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 1,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 11400
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 1,
+       "credito": 3800
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 1,
+       "neto": 100000
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 5,
+     "ventasNetas": 5000000,
+     "ventasExentas": 0,
+     "debito": 950000,
+     "ivaRetenido": 0,
+     "debitoTotal": 950000,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 140141,
+     "remanenteReaj": 142297,
+     "reajusteRemanente": 2156,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 70588,
+     "utmPeriodo": 70588,
+     "utmImputacion": 71506,
+     "remanenteUTM": 1.99,
+     "creditoTotal": 142297,
+     "ivaDeterminado": 807703,
+     "ivaAPagar": 807703,
+     "remanente": 0,
+     "basePPM": 5000000,
+     "ppm": 12500,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 820203,
+     "nDocsV": 1,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 12500,
+      "77": 0,
+      "89": 807703,
+      "91": 820203,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 950000,
+      "503": 1,
+      "504": 142297,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 142297,
+      "538": 950000,
+      "562": 0,
+      "563": 5000000,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 950000
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 6,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71506,
+     "utmPeriodo": 71506,
+     "utmImputacion": 71649,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 7,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71649,
+     "utmPeriodo": 71649,
+     "utmImputacion": 71649,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 8,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71649,
+     "utmPeriodo": 71649,
+     "utmImputacion": 71721,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 9,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71721,
+     "utmPeriodo": 71721,
+     "utmImputacion": 72151,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 10,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 72151,
+     "utmPeriodo": 72151,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 11,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 0,
+     "utmPeriodo": 0,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 12,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 0,
+     "remanenteReaj": 0,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 0,
+     "utmPeriodo": 0,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 0,
+     "ivaDeterminado": 0,
+     "ivaAPagar": 0,
+     "remanente": 0,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 0,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 0,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 0,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    }
+   ]
+  },
+  {
+   "nombre": "UTM guardada en la declaración",
+   "entrada": {
+    "tasaPPM": 1,
+    "anterior": {
+     "2025-12": {
+      "periodo": "2025-12",
+      "estado": "presentado",
+      "declarado": {
+       "77": 800000
+      },
+      "utm": 68000
+     }
+    },
+    "items": {
+     "2026-02": {
+      "periodo": "2026-02",
+      "estado": "borrador",
+      "utm": 70000,
+      "declarado": {}
+     }
+    },
+    "ventas": [
+     {
+      "id": "v1",
+      "tipoDTE": 33,
+      "fecha": "2026-01-10",
+      "neto": 1000000,
+      "exento": 0,
+      "iva": 190000,
+      "total": 1190000
+     },
+     {
+      "id": "v2",
+      "tipoDTE": 39,
+      "fecha": "2026-01-15",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000
+     },
+     {
+      "id": "v3",
+      "tipoDTE": 61,
+      "fecha": "2026-01-20",
+      "neto": 50000,
+      "exento": 0,
+      "iva": 9500,
+      "total": 59500
+     },
+     {
+      "id": "v4",
+      "tipoDTE": 34,
+      "fecha": "2026-02-05",
+      "neto": 0,
+      "exento": 300000,
+      "iva": 0,
+      "total": 300000
+     },
+     {
+      "id": "v5",
+      "tipoDTE": 56,
+      "fecha": "2026-02-06",
+      "neto": 10000,
+      "exento": 0,
+      "iva": 1900,
+      "total": 11900
+     },
+     {
+      "id": "v6",
+      "tipoDTE": 33,
+      "fecha": "2026-03-01",
+      "neto": 200000,
+      "exento": 0,
+      "iva": 38000,
+      "total": 238000
+     },
+     {
+      "id": "v7",
+      "tipoDTE": 33,
+      "fecha": "2026-05-01",
+      "neto": 5000000,
+      "exento": 0,
+      "iva": 950000,
+      "total": 5950000
+     }
+    ],
+    "compras": [
+     {
+      "id": "c1",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "1",
+      "fecha": "2026-01-05",
+      "neto": 3000000,
+      "exento": 0,
+      "iva": 570000,
+      "total": 3570000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 3000000
+       }
+      ]
+     },
+     {
+      "id": "c2",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "2",
+      "fecha": "2026-01-28",
+      "periodoContable": "2026-02",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c3",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "3",
+      "fecha": "2026-02-10",
+      "neto": 1000000,
+      "exento": 0,
+      "iva": 190000,
+      "total": 1190000,
+      "tratamientoIVA": "activo_fijo",
+      "ivaActivoFijo": 190000,
+      "dist": [
+       {
+        "cuenta": "1203001",
+        "monto": 1000000
+       }
+      ]
+     },
+     {
+      "id": "c4",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "4",
+      "fecha": "2026-02-11",
+      "neto": 300000,
+      "exento": 0,
+      "iva": 57000,
+      "total": 357000,
+      "ivaRecuperable": 0,
+      "ivaNoRecuperable": 57000,
+      "tratamientoIVA": "sii",
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 300000
+       }
+      ]
+     },
+     {
+      "id": "c5",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 46,
+      "numero": "7",
+      "fecha": "2026-03-12",
+      "neto": 200000,
+      "exento": 0,
+      "iva": 38000,
+      "total": 200000,
+      "ivaRetenido": 38000,
+      "totalSII": 200000,
+      "totalIncluyeRetencion": false,
+      "dist": [
+       {
+        "cuenta": "3103003",
+        "monto": 200000
+       }
+      ]
+     },
+     {
+      "id": "c6",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 61,
+      "numero": "9",
+      "fecha": "2026-03-15",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c7",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 34,
+      "numero": "10",
+      "fecha": "2026-03-16",
+      "neto": 0,
+      "exento": 45000,
+      "iva": 0,
+      "total": 45000,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 45000
+       }
+      ]
+     },
+     {
+      "id": "c8",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "11",
+      "fecha": "2026-04-02",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "tratamientoIVA": "proporcional",
+      "porcentajeIvaRecuperable": 60,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c9",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 33,
+      "numero": "12",
+      "fecha": "2026-04-03",
+      "neto": 100000,
+      "exento": 0,
+      "iva": 19000,
+      "total": 119000,
+      "estado": "anulado",
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 100000
+       }
+      ]
+     },
+     {
+      "id": "c10",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 70,
+      "numero": "5",
+      "fecha": "2026-04-04",
+      "total": 100000,
+      "bruto": 100000,
+      "dist": []
+     },
+     {
+      "id": "c11",
+      "rutCodigo": "76151704",
+      "rutDV": "K",
+      "razonSocial": "P",
+      "tipoDTE": 56,
+      "numero": "13",
+      "fecha": "2026-04-05",
+      "neto": 20000,
+      "exento": 0,
+      "iva": 3800,
+      "total": 23800,
+      "dist": [
+       {
+        "cuenta": "3202010",
+        "monto": 20000
+       }
+      ]
+     }
+    ],
+    "honorarios": [
+     {
+      "id": "h1",
+      "mes": 1,
+      "bruto": 500000,
+      "estado": "pendiente"
+     },
+     {
+      "id": "h2",
+      "mes": 2,
+      "bruto": 300000,
+      "tasaRetencion": 0.1525,
+      "retencion": 45750
+     },
+     {
+      "id": "h3",
+      "mes": 2,
+      "bruto": 100000,
+      "estado": "anulado"
+     },
+     {
+      "id": "h4",
+      "mes": 3,
+      "bruto": 200000,
+      "tipoRetencion": "sin_retencion",
+      "retencion": 0
+     }
+    ],
+    "asientos": [
+     {
+      "id": "r1",
+      "tipo": "remuneraciones",
+      "fecha": "2026-01-31",
+      "periodo": "2026-01",
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 35000
+       },
+       {
+        "cd": "4101001",
+        "debe": 35000,
+        "haber": 0
+       }
+      ]
+     },
+     {
+      "id": "r2",
+      "tipo": "remuneraciones",
+      "fecha": "2026-02-28",
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 41000
+       },
+       {
+        "cd": "4101001",
+        "debe": 41000,
+        "haber": 0
+       }
+      ]
+     },
+     {
+      "id": "r3",
+      "tipo": "remuneraciones",
+      "fecha": "2026-03-31",
+      "anulado": true,
+      "movs": [
+       {
+        "cd": "2104002",
+        "debe": 0,
+        "haber": 99999
+       },
+       {
+        "cd": "4101001",
+        "debe": 99999,
+        "haber": 0
+       }
+      ]
+     }
+    ]
+   },
+   "resultado": [
+    {
+     "m": 1,
+     "ventasNetas": 1050000,
+     "ventasExentas": 0,
+     "debito": 199500,
+     "ivaRetenido": 0,
+     "debitoTotal": 199500,
+     "comprasNetas": 3000000,
+     "credito": 570000,
+     "creditoActivoFijo": 0,
+     "creditoMes": 570000,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 800000,
+     "remanenteReaj": 802900,
+     "reajusteRemanente": 2900,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69751,
+     "utmPeriodo": 69751,
+     "utmImputacion": 70000,
+     "remanenteUTM": 11.47,
+     "creditoTotal": 1372900,
+     "ivaDeterminado": -1173400,
+     "ivaAPagar": 0,
+     "remanente": 1173400,
+     "basePPM": 1050000,
+     "ppm": 10500,
+     "retencionHon": 76250,
+     "iusc": 35000,
+     "totalPagar": 121750,
+     "nDocsV": 3,
+     "nDocsC": 1,
+     "codigos": {
+      "39": 0,
+      "48": 35000,
+      "62": 10500,
+      "77": 1173400,
+      "89": 0,
+      "91": 121750,
+      "110": 1,
+      "111": 19000,
+      "142": 0,
+      "151": 76250,
+      "502": 190000,
+      "503": 1,
+      "504": 802900,
+      "509": 1,
+      "510": 9500,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 570000,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 1372900,
+      "538": 199500,
+      "562": 0,
+      "563": 1050000,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 190000
+      },
+      "boletas": {
+       "n": 1,
+       "iva": 19000
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 1,
+       "iva": 9500
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 570000
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 2,
+     "ventasNetas": 10000,
+     "ventasExentas": 300000,
+     "debito": 1900,
+     "ivaRetenido": 0,
+     "debitoTotal": 1900,
+     "comprasNetas": 1400000,
+     "credito": 19000,
+     "creditoActivoFijo": 190000,
+     "creditoMes": 209000,
+     "ivaNoRecuperable": 57000,
+     "remanenteAnt": 1173400,
+     "remanenteReaj": 1171340,
+     "reajusteRemanente": -2060,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 70000,
+     "utmPeriodo": 70000,
+     "utmImputacion": 69889,
+     "remanenteUTM": 16.76,
+     "creditoTotal": 1380340,
+     "ivaDeterminado": -1378440,
+     "ivaAPagar": 0,
+     "remanente": 1378440,
+     "basePPM": 310000,
+     "ppm": 3100,
+     "retencionHon": 45750,
+     "iusc": 41000,
+     "totalPagar": 89850,
+     "nDocsV": 2,
+     "nDocsC": 3,
+     "codigos": {
+      "39": 0,
+      "48": 41000,
+      "62": 3100,
+      "77": 1378440,
+      "89": 0,
+      "91": 89850,
+      "110": 0,
+      "111": 0,
+      "142": 300000,
+      "151": 45750,
+      "502": 0,
+      "503": 0,
+      "504": 1171340,
+      "509": 0,
+      "510": 0,
+      "512": 1,
+      "513": 1900,
+      "519": 1,
+      "520": 19000,
+      "521": 300000,
+      "524": 1,
+      "525": 190000,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 1380340,
+      "538": 1900,
+      "562": 0,
+      "563": 310000,
+      "564": 1,
+      "584": 0,
+      "586": 1
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 1,
+       "iva": 1900
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 1,
+       "monto": 300000
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 19000
+      },
+      "activoFijo": {
+       "n": 1,
+       "credito": 190000
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 1,
+       "neto": 300000
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": {
+      "periodo": "2026-02",
+      "estado": "borrador",
+      "utm": 70000,
+      "declarado": {}
+     }
+    },
+    {
+     "m": 3,
+     "ventasNetas": 200000,
+     "ventasExentas": 0,
+     "debito": 38000,
+     "ivaRetenido": 38000,
+     "debitoTotal": 76000,
+     "comprasNetas": 100000,
+     "credito": 19000,
+     "creditoActivoFijo": 0,
+     "creditoMes": 19000,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 1378440,
+     "remanenteReaj": 1378211,
+     "reajusteRemanente": -229,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69889,
+     "utmPeriodo": 69889,
+     "utmImputacion": 69889,
+     "remanenteUTM": 19.72,
+     "creditoTotal": 1397211,
+     "ivaDeterminado": -1321211,
+     "ivaAPagar": 0,
+     "remanente": 1321211,
+     "basePPM": 200000,
+     "ppm": 2000,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 2000,
+     "nDocsV": 1,
+     "nDocsC": 3,
+     "codigos": {
+      "39": 38000,
+      "48": 0,
+      "62": 2000,
+      "77": 1321211,
+      "89": 0,
+      "91": 2000,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 38000,
+      "503": 1,
+      "504": 1378211,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 38000,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 1,
+      "528": 19000,
+      "531": 0,
+      "532": 0,
+      "537": 1397211,
+      "538": 38000,
+      "562": 45000,
+      "563": 200000,
+      "564": 0,
+      "584": 1,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 38000
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 38000
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 1,
+       "credito": 19000
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 1,
+       "monto": 45000
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 4,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 120000,
+     "credito": 15200,
+     "creditoActivoFijo": 0,
+     "creditoMes": 15200,
+     "ivaNoRecuperable": 7600,
+     "remanenteAnt": 1321211,
+     "remanenteReaj": 1334113,
+     "reajusteRemanente": 12902,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 69889,
+     "utmPeriodo": 69889,
+     "utmImputacion": 70588,
+     "remanenteUTM": 18.9,
+     "creditoTotal": 1349313,
+     "ivaDeterminado": -1349313,
+     "ivaAPagar": 0,
+     "remanente": 1349313,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 2,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 1349313,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 1334113,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 1,
+      "520": 11400,
+      "521": 100000,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 1,
+      "532": 3800,
+      "537": 1349313,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 1,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 1,
+       "credito": 11400
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 1,
+       "credito": 3800
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 1,
+       "neto": 100000
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 5,
+     "ventasNetas": 5000000,
+     "ventasExentas": 0,
+     "debito": 950000,
+     "ivaRetenido": 0,
+     "debitoTotal": 950000,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 1349313,
+     "remanenteReaj": 1367195,
+     "reajusteRemanente": 17882,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 70588,
+     "utmPeriodo": 70588,
+     "utmImputacion": 71506,
+     "remanenteUTM": 19.12,
+     "creditoTotal": 1367195,
+     "ivaDeterminado": -417195,
+     "ivaAPagar": 0,
+     "remanente": 417195,
+     "basePPM": 5000000,
+     "ppm": 50000,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 50000,
+     "nDocsV": 1,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 50000,
+      "77": 417195,
+      "89": 0,
+      "91": 50000,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 950000,
+      "503": 1,
+      "504": 1367195,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 1367195,
+      "538": 950000,
+      "562": 0,
+      "563": 5000000,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 1,
+       "iva": 950000
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 6,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 417195,
+     "remanenteReaj": 417714,
+     "reajusteRemanente": 519,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71506,
+     "utmPeriodo": 71506,
+     "utmImputacion": 71649,
+     "remanenteUTM": 5.83,
+     "creditoTotal": 417714,
+     "ivaDeterminado": -417714,
+     "ivaAPagar": 0,
+     "remanente": 417714,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 417714,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 417714,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 417714,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 7,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 417714,
+     "remanenteReaj": 417714,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71649,
+     "utmPeriodo": 71649,
+     "utmImputacion": 71649,
+     "remanenteUTM": 5.83,
+     "creditoTotal": 417714,
+     "ivaDeterminado": -417714,
+     "ivaAPagar": 0,
+     "remanente": 417714,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 417714,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 417714,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 417714,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 8,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 417714,
+     "remanenteReaj": 418133,
+     "reajusteRemanente": 419,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71649,
+     "utmPeriodo": 71649,
+     "utmImputacion": 71721,
+     "remanenteUTM": 5.83,
+     "creditoTotal": 418133,
+     "ivaDeterminado": -418133,
+     "ivaAPagar": 0,
+     "remanente": 418133,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 418133,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 418133,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 418133,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 9,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 418133,
+     "remanenteReaj": 420640,
+     "reajusteRemanente": 2507,
+     "remanenteSinUTM": false,
+     "utmRemanenteAnt": 71721,
+     "utmPeriodo": 71721,
+     "utmImputacion": 72151,
+     "remanenteUTM": 5.83,
+     "creditoTotal": 420640,
+     "ivaDeterminado": -420640,
+     "ivaAPagar": 0,
+     "remanente": 420640,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 420640,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 420640,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 420640,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 10,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 420640,
+     "remanenteReaj": 420640,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": true,
+     "utmRemanenteAnt": 72151,
+     "utmPeriodo": 72151,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 420640,
+     "ivaDeterminado": -420640,
+     "ivaAPagar": 0,
+     "remanente": 420640,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 420640,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 420640,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 420640,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 11,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 420640,
+     "remanenteReaj": 420640,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": true,
+     "utmRemanenteAnt": 0,
+     "utmPeriodo": 0,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 420640,
+     "ivaDeterminado": -420640,
+     "ivaAPagar": 0,
+     "remanente": 420640,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 420640,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 420640,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 420640,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    },
+    {
+     "m": 12,
+     "ventasNetas": 0,
+     "ventasExentas": 0,
+     "debito": 0,
+     "ivaRetenido": 0,
+     "debitoTotal": 0,
+     "comprasNetas": 0,
+     "credito": 0,
+     "creditoActivoFijo": 0,
+     "creditoMes": 0,
+     "ivaNoRecuperable": 0,
+     "remanenteAnt": 420640,
+     "remanenteReaj": 420640,
+     "reajusteRemanente": 0,
+     "remanenteSinUTM": true,
+     "utmRemanenteAnt": 0,
+     "utmPeriodo": 0,
+     "utmImputacion": 0,
+     "remanenteUTM": 0,
+     "creditoTotal": 420640,
+     "ivaDeterminado": -420640,
+     "ivaAPagar": 0,
+     "remanente": 420640,
+     "basePPM": 0,
+     "ppm": 0,
+     "retencionHon": 0,
+     "iusc": 0,
+     "totalPagar": 0,
+     "nDocsV": 0,
+     "nDocsC": 0,
+     "codigos": {
+      "39": 0,
+      "48": 0,
+      "62": 0,
+      "77": 420640,
+      "89": 0,
+      "91": 0,
+      "110": 0,
+      "111": 0,
+      "142": 0,
+      "151": 0,
+      "502": 0,
+      "503": 0,
+      "504": 420640,
+      "509": 0,
+      "510": 0,
+      "512": 0,
+      "513": 0,
+      "519": 0,
+      "520": 0,
+      "521": 0,
+      "524": 0,
+      "525": 0,
+      "527": 0,
+      "528": 0,
+      "531": 0,
+      "532": 0,
+      "537": 420640,
+      "538": 0,
+      "562": 0,
+      "563": 0,
+      "564": 0,
+      "584": 0,
+      "586": 0
+     },
+     "detalleVentas": {
+      "facturas": {
+       "n": 0,
+       "iva": 0
+      },
+      "boletas": {
+       "n": 0,
+       "iva": 0
+      },
+      "nd": {
+       "n": 0,
+       "iva": 0
+      },
+      "nc": {
+       "n": 0,
+       "iva": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "detalleCompras": {
+      "facturas": {
+       "n": 0,
+       "credito": 0
+      },
+      "activoFijo": {
+       "n": 0,
+       "credito": 0
+      },
+      "nd": {
+       "n": 0,
+       "credito": 0
+      },
+      "nc": {
+       "n": 0,
+       "credito": 0
+      },
+      "sinDerecho": {
+       "n": 0,
+       "neto": 0
+      },
+      "exentas": {
+       "n": 0,
+       "monto": 0
+      }
+     },
+     "declaracion": null
+    }
+   ]
+  }
+ ]
+}

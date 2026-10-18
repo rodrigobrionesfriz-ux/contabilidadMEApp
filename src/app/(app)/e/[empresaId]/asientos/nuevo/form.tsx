@@ -6,6 +6,8 @@ import { guardarAsiento } from '../acciones';
 import { clp, hoyISO } from '@/lib/formato';
 import { rutParse } from '@/motor/rut';
 import { Mensaje } from '@/components/form-estado';
+import { lineasDesdeComprobante, pideMontoDist, type ComprobanteTipo } from '@/herramientas/comprobantes-tipo';
+import { guardarPlantilla } from '../tipo/acciones';
 
 export interface CuentaOpcion {
   codigo: string;
@@ -19,8 +21,8 @@ interface Linea { cuenta: string; debe: string; haber: string; cc: string; rut: 
 const vacia = (): Linea => ({ cuenta: '', debe: '', haber: '', cc: '', rut: '', glosa: '' });
 const monto = (s: string) => Math.round(Number(s.replace(/\./g, '').replace(',', '.')) || 0);
 
-export function FormAsiento({ empresaId, cuentas, centros }: {
-  empresaId: string; cuentas: CuentaOpcion[]; centros: { codigo: string; nombre: string }[];
+export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
+  empresaId: string; cuentas: CuentaOpcion[]; centros: { codigo: string; nombre: string }[]; plantillas?: ComprobanteTipo[];
 }) {
   const porCodigo = useMemo(() => new Map(cuentas.map((c) => [c.codigo, c])), [cuentas]);
   const [fecha, setFecha] = useState(hoyISO());
@@ -38,6 +40,32 @@ export function FormAsiento({ empresaId, cuentas, centros }: {
       if (campo === 'haber' && v) n.debe = '';
       return n;
     }));
+
+  const aplicarPlantilla = (id: string) => {
+    const c = plantillas.find((x) => x.id === id);
+    if (!c) return;
+    let montoDist: number | null = null;
+    if (pideMontoDist(c)) {
+      const r = window.prompt(`«${c.nombre}» reparte el gasto entre ${c.dist.filter((d) => d.cd && d.pct > 0).length} cuentas.\n\nMonto total a distribuir (deja vacío para completarlo a mano):`, '');
+      if (r === null) return;
+      montoDist = r.trim() ? Math.round(Number(r.replace(/[^0-9-]/g, '')) || 0) : 0;
+    }
+    if (lineas.some((l) => l.cuenta || l.debe || l.haber) && !window.confirm(`¿Aplicar «${c.nombre}»? Se reemplazarán las líneas escritas.`)) return;
+    const d = lineasDesdeComprobante(c, montoDist, (cd) => porCodigo.get(cd)?.nombre || '');
+    setLineas(d.lineas.map((l) => ({ cuenta: l.cd, debe: l.debe ? String(l.debe) : '', haber: l.haber ? String(l.haber) : '', cc: porCodigo.get(l.cd)?.acepta_centro_costo ? l.cc : '', rut: '', glosa: l.desc })));
+    if (d.glosa) setGlosa(d.glosa);
+    setMsg({ ok: `Plantilla aplicada: ${c.nombre}${d.distribuido ? ` · gasto repartido en ${d.distribuido} cuentas` : ''}.` });
+  };
+  const guardarComoPlantilla = () => {
+    const nombre = window.prompt('Nombre de la plantilla:', glosa);
+    if (!nombre?.trim()) return;
+    const conMontos = window.confirm('¿Guardar también los montos?\n\nAceptar: con montos · Cancelar: sólo cuentas, glosas y centros.');
+    iniciar(async () => {
+      const r = await guardarPlantilla(empresaId, null, { nombre, descripcion: '', glosa, guardaMontos: conMontos, distActiva: false, distBase: 0, dist: [],
+        lineas: lineas.filter((l) => l.cuenta || l.glosa).map((l) => ({ cd: l.cuenta, desc: l.glosa, debe: monto(l.debe), haber: monto(l.haber), cc: l.cc })) });
+      setMsg(r.ok ? { ok: r.mensaje } : { error: r.error });
+    });
+  };
 
   const totalD = lineas.reduce((s, l) => s + monto(l.debe), 0);
   const totalH = lineas.reduce((s, l) => s + monto(l.haber), 0);
@@ -72,6 +100,15 @@ export function FormAsiento({ empresaId, cuentas, centros }: {
       <datalist id="lista-cuentas">
         {cuentas.map((c) => <option key={c.codigo} value={`${c.codigo} · ${c.nombre}`} />)}
       </datalist>
+      <div className="flex flex-wrap items-end gap-2">
+        <div className="w-72"><label className="etiqueta" htmlFor="plantilla">Usar plantilla</label>
+          <select id="plantilla" className="campo" value="" onChange={(e) => aplicarPlantilla(e.target.value)}>
+            <option value="">{plantillas.length ? '📋 Elegir asiento tipo…' : 'Sin plantillas todavía'}</option>
+            {plantillas.map((c) => <option key={c.id} value={c.id}>{c.nombre}</option>)}
+          </select></div>
+        <Link href={`/e/${empresaId}/asientos/tipo`} className="boton-sec">Administrar plantillas</Link>
+        <button type="button" className="boton-sec" disabled={enviando || !lineas.some((l) => l.cuenta)} onClick={guardarComoPlantilla}>💾 Guardar como plantilla</button>
+      </div>
       <div className="grid gap-3 sm:grid-cols-[180px_1fr]">
         <div>
           <label className="etiqueta" htmlFor="fecha">Fecha</label>

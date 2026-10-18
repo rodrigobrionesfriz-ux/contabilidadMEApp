@@ -1,0 +1,1317 @@
+{
+ "productos": [
+  {
+   "id": "p1",
+   "codigo": "P000001",
+   "descripcion": "FERTILIZANTE",
+   "manejaLotes": false
+  },
+  {
+   "id": "p2",
+   "codigo": "P000002",
+   "descripcion": "FUNGICIDA",
+   "manejaLotes": true
+  },
+  {
+   "id": "p3",
+   "codigo": "P000003",
+   "descripcion": "INACTIVO",
+   "activo": false
+  }
+ ],
+ "bodegas": [
+  {
+   "id": "b1",
+   "codigo": "B1",
+   "nombre": "CENTRAL"
+  },
+  {
+   "id": "b2",
+   "codigo": "B2",
+   "nombre": "CAMPO"
+  },
+  {
+   "id": "b3",
+   "codigo": "B3",
+   "nombre": "CERRADA",
+   "activo": false
+  }
+ ],
+ "movs": [
+  {
+   "id": "m1",
+   "folio": "ENT-000001",
+   "tipo": "ENTRADA",
+   "fecha": "2026-01-05",
+   "creado": "2026-01-05T10:00:00Z",
+   "bodegaDestinoId": "b1",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 100,
+     "costoUnitario": 1000
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 10,
+     "costoUnitario": 5000,
+     "lote": "l1",
+     "fechaVencimiento": "2027-01-01"
+    }
+   ]
+  },
+  {
+   "id": "m2",
+   "folio": "ENT-000002",
+   "tipo": "ENTRADA",
+   "fecha": "2026-01-10",
+   "creado": "2026-01-10T10:00:00Z",
+   "bodegaDestinoId": "b1",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 50,
+     "costoUnitario": 1300
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 5,
+     "costoUnitario": 6200,
+     "lote": "L2",
+     "fechaVencimiento": "2027-06-01"
+    }
+   ]
+  },
+  {
+   "id": "m3",
+   "folio": "SAL-000001",
+   "tipo": "SALIDA",
+   "fecha": "2026-01-15",
+   "creado": "2026-01-15T10:00:00Z",
+   "bodegaOrigenId": "b1",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 30
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 4,
+     "lote": "L1"
+    }
+   ]
+  },
+  {
+   "id": "m4",
+   "folio": "TRA-000001",
+   "tipo": "TRASPASO",
+   "fecha": "2026-01-20",
+   "creado": "2026-01-20T10:00:00Z",
+   "bodegaOrigenId": "b1",
+   "bodegaDestinoId": "b2",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 20
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 3,
+     "lote": "L2"
+    }
+   ]
+  },
+  {
+   "id": "m5",
+   "folio": "SAL-000002",
+   "tipo": "SALIDA",
+   "fecha": "2026-01-21",
+   "creado": "2026-01-21T10:00:00Z",
+   "bodegaOrigenId": "b2",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 25
+    }
+   ]
+  },
+  {
+   "id": "m6",
+   "folio": "ENT-000003",
+   "tipo": "ENTRADA",
+   "fecha": "2026-01-22",
+   "creado": "2026-01-22T10:00:00Z",
+   "estado": "ANULADO",
+   "bodegaDestinoId": "b2",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 999,
+     "costoUnitario": 1
+    }
+   ]
+  },
+  {
+   "id": "m7",
+   "folio": "AJE-000001",
+   "tipo": "AJUSTE_ENTRADA",
+   "fecha": "2026-01-25",
+   "creado": "2026-01-25T10:00:00Z",
+   "bodegaDestinoId": "b2",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 7,
+     "costoUnitario": 1500
+    },
+    {
+     "productoId": "px",
+     "cantidad": 1,
+     "costoUnitario": 1
+    }
+   ]
+  },
+  {
+   "id": "m8",
+   "folio": "AJS-000001",
+   "tipo": "AJUSTE_SALIDA",
+   "fecha": "2026-01-26",
+   "creado": "2026-01-26T10:00:00Z",
+   "bodegaOrigenId": "b1",
+   "lineas": [
+    {
+     "productoId": "p2",
+     "cantidad": 1,
+     "lote": "L2",
+     "fechaVencimiento": "2027-07-01"
+    }
+   ]
+  }
+ ],
+ "calc": {
+  "stock": [
+   {
+    "key": "p1|b1",
+    "productoId": "p1",
+    "bodegaId": "b1",
+    "cantidad": 100,
+    "costoPromedio": 1100,
+    "valor": 110000
+   },
+   {
+    "key": "p1|b2",
+    "productoId": "p1",
+    "bodegaId": "b2",
+    "cantidad": 2,
+    "costoPromedio": 2500,
+    "valor": 5000
+   },
+   {
+    "key": "p2|b1",
+    "productoId": "p2",
+    "bodegaId": "b1",
+    "cantidad": 7,
+    "costoPromedio": 5400,
+    "valor": 37800
+   },
+   {
+    "key": "p2|b2",
+    "productoId": "p2",
+    "bodegaId": "b2",
+    "cantidad": 3,
+    "costoPromedio": 5400,
+    "valor": 16200
+   }
+  ],
+  "lotes": [
+   {
+    "key": "p2|b1|L1",
+    "productoId": "p2",
+    "bodegaId": "b1",
+    "lote": "L1",
+    "fechaVencimiento": "2027-01-01",
+    "cantidad": 6,
+    "costoPromedio": 5000,
+    "valor": 30000
+   },
+   {
+    "key": "p2|b1|L2",
+    "productoId": "p2",
+    "bodegaId": "b1",
+    "lote": "L2",
+    "fechaVencimiento": "2027-06-01",
+    "cantidad": 1,
+    "costoPromedio": 6200,
+    "valor": 6200
+   },
+   {
+    "key": "p2|b2|L2",
+    "productoId": "p2",
+    "bodegaId": "b2",
+    "lote": "L2",
+    "fechaVencimiento": "",
+    "cantidad": 3,
+    "costoPromedio": 5400,
+    "valor": 16200
+   }
+  ],
+  "errores": [
+   {
+    "tipo": "STOCK_NEGATIVO",
+    "movimientoId": "m5",
+    "folio": "SAL-000002",
+    "productoId": "p1",
+    "bodegaId": "b2",
+    "lote": "",
+    "mensaje": "SAL-000002: solicitado 25, disponible 20"
+   },
+   {
+    "tipo": "PRODUCTO_INEXISTENTE",
+    "movimientoId": "m7",
+    "productoId": "px",
+    "mensaje": "Producto px no existe"
+   },
+   {
+    "tipo": "VENCIMIENTO_LOTE",
+    "movimientoId": "",
+    "productoId": "p2",
+    "bodegaId": "b1",
+    "lote": "L2",
+    "mensaje": "El lote L2 tiene fechas de vencimiento distintas"
+   }
+  ],
+  "valorizaciones": [
+   [
+    "m1",
+    [
+     {
+      "productoId": "p1",
+      "cantidad": 100,
+      "costoUnitario": 1000,
+      "costoAplicado": 1000,
+      "valorAplicado": 100000
+     },
+     {
+      "productoId": "p2",
+      "cantidad": 10,
+      "costoUnitario": 5000,
+      "lote": "l1",
+      "fechaVencimiento": "2027-01-01",
+      "costoAplicado": 5000,
+      "valorAplicado": 50000
+     }
+    ]
+   ],
+   [
+    "m2",
+    [
+     {
+      "productoId": "p1",
+      "cantidad": 50,
+      "costoUnitario": 1300,
+      "costoAplicado": 1300,
+      "valorAplicado": 65000
+     },
+     {
+      "productoId": "p2",
+      "cantidad": 5,
+      "costoUnitario": 6200,
+      "lote": "L2",
+      "fechaVencimiento": "2027-06-01",
+      "costoAplicado": 6200,
+      "valorAplicado": 31000
+     }
+    ]
+   ],
+   [
+    "m3",
+    [
+     {
+      "productoId": "p1",
+      "cantidad": 30,
+      "costoAplicado": 1100,
+      "valorAplicado": 33000
+     },
+     {
+      "productoId": "p2",
+      "cantidad": 4,
+      "lote": "L1",
+      "costoAplicado": 5400,
+      "valorAplicado": 21600
+     }
+    ]
+   ],
+   [
+    "m4",
+    [
+     {
+      "productoId": "p1",
+      "cantidad": 20,
+      "costoAplicado": 1100,
+      "valorAplicado": 22000
+     },
+     {
+      "productoId": "p2",
+      "cantidad": 3,
+      "lote": "L2",
+      "costoAplicado": 5400,
+      "valorAplicado": 16200
+     }
+    ]
+   ],
+   [
+    "m5",
+    [
+     {
+      "productoId": "p1",
+      "cantidad": 25,
+      "costoAplicado": 1100,
+      "valorAplicado": 27500
+     }
+    ]
+   ],
+   [
+    "m7",
+    [
+     {
+      "productoId": "p1",
+      "cantidad": 7,
+      "costoUnitario": 1500,
+      "costoAplicado": 1500,
+      "valorAplicado": 10500
+     }
+    ]
+   ],
+   [
+    "m8",
+    [
+     {
+      "productoId": "p2",
+      "cantidad": 1,
+      "lote": "L2",
+      "fechaVencimiento": "2027-07-01",
+      "costoAplicado": 5400,
+      "valorAplicado": 5400
+     }
+    ]
+   ]
+  ]
+ },
+ "casosVal": [
+  {
+   "tipo": "XX",
+   "fecha": "",
+   "lineas": []
+  },
+  {
+   "tipo": "SALIDA",
+   "fecha": "2026-02-01",
+   "bodegaOrigenId": "b3",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 1
+    }
+   ]
+  },
+  {
+   "tipo": "TRASPASO",
+   "fecha": "2026-02-01",
+   "bodegaOrigenId": "b1",
+   "bodegaDestinoId": "b1",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 1
+    }
+   ]
+  },
+  {
+   "tipo": "ENTRADA",
+   "fecha": "2026-02-01",
+   "bodegaDestinoId": "b1",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 1,
+     "costoUnitario": 0
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 1,
+     "costoUnitario": 5
+    },
+    {
+     "productoId": "p3",
+     "cantidad": 1,
+     "costoUnitario": 5
+    },
+    {
+     "productoId": "zz",
+     "cantidad": 1
+    }
+   ]
+  },
+  {
+   "tipo": "SALIDA",
+   "fecha": "2026-02-01",
+   "bodegaOrigenId": "b1",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 60
+    },
+    {
+     "productoId": "p1",
+     "cantidad": 20
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 7,
+     "lote": "l1"
+    }
+   ]
+  },
+  {
+   "tipo": "SALIDA",
+   "fecha": "2026-02-01",
+   "bodegaOrigenId": "b1",
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 10
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 2,
+     "lote": "L1"
+    },
+    {
+     "productoId": "p1",
+     "cantidad": 0
+    }
+   ]
+  },
+  {
+   "tipo": "ENTRADA",
+   "fecha": "2026-02-01",
+   "bodegaDestinoId": "b1",
+   "lineas": [
+    {
+     "productoId": "p2",
+     "cantidad": 1,
+     "costoUnitario": 5,
+     "lote": "l1",
+     "fechaVencimiento": "2028-01-01"
+    }
+   ]
+  }
+ ],
+ "val": [
+  {
+   "ok": false,
+   "errores": [
+    "Tipo de movimiento inválido",
+    "Falta la fecha",
+    "Agregue al menos un producto con cantidad"
+   ],
+   "lineas": []
+  },
+  {
+   "ok": false,
+   "errores": [
+    "Seleccione una bodega de origen activa"
+   ],
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 1
+    }
+   ]
+  },
+  {
+   "ok": false,
+   "errores": [
+    "La bodega de destino debe ser distinta de la bodega de origen"
+   ],
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 1
+    }
+   ]
+  },
+  {
+   "ok": false,
+   "errores": [
+    "FERTILIZANTE: indique un costo unitario mayor que cero",
+    "FUNGICIDA: indique el lote",
+    "FUNGICIDA: indique la fecha de vencimiento",
+    "INACTIVO: producto inactivo",
+    "Producto zz no existe"
+   ],
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 1,
+     "costoUnitario": 0
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 1,
+     "costoUnitario": 5
+    },
+    {
+     "productoId": "p3",
+     "cantidad": 1,
+     "costoUnitario": 5
+    },
+    {
+     "productoId": "zz",
+     "cantidad": 1
+    }
+   ]
+  },
+  {
+   "ok": false,
+   "errores": [
+    "FUNGICIDA: saldo insuficiente en el lote L1"
+   ],
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 60
+    },
+    {
+     "productoId": "p1",
+     "cantidad": 20
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 7,
+     "lote": "l1"
+    }
+   ]
+  },
+  {
+   "ok": true,
+   "errores": [],
+   "lineas": [
+    {
+     "productoId": "p1",
+     "cantidad": 10
+    },
+    {
+     "productoId": "p2",
+     "cantidad": 2,
+     "lote": "L1"
+    }
+   ]
+  },
+  {
+   "ok": false,
+   "errores": [
+    "FUNGICIDA: el lote L1 ya existe con vencimiento 2027-01-01"
+   ],
+   "lineas": [
+    {
+     "productoId": "p2",
+     "cantidad": 1,
+     "costoUnitario": 5,
+     "lote": "l1",
+     "fechaVencimiento": "2028-01-01"
+    }
+   ]
+  }
+ ],
+ "toma": {
+  "id": "t1",
+  "bodegaId": "b1",
+  "creado": "2026-01-12T00:00:00Z",
+  "lineas": []
+ },
+ "reb": [
+  {
+   "actual": 100,
+   "posteriores": -50,
+   "objetivo": 30,
+   "diferencia": -70
+  },
+  {
+   "actual": 1,
+   "posteriores": -4,
+   "objetivo": 0,
+   "diferencia": -1
+  },
+  {
+   "actual": 100,
+   "posteriores": 0,
+   "objetivo": 0,
+   "diferencia": -100
+  }
+ ],
+ "neto": 2,
+ "oc": {
+  "id": "oc1",
+  "fecha": "2026-03-01",
+  "fechaEntrega": "2026-03-10",
+  "proveedorRut": "76111111-1",
+  "proveedorNombre": "PROV",
+  "bodegaId": "b1",
+  "estado": "EMITIDA",
+  "tasaIVA": 19,
+  "lineas": [
+   {
+    "id": "a",
+    "productoId": "p1",
+    "cantidad": 10,
+    "precioUnitario": 1000.5,
+    "descuentoPct": 5
+   },
+   {
+    "id": "b",
+    "productoId": "p2",
+    "cantidad": 4,
+    "precioUnitario": 333.33,
+    "descuentoPct": 0,
+    "aplicaIVA": false
+   }
+  ]
+ },
+ "recs": [
+  {
+   "ordenCompraId": "oc1",
+   "estado": "VIGENTE",
+   "lineas": [
+    {
+     "ocLineaId": "a",
+     "cantidad": 4
+    },
+    {
+     "ocLineaId": "b",
+     "cantidad": 4
+    }
+   ]
+  },
+  {
+   "ordenCompraId": "oc1",
+   "estado": "ANULADA",
+   "lineas": [
+    {
+     "ocLineaId": "a",
+     "cantidad": 6
+    }
+   ]
+  },
+  {
+   "ordenCompraId": "oc1",
+   "estado": "VIGENTE",
+   "lineas": [
+    {
+     "ocLineaId": "a",
+     "cantidad": 1.5
+    }
+   ]
+  }
+ ],
+ "ocOut": {
+  "totales": {
+   "netoAfecto": 9504.75,
+   "netoExento": 1333.32,
+   "neto": 10838.07,
+   "iva": 1805.9025,
+   "total": 12643.9725
+  },
+  "resumen": {
+   "lineas": [
+    {
+     "id": "a",
+     "productoId": "p1",
+     "cantidad": 10,
+     "precioUnitario": 1000.5,
+     "descuentoPct": 5,
+     "recibida": 5.5,
+     "pendiente": 4.5
+    },
+    {
+     "id": "b",
+     "productoId": "p2",
+     "cantidad": 4,
+     "precioUnitario": 333.33,
+     "descuentoPct": 0,
+     "aplicaIVA": false,
+     "recibida": 4,
+     "pendiente": 0
+    }
+   ],
+   "pedida": 14,
+   "recibida": 9.5,
+   "pendiente": 4.5,
+   "avance": 67.857143
+  },
+  "estado": "PARCIAL",
+  "estadoVacio": "EMITIDA",
+  "estadoCompleto": "RECIBIDA",
+  "valOC": [
+   {
+    "ok": false,
+    "errores": [
+     "La fecha esperada de entrega no puede ser anterior a la orden",
+     "Selecciona un proveedor",
+     "El proveedor ya no está disponible",
+     "Selecciona una bodega activa",
+     "FERTILIZANTE: el precio unitario debe ser mayor que cero",
+     "FERTILIZANTE: descuento fuera de rango",
+     "FERTILIZANTE: producto repetido en la orden",
+     "INACTIVO: producto no disponible para inventario",
+     "Hay un producto inexistente"
+    ],
+    "lineas": [
+     {
+      "productoId": "p1",
+      "cantidad": 1,
+      "precioUnitario": 0,
+      "descuentoPct": 100
+     },
+     {
+      "productoId": "p1",
+      "cantidad": 1,
+      "precioUnitario": 1,
+      "descuentoPct": 0
+     },
+     {
+      "productoId": "p3",
+      "cantidad": 1,
+      "precioUnitario": 1
+     },
+     {
+      "productoId": "zz",
+      "cantidad": 2
+     }
+    ]
+   },
+   {
+    "ok": true,
+    "errores": [],
+    "lineas": [
+     {
+      "id": "a",
+      "productoId": "p1",
+      "cantidad": 10,
+      "precioUnitario": 1000.5,
+      "descuentoPct": 5
+     },
+     {
+      "id": "b",
+      "productoId": "p2",
+      "cantidad": 4,
+      "precioUnitario": 333.33,
+      "descuentoPct": 0,
+      "aplicaIVA": false
+     }
+    ]
+   }
+  ],
+  "valRec": [
+   {
+    "ok": false,
+    "errores": [
+     "La recepción no puede ser anterior a la orden",
+     "Indica el número de guía, factura o documento",
+     "FERTILIZANTE: recibido supera la cantidad pendiente",
+     "FUNGICIDA: recibido supera la cantidad pendiente",
+     "La recepción contiene una línea que no pertenece a la orden",
+     "FUNGICIDA: indica lote",
+     "FUNGICIDA: indica vencimiento"
+    ],
+    "lineas": [
+     {
+      "ocLineaId": "a",
+      "cantidad": 5
+     },
+     {
+      "ocLineaId": "b",
+      "cantidad": 1
+     },
+     {
+      "ocLineaId": "q",
+      "cantidad": 1
+     }
+    ]
+   },
+   {
+    "ok": true,
+    "errores": [],
+    "lineas": [
+     {
+      "ocLineaId": "a",
+      "cantidad": 2
+     }
+    ]
+   },
+   {
+    "ok": false,
+    "errores": [
+     "La orden de compra no existe",
+     "Indica la fecha de recepción",
+     "Ingresa al menos una cantidad recibida"
+    ],
+    "lineas": []
+   }
+  ]
+ },
+ "filas": [
+  [
+   "Plantilla"
+  ],
+  [
+   "CÓDIGO",
+   "EAN",
+   "DESCRIPCIÓN",
+   "TIPO",
+   "UNIDAD",
+   "GRUPO",
+   "SUBGRUPO",
+   "STOCK MÍNIMO",
+   "CUENTA INVENTARIO",
+   "CUENTA COSTO/CONSUMO",
+   "AFECTO IVA",
+   "MANEJA LOTES",
+   "INVENTARIABLE",
+   "ACTIVO"
+  ],
+  [
+   "p000001",
+   "",
+   "fertilizante npk",
+   "mercaderia",
+   "unidades",
+   "insumos",
+   "suelo",
+   "1.500",
+   "9999",
+   "3101002",
+   "sí",
+   "",
+   "",
+   ""
+  ],
+  [
+   "P000009",
+   "780",
+   "NUEVO",
+   "INSUMO",
+   "kg",
+   "",
+   "",
+   "2,5",
+   "",
+   "3101002",
+   "NO",
+   "SI",
+   "SI",
+   "SI"
+  ],
+  [
+   "P000009",
+   "780",
+   "REPETIDO",
+   "RARO",
+   "XX",
+   "",
+   "SUB",
+   "-1",
+   "",
+   "",
+   "TALVEZ",
+   "",
+   "",
+   ""
+  ],
+  [
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   ""
+  ],
+  [
+   "P000002",
+   "781",
+   "FUNGICIDA",
+   "INSUMO",
+   "LT",
+   "",
+   "",
+   "0",
+   "",
+   "9101",
+   "",
+   "NO",
+   "",
+   ""
+  ],
+  [
+   "P000010",
+   "781",
+   "OTRO",
+   "INSUMO",
+   "LT",
+   "",
+   "",
+   "0",
+   "",
+   "3101002",
+   "",
+   "",
+   "",
+   ""
+  ]
+ ],
+ "imp": [
+  {
+   "filas": [
+    {
+     "fila": 3,
+     "estado": "OMITE",
+     "errores": [],
+     "codigo": "P000001",
+     "producto": {
+      "id": "p1",
+      "codigo": "P000001",
+      "ean": "",
+      "descripcion": "FERTILIZANTE NPK",
+      "tipo": "MERCADERÍA",
+      "unidad": "UN",
+      "grupoNombre": "INSUMOS",
+      "subgrupo": "SUELO",
+      "stockMinimo": 1500,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "3101002",
+      "aplicaIVA": true,
+      "manejaLotes": false,
+      "inventariable": true,
+      "activo": true
+     }
+    },
+    {
+     "fila": 4,
+     "estado": "NUEVO",
+     "errores": [],
+     "codigo": "P000009",
+     "producto": {
+      "id": "",
+      "codigo": "P000009",
+      "ean": "780",
+      "descripcion": "NUEVO",
+      "tipo": "INSUMO",
+      "unidad": "KG",
+      "grupoNombre": "",
+      "subgrupo": "",
+      "stockMinimo": 2.5,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "3101002",
+      "aplicaIVA": false,
+      "manejaLotes": true,
+      "inventariable": true,
+      "activo": true
+     }
+    },
+    {
+     "fila": 5,
+     "estado": "ERROR",
+     "errores": [
+      "Código repetido dentro del archivo",
+      "Tipo inválido: RARO",
+      "Unidad inválida: XX",
+      "Stock mínimo inválido",
+      "Usa SÍ o NO en las columnas lógicas",
+      "Un subgrupo requiere grupo",
+      "Falta la cuenta de gasto/consumo"
+     ],
+     "codigo": "P000009",
+     "producto": {
+      "id": "",
+      "codigo": "P000009",
+      "ean": "780",
+      "descripcion": "REPETIDO",
+      "tipo": "RARO",
+      "unidad": "XX",
+      "grupoNombre": "",
+      "subgrupo": "SUB",
+      "stockMinimo": -1,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "",
+      "aplicaIVA": false,
+      "manejaLotes": false,
+      "inventariable": true,
+      "activo": true
+     }
+    },
+    {
+     "fila": 7,
+     "estado": "ERROR",
+     "errores": [
+      "La cuenta de gasto/consumo debe ser una cuenta de Gasto del plan de cuentas: 9101",
+      "No se puede cambiar manejo de lotes porque el producto tiene movimientos"
+     ],
+     "codigo": "P000002",
+     "producto": {
+      "id": "p2",
+      "codigo": "P000002",
+      "ean": "781",
+      "descripcion": "FUNGICIDA",
+      "tipo": "INSUMO",
+      "unidad": "LT",
+      "grupoNombre": "",
+      "subgrupo": "",
+      "stockMinimo": 0,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "9101",
+      "aplicaIVA": true,
+      "manejaLotes": false,
+      "inventariable": true,
+      "activo": true
+     }
+    },
+    {
+     "fila": 8,
+     "estado": "ERROR",
+     "errores": [
+      "EAN asignado a otro producto",
+      "EAN repetido dentro del archivo"
+     ],
+     "codigo": "P000010",
+     "producto": {
+      "id": "",
+      "codigo": "P000010",
+      "ean": "781",
+      "descripcion": "OTRO",
+      "tipo": "INSUMO",
+      "unidad": "LT",
+      "grupoNombre": "",
+      "subgrupo": "",
+      "stockMinimo": 0,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "3101002",
+      "aplicaIVA": true,
+      "manejaLotes": false,
+      "inventariable": true,
+      "activo": true
+     }
+    }
+   ],
+   "resumen": {
+    "nuevos": 1,
+    "actualiza": 0,
+    "omite": 1,
+    "errores": 3
+   }
+  },
+  {
+   "filas": [
+    {
+     "fila": 3,
+     "estado": "ACTUALIZA",
+     "errores": [],
+     "codigo": "P000001",
+     "producto": {
+      "id": "p1",
+      "codigo": "P000001",
+      "ean": "",
+      "descripcion": "FERTILIZANTE NPK",
+      "tipo": "MERCADERÍA",
+      "unidad": "UN",
+      "grupoNombre": "INSUMOS",
+      "subgrupo": "SUELO",
+      "stockMinimo": 1500,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "3101002",
+      "aplicaIVA": true,
+      "manejaLotes": false,
+      "inventariable": true,
+      "activo": true
+     }
+    },
+    {
+     "fila": 4,
+     "estado": "NUEVO",
+     "errores": [],
+     "codigo": "P000009",
+     "producto": {
+      "id": "",
+      "codigo": "P000009",
+      "ean": "780",
+      "descripcion": "NUEVO",
+      "tipo": "INSUMO",
+      "unidad": "KG",
+      "grupoNombre": "",
+      "subgrupo": "",
+      "stockMinimo": 2.5,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "3101002",
+      "aplicaIVA": false,
+      "manejaLotes": true,
+      "inventariable": true,
+      "activo": true
+     }
+    },
+    {
+     "fila": 5,
+     "estado": "ERROR",
+     "errores": [
+      "Código repetido dentro del archivo",
+      "Tipo inválido: RARO",
+      "Unidad inválida: XX",
+      "Stock mínimo inválido",
+      "Usa SÍ o NO en las columnas lógicas",
+      "Un subgrupo requiere grupo",
+      "Falta la cuenta de gasto/consumo"
+     ],
+     "codigo": "P000009",
+     "producto": {
+      "id": "",
+      "codigo": "P000009",
+      "ean": "780",
+      "descripcion": "REPETIDO",
+      "tipo": "RARO",
+      "unidad": "XX",
+      "grupoNombre": "",
+      "subgrupo": "SUB",
+      "stockMinimo": -1,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "",
+      "aplicaIVA": false,
+      "manejaLotes": false,
+      "inventariable": true,
+      "activo": true
+     }
+    },
+    {
+     "fila": 7,
+     "estado": "ERROR",
+     "errores": [
+      "La cuenta de gasto/consumo debe ser una cuenta de Gasto del plan de cuentas: 9101",
+      "No se puede cambiar manejo de lotes porque el producto tiene movimientos"
+     ],
+     "codigo": "P000002",
+     "producto": {
+      "id": "p2",
+      "codigo": "P000002",
+      "ean": "781",
+      "descripcion": "FUNGICIDA",
+      "tipo": "INSUMO",
+      "unidad": "LT",
+      "grupoNombre": "",
+      "subgrupo": "",
+      "stockMinimo": 0,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "9101",
+      "aplicaIVA": true,
+      "manejaLotes": false,
+      "inventariable": true,
+      "activo": true
+     }
+    },
+    {
+     "fila": 8,
+     "estado": "ERROR",
+     "errores": [
+      "EAN asignado a otro producto",
+      "EAN repetido dentro del archivo"
+     ],
+     "codigo": "P000010",
+     "producto": {
+      "id": "",
+      "codigo": "P000010",
+      "ean": "781",
+      "descripcion": "OTRO",
+      "tipo": "INSUMO",
+      "unidad": "LT",
+      "grupoNombre": "",
+      "subgrupo": "",
+      "stockMinimo": 0,
+      "cuentaInventario": "1109007",
+      "cuentaCosto": "3101002",
+      "aplicaIVA": true,
+      "manejaLotes": false,
+      "inventariable": true,
+      "activo": true
+     }
+    }
+   ],
+   "resumen": {
+    "nuevos": 1,
+    "actualiza": 1,
+    "omite": 0,
+    "errores": 3
+   }
+  }
+ ],
+ "compras": [
+  {
+   "id": "c1",
+   "tipoDTE": 33,
+   "rutCodigo": "76111111-1",
+   "numero": "455",
+   "fecha": "2026-03-02",
+   "total": 100
+  },
+  {
+   "id": "c2",
+   "tipoDTE": 33,
+   "rutCodigo": "76111111-1",
+   "numero": "456",
+   "fecha": "2026-03-09",
+   "estado": "anulado"
+  },
+  {
+   "id": "c3",
+   "tipoDTE": 34,
+   "rutCodigo": "76111111-1",
+   "numero": "12",
+   "fecha": "2026-03-05"
+  },
+  {
+   "id": "c4",
+   "tipoDTE": 61,
+   "rutCodigo": "76111111-1",
+   "numero": "1",
+   "fecha": "2026-03-06"
+  },
+  {
+   "id": "c5",
+   "tipoDTE": 33,
+   "rutCodigo": "1-9",
+   "numero": "455",
+   "fecha": "2026-03-07"
+  }
+ ],
+ "rec": {
+  "id": "r1",
+  "tipoDTE": 33,
+  "proveedorRut": "76111111-1",
+  "documentoNumero": "000455",
+  "estado": "VIGENTE"
+ },
+ "conc": {
+  "buscar": "c1",
+  "buscarGuia": null,
+  "vinculables": [
+   "c3",
+   "c1"
+  ],
+  "otras": [
+   "r2"
+  ]
+ }
+}

@@ -39,6 +39,7 @@ export interface OtroImpuestoDetalle {
   tipo?: string;
   nombre?: string;
   monto: number;
+  tasa?: number;
   tratamiento?: 'costo' | 'recuperable' | string;
   codigoF29?: string;
   cuenta?: string;

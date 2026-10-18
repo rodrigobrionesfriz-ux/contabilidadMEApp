@@ -1,8 +1,10 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { requerirEmpresa, puedeEscribir } from '@/lib/auth';
 import { crearClienteServidor } from '@/lib/supabase/server';
-import { clp, fechaCL } from '@/lib/formato';
+import { clp, fechaCL, param, rangoAnio, MESES } from '@/lib/formato';
+import { traerTodo } from '@/lib/paginar';
+import { SelectorPeriodo } from '@/components/selector-periodo';
 import { BotonAnular } from './anular';
 
 export const metadata: Metadata = { title: 'Libro diario' };
@@ -16,17 +18,18 @@ interface AsientoDB {
 export default async function DiarioPage({ params, searchParams }: PageProps<'/e/[empresaId]/diario'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(Array.isArray(sp.anio) ? sp.anio[0] : sp.anio) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const mes = Number(param(sp.mes)) || 0;
+  const { desde, hasta } = mes ? rangoAnio(anio, mes, mes) : rangoAnio(anio);
   const empresa = await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
-  const [{ data, error }, cuentas] = await Promise.all([
-    supabase.from('asientos')
+  const [data, cuentas] = await Promise.all([
+    traerTodo((d, h) => supabase.from('asientos')
       .select('id,numero,fecha,glosa,tipo,anulado,motivo_anulacion,asiento_lineas(orden,cuenta,debe,haber,glosa,centro_costo,rut_auxiliar)')
-      .eq('empresa_id', empresaId).eq('anio', anio)
-      .order('fecha').order('numero').order('orden', { referencedTable: 'asiento_lineas' }),
-    supabase.from('cuentas').select('codigo,nombre').eq('empresa_id', empresaId),
+      .eq('empresa_id', empresaId).eq('anio', anio).gte('fecha', desde).lte('fecha', hasta)
+      .order('fecha').order('numero').order('orden', { referencedTable: 'asiento_lineas' }).range(d, h)),
+    supabase.from('cuentas').select('codigo,nombre').eq('empresa_id', empresaId).limit(5000),
   ]);
-  if (error) throw new Error(error.message);
   const nombre = new Map((cuentas.data ?? []).map((c) => [c.codigo, c.nombre]));
   const asientos = data as AsientoDB[];
   const vigentes = asientos.filter((a) => !a.anulado);
@@ -36,18 +39,15 @@ export default async function DiarioPage({ params, searchParams }: PageProps<'/e
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-semibold">Libro diario {anio}</h1>
-        <div className="flex items-center gap-2 text-sm">
-          <Link href={`?anio=${anio - 1}`} className="boton-sec">← {anio - 1}</Link>
-          <Link href={`?anio=${anio + 1}`} className="boton-sec">{anio + 1} →</Link>
-        </div>
+        <h1 className="text-xl font-semibold">Libro diario {mes ? `${MESES[mes - 1]} ` : ''}{anio}</h1>
+        <SelectorPeriodo anio={anio} mes={mes} etiquetaMes="Mes" />
       </div>
       <p className="text-sm text-tenue">{vigentes.length} asientos vigentes · total debe/haber <span className="num text-texto">{clp(total)}</span></p>
-      {asientos.length === 0 && <div className="tarjeta p-8 text-center text-tenue">Sin asientos en {anio}.</div>}
+      {asientos.length === 0 && <div className="tarjeta p-8 text-center text-tenue">Sin asientos en el período.</div>}
       {asientos.map((a) => (
-        <section key={a.id} className={`tarjeta ${a.anulado ? 'opacity-50' : ''}`}>
+        <section key={a.id} id={`n${a.numero}`} className={`tarjeta scroll-mt-4 ${a.anulado ? 'opacity-50' : ''}`}>
           <header className="flex flex-wrap items-center gap-3 border-b border-borde px-4 py-2 text-sm">
-            <span className="num font-semibold">N° {a.numero}</span>
+            <Link href={`/e/${empresaId}/asientos/${a.id}`} className="num font-semibold hover:text-acento" title="Ver comprobante">N° {a.numero}</Link>
             <span className="num text-tenue">{fechaCL(a.fecha)}</span>
             <span className="min-w-0 flex-1 truncate">{a.glosa}</span>
             {a.anulado && <span className="rounded bg-peligro/20 px-2 py-0.5 text-xs font-semibold text-peligro" title={a.motivo_anulacion ?? ''}>ANULADO</span>}

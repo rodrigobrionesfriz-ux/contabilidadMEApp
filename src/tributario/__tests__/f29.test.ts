@@ -1,0 +1,50 @@
+import { describe, it, expect } from 'vitest';
+import oro from '../__fixtures__/f29-oro.json';
+import { calcularF29Anual, reajustarRemanente, type EntradaF29 } from '../f29';
+
+interface Caso { nombre: string; entrada: Record<string, unknown> & { tasaPPM: number; anterior: object; items: object; ventas: never[]; compras: never[]; honorarios: never[]; asientos: { anulado?: boolean; tipo: string; fecha: string; periodo?: string; movs: { cd: string; debe: number; haber: number }[] }[] }; resultado: unknown[] }
+
+describe('F29 (igual al sistema actual)', () => {
+  for (const c of (oro as unknown as { casos: Caso[] }).casos) {
+    it(c.nombre, () => {
+      const iusc: Record<string, number> = {};
+      for (const a of c.entrada.asientos) {
+        if (a.anulado || a.tipo !== 'remuneraciones') continue;
+        const p = a.periodo ?? a.fecha.slice(0, 7);
+        iusc[p] = (iusc[p] ?? 0) + a.movs.reduce((s, m) => s + (m.cd === '2104002' ? m.haber - m.debe : 0), 0);
+      }
+      const e: EntradaF29 = {
+        anio: 2026, tasaPPM: c.entrada.tasaPPM, ventas: c.entrada.ventas, compras: c.entrada.compras, honorarios: c.entrada.honorarios,
+        iusc, declaraciones: c.entrada.items as EntradaF29['declaraciones'], anteriores: c.entrada.anterior as EntradaF29['anteriores'],
+      };
+      expect(JSON.parse(JSON.stringify(calcularF29Anual(e)))).toEqual(c.resultado);
+    });
+  }
+  it('reajuste del remanente como el SII (ej. dic-2024)', () => {
+    expect(reajustarRemanente(176181, 67429, 67294)).toEqual({ monto: 175637, utm: 2.61, reajustado: true });
+  });
+});
+
+import { compensacionIVA, pagoF29, montosSugeridos } from '../asientos-f29';
+describe('asientos del F29', () => {
+  const caso = (oro as unknown as { casos: { resultado: unknown[] }[] }).casos[1];
+  const meses = caso.resultado as Parameters<typeof compensacionIVA>[0][];
+  it('la compensación cuadra en todos los meses (con y sin PPM)', () => {
+    for (const m of meses) {
+      expect(compensacionIVA(m, 2026, false).cuadra, `mes ${m.m}`).toBe(true);
+      expect(compensacionIVA(m, 2026, true).cuadra).toBe(true);
+    }
+  });
+  it('mayo: imputa el remanente y deja IVA a pagar en 2104002 cuando corresponde', () => {
+    const may = meses[4];
+    const c = compensacionIVA(may, 2026, false);
+    expect(c.lineas.find((l) => l.cuenta === '2103003')?.debe).toBe(950000);
+    const rem = c.lineas.find((l) => l.cuenta === '1108007');
+    expect(rem && rem.haber > 0 ? rem.haber : rem?.debe).toBeDefined();
+  });
+  it('pago F29 suma conceptos y abona el banco', () => {
+    const p = pagoF29(meses[0], 2026, montosSugeridos(meses[0]), '1101201');
+    expect(p.lineas.at(-1)).toMatchObject({ cuenta: '1101201', haber: p.total });
+    expect(p.total).toBe(meses[0].ppm + meses[0].retencionHon + meses[0].iusc + meses[0].ivaAPagar);
+  });
+});

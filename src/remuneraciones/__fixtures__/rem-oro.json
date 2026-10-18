@@ -1,0 +1,5394 @@
+{
+ "uf": 41247.63,
+ "utm": 72151,
+ "trabajadores": [
+  {
+   "id": "t1",
+   "nombre": "Ana Base",
+   "rut": "11111111-1",
+   "base": 600000,
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 0,
+   "colacion": 50000,
+   "movilizacion": 40000,
+   "afp": "habitat",
+   "salud": "fonasa",
+   "plan": 0,
+   "contrato": "indefinido",
+   "lre": {}
+  },
+  {
+   "id": "t2",
+   "nombre": "Beto Alto",
+   "rut": "22222222-2",
+   "base": 4500000,
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 300000,
+   "colacion": 0,
+   "movilizacion": 0,
+   "afp": "capital",
+   "salud": "banmedica",
+   "plan": 6.5,
+   "contrato": "indefinido",
+   "lre": {}
+  },
+  {
+   "id": "t3",
+   "nombre": "Cata Monto",
+   "rut": "33333333-3",
+   "base": 800000,
+   "grat": 150000,
+   "otros": 50000,
+   "colacion": 30000,
+   "movilizacion": 30000,
+   "afp": "modelo",
+   "salud": "colmena",
+   "plan": 1.2,
+   "contrato": "plazo",
+   "lre": {}
+  },
+  {
+   "id": "t4",
+   "nombre": "Dani Hora",
+   "rut": "44444444-4",
+   "tipoPago": "hora",
+   "valorHora": 5000,
+   "horasMes": 80,
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 0,
+   "colacion": 20000,
+   "movilizacion": 0,
+   "afp": "uno",
+   "salud": "fonasa",
+   "plan": 0,
+   "contrato": "plazo",
+   "lre": {}
+  },
+  {
+   "id": "t5",
+   "nombre": "Eli Licencia",
+   "rut": "55555555-5",
+   "base": 900000,
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 0,
+   "colacion": 40000,
+   "movilizacion": 40000,
+   "afp": "provida",
+   "salud": "fonasa",
+   "plan": 0,
+   "contrato": "indefinido",
+   "lre": {
+    "cargasLegales": "2",
+    "cargasInvalidez": "1"
+   }
+  },
+  {
+   "id": "t6",
+   "nombre": "Fran Ingreso",
+   "rut": "66666666-6",
+   "base": 700000,
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 0,
+   "colacion": 0,
+   "movilizacion": 0,
+   "afp": "planvital",
+   "salud": "fonasa",
+   "plan": 0,
+   "contrato": "indefinido",
+   "lre": {
+    "fechaInicio": "2026-03-16",
+    "puestoPesado": "pesado"
+   }
+  },
+  {
+   "id": "t7",
+   "nombre": "Gabo Pensionado",
+   "rut": "77777777-7",
+   "base": 1200000,
+   "gratifModo": "monto",
+   "grat": 0,
+   "otros": 0,
+   "colacion": 0,
+   "movilizacion": 0,
+   "afp": "cuprum",
+   "salud": "fonasa",
+   "plan": 0,
+   "contrato": "indefinido11",
+   "tipoTrabajador": "1",
+   "lre": {
+    "cargasLegales": "1",
+    "tramoAsignacion": "B"
+   }
+  },
+  {
+   "id": "t8",
+   "nombre": "Hugo Termino",
+   "rut": "88888888-8",
+   "base": 650000,
+   "gratifModo": "pct",
+   "gratifPct": 25,
+   "otros": 0,
+   "colacion": 0,
+   "movilizacion": 0,
+   "afp": "habitat",
+   "salud": "fonasa",
+   "plan": 0,
+   "contrato": "plazo",
+   "lre": {
+    "fechaTermino": "2026-02-10",
+    "rentaMinima": "especial"
+   }
+  },
+  {
+   "id": "t9",
+   "nombre": "Ivo Antiguo",
+   "rut": "99999999-9",
+   "base": 500000,
+   "grat": 100000,
+   "otros": 0,
+   "colacion": 0,
+   "movilizacion": 0,
+   "afp": "habitat",
+   "salud": "fonasa",
+   "plan": 0,
+   "contrato": "indefinido",
+   "lre": {
+    "cargasLegales": "1"
+   },
+   "anticipos": [
+    {
+     "id": "an1",
+     "fecha": "2026-03-10",
+     "monto": 100000,
+     "motivo": "Adelanto"
+    },
+    {
+     "id": "an2",
+     "fecha": "2026-02-25",
+     "monto": 50000,
+     "mesDesc": "2026-03"
+    },
+    {
+     "id": "an3",
+     "fecha": "2026-04-02",
+     "monto": 9999
+    }
+   ]
+  }
+ ],
+ "asistencia": {
+  "eventos": [
+   {
+    "id": "e1",
+    "trab": "t5",
+    "tipo": "licencia",
+    "licTipo": "1",
+    "desde": "2026-03-05",
+    "hasta": "2026-03-14"
+   },
+   {
+    "id": "e2",
+    "trab": "t5",
+    "tipo": "vacaciones",
+    "desde": "2026-03-20",
+    "hasta": "2026-03-31"
+   },
+   {
+    "id": "e3",
+    "trab": "t1",
+    "tipo": "permiso_sin",
+    "desde": "2026-02-27",
+    "hasta": "2026-02-28"
+   },
+   {
+    "id": "e4",
+    "trab": "t3",
+    "tipo": "ausencia",
+    "desde": "2026-03-02",
+    "hasta": "2026-03-02"
+   },
+   {
+    "id": "e5",
+    "trab": "t3",
+    "tipo": "licencia",
+    "desde": "2026-03-02",
+    "hasta": "2026-03-03"
+   },
+   {
+    "id": "e6",
+    "trab": "t2",
+    "tipo": "licencia",
+    "desde": "2026-01-20",
+    "hasta": "2026-03-31"
+   }
+  ],
+  "horas": {
+   "2026-03": {
+    "t4": 96
+   }
+  }
+ },
+ "libroRem": {
+  "2025-07": {
+   "lineas": [
+    {
+     "id": "t9",
+     "totalImponible": 600000
+    }
+   ]
+  },
+  "2025-08": {
+   "lineas": [
+    {
+     "id": "t9",
+     "totalImponible": 1000000
+    }
+   ]
+  }
+ },
+ "indicadores": {
+  "uf": 41247.63,
+  "utm": 72151,
+  "uta": 865812,
+  "dolar": 933,
+  "euro": 1065.07,
+  "topeAFP_UF": 90,
+  "topeCesantia_UF": 135.2,
+  "ingresoMinimo": 553553,
+  "gratifPct": 25,
+  "gratifTopeIMM": 4.75,
+  "tasaAFP": 10,
+  "tasaSalud": 7,
+  "tasaCesantiaTrab": 0.6,
+  "factorCM": 3.4,
+  "retHonorarios": 15.25,
+  "retHonorariosManual": false,
+  "asigFamA_hasta": 649039,
+  "asigFamA_monto": 22601,
+  "asigFamB_hasta": 947990,
+  "asigFamB_monto": 13870,
+  "asigFamC_hasta": 1478539,
+  "asigFamC_monto": 4382,
+  "rentaMinimaEspecial": 412938,
+  "rentaMinimaCasa": 553553,
+  "rentaMinimaNoRem": 356815,
+  "tpPesadoEmp": 2,
+  "tpPesadoTrab": 2,
+  "tpMenosEmp": 1,
+  "tpMenosTrab": 1
+ },
+ "previsional": {
+  "afps": [
+   {
+    "k": "capital",
+    "nm": "AFP Capital",
+    "comision": 1.44
+   },
+   {
+    "k": "cuprum",
+    "nm": "AFP Cuprum",
+    "comision": 1.44
+   },
+   {
+    "k": "habitat",
+    "nm": "AFP Habitat",
+    "comision": 1.27
+   },
+   {
+    "k": "modelo",
+    "nm": "AFP Modelo",
+    "comision": 0.58
+   },
+   {
+    "k": "planvital",
+    "nm": "AFP PlanVital",
+    "comision": 1.16
+   },
+   {
+    "k": "provida",
+    "nm": "AFP ProVida",
+    "comision": 1.45
+   },
+   {
+    "k": "uno",
+    "nm": "AFP Uno",
+    "comision": 0.46
+   }
+  ],
+  "isapres": [
+   {
+    "k": "fonasa",
+    "nm": "Fonasa"
+   },
+   {
+    "k": "banmedica",
+    "nm": "Isapre Banmédica"
+   },
+   {
+    "k": "colmena",
+    "nm": "Isapre Colmena Golden Cross"
+   },
+   {
+    "k": "consalud",
+    "nm": "Isapre Consalud"
+   },
+   {
+    "k": "cruzblanca",
+    "nm": "Isapre Cruz Blanca"
+   },
+   {
+    "k": "esencial",
+    "nm": "Isapre Esencial"
+   },
+   {
+    "k": "nuevamasvida",
+    "nm": "Isapre Nueva Masvida"
+   },
+   {
+    "k": "vidatres",
+    "nm": "Isapre Vida Tres"
+   },
+   {
+    "k": "fundacion",
+    "nm": "Isapre Fundación"
+   }
+  ],
+  "mutuales": [
+   {
+    "k": "achs",
+    "nm": "ACHS — Asociación Chilena de Seguridad"
+   },
+   {
+    "k": "mutual",
+    "nm": "Mutual de Seguridad CChC"
+   },
+   {
+    "k": "ist",
+    "nm": "IST — Instituto de Seguridad del Trabajo"
+   },
+   {
+    "k": "isl",
+    "nm": "ISL — Instituto de Seguridad Laboral (estatal)"
+   }
+  ],
+  "cajas": [
+   {
+    "k": "ninguna",
+    "nm": "Sin caja de compensación"
+   },
+   {
+    "k": "losandes",
+    "nm": "Caja Los Andes"
+   },
+   {
+    "k": "laaraucana",
+    "nm": "Caja La Araucana"
+   },
+   {
+    "k": "18septiembre",
+    "nm": "Caja 18 de Septiembre"
+   },
+   {
+    "k": "gabriela",
+    "nm": "Caja Gabriela Mistral"
+   }
+  ],
+  "patronal": {
+   "sis": 1.78,
+   "mutualBase": 0.9,
+   "mutualAdicional": 0,
+   "mutualSanna": 0.03,
+   "mutualExtra": 0,
+   "islBase": 0.9,
+   "islAdicional": 0,
+   "islSanna": 0.03,
+   "islExtra": 0,
+   "afcIndefinido": 2.4,
+   "afcTrabIndefinido": 0.6,
+   "afcPlazoFijo": 3,
+   "afcTrabPlazoFijo": 0,
+   "afcIndef11": 0.8,
+   "afcTrabIndef11": 0,
+   "cajaCompensacion": 0,
+   "ccafSaludCaja": 4.2,
+   "ccafSaludFonasa": 2.8,
+   "mutualInstitucion": "achs",
+   "cajaInstitucion": "ninguna"
+  }
+ },
+ "iuscTabla": [
+  {
+   "desde": 0,
+   "hasta": 13.5,
+   "factor": 0,
+   "rebajaUTM": 0
+  },
+  {
+   "desde": 13.5,
+   "hasta": 30,
+   "factor": 0.04,
+   "rebajaUTM": 0.54
+  },
+  {
+   "desde": 30,
+   "hasta": 50,
+   "factor": 0.08,
+   "rebajaUTM": 1.74
+  },
+  {
+   "desde": 50,
+   "hasta": 70,
+   "factor": 0.135,
+   "rebajaUTM": 4.49
+  },
+  {
+   "desde": 70,
+   "hasta": 90,
+   "factor": 0.23,
+   "rebajaUTM": 11.14
+  },
+  {
+   "desde": 90,
+   "hasta": 120,
+   "factor": 0.304,
+   "rebajaUTM": 17.8
+  },
+  {
+   "desde": 120,
+   "hasta": 310,
+   "factor": 0.35,
+   "rebajaUTM": 23.32
+  },
+  {
+   "desde": 310,
+   "hasta": 1000000000,
+   "factor": 0.4,
+   "rebajaUTM": 38.82
+  }
+ ],
+ "reforma": [
+  {
+   "desde": "2025-08",
+   "capInd": 0.1,
+   "cev": 0.9,
+   "crp": 0
+  },
+  {
+   "desde": "2026-08",
+   "capInd": 0.1,
+   "cev": null,
+   "crp": 0.9
+  },
+  {
+   "desde": "2027-08",
+   "capInd": 0.25,
+   "cev": null,
+   "crp": 1.5
+  },
+  {
+   "desde": "2028-08",
+   "capInd": 1,
+   "cev": null,
+   "crp": 1.5
+  },
+  {
+   "desde": "2029-08",
+   "capInd": 1.7,
+   "cev": null,
+   "crp": 1.5
+  },
+  {
+   "desde": "2030-08",
+   "capInd": 2.4,
+   "cev": null,
+   "crp": 1.5
+  },
+  {
+   "desde": "2031-08",
+   "capInd": 3.1,
+   "cev": null,
+   "crp": 1.5
+  },
+  {
+   "desde": "2032-08",
+   "capInd": 3.8,
+   "cev": null,
+   "crp": 1.5
+  },
+  {
+   "desde": "2033-08",
+   "capInd": 4.5,
+   "cev": null,
+   "crp": 1.5
+  }
+ ],
+ "casos": [
+  {
+   "mes": 2,
+   "trab": "t1",
+   "asis": {
+    "periodo": "2026-02",
+    "diasPagados": 26,
+    "factor": 0.8666666666666667,
+    "diasLicencia": 0,
+    "diasPermisoSin": 4,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 4,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [
+     {
+      "id": "e3",
+      "trab": "t1",
+      "tipo": "permiso_sin",
+      "desde": "2026-02-27",
+      "hasta": "2026-02-28"
+     }
+    ],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 11570,
+     "mutual": 6045,
+     "afc": 15600,
+     "caja": 0,
+     "capInd": 650,
+     "cev": 5850,
+     "crp": 0,
+     "total": 39715,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 11570,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 650,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 5850,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 6045,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 15600,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 767715,
+    "base": 520000,
+    "baseContrato": 600000,
+    "otros": 0,
+    "colacion": 43333,
+    "movilizacion": 34667,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0.8666666666666667,
+    "asis": {
+     "periodo": "2026-02",
+     "diasPagados": 26,
+     "factor": 0.8666666666666667,
+     "diasLicencia": 0,
+     "diasPermisoSin": 4,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 4,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [
+      {
+       "id": "e3",
+       "trab": "t1",
+       "tipo": "permiso_sin",
+       "desde": "2026-02-27",
+       "hasta": "2026-02-28"
+      }
+     ],
+     "completo": false
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 130000,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 130000,
+     "tope": 189900,
+     "monto": 130000,
+     "topeAplicado": false
+    },
+    "totalImponible": 650000,
+    "totalNoImponible": 78000,
+    "totalHaberes": 728000,
+    "baseAFP": 650000,
+    "baseCes": 650000,
+    "baseSIS": 650000,
+    "baseAFC": 650000,
+    "descAFP": 73255,
+    "descAFP_pension": 65000,
+    "descAFP_comision": 8255,
+    "descSalud": 45500,
+    "saludLegal": 45500,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 3900,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "B",
+     "manual": false,
+     "ingreso": 750000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 26,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 122655,
+    "baseTributable": 527345,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 7.308907707446882,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 122655,
+    "liquido": 605345,
+    "afpNm": "AFP Habitat",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 2,
+   "trab": "t2",
+   "asis": {
+    "periodo": "2026-02",
+    "diasPagados": 0,
+    "factor": 0,
+    "diasLicencia": 30,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 30,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [
+     {
+      "id": "e6",
+      "trab": "t2",
+      "tipo": "licencia",
+      "desde": "2026-01-20",
+      "hasta": "2026-03-31"
+     }
+    ],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 66079,
+     "mutual": 0,
+     "afc": 120459,
+     "caja": 0,
+     "capInd": 0,
+     "cev": 33411,
+     "crp": 0,
+     "total": 219949,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 66079,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 33411,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 0,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 120459,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 219949,
+    "base": 0,
+    "baseContrato": 4500000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0,
+    "asis": {
+     "periodo": "2026-02",
+     "diasPagados": 0,
+     "factor": 0,
+     "diasLicencia": 30,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 30,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [
+      {
+       "id": "e6",
+       "trab": "t2",
+       "tipo": "licencia",
+       "desde": "2026-01-20",
+       "hasta": "2026-03-31"
+      }
+     ],
+     "completo": false
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 0,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 0,
+     "tope": 0,
+     "monto": 0,
+     "topeAplicado": false
+    },
+    "totalImponible": 0,
+    "totalNoImponible": 0,
+    "totalHaberes": 0,
+    "baseAFP": 0,
+    "baseCes": 0,
+    "baseSIS": 3712287,
+    "baseAFC": 5019115,
+    "descAFP": 0,
+    "descAFP_pension": 0,
+    "descAFP_comision": 0,
+    "descSalud": 268110,
+    "saludLegal": 0,
+    "adicionalIsapre": 268110,
+    "planUF": 6.5,
+    "planPesos": 268110,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "A",
+     "manual": false,
+     "ingreso": 0,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 0,
+     "proporcional": true,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 268110,
+    "baseTributable": -268110,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": null,
+     "idx": -1,
+     "baseUTM": 0,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 268110,
+    "liquido": -268110,
+    "afpNm": "AFP Capital",
+    "saludNm": "Isapre Banmédica",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 2,
+   "trab": "t3",
+   "asis": {
+    "periodo": "2026-02",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 17800,
+     "mutual": 9300,
+     "afc": 30000,
+     "caja": 0,
+     "capInd": 1000,
+     "cev": 9000,
+     "crp": 0,
+     "total": 67100,
+     "mutualTasa": 0.93,
+     "afcTasa": 3,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 17800,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 1000,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 9000,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 9300,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (plazo fijo / obra o faena)",
+       "tasa": 3,
+       "monto": 30000,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 1127100,
+    "base": 800000,
+    "baseContrato": 800000,
+    "otros": 50000,
+    "colacion": 30000,
+    "movilizacion": 30000,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-02",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0,
+    "grat": 150000,
+    "gratModo": "monto",
+    "gratInfo": null,
+    "totalImponible": 1000000,
+    "totalNoImponible": 60000,
+    "totalHaberes": 1060000,
+    "baseAFP": 1000000,
+    "baseCes": 1000000,
+    "baseSIS": 1000000,
+    "baseAFC": 1000000,
+    "descAFP": 105800,
+    "descAFP_pension": 100000,
+    "descAFP_comision": 5800,
+    "descSalud": 70000,
+    "saludLegal": 70000,
+    "adicionalIsapre": 0,
+    "planUF": 1.2,
+    "planPesos": 49497,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "C",
+     "manual": false,
+     "ingreso": 1000000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 175800,
+    "baseTributable": 824200,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 11.423265096810855,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 175800,
+    "liquido": 884200,
+    "afpNm": "AFP Modelo",
+    "saludNm": "Isapre Colmena Golden Cross",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 2,
+   "trab": "t4",
+   "asis": {
+    "periodo": "2026-02",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": true,
+    "horas": 80,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 8900,
+     "mutual": 4650,
+     "afc": 15000,
+     "caja": 0,
+     "capInd": 500,
+     "cev": 4500,
+     "crp": 0,
+     "total": 33550,
+     "mutualTasa": 0.93,
+     "afcTasa": 3,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 8900,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 500,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 4500,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 4650,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (plazo fijo / obra o faena)",
+       "tasa": 3,
+       "monto": 15000,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 553550,
+    "base": 400000,
+    "baseContrato": 400000,
+    "otros": 0,
+    "colacion": 20000,
+    "movilizacion": 0,
+    "porHora": true,
+    "horas": 80,
+    "valorHora": 5000,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-02",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": true,
+     "horas": 80,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0,
+    "grat": 100000,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 100000,
+     "tope": 219115,
+     "monto": 100000,
+     "topeAplicado": false
+    },
+    "totalImponible": 500000,
+    "totalNoImponible": 20000,
+    "totalHaberes": 520000,
+    "baseAFP": 500000,
+    "baseCes": 500000,
+    "baseSIS": 500000,
+    "baseAFC": 500000,
+    "descAFP": 52300,
+    "descAFP_pension": 50000,
+    "descAFP_comision": 2300,
+    "descSalud": 35000,
+    "saludLegal": 35000,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "A",
+     "manual": false,
+     "ingreso": 500000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 87300,
+    "baseTributable": 412700,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 5.719948441463043,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 87300,
+    "liquido": 432700,
+    "afpNm": "AFP Uno",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 2,
+   "trab": "t5",
+   "asis": {
+    "periodo": "2026-02",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 19920,
+     "mutual": 10408,
+     "afc": 26859,
+     "caja": 0,
+     "capInd": 1119,
+     "cev": 10072,
+     "crp": 0,
+     "total": 68378,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 19920,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 1119,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 10072,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 10408,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 26859,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 1267493,
+    "base": 900000,
+    "baseContrato": 900000,
+    "otros": 0,
+    "colacion": 40000,
+    "movilizacion": 40000,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-02",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 219115,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 225000,
+     "tope": 219115,
+     "monto": 219115,
+     "topeAplicado": true
+    },
+    "totalImponible": 1119115,
+    "totalNoImponible": 97528,
+    "totalHaberes": 1216643,
+    "baseAFP": 1119115,
+    "baseCes": 1119115,
+    "baseSIS": 1119115,
+    "baseAFC": 1119115,
+    "descAFP": 128139,
+    "descAFP_pension": 111912,
+    "descAFP_comision": 16227,
+    "descSalud": 78338,
+    "saludLegal": 78338,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 6715,
+    "asigFamiliar": 17528,
+    "af": {
+     "tramo": "C",
+     "tramoIngreso": "C",
+     "manual": false,
+     "ingreso": 1119115,
+     "fuente": "renta imponible del mes",
+     "valor": 4382,
+     "cargas": {
+      "simples": 2,
+      "maternales": 0,
+      "invalidas": 1,
+      "total": 3,
+      "equivalentes": 4
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 17528
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 213192,
+    "baseTributable": 905923,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 12.555931310723343,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 213192,
+    "liquido": 1003451,
+    "afpNm": "AFP ProVida",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 2,
+   "trab": "t6",
+   "asis": {
+    "periodo": "2026-02",
+    "diasPagados": 0,
+    "factor": 0,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 30,
+    "diasNoPagados": 30,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 0,
+     "mutual": 0,
+     "afc": 0,
+     "caja": 0,
+     "capInd": 0,
+     "cev": 0,
+     "crp": 0,
+     "total": 0,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 0,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 0,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 0,
+    "base": 0,
+    "baseContrato": 700000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0,
+    "asis": {
+     "periodo": "2026-02",
+     "diasPagados": 0,
+     "factor": 0,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 30,
+     "diasNoPagados": 30,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": false
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 0,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 0,
+     "tope": 0,
+     "monto": 0,
+     "topeAplicado": false
+    },
+    "totalImponible": 0,
+    "totalNoImponible": 0,
+    "totalHaberes": 0,
+    "baseAFP": 0,
+    "baseCes": 0,
+    "baseSIS": 0,
+    "baseAFC": 0,
+    "descAFP": 0,
+    "descAFP_pension": 0,
+    "descAFP_comision": 0,
+    "descSalud": 0,
+    "saludLegal": 0,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "A",
+     "manual": false,
+     "ingreso": 0,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 0,
+     "proporcional": true,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "pesado",
+    "tasasTP": {
+     "emp": 2,
+     "trab": 2
+    },
+    "totalPrevisional": 0,
+    "baseTributable": 0,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": null,
+     "idx": -1,
+     "baseUTM": 0,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 0,
+    "liquido": 0,
+    "afpNm": "AFP PlanVital",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 2,
+   "trab": "t7",
+   "asis": {
+    "periodo": "2026-02",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 0,
+     "mutual": 11160,
+     "afc": 9600,
+     "caja": 0,
+     "capInd": 0,
+     "cev": 0,
+     "crp": 0,
+     "total": 20760,
+     "mutualTasa": 0.93,
+     "afcTasa": 0.8,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 11160,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido, más de 11 años)",
+       "tasa": 0.8,
+       "monto": 9600,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 1220760,
+    "base": 1200000,
+    "baseContrato": 1200000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-02",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0,
+    "grat": 0,
+    "gratModo": "monto",
+    "gratInfo": null,
+    "totalImponible": 1200000,
+    "totalNoImponible": 13870,
+    "totalHaberes": 1213870,
+    "baseAFP": 1200000,
+    "baseCes": 1200000,
+    "baseSIS": 1200000,
+    "baseAFC": 1200000,
+    "descAFP": 137280,
+    "descAFP_pension": 120000,
+    "descAFP_comision": 17280,
+    "descSalud": 84000,
+    "saludLegal": 84000,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 13870,
+    "af": {
+     "tramo": "B",
+     "tramoIngreso": "B",
+     "manual": true,
+     "ingreso": 1200000,
+     "fuente": "renta imponible del mes",
+     "valor": 13870,
+     "cargas": {
+      "simples": 1,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 1,
+      "equivalentes": 1
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 13870
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 221280,
+    "baseTributable": 978720,
+    "iusc": 187,
+    "iuscDet": {
+     "impuesto": 187,
+     "tramo": {
+      "desde": 13.5,
+      "hasta": 30,
+      "factor": 0.04,
+      "rebajaUTM": 0.54
+     },
+     "idx": 1,
+     "baseUTM": 13.564884755582042,
+     "factor": 0.04,
+     "rebaja": 38961.54
+    },
+    "totalDescuentos": 221467,
+    "liquido": 992403,
+    "afpNm": "AFP Cuprum",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 2,
+   "trab": "t8",
+   "asis": {
+    "periodo": "2026-02",
+    "diasPagados": 10,
+    "factor": 0.3333333333333333,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 20,
+    "diasNoPagados": 20,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 4821,
+     "mutual": 2519,
+     "afc": 8125,
+     "caja": 0,
+     "capInd": 271,
+     "cev": 2438,
+     "crp": 0,
+     "total": 18174,
+     "mutualTasa": 0.93,
+     "afcTasa": 3,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 4821,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 271,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 2438,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 2519,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (plazo fijo / obra o faena)",
+       "tasa": 3,
+       "monto": 8125,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 289008,
+    "base": 216667,
+    "baseContrato": 650000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0.3333333333333333,
+    "asis": {
+     "periodo": "2026-02",
+     "diasPagados": 10,
+     "factor": 0.3333333333333333,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 20,
+     "diasNoPagados": 20,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": false
+    },
+    "tasaCesTrab": 0,
+    "grat": 54167,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 54167,
+     "tope": 73038,
+     "monto": 54167,
+     "topeAplicado": false
+    },
+    "totalImponible": 270834,
+    "totalNoImponible": 0,
+    "totalHaberes": 270834,
+    "baseAFP": 270834,
+    "baseCes": 270834,
+    "baseSIS": 270834,
+    "baseAFC": 270834,
+    "descAFP": 30523,
+    "descAFP_pension": 27083,
+    "descAFP_comision": 3440,
+    "descSalud": 18958,
+    "saludLegal": 18958,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "B",
+     "manual": false,
+     "ingreso": 812502,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 10,
+     "proporcional": true,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 49481,
+    "baseTributable": 221353,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 3.0679131266371913,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 49481,
+    "liquido": 221353,
+    "afpNm": "AFP Habitat",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 2,
+   "trab": "t9",
+   "asis": {
+    "periodo": "2026-02",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 10680,
+     "mutual": 5580,
+     "afc": 14400,
+     "caja": 0,
+     "capInd": 600,
+     "cev": 5400,
+     "crp": 0,
+     "total": 36660,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 10680,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 600,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 5400,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 5580,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 14400,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 636660,
+    "base": 500000,
+    "baseContrato": 500000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-02",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 100000,
+    "gratModo": "monto",
+    "gratInfo": null,
+    "totalImponible": 600000,
+    "totalNoImponible": 13870,
+    "totalHaberes": 613870,
+    "baseAFP": 600000,
+    "baseCes": 600000,
+    "baseSIS": 600000,
+    "baseAFC": 600000,
+    "descAFP": 67620,
+    "descAFP_pension": 60000,
+    "descAFP_comision": 7620,
+    "descSalud": 42000,
+    "saludLegal": 42000,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 3600,
+    "asigFamiliar": 13870,
+    "af": {
+     "tramo": "B",
+     "tramoIngreso": "B",
+     "manual": false,
+     "ingreso": 800000,
+     "fuente": "promedio semestre anterior (2 meses)",
+     "valor": 13870,
+     "cargas": {
+      "simples": 1,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 1,
+      "equivalentes": 1
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 13870
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 113220,
+    "baseTributable": 486780,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 6.746684037643276,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 113220,
+    "liquido": 500650,
+    "afpNm": "AFP Habitat",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 3,
+   "trab": "t1",
+   "asis": {
+    "periodo": "2026-03",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 13350,
+     "mutual": 6975,
+     "afc": 18000,
+     "caja": 0,
+     "capInd": 750,
+     "cev": 6750,
+     "crp": 0,
+     "total": 45825,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 13350,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 750,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 6750,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 6975,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 18000,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 885825,
+    "base": 600000,
+    "baseContrato": 600000,
+    "otros": 0,
+    "colacion": 50000,
+    "movilizacion": 40000,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-03",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 150000,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 150000,
+     "tope": 219115,
+     "monto": 150000,
+     "topeAplicado": false
+    },
+    "totalImponible": 750000,
+    "totalNoImponible": 90000,
+    "totalHaberes": 840000,
+    "baseAFP": 750000,
+    "baseCes": 750000,
+    "baseSIS": 750000,
+    "baseAFC": 750000,
+    "descAFP": 84525,
+    "descAFP_pension": 75000,
+    "descAFP_comision": 9525,
+    "descSalud": 52500,
+    "saludLegal": 52500,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 4500,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "B",
+     "manual": false,
+     "ingreso": 750000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 141525,
+    "baseTributable": 608475,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 8.433355047054095,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 141525,
+    "liquido": 698475,
+    "afpNm": "AFP Habitat",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 3,
+   "trab": "t2",
+   "asis": {
+    "periodo": "2026-03",
+    "diasPagados": 0,
+    "factor": 0,
+    "diasLicencia": 30,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 30,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [
+     {
+      "id": "e6",
+      "trab": "t2",
+      "tipo": "licencia",
+      "desde": "2026-01-20",
+      "hasta": "2026-03-31"
+     }
+    ],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 66079,
+     "mutual": 0,
+     "afc": 120459,
+     "caja": 0,
+     "capInd": 0,
+     "cev": 33411,
+     "crp": 0,
+     "total": 219949,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 66079,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 33411,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 0,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 120459,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 219949,
+    "base": 0,
+    "baseContrato": 4500000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0,
+    "asis": {
+     "periodo": "2026-03",
+     "diasPagados": 0,
+     "factor": 0,
+     "diasLicencia": 30,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 30,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [
+      {
+       "id": "e6",
+       "trab": "t2",
+       "tipo": "licencia",
+       "desde": "2026-01-20",
+       "hasta": "2026-03-31"
+      }
+     ],
+     "completo": false
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 0,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 0,
+     "tope": 0,
+     "monto": 0,
+     "topeAplicado": false
+    },
+    "totalImponible": 0,
+    "totalNoImponible": 0,
+    "totalHaberes": 0,
+    "baseAFP": 0,
+    "baseCes": 0,
+    "baseSIS": 3712287,
+    "baseAFC": 5019115,
+    "descAFP": 0,
+    "descAFP_pension": 0,
+    "descAFP_comision": 0,
+    "descSalud": 268110,
+    "saludLegal": 0,
+    "adicionalIsapre": 268110,
+    "planUF": 6.5,
+    "planPesos": 268110,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "A",
+     "manual": false,
+     "ingreso": 0,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 0,
+     "proporcional": true,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 268110,
+    "baseTributable": -268110,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": null,
+     "idx": -1,
+     "baseUTM": 0,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 268110,
+    "liquido": -268110,
+    "afpNm": "AFP Capital",
+    "saludNm": "Isapre Banmédica",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 3,
+   "trab": "t3",
+   "asis": {
+    "periodo": "2026-03",
+    "diasPagados": 28,
+    "factor": 0.9333333333333333,
+    "diasLicencia": 2,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 2,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [
+     {
+      "id": "e4",
+      "trab": "t3",
+      "tipo": "ausencia",
+      "desde": "2026-03-02",
+      "hasta": "2026-03-02"
+     },
+     {
+      "id": "e5",
+      "trab": "t3",
+      "tipo": "licencia",
+      "desde": "2026-03-02",
+      "hasta": "2026-03-03"
+     }
+    ],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 17800,
+     "mutual": 8680,
+     "afc": 30000,
+     "caja": 0,
+     "capInd": 933,
+     "cev": 9000,
+     "crp": 0,
+     "total": 66413,
+     "mutualTasa": 0.93,
+     "afcTasa": 3,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 17800,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 933,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 9000,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 8680,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (plazo fijo / obra o faena)",
+       "tasa": 3,
+       "monto": 30000,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 1055747,
+    "base": 746667,
+    "baseContrato": 800000,
+    "otros": 46667,
+    "colacion": 28000,
+    "movilizacion": 28000,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0.9333333333333333,
+    "asis": {
+     "periodo": "2026-03",
+     "diasPagados": 28,
+     "factor": 0.9333333333333333,
+     "diasLicencia": 2,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 2,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [
+      {
+       "id": "e4",
+       "trab": "t3",
+       "tipo": "ausencia",
+       "desde": "2026-03-02",
+       "hasta": "2026-03-02"
+      },
+      {
+       "id": "e5",
+       "trab": "t3",
+       "tipo": "licencia",
+       "desde": "2026-03-02",
+       "hasta": "2026-03-03"
+      }
+     ],
+     "completo": false
+    },
+    "tasaCesTrab": 0,
+    "grat": 140000,
+    "gratModo": "monto",
+    "gratInfo": null,
+    "totalImponible": 933334,
+    "totalNoImponible": 56000,
+    "totalHaberes": 989334,
+    "baseAFP": 933334,
+    "baseCes": 933334,
+    "baseSIS": 1000001,
+    "baseAFC": 1000001,
+    "descAFP": 98747,
+    "descAFP_pension": 93333,
+    "descAFP_comision": 5414,
+    "descSalud": 65333,
+    "saludLegal": 65333,
+    "adicionalIsapre": 0,
+    "planUF": 1.2,
+    "planPesos": 49497,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "C",
+     "manual": false,
+     "ingreso": 1000001,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 28,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 164080,
+    "baseTributable": 769254,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 10.661723330237972,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 164080,
+    "liquido": 825254,
+    "afpNm": "AFP Modelo",
+    "saludNm": "Isapre Colmena Golden Cross",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 3,
+   "trab": "t4",
+   "asis": {
+    "periodo": "2026-03",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": true,
+    "horas": 96,
+    "horasIngresadas": true,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 10680,
+     "mutual": 5580,
+     "afc": 18000,
+     "caja": 0,
+     "capInd": 600,
+     "cev": 5400,
+     "crp": 0,
+     "total": 40260,
+     "mutualTasa": 0.93,
+     "afcTasa": 3,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 10680,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 600,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 5400,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 5580,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (plazo fijo / obra o faena)",
+       "tasa": 3,
+       "monto": 18000,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 660260,
+    "base": 480000,
+    "baseContrato": 480000,
+    "otros": 0,
+    "colacion": 20000,
+    "movilizacion": 0,
+    "porHora": true,
+    "horas": 96,
+    "valorHora": 5000,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-03",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": true,
+     "horas": 96,
+     "horasIngresadas": true,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0,
+    "grat": 120000,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 120000,
+     "tope": 219115,
+     "monto": 120000,
+     "topeAplicado": false
+    },
+    "totalImponible": 600000,
+    "totalNoImponible": 20000,
+    "totalHaberes": 620000,
+    "baseAFP": 600000,
+    "baseCes": 600000,
+    "baseSIS": 600000,
+    "baseAFC": 600000,
+    "descAFP": 62760,
+    "descAFP_pension": 60000,
+    "descAFP_comision": 2760,
+    "descSalud": 42000,
+    "saludLegal": 42000,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "A",
+     "manual": false,
+     "ingreso": 600000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 104760,
+    "baseTributable": 495240,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 6.863938129755652,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 104760,
+    "liquido": 515240,
+    "afpNm": "AFP Uno",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 3,
+   "trab": "t5",
+   "asis": {
+    "periodo": "2026-03",
+    "diasPagados": 20,
+    "factor": 0.6666666666666666,
+    "diasLicencia": 10,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 11,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 10,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [
+     {
+      "id": "e1",
+      "trab": "t5",
+      "tipo": "licencia",
+      "licTipo": "1",
+      "desde": "2026-03-05",
+      "hasta": "2026-03-14"
+     },
+     {
+      "id": "e2",
+      "trab": "t5",
+      "tipo": "vacaciones",
+      "desde": "2026-03-20",
+      "hasta": "2026-03-31"
+     }
+    ],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 19920,
+     "mutual": 6939,
+     "afc": 26859,
+     "caja": 0,
+     "capInd": 746,
+     "cev": 10072,
+     "crp": 0,
+     "total": 64536,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 19920,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 746,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 10072,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 6939,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 26859,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 863947,
+    "base": 600000,
+    "baseContrato": 900000,
+    "otros": 0,
+    "colacion": 26667,
+    "movilizacion": 26667,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0.6666666666666666,
+    "asis": {
+     "periodo": "2026-03",
+     "diasPagados": 20,
+     "factor": 0.6666666666666666,
+     "diasLicencia": 10,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 11,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 10,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [
+      {
+       "id": "e1",
+       "trab": "t5",
+       "tipo": "licencia",
+       "licTipo": "1",
+       "desde": "2026-03-05",
+       "hasta": "2026-03-14"
+      },
+      {
+       "id": "e2",
+       "trab": "t5",
+       "tipo": "vacaciones",
+       "desde": "2026-03-20",
+       "hasta": "2026-03-31"
+      }
+     ],
+     "completo": false
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 146077,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 150000,
+     "tope": 146077,
+     "monto": 146077,
+     "topeAplicado": true
+    },
+    "totalImponible": 746077,
+    "totalNoImponible": 65019,
+    "totalHaberes": 811096,
+    "baseAFP": 746077,
+    "baseCes": 746077,
+    "baseSIS": 1119115,
+    "baseAFC": 1119115,
+    "descAFP": 85426,
+    "descAFP_pension": 74608,
+    "descAFP_comision": 10818,
+    "descSalud": 52225,
+    "saludLegal": 52225,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 4476,
+    "asigFamiliar": 11685,
+    "af": {
+     "tramo": "C",
+     "tramoIngreso": "C",
+     "manual": false,
+     "ingreso": 1119116,
+     "fuente": "renta imponible del mes",
+     "valor": 4382,
+     "cargas": {
+      "simples": 2,
+      "maternales": 0,
+      "invalidas": 1,
+      "total": 3,
+      "equivalentes": 4
+     },
+     "dias": 20,
+     "proporcional": true,
+     "monto": 11685
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 142127,
+    "baseTributable": 603950,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 8.370639353577912,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 142127,
+    "liquido": 668969,
+    "afpNm": "AFP ProVida",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 3,
+   "trab": "t6",
+   "asis": {
+    "periodo": "2026-03",
+    "diasPagados": 15,
+    "factor": 0.5,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 15,
+    "diasNoPagados": 15,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 7788,
+     "mutual": 4069,
+     "afc": 10500,
+     "caja": 0,
+     "capInd": 438,
+     "cev": 3938,
+     "crp": 0,
+     "total": 35483,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 7788,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 438,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 3938,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 4069,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 10500,
+       "institucion": "AFC Chile"
+      },
+      {
+       "concepto": "Trabajo pesado (Ley 19.404)",
+       "tasa": 2,
+       "monto": 8750,
+       "institucion": "AFP del trabajador"
+      }
+     ],
+     "trabPesado": 8750
+    },
+    "costoEmpresa": 472983,
+    "base": 350000,
+    "baseContrato": 700000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0.5,
+    "asis": {
+     "periodo": "2026-03",
+     "diasPagados": 15,
+     "factor": 0.5,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 15,
+     "diasNoPagados": 15,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": false
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 87500,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 87500,
+     "tope": 109558,
+     "monto": 87500,
+     "topeAplicado": false
+    },
+    "totalImponible": 437500,
+    "totalNoImponible": 0,
+    "totalHaberes": 437500,
+    "baseAFP": 437500,
+    "baseCes": 437500,
+    "baseSIS": 437500,
+    "baseAFC": 437500,
+    "descAFP": 48825,
+    "descAFP_pension": 43750,
+    "descAFP_comision": 5075,
+    "descSalud": 30625,
+    "saludLegal": 30625,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 2625,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "B",
+     "manual": false,
+     "ingreso": 875000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 15,
+     "proporcional": true,
+     "monto": 0
+    },
+    "descTrabPesado": 8750,
+    "aporteTrabPesado": 8750,
+    "califPesado": "pesado",
+    "tasasTP": {
+     "emp": 2,
+     "trab": 2
+    },
+    "totalPrevisional": 90825,
+    "baseTributable": 346675,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 4.804853709581295,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 90825,
+    "liquido": 346675,
+    "afpNm": "AFP PlanVital",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 3,
+   "trab": "t7",
+   "asis": {
+    "periodo": "2026-03",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 0,
+     "mutual": 11160,
+     "afc": 9600,
+     "caja": 0,
+     "capInd": 0,
+     "cev": 0,
+     "crp": 0,
+     "total": 20760,
+     "mutualTasa": 0.93,
+     "afcTasa": 0.8,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 11160,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido, más de 11 años)",
+       "tasa": 0.8,
+       "monto": 9600,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 1220760,
+    "base": 1200000,
+    "baseContrato": 1200000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-03",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0,
+    "grat": 0,
+    "gratModo": "monto",
+    "gratInfo": null,
+    "totalImponible": 1200000,
+    "totalNoImponible": 13870,
+    "totalHaberes": 1213870,
+    "baseAFP": 1200000,
+    "baseCes": 1200000,
+    "baseSIS": 1200000,
+    "baseAFC": 1200000,
+    "descAFP": 137280,
+    "descAFP_pension": 120000,
+    "descAFP_comision": 17280,
+    "descSalud": 84000,
+    "saludLegal": 84000,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 13870,
+    "af": {
+     "tramo": "B",
+     "tramoIngreso": "B",
+     "manual": true,
+     "ingreso": 1200000,
+     "fuente": "renta imponible del mes",
+     "valor": 13870,
+     "cargas": {
+      "simples": 1,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 1,
+      "equivalentes": 1
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 13870
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 221280,
+    "baseTributable": 978720,
+    "iusc": 187,
+    "iuscDet": {
+     "impuesto": 187,
+     "tramo": {
+      "desde": 13.5,
+      "hasta": 30,
+      "factor": 0.04,
+      "rebajaUTM": 0.54
+     },
+     "idx": 1,
+     "baseUTM": 13.564884755582042,
+     "factor": 0.04,
+     "rebaja": 38961.54
+    },
+    "totalDescuentos": 221467,
+    "liquido": 992403,
+    "afpNm": "AFP Cuprum",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 3,
+   "trab": "t8",
+   "asis": {
+    "periodo": "2026-03",
+    "diasPagados": 0,
+    "factor": 0,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 30,
+    "diasNoPagados": 30,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 0,
+     "mutual": 0,
+     "afc": 0,
+     "caja": 0,
+     "capInd": 0,
+     "cev": 0,
+     "crp": 0,
+     "total": 0,
+     "mutualTasa": 0.93,
+     "afcTasa": 3,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 0,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (plazo fijo / obra o faena)",
+       "tasa": 3,
+       "monto": 0,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 0,
+    "base": 0,
+    "baseContrato": 650000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0,
+    "asis": {
+     "periodo": "2026-03",
+     "diasPagados": 0,
+     "factor": 0,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 30,
+     "diasNoPagados": 30,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": false
+    },
+    "tasaCesTrab": 0,
+    "grat": 0,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 0,
+     "tope": 0,
+     "monto": 0,
+     "topeAplicado": false
+    },
+    "totalImponible": 0,
+    "totalNoImponible": 0,
+    "totalHaberes": 0,
+    "baseAFP": 0,
+    "baseCes": 0,
+    "baseSIS": 0,
+    "baseAFC": 0,
+    "descAFP": 0,
+    "descAFP_pension": 0,
+    "descAFP_comision": 0,
+    "descSalud": 0,
+    "saludLegal": 0,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "A",
+     "manual": false,
+     "ingreso": 0,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 0,
+     "proporcional": true,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 0,
+    "baseTributable": 0,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": null,
+     "idx": -1,
+     "baseUTM": 0,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 0,
+    "liquido": 0,
+    "afpNm": "AFP Habitat",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 3,
+   "trab": "t9",
+   "asis": {
+    "periodo": "2026-03",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 10680,
+     "mutual": 5580,
+     "afc": 14400,
+     "caja": 0,
+     "capInd": 600,
+     "cev": 5400,
+     "crp": 0,
+     "total": 36660,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2025-08",
+      "capInd": 0.1,
+      "cev": 0.9,
+      "crp": 0,
+      "cevAuto": false
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 10680,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 600,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.9,
+       "monto": 5400,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 5580,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 14400,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 636660,
+    "base": 500000,
+    "baseContrato": 500000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-03",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 100000,
+    "gratModo": "monto",
+    "gratInfo": null,
+    "totalImponible": 600000,
+    "totalNoImponible": 13870,
+    "totalHaberes": 613870,
+    "baseAFP": 600000,
+    "baseCes": 600000,
+    "baseSIS": 600000,
+    "baseAFC": 600000,
+    "descAFP": 67620,
+    "descAFP_pension": 60000,
+    "descAFP_comision": 7620,
+    "descSalud": 42000,
+    "saludLegal": 42000,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 3600,
+    "asigFamiliar": 13870,
+    "af": {
+     "tramo": "B",
+     "tramoIngreso": "B",
+     "manual": false,
+     "ingreso": 800000,
+     "fuente": "promedio semestre anterior (2 meses)",
+     "valor": 13870,
+     "cargas": {
+      "simples": 1,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 1,
+      "equivalentes": 1
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 13870
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 113220,
+    "baseTributable": 486780,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 6.746684037643276,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 263220,
+    "liquido": 350650,
+    "afpNm": "AFP Habitat",
+    "saludNm": "Fonasa",
+    "anticipos": [
+     {
+      "id": "an2",
+      "fecha": "2026-02-25",
+      "monto": 50000,
+      "motivo": ""
+     },
+     {
+      "id": "an1",
+      "fecha": "2026-03-10",
+      "monto": 100000,
+      "motivo": "Adelanto"
+     }
+    ],
+    "anticipo": 150000
+   }
+  },
+  {
+   "mes": 9,
+   "trab": "t1",
+   "asis": {
+    "periodo": "2026-09",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 13350,
+     "mutual": 6975,
+     "afc": 18000,
+     "caja": 0,
+     "capInd": 750,
+     "cev": 5400,
+     "crp": 6750,
+     "total": 51225,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2026-08",
+      "capInd": 0.1,
+      "cev": 0.72,
+      "crp": 0.9,
+      "cevAuto": true
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 13350,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 750,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.72,
+       "monto": 5400,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: rentabilidad protegida (CRP)",
+       "tasa": 0.9,
+       "monto": 6750,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 6975,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 18000,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 891225,
+    "base": 600000,
+    "baseContrato": 600000,
+    "otros": 0,
+    "colacion": 50000,
+    "movilizacion": 40000,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-09",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 150000,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 150000,
+     "tope": 219115,
+     "monto": 150000,
+     "topeAplicado": false
+    },
+    "totalImponible": 750000,
+    "totalNoImponible": 90000,
+    "totalHaberes": 840000,
+    "baseAFP": 750000,
+    "baseCes": 750000,
+    "baseSIS": 750000,
+    "baseAFC": 750000,
+    "descAFP": 84525,
+    "descAFP_pension": 75000,
+    "descAFP_comision": 9525,
+    "descSalud": 52500,
+    "saludLegal": 52500,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 4500,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "B",
+     "manual": false,
+     "ingreso": 750000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 141525,
+    "baseTributable": 608475,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 8.433355047054095,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 141525,
+    "liquido": 698475,
+    "afpNm": "AFP Habitat",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 9,
+   "trab": "t2",
+   "asis": {
+    "periodo": "2026-09",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 66079,
+     "mutual": 34524,
+     "afc": 120459,
+     "caja": 0,
+     "capInd": 3712,
+     "cev": 26728,
+     "crp": 33411,
+     "total": 284913,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2026-08",
+      "capInd": 0.1,
+      "cev": 0.72,
+      "crp": 0.9,
+      "cevAuto": true
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 66079,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 3712,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.72,
+       "monto": 26728,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: rentabilidad protegida (CRP)",
+       "tasa": 0.9,
+       "monto": 33411,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 34524,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 120459,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 5304028,
+    "base": 4500000,
+    "baseContrato": 4500000,
+    "otros": 300000,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-09",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 219115,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 1200000,
+     "tope": 219115,
+     "monto": 219115,
+     "topeAplicado": true
+    },
+    "totalImponible": 5019115,
+    "totalNoImponible": 0,
+    "totalHaberes": 5019115,
+    "baseAFP": 3712287,
+    "baseCes": 5019115,
+    "baseSIS": 3712287,
+    "baseAFC": 5019115,
+    "descAFP": 424686,
+    "descAFP_pension": 371229,
+    "descAFP_comision": 53457,
+    "descSalud": 268110,
+    "saludLegal": 259860,
+    "adicionalIsapre": 8250,
+    "planUF": 6.5,
+    "planPesos": 268110,
+    "descCesantia": 30115,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "D",
+     "manual": false,
+     "ingreso": 5019115,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 722911,
+    "baseTributable": 4296204,
+    "iusc": 256030,
+    "iuscDet": {
+     "impuesto": 256030,
+     "tramo": {
+      "desde": 50,
+      "hasta": 70,
+      "factor": 0.135,
+      "rebajaUTM": 4.49
+     },
+     "idx": 3,
+     "baseUTM": 59.54462169616499,
+     "factor": 0.135,
+     "rebaja": 323957.99
+    },
+    "totalDescuentos": 978941,
+    "liquido": 4040174,
+    "afpNm": "AFP Capital",
+    "saludNm": "Isapre Banmédica",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 9,
+   "trab": "t3",
+   "asis": {
+    "periodo": "2026-09",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 17800,
+     "mutual": 9300,
+     "afc": 30000,
+     "caja": 0,
+     "capInd": 1000,
+     "cev": 7200,
+     "crp": 9000,
+     "total": 74300,
+     "mutualTasa": 0.93,
+     "afcTasa": 3,
+     "reforma": {
+      "desde": "2026-08",
+      "capInd": 0.1,
+      "cev": 0.72,
+      "crp": 0.9,
+      "cevAuto": true
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 17800,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 1000,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.72,
+       "monto": 7200,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: rentabilidad protegida (CRP)",
+       "tasa": 0.9,
+       "monto": 9000,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 9300,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (plazo fijo / obra o faena)",
+       "tasa": 3,
+       "monto": 30000,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 1134300,
+    "base": 800000,
+    "baseContrato": 800000,
+    "otros": 50000,
+    "colacion": 30000,
+    "movilizacion": 30000,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-09",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0,
+    "grat": 150000,
+    "gratModo": "monto",
+    "gratInfo": null,
+    "totalImponible": 1000000,
+    "totalNoImponible": 60000,
+    "totalHaberes": 1060000,
+    "baseAFP": 1000000,
+    "baseCes": 1000000,
+    "baseSIS": 1000000,
+    "baseAFC": 1000000,
+    "descAFP": 105800,
+    "descAFP_pension": 100000,
+    "descAFP_comision": 5800,
+    "descSalud": 70000,
+    "saludLegal": 70000,
+    "adicionalIsapre": 0,
+    "planUF": 1.2,
+    "planPesos": 49497,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "C",
+     "manual": false,
+     "ingreso": 1000000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 175800,
+    "baseTributable": 824200,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 11.423265096810855,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 175800,
+    "liquido": 884200,
+    "afpNm": "AFP Modelo",
+    "saludNm": "Isapre Colmena Golden Cross",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 9,
+   "trab": "t4",
+   "asis": {
+    "periodo": "2026-09",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": true,
+    "horas": 80,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 8900,
+     "mutual": 4650,
+     "afc": 15000,
+     "caja": 0,
+     "capInd": 500,
+     "cev": 3600,
+     "crp": 4500,
+     "total": 37150,
+     "mutualTasa": 0.93,
+     "afcTasa": 3,
+     "reforma": {
+      "desde": "2026-08",
+      "capInd": 0.1,
+      "cev": 0.72,
+      "crp": 0.9,
+      "cevAuto": true
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 8900,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 500,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.72,
+       "monto": 3600,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: rentabilidad protegida (CRP)",
+       "tasa": 0.9,
+       "monto": 4500,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 4650,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (plazo fijo / obra o faena)",
+       "tasa": 3,
+       "monto": 15000,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 557150,
+    "base": 400000,
+    "baseContrato": 400000,
+    "otros": 0,
+    "colacion": 20000,
+    "movilizacion": 0,
+    "porHora": true,
+    "horas": 80,
+    "valorHora": 5000,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-09",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": true,
+     "horas": 80,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0,
+    "grat": 100000,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 100000,
+     "tope": 219115,
+     "monto": 100000,
+     "topeAplicado": false
+    },
+    "totalImponible": 500000,
+    "totalNoImponible": 20000,
+    "totalHaberes": 520000,
+    "baseAFP": 500000,
+    "baseCes": 500000,
+    "baseSIS": 500000,
+    "baseAFC": 500000,
+    "descAFP": 52300,
+    "descAFP_pension": 50000,
+    "descAFP_comision": 2300,
+    "descSalud": 35000,
+    "saludLegal": 35000,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "A",
+     "manual": false,
+     "ingreso": 500000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 87300,
+    "baseTributable": 412700,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 5.719948441463043,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 87300,
+    "liquido": 432700,
+    "afpNm": "AFP Uno",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 9,
+   "trab": "t5",
+   "asis": {
+    "periodo": "2026-09",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 19920,
+     "mutual": 10408,
+     "afc": 26859,
+     "caja": 0,
+     "capInd": 1119,
+     "cev": 8058,
+     "crp": 10072,
+     "total": 76436,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2026-08",
+      "capInd": 0.1,
+      "cev": 0.72,
+      "crp": 0.9,
+      "cevAuto": true
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 19920,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 1119,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.72,
+       "monto": 8058,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: rentabilidad protegida (CRP)",
+       "tasa": 0.9,
+       "monto": 10072,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 10408,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 26859,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 1275551,
+    "base": 900000,
+    "baseContrato": 900000,
+    "otros": 0,
+    "colacion": 40000,
+    "movilizacion": 40000,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-09",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 219115,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 225000,
+     "tope": 219115,
+     "monto": 219115,
+     "topeAplicado": true
+    },
+    "totalImponible": 1119115,
+    "totalNoImponible": 97528,
+    "totalHaberes": 1216643,
+    "baseAFP": 1119115,
+    "baseCes": 1119115,
+    "baseSIS": 1119115,
+    "baseAFC": 1119115,
+    "descAFP": 128139,
+    "descAFP_pension": 111912,
+    "descAFP_comision": 16227,
+    "descSalud": 78338,
+    "saludLegal": 78338,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 6715,
+    "asigFamiliar": 17528,
+    "af": {
+     "tramo": "C",
+     "tramoIngreso": "C",
+     "manual": false,
+     "ingreso": 1119115,
+     "fuente": "renta imponible del mes",
+     "valor": 4382,
+     "cargas": {
+      "simples": 2,
+      "maternales": 0,
+      "invalidas": 1,
+      "total": 3,
+      "equivalentes": 4
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 17528
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 213192,
+    "baseTributable": 905923,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 12.555931310723343,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 213192,
+    "liquido": 1003451,
+    "afpNm": "AFP ProVida",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 9,
+   "trab": "t6",
+   "asis": {
+    "periodo": "2026-09",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 15575,
+     "mutual": 8138,
+     "afc": 21000,
+     "caja": 0,
+     "capInd": 875,
+     "cev": 6300,
+     "crp": 7875,
+     "total": 77263,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2026-08",
+      "capInd": 0.1,
+      "cev": 0.72,
+      "crp": 0.9,
+      "cevAuto": true
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 15575,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 875,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.72,
+       "monto": 6300,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: rentabilidad protegida (CRP)",
+       "tasa": 0.9,
+       "monto": 7875,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 8138,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 21000,
+       "institucion": "AFC Chile"
+      },
+      {
+       "concepto": "Trabajo pesado (Ley 19.404)",
+       "tasa": 2,
+       "monto": 17500,
+       "institucion": "AFP del trabajador"
+      }
+     ],
+     "trabPesado": 17500
+    },
+    "costoEmpresa": 952263,
+    "base": 700000,
+    "baseContrato": 700000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-09",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 175000,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 175000,
+     "tope": 219115,
+     "monto": 175000,
+     "topeAplicado": false
+    },
+    "totalImponible": 875000,
+    "totalNoImponible": 0,
+    "totalHaberes": 875000,
+    "baseAFP": 875000,
+    "baseCes": 875000,
+    "baseSIS": 875000,
+    "baseAFC": 875000,
+    "descAFP": 97650,
+    "descAFP_pension": 87500,
+    "descAFP_comision": 10150,
+    "descSalud": 61250,
+    "saludLegal": 61250,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 5250,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "B",
+     "manual": false,
+     "ingreso": 875000,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 0
+    },
+    "descTrabPesado": 17500,
+    "aporteTrabPesado": 17500,
+    "califPesado": "pesado",
+    "tasasTP": {
+     "emp": 2,
+     "trab": 2
+    },
+    "totalPrevisional": 181650,
+    "baseTributable": 693350,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 9.60970741916259,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 181650,
+    "liquido": 693350,
+    "afpNm": "AFP PlanVital",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 9,
+   "trab": "t7",
+   "asis": {
+    "periodo": "2026-09",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 0,
+     "mutual": 11160,
+     "afc": 9600,
+     "caja": 0,
+     "capInd": 0,
+     "cev": 0,
+     "crp": 0,
+     "total": 20760,
+     "mutualTasa": 0.93,
+     "afcTasa": 0.8,
+     "reforma": {
+      "desde": "2026-08",
+      "capInd": 0.1,
+      "cev": 0.72,
+      "crp": 0.9,
+      "cevAuto": true
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: rentabilidad protegida (CRP)",
+       "tasa": 0,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 11160,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido, más de 11 años)",
+       "tasa": 0.8,
+       "monto": 9600,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 1220760,
+    "base": 1200000,
+    "baseContrato": 1200000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-09",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0,
+    "grat": 0,
+    "gratModo": "monto",
+    "gratInfo": null,
+    "totalImponible": 1200000,
+    "totalNoImponible": 13870,
+    "totalHaberes": 1213870,
+    "baseAFP": 1200000,
+    "baseCes": 1200000,
+    "baseSIS": 1200000,
+    "baseAFC": 1200000,
+    "descAFP": 137280,
+    "descAFP_pension": 120000,
+    "descAFP_comision": 17280,
+    "descSalud": 84000,
+    "saludLegal": 84000,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 13870,
+    "af": {
+     "tramo": "B",
+     "tramoIngreso": "B",
+     "manual": true,
+     "ingreso": 1200000,
+     "fuente": "renta imponible del mes",
+     "valor": 13870,
+     "cargas": {
+      "simples": 1,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 1,
+      "equivalentes": 1
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 13870
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 221280,
+    "baseTributable": 978720,
+    "iusc": 187,
+    "iuscDet": {
+     "impuesto": 187,
+     "tramo": {
+      "desde": 13.5,
+      "hasta": 30,
+      "factor": 0.04,
+      "rebajaUTM": 0.54
+     },
+     "idx": 1,
+     "baseUTM": 13.564884755582042,
+     "factor": 0.04,
+     "rebaja": 38961.54
+    },
+    "totalDescuentos": 221467,
+    "liquido": 992403,
+    "afpNm": "AFP Cuprum",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 9,
+   "trab": "t8",
+   "asis": {
+    "periodo": "2026-09",
+    "diasPagados": 0,
+    "factor": 0,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 30,
+    "diasNoPagados": 30,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": false
+   },
+   "liq": {
+    "patronal": {
+     "sis": 0,
+     "mutual": 0,
+     "afc": 0,
+     "caja": 0,
+     "capInd": 0,
+     "cev": 0,
+     "crp": 0,
+     "total": 0,
+     "mutualTasa": 0.93,
+     "afcTasa": 3,
+     "reforma": {
+      "desde": "2026-08",
+      "capInd": 0.1,
+      "cev": 0.72,
+      "crp": 0.9,
+      "cevAuto": true
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 0,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.72,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: rentabilidad protegida (CRP)",
+       "tasa": 0.9,
+       "monto": 0,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 0,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (plazo fijo / obra o faena)",
+       "tasa": 3,
+       "monto": 0,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 0,
+    "base": 0,
+    "baseContrato": 650000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 0,
+    "asis": {
+     "periodo": "2026-09",
+     "diasPagados": 0,
+     "factor": 0,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 30,
+     "diasNoPagados": 30,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": false
+    },
+    "tasaCesTrab": 0,
+    "grat": 0,
+    "gratModo": "pct",
+    "gratInfo": {
+     "pct": 25,
+     "bruta": 0,
+     "tope": 0,
+     "monto": 0,
+     "topeAplicado": false
+    },
+    "totalImponible": 0,
+    "totalNoImponible": 0,
+    "totalHaberes": 0,
+    "baseAFP": 0,
+    "baseCes": 0,
+    "baseSIS": 0,
+    "baseAFC": 0,
+    "descAFP": 0,
+    "descAFP_pension": 0,
+    "descAFP_comision": 0,
+    "descSalud": 0,
+    "saludLegal": 0,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 0,
+    "asigFamiliar": 0,
+    "af": {
+     "tramo": "D",
+     "tramoIngreso": "A",
+     "manual": false,
+     "ingreso": 0,
+     "fuente": "renta imponible del mes",
+     "valor": 0,
+     "cargas": {
+      "simples": 0,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 0,
+      "equivalentes": 0
+     },
+     "dias": 0,
+     "proporcional": true,
+     "monto": 0
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 0,
+    "baseTributable": 0,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": null,
+     "idx": -1,
+     "baseUTM": 0,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 0,
+    "liquido": 0,
+    "afpNm": "AFP Habitat",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  },
+  {
+   "mes": 9,
+   "trab": "t9",
+   "asis": {
+    "periodo": "2026-09",
+    "diasPagados": 30,
+    "factor": 1,
+    "diasLicencia": 0,
+    "diasPermisoSin": 0,
+    "diasAusencia": 0,
+    "diasPermisoCon": 0,
+    "diasVacaciones": 0,
+    "diasFueraContrato": 0,
+    "diasNoPagados": 0,
+    "porHora": false,
+    "horas": null,
+    "horasIngresadas": false,
+    "eventos": [],
+    "completo": true
+   },
+   "liq": {
+    "patronal": {
+     "sis": 10680,
+     "mutual": 5580,
+     "afc": 14400,
+     "caja": 0,
+     "capInd": 600,
+     "cev": 4320,
+     "crp": 5400,
+     "total": 40980,
+     "mutualTasa": 0.93,
+     "afcTasa": 2.4,
+     "reforma": {
+      "desde": "2026-08",
+      "capInd": 0.1,
+      "cev": 0.72,
+      "crp": 0.9,
+      "cevAuto": true
+     },
+     "detalle": [
+      {
+       "concepto": "SIS (invalidez y sobrevivencia)",
+       "tasa": 1.78,
+       "monto": 10680,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: capitalización individual",
+       "tasa": 0.1,
+       "monto": 600,
+       "institucion": "AFP del trabajador"
+      },
+      {
+       "concepto": "Seguro Social Previsional (expectativa de vida)",
+       "tasa": 0.72,
+       "monto": 4320,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Reforma: rentabilidad protegida (CRP)",
+       "tasa": 0.9,
+       "monto": 5400,
+       "institucion": "Seguro Social Previsional"
+      },
+      {
+       "concepto": "Mutual (Ley 16.744)",
+       "tasa": 0.93,
+       "monto": 5580,
+       "institucion": "ACHS — Asociación Chilena de Seguridad"
+      },
+      {
+       "concepto": "Seguro cesantía (indefinido)",
+       "tasa": 2.4,
+       "monto": 14400,
+       "institucion": "AFC Chile"
+      }
+     ],
+     "trabPesado": 0
+    },
+    "costoEmpresa": 640980,
+    "base": 500000,
+    "baseContrato": 500000,
+    "otros": 0,
+    "colacion": 0,
+    "movilizacion": 0,
+    "porHora": false,
+    "horas": null,
+    "valorHora": null,
+    "factor": 1,
+    "asis": {
+     "periodo": "2026-09",
+     "diasPagados": 30,
+     "factor": 1,
+     "diasLicencia": 0,
+     "diasPermisoSin": 0,
+     "diasAusencia": 0,
+     "diasPermisoCon": 0,
+     "diasVacaciones": 0,
+     "diasFueraContrato": 0,
+     "diasNoPagados": 0,
+     "porHora": false,
+     "horas": null,
+     "horasIngresadas": false,
+     "eventos": [],
+     "completo": true
+    },
+    "tasaCesTrab": 0.6,
+    "grat": 100000,
+    "gratModo": "monto",
+    "gratInfo": null,
+    "totalImponible": 600000,
+    "totalNoImponible": 22601,
+    "totalHaberes": 622601,
+    "baseAFP": 600000,
+    "baseCes": 600000,
+    "baseSIS": 600000,
+    "baseAFC": 600000,
+    "descAFP": 67620,
+    "descAFP_pension": 60000,
+    "descAFP_comision": 7620,
+    "descSalud": 42000,
+    "saludLegal": 42000,
+    "adicionalIsapre": 0,
+    "planUF": 0,
+    "planPesos": 0,
+    "descCesantia": 3600,
+    "asigFamiliar": 22601,
+    "af": {
+     "tramo": "A",
+     "tramoIngreso": "A",
+     "manual": false,
+     "ingreso": 600000,
+     "fuente": "renta imponible del mes",
+     "valor": 22601,
+     "cargas": {
+      "simples": 1,
+      "maternales": 0,
+      "invalidas": 0,
+      "total": 1,
+      "equivalentes": 1
+     },
+     "dias": 30,
+     "proporcional": false,
+     "monto": 22601
+    },
+    "descTrabPesado": 0,
+    "aporteTrabPesado": 0,
+    "califPesado": "",
+    "tasasTP": {
+     "emp": 0,
+     "trab": 0
+    },
+    "totalPrevisional": 113220,
+    "baseTributable": 486780,
+    "iusc": 0,
+    "iuscDet": {
+     "impuesto": 0,
+     "tramo": {
+      "desde": 0,
+      "hasta": 13.5,
+      "factor": 0,
+      "rebajaUTM": 0
+     },
+     "idx": 0,
+     "baseUTM": 6.746684037643276,
+     "factor": 0,
+     "rebaja": 0
+    },
+    "totalDescuentos": 113220,
+    "liquido": 509381,
+    "afpNm": "AFP Habitat",
+    "saludNm": "Fonasa",
+    "anticipos": [],
+    "anticipo": 0
+   }
+  }
+ ]
+}

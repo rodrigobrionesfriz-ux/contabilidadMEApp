@@ -1,0 +1,937 @@
+{
+ "validador": [
+  {
+   "nombre": "ok una línea",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 100000,
+    "exento": 0,
+    "iva": 19000,
+    "otrosImpuestos": 0,
+    "total": 119000
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 100000,
+     "afecto": true
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": true,
+    "errores": [],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 100000,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 19000,
+     "totalCalc": 119000,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 0,
+     "difTotal": 0,
+     "neto": 100000,
+     "exento": 0,
+     "iva": 19000,
+     "otros": 0,
+     "total": 119000
+    }
+   }
+  },
+  {
+   "nombre": "dos líneas sin descripción",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 100000,
+    "exento": 0,
+    "iva": 19000,
+    "otrosImpuestos": 0,
+    "total": 119000
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 60000,
+     "afecto": true
+    },
+    {
+     "cuenta": "3202011",
+     "monto": 40000,
+     "afecto": true,
+     "desc": "B"
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "Línea 1: la descripción es obligatoria cuando el documento tiene más de una línea."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 100000,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 19000,
+     "totalCalc": 119000,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 0,
+     "difTotal": 0,
+     "neto": 100000,
+     "exento": 0,
+     "iva": 19000,
+     "otros": 0,
+     "total": 119000
+    }
+   }
+  },
+  {
+   "nombre": "neto no cuadra",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 100000,
+    "exento": 0,
+    "iva": 19000,
+    "otrosImpuestos": 0,
+    "total": 119000
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 90000,
+     "afecto": true
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "Las líneas afectas suman $ 90.000 y el neto del RCV es $ 100.000 (diferencia $ -10.000).",
+     "IVA calculado $ 17.100 (19% de $ 90.000) distinto del IVA del RCV $ 19.000 (diferencia $ -1.900).",
+     "Líneas + IVA calculado + otros impuestos = $ 107.100 y el total del RCV es $ 119.000 (diferencia $ -11.900)."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 90000,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 17100,
+     "totalCalc": 107100,
+     "difNeto": -10000,
+     "difExento": 0,
+     "difIva": -1900,
+     "difTotal": -11900,
+     "neto": 100000,
+     "exento": 0,
+     "iva": 19000,
+     "otros": 0,
+     "total": 119000
+    }
+   }
+  },
+  {
+   "nombre": "cuenta agrupadora e inexistente",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 100000,
+    "exento": 0,
+    "iva": 19000,
+    "otrosImpuestos": 0,
+    "total": 119000
+   },
+   "lineas": [
+    {
+     "cuenta": "1",
+     "monto": 50000,
+     "afecto": true,
+     "desc": "a"
+    },
+    {
+     "cuenta": "9999999",
+     "monto": 50000,
+     "afecto": true,
+     "desc": "b"
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "Línea 1: la cuenta 1 es agrupadora y no acepta movimientos.",
+     "Línea 2: la cuenta 9999999 no existe en el plan de cuentas."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 100000,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 19000,
+     "totalCalc": 119000,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 0,
+     "difTotal": 0,
+     "neto": 100000,
+     "exento": 0,
+     "iva": 19000,
+     "otros": 0,
+     "total": 119000
+    }
+   }
+  },
+  {
+   "nombre": "cc en cuenta que no admite",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 100000,
+    "exento": 0,
+    "iva": 19000,
+    "otrosImpuestos": 0,
+    "total": 119000
+   },
+   "lineas": [
+    {
+     "cuenta": "1101201",
+     "monto": 100000,
+     "afecto": true,
+     "cc": "X"
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": true,
+    "errores": [],
+    "avisos": [
+     "Línea 1: la cuenta 1101201 no admite centro de costo; se ignorará."
+    ],
+    "resumen": {
+     "sumAfecto": 100000,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 19000,
+     "totalCalc": 119000,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 0,
+     "difTotal": 0,
+     "neto": 100000,
+     "exento": 0,
+     "iva": 19000,
+     "otros": 0,
+     "total": 119000
+    }
+   }
+  },
+  {
+   "nombre": "neto + exento",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 80000,
+    "exento": 20000,
+    "iva": 15200,
+    "otrosImpuestos": 0,
+    "total": 115200
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 80000,
+     "afecto": true,
+     "desc": "a"
+    },
+    {
+     "cuenta": "3202010",
+     "monto": 20000,
+     "afecto": false,
+     "desc": "b"
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": true,
+    "errores": [],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 80000,
+     "sumExento": 20000,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 15200,
+     "totalCalc": 115200,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 0,
+     "difTotal": 0,
+     "neto": 80000,
+     "exento": 20000,
+     "iva": 15200,
+     "otros": 0,
+     "total": 115200
+    }
+   }
+  },
+  {
+   "nombre": "exenta con línea afecta",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 34,
+    "neto": 0,
+    "exento": 45000,
+    "iva": 0,
+    "otrosImpuestos": 0,
+    "total": 45000
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 45000,
+     "afecto": true
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "Las líneas afectas suman $ 45.000 y el neto del RCV es $ 0 (diferencia $ 45.000).",
+     "Las líneas exentas suman $ 0 y el exento del RCV es $ 45.000 (diferencia $ -45.000).",
+     "El Factura Exenta Electrónica no lleva IVA: todas las líneas deben ser exentas.",
+     "IVA calculado $ 8.550 (19% de $ 45.000) distinto del IVA del RCV $ 0 (diferencia $ 8.550).",
+     "Líneas + IVA calculado + otros impuestos = $ 53.550 y el total del RCV es $ 45.000 (diferencia $ 8.550)."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 45000,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 8550,
+     "totalCalc": 53550,
+     "difNeto": 45000,
+     "difExento": -45000,
+     "difIva": 8550,
+     "difTotal": 8550,
+     "neto": 0,
+     "exento": 45000,
+     "iva": 0,
+     "otros": 0,
+     "total": 45000
+    }
+   }
+  },
+  {
+   "nombre": "otros sin línea",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 51776,
+    "exento": 0,
+    "iva": 9838,
+    "otrosImpuestos": 21363,
+    "total": 82977
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 51776,
+     "afecto": true
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "El RCV informa otros impuestos por $ 21.363: agrega una línea de tipo \"Otro impuesto\" con su cuenta (costo/gasto, o 1108006 si es recuperable).",
+     "IVA calculado $ 9.837 (19% de $ 51.776) distinto del IVA del RCV $ 9.838 (diferencia $ -1). Si es redondeo del emisor, marca \"Aceptar diferencia de $1\".",
+     "Líneas + IVA calculado + otros impuestos = $ 61.613 y el total del RCV es $ 82.977 (diferencia $ -21.364)."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 51776,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": -21363,
+     "cruzaOtros": true,
+     "ivaCalc": 9837,
+     "totalCalc": 61613,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": -1,
+     "difTotal": -21364,
+     "neto": 51776,
+     "exento": 0,
+     "iva": 9838,
+     "otros": 21363,
+     "total": 82977
+    }
+   }
+  },
+  {
+   "nombre": "otros con línea",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 51776,
+    "exento": 0,
+    "iva": 9838,
+    "otrosImpuestos": 21363,
+    "total": 82977
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 51776,
+     "afecto": true
+    },
+    {
+     "cuenta": "3202011",
+     "monto": 21363,
+     "afecto": false,
+     "otroImp": true,
+     "desc": "IEC"
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "IVA calculado $ 9.837 (19% de $ 51.776) distinto del IVA del RCV $ 9.838 (diferencia $ -1). Si es redondeo del emisor, marca \"Aceptar diferencia de $1\".",
+     "Líneas + IVA calculado + otros impuestos = $ 82.976 y el total del RCV es $ 82.977 (diferencia $ -1)."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 51776,
+     "sumExento": 0,
+     "sumOtros": 21363,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 9837,
+     "totalCalc": 82976,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": -1,
+     "difTotal": -1,
+     "neto": 51776,
+     "exento": 0,
+     "iva": 9838,
+     "otros": 21363,
+     "total": 82977
+    }
+   }
+  },
+  {
+   "nombre": "otros legacy",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 51776,
+    "exento": 0,
+    "iva": 9838,
+    "otrosImpuestos": 21363,
+    "total": 82977
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 51776,
+     "afecto": true
+    }
+   ],
+   "opts": {
+    "legacyOtros": true
+   },
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "IVA calculado $ 9.837 (19% de $ 51.776) distinto del IVA del RCV $ 9.838 (diferencia $ -1). Si es redondeo del emisor, marca \"Aceptar diferencia de $1\".",
+     "Líneas + IVA calculado + otros impuestos = $ 82.976 y el total del RCV es $ 82.977 (diferencia $ -1)."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 51776,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": false,
+     "ivaCalc": 9837,
+     "totalCalc": 82976,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": -1,
+     "difTotal": -1,
+     "neto": 51776,
+     "exento": 0,
+     "iva": 9838,
+     "otros": 21363,
+     "total": 82977
+    }
+   }
+  },
+  {
+   "nombre": "iva redondeo sin aceptar",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 51777,
+    "exento": 0,
+    "iva": 9837,
+    "otrosImpuestos": 0,
+    "total": 61614
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 51777,
+     "afecto": true
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "IVA calculado $ 9.838 (19% de $ 51.777) distinto del IVA del RCV $ 9.837 (diferencia $ 1). Si es redondeo del emisor, marca \"Aceptar diferencia de $1\".",
+     "Líneas + IVA calculado + otros impuestos = $ 61.615 y el total del RCV es $ 61.614 (diferencia $ 1)."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 51777,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 9838,
+     "totalCalc": 61615,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 1,
+     "difTotal": 1,
+     "neto": 51777,
+     "exento": 0,
+     "iva": 9837,
+     "otros": 0,
+     "total": 61614
+    }
+   }
+  },
+  {
+   "nombre": "iva redondeo aceptado",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 51777,
+    "exento": 0,
+    "iva": 9837,
+    "otrosImpuestos": 0,
+    "total": 61614
+   },
+   "lineas": [
+    {
+     "cuenta": "3202010",
+     "monto": 51777,
+     "afecto": true
+    }
+   ],
+   "opts": {
+    "aceptaRedondeo": true
+   },
+   "resultado": {
+    "ok": true,
+    "errores": [],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 51777,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 9838,
+     "totalCalc": 61615,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 1,
+     "difTotal": 1,
+     "neto": 51777,
+     "exento": 0,
+     "iva": 9837,
+     "otros": 0,
+     "total": 61614
+    }
+   }
+  },
+  {
+   "nombre": "46 total sin retención",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 46,
+    "neto": 200000,
+    "exento": 0,
+    "iva": 38000,
+    "otrosImpuestos": 0,
+    "total": 200000,
+    "ivaRetenido": 38000
+   },
+   "lineas": [
+    {
+     "cuenta": "3103003",
+     "monto": 200000,
+     "afecto": true
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": true,
+    "errores": [],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 200000,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 38000,
+     "totalCalc": 200000,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 0,
+     "difTotal": 0,
+     "neto": 200000,
+     "exento": 0,
+     "iva": 38000,
+     "otros": 0,
+     "total": 200000
+    }
+   }
+  },
+  {
+   "nombre": "venta ok",
+   "tipo": "venta",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 1000000,
+    "exento": 0,
+    "iva": 190000,
+    "otrosImpuestos": 0,
+    "total": 1190000
+   },
+   "lineas": [
+    {
+     "cuenta": "4101002",
+     "monto": 1000000,
+     "afecto": true
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": true,
+    "errores": [],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 1000000,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": false,
+     "ivaCalc": 190000,
+     "totalCalc": 1190000,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 0,
+     "difTotal": 0,
+     "neto": 1000000,
+     "exento": 0,
+     "iva": 190000,
+     "otros": 0,
+     "total": 1190000
+    }
+   }
+  },
+  {
+   "nombre": "venta con otro impuesto",
+   "tipo": "venta",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 1000,
+    "exento": 0,
+    "iva": 190,
+    "otrosImpuestos": 0,
+    "total": 1190
+   },
+   "lineas": [
+    {
+     "cuenta": "4101002",
+     "monto": 1000,
+     "afecto": true
+    },
+    {
+     "cuenta": "4101002",
+     "monto": 5,
+     "otroImp": true,
+     "afecto": false,
+     "desc": "x"
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "Las líneas de otros impuestos sólo aplican a compras."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 1000,
+     "sumExento": 0,
+     "sumOtros": 5,
+     "difOtros": 0,
+     "cruzaOtros": false,
+     "ivaCalc": 190,
+     "totalCalc": 1190,
+     "difNeto": 0,
+     "difExento": 0,
+     "difIva": 0,
+     "difTotal": 0,
+     "neto": 1000,
+     "exento": 0,
+     "iva": 190,
+     "otros": 0,
+     "total": 1190
+    }
+   }
+  },
+  {
+   "nombre": "monto cero y sin cuenta",
+   "tipo": "compra",
+   "doc": {
+    "tipoDTE": 33,
+    "neto": 100000,
+    "exento": 0,
+    "iva": 19000,
+    "otrosImpuestos": 0,
+    "total": 119000
+   },
+   "lineas": [
+    {
+     "cuenta": "",
+     "monto": 0,
+     "afecto": true
+    }
+   ],
+   "opts": {},
+   "resultado": {
+    "ok": false,
+    "errores": [
+     "Línea 1: falta la cuenta.",
+     "Línea 1: el monto debe ser mayor que cero.",
+     "Las líneas afectas suman $ 0 y el neto del RCV es $ 100.000 (diferencia $ -100.000).",
+     "IVA calculado $ 0 (19% de $ 0) distinto del IVA del RCV $ 19.000 (diferencia $ -19.000).",
+     "Líneas + IVA calculado + otros impuestos = $ 0 y el total del RCV es $ 119.000 (diferencia $ -119.000)."
+    ],
+    "avisos": [],
+    "resumen": {
+     "sumAfecto": 0,
+     "sumExento": 0,
+     "sumOtros": 0,
+     "difOtros": 0,
+     "cruzaOtros": true,
+     "ivaCalc": 0,
+     "totalCalc": 0,
+     "difNeto": -100000,
+     "difExento": 0,
+     "difIva": -19000,
+     "difTotal": -119000,
+     "neto": 100000,
+     "exento": 0,
+     "iva": 19000,
+     "otros": 0,
+     "total": 119000
+    }
+   }
+  }
+ ],
+ "lineas": [
+  {
+   "nombre": "compra neto",
+   "tipo": "compra",
+   "d": {
+    "tipoDTE": 33,
+    "neto": 100000,
+    "exento": 0,
+    "otrosImpuestos": 0,
+    "cuenta": "3202010",
+    "cc": "CC1"
+   },
+   "resultado": [
+    {
+     "cuenta": "3202010",
+     "desc": "",
+     "monto": 100000,
+     "cc": "CC1",
+     "afecto": true
+    }
+   ]
+  },
+  {
+   "nombre": "compra neto exento",
+   "tipo": "compra",
+   "d": {
+    "tipoDTE": 33,
+    "neto": 80000,
+    "exento": 20000,
+    "otrosImpuestos": 0
+   },
+   "resultado": [
+    {
+     "cuenta": "",
+     "desc": "",
+     "monto": 80000,
+     "cc": "",
+     "afecto": true
+    },
+    {
+     "cuenta": "",
+     "desc": "",
+     "monto": 20000,
+     "cc": "",
+     "afecto": false
+    }
+   ]
+  },
+  {
+   "nombre": "compra otros detalle",
+   "tipo": "compra",
+   "d": {
+    "tipoDTE": 33,
+    "neto": 51776,
+    "exento": 0,
+    "otrosImpuestos": 21363,
+    "cuenta": "3202010",
+    "otrosImpuestosDetalle": [
+     {
+      "tipo": "28",
+      "monto": 21363
+     }
+    ]
+   },
+   "resultado": [
+    {
+     "cuenta": "3202010",
+     "desc": "",
+     "monto": 51776,
+     "cc": "",
+     "afecto": true
+    },
+    {
+     "cuenta": "3202010",
+     "cc": "",
+     "monto": 21363,
+     "afecto": false,
+     "otroImp": true,
+     "codImp": "28",
+     "desc": "Otro impuesto cód. 28"
+    }
+   ]
+  },
+  {
+   "nombre": "compra otros 2 detalles",
+   "tipo": "compra",
+   "d": {
+    "tipoDTE": 33,
+    "neto": 500000,
+    "exento": 0,
+    "otrosImpuestos": 45000,
+    "otrosImpuestosDetalle": [
+     {
+      "tipo": "28",
+      "monto": 30000
+     },
+     {
+      "tipo": "sincredito",
+      "monto": 15000
+     }
+    ]
+   },
+   "resultado": [
+    {
+     "cuenta": "",
+     "desc": "",
+     "monto": 500000,
+     "cc": "",
+     "afecto": true
+    },
+    {
+     "cuenta": "",
+     "cc": "",
+     "monto": 30000,
+     "afecto": false,
+     "otroImp": true,
+     "codImp": "28",
+     "desc": "Otro impuesto cód. 28"
+    },
+    {
+     "cuenta": "",
+     "cc": "",
+     "monto": 15000,
+     "afecto": false,
+     "otroImp": true,
+     "codImp": "",
+     "desc": "Otros impuestos"
+    }
+   ]
+  },
+  {
+   "nombre": "venta",
+   "tipo": "venta",
+   "d": {
+    "tipoDTE": 33,
+    "neto": 1000,
+    "exento": 0
+   },
+   "resultado": [
+    {
+     "cuenta": "4101002",
+     "desc": "",
+     "monto": 1000,
+     "cc": "",
+     "afecto": true
+    }
+   ]
+  },
+  {
+   "nombre": "venta exenta",
+   "tipo": "venta",
+   "d": {
+    "tipoDTE": 34,
+    "neto": 0,
+    "exento": 500
+   },
+   "resultado": [
+    {
+     "cuenta": "4101002",
+     "desc": "",
+     "monto": 500,
+     "cc": "",
+     "afecto": false
+    }
+   ]
+  }
+ ]
+}

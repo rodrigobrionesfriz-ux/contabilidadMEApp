@@ -1,0 +1,5004 @@
+{
+ "bienes": [
+  {
+   "id": "a2",
+   "desc": "Tractor",
+   "cat": "maquinarias",
+   "fecha": "2025-03-10",
+   "valor": 45000000,
+   "valorContable": 45000000,
+   "residualContable": 0,
+   "vidaContable": 10,
+   "metodoContable": "lineal",
+   "fechaInicioDepContable": "2025-04-01",
+   "valorTributario": 45000000,
+   "residualTributario": 0,
+   "vidaTributaria": 15,
+   "metodoTributario": "acelerada",
+   "fechaInicioDepTributaria": "2025-04-01"
+  },
+  {
+   "id": "a3",
+   "desc": "Camión",
+   "cat": "vehiculos",
+   "fecha": "2026-08-20",
+   "valor": 60000000,
+   "valorContable": 60000000,
+   "residualContable": 0,
+   "vidaContable": 7,
+   "metodoContable": "lineal",
+   "fechaInicioDepContable": "2026-09-01",
+   "valorTributario": 58000000,
+   "residualTributario": 0,
+   "vidaTributaria": 7,
+   "metodoTributario": "lineal",
+   "fechaInicioDepTributaria": "2026-09-01"
+  }
+ ],
+ "casos": [
+  {
+   "clave": "dm:14D3:base",
+   "asientos": "dm",
+   "regimen": "14D3",
+   "datos": {
+    "regimen": "14D3",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": null,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D3",
+    "tasa": 12.5,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     }
+    ],
+    "totalAgregados": 7600000,
+    "totalDeducciones": 58000000,
+    "rliAntesPerdida": -35200000,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 35200000,
+    "rli": -35200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 0,
+    "ppmReajustado": 0,
+    "reaj": 0,
+    "saldo": 0,
+    "aPagar": 0,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14D3:ajustes",
+   "asientos": "dm",
+   "regimen": "14D3",
+   "datos": {
+    "regimen": "14D3",
+    "tasa": null,
+    "perdidaArrastre": 5000000,
+    "rechazadas": [
+     "3202050",
+     "3202070"
+    ],
+    "agregados": [
+     {
+      "lbl": "Agregado X",
+      "monto": 100000
+     }
+    ],
+    "deducciones": [
+     {
+      "lbl": "Ingreso no renta",
+      "monto": 50000
+     }
+    ],
+    "creditos": {
+     "af33bis": 300000,
+     "sence": 120000,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 1500000,
+    "reajustePPM": 3.5,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D3",
+    "tasa": 12.5,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado: Multas e infracciones",
+      "monto": 350000,
+      "auto": true,
+      "cuenta": "3202050",
+      "nota": "Multas y sanciones (Art. 31 inc. 2°)"
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado: Gastos particulares socios",
+      "monto": 600000,
+      "auto": true,
+      "cuenta": "3202070",
+      "nota": "Retiros y gastos particulares del dueño (Art. 21)"
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Agregado X",
+      "monto": 100000,
+      "auto": false,
+      "idx": 0
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     },
+     {
+      "cod": "",
+      "lbl": "Ingreso no renta",
+      "monto": 50000,
+      "auto": false,
+      "idx": 0
+     }
+    ],
+    "totalAgregados": 8650000,
+    "totalDeducciones": 58050000,
+    "rliAntesPerdida": -34200000,
+    "perdidaPrevia": 5000000,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 39200000,
+    "rli": -34200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [
+     {
+      "cod": "366",
+      "lbl": "Crédito por inversión en activo fijo (Art. 33 bis)",
+      "monto": 300000
+     },
+     {
+      "cod": "82",
+      "lbl": "Crédito por gastos de capacitación (SENCE)",
+      "monto": 120000
+     }
+    ],
+    "totalCreditos": 420000,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 1500000,
+    "ppmReajustado": 1552500,
+    "reaj": 3.5,
+    "saldo": -1552500,
+    "aPagar": 0,
+    "devolucion": 1552500,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14D3:perdidaGrande",
+   "asientos": "dm",
+   "regimen": "14D3",
+   "datos": {
+    "regimen": "14D3",
+    "tasa": null,
+    "perdidaArrastre": 90000000,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 400000,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D3",
+    "tasa": 12.5,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     }
+    ],
+    "totalAgregados": 7600000,
+    "totalDeducciones": 58000000,
+    "rliAntesPerdida": -35200000,
+    "perdidaPrevia": 90000000,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 125200000,
+    "rli": -35200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 400000,
+    "ppmReajustado": 400000,
+    "reaj": 0,
+    "saldo": -400000,
+    "aPagar": 0,
+    "devolucion": 400000,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14D3:credMayor",
+   "asientos": "dm",
+   "regimen": "14D3",
+   "datos": {
+    "regimen": "14D3",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 99000000
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 100,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D3",
+    "tasa": 12.5,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     }
+    ],
+    "totalAgregados": 7600000,
+    "totalDeducciones": 58000000,
+    "rliAntesPerdida": -35200000,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 35200000,
+    "rli": -35200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [
+     {
+      "cod": "366",
+      "lbl": "Crédito por inversión en activo fijo (Art. 33 bis)",
+      "monto": 99000000
+     }
+    ],
+    "totalCreditos": 99000000,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 100,
+    "ppmReajustado": 100,
+    "reaj": 0,
+    "saldo": -100,
+    "aPagar": 0,
+    "devolucion": 100,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14A:base",
+   "asientos": "dm",
+   "regimen": "14A",
+   "datos": {
+    "regimen": "14A",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": null,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14A",
+    "tasa": 27,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 10738095,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 0,
+    "rli": 10738095,
+    "baseImponible": 10738095,
+    "idpc": 2899286,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 2899286,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 0,
+    "ppmReajustado": 0,
+    "reaj": 0,
+    "saldo": 2899286,
+    "aPagar": 2899286,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14A:ajustes",
+   "asientos": "dm",
+   "regimen": "14A",
+   "datos": {
+    "regimen": "14A",
+    "tasa": null,
+    "perdidaArrastre": 5000000,
+    "rechazadas": [
+     "3202050",
+     "3202070"
+    ],
+    "agregados": [
+     {
+      "lbl": "Agregado X",
+      "monto": 100000
+     }
+    ],
+    "deducciones": [
+     {
+      "lbl": "Ingreso no renta",
+      "monto": 50000
+     }
+    ],
+    "creditos": {
+     "af33bis": 300000,
+     "sence": 120000,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 1500000,
+    "reajustePPM": 3.5,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14A",
+    "tasa": 27,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado: Multas e infracciones",
+      "monto": 350000,
+      "auto": true,
+      "cuenta": "3202050",
+      "nota": "Multas y sanciones (Art. 31 inc. 2°)"
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado: Gastos particulares socios",
+      "monto": 600000,
+      "auto": true,
+      "cuenta": "3202070",
+      "nota": "Retiros y gastos particulares del dueño (Art. 21)"
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     },
+     {
+      "cod": "",
+      "lbl": "Agregado X",
+      "monto": 100000,
+      "auto": false,
+      "idx": 0
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     },
+     {
+      "cod": "",
+      "lbl": "Ingreso no renta",
+      "monto": 50000,
+      "auto": false,
+      "idx": 0
+     }
+    ],
+    "totalAgregados": 8350000,
+    "totalDeducciones": 11811905,
+    "rliAntesPerdida": 11738095,
+    "perdidaPrevia": 5000000,
+    "perdidaImputada": 5000000,
+    "perdidaRemanente": 0,
+    "rli": 6738095,
+    "baseImponible": 6738095,
+    "idpc": 1819286,
+    "creditos": [
+     {
+      "cod": "366",
+      "lbl": "Crédito por inversión en activo fijo (Art. 33 bis)",
+      "monto": 300000
+     },
+     {
+      "cod": "82",
+      "lbl": "Crédito por gastos de capacitación (SENCE)",
+      "monto": 120000
+     }
+    ],
+    "totalCreditos": 420000,
+    "idpcNeto": 1399286,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 1500000,
+    "ppmReajustado": 1552500,
+    "reaj": 3.5,
+    "saldo": -153214,
+    "aPagar": 0,
+    "devolucion": 153214,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14A:perdidaGrande",
+   "asientos": "dm",
+   "regimen": "14A",
+   "datos": {
+    "regimen": "14A",
+    "tasa": null,
+    "perdidaArrastre": 90000000,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 400000,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14A",
+    "tasa": 27,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 10738095,
+    "perdidaPrevia": 90000000,
+    "perdidaImputada": 10738095,
+    "perdidaRemanente": 79261905,
+    "rli": 0,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 400000,
+    "ppmReajustado": 400000,
+    "reaj": 0,
+    "saldo": -400000,
+    "aPagar": 0,
+    "devolucion": 400000,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14A:credMayor",
+   "asientos": "dm",
+   "regimen": "14A",
+   "datos": {
+    "regimen": "14A",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 99000000
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 100,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14A",
+    "tasa": 27,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 10738095,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 0,
+    "rli": 10738095,
+    "baseImponible": 10738095,
+    "idpc": 2899286,
+    "creditos": [
+     {
+      "cod": "366",
+      "lbl": "Crédito por inversión en activo fijo (Art. 33 bis)",
+      "monto": 99000000
+     }
+    ],
+    "totalCreditos": 99000000,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 100,
+    "ppmReajustado": 100,
+    "reaj": 0,
+    "saldo": -100,
+    "aPagar": 0,
+    "devolucion": 100,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14D8:base",
+   "asientos": "dm",
+   "regimen": "14D8",
+   "datos": {
+    "regimen": "14D8",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": null,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D8",
+    "tasa": 0,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     }
+    ],
+    "totalAgregados": 7600000,
+    "totalDeducciones": 58000000,
+    "rliAntesPerdida": -35200000,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 35200000,
+    "rli": -35200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 0,
+    "ppmReajustado": 0,
+    "reaj": 0,
+    "saldo": 0,
+    "aPagar": 0,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14D8:ajustes",
+   "asientos": "dm",
+   "regimen": "14D8",
+   "datos": {
+    "regimen": "14D8",
+    "tasa": null,
+    "perdidaArrastre": 5000000,
+    "rechazadas": [
+     "3202050",
+     "3202070"
+    ],
+    "agregados": [
+     {
+      "lbl": "Agregado X",
+      "monto": 100000
+     }
+    ],
+    "deducciones": [
+     {
+      "lbl": "Ingreso no renta",
+      "monto": 50000
+     }
+    ],
+    "creditos": {
+     "af33bis": 300000,
+     "sence": 120000,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 1500000,
+    "reajustePPM": 3.5,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D8",
+    "tasa": 0,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado: Multas e infracciones",
+      "monto": 350000,
+      "auto": true,
+      "cuenta": "3202050",
+      "nota": "Multas y sanciones (Art. 31 inc. 2°)"
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado: Gastos particulares socios",
+      "monto": 600000,
+      "auto": true,
+      "cuenta": "3202070",
+      "nota": "Retiros y gastos particulares del dueño (Art. 21)"
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Agregado X",
+      "monto": 100000,
+      "auto": false,
+      "idx": 0
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     },
+     {
+      "cod": "",
+      "lbl": "Ingreso no renta",
+      "monto": 50000,
+      "auto": false,
+      "idx": 0
+     }
+    ],
+    "totalAgregados": 8650000,
+    "totalDeducciones": 58050000,
+    "rliAntesPerdida": -34200000,
+    "perdidaPrevia": 5000000,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 39200000,
+    "rli": -34200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [
+     {
+      "cod": "366",
+      "lbl": "Crédito por inversión en activo fijo (Art. 33 bis)",
+      "monto": 300000
+     },
+     {
+      "cod": "82",
+      "lbl": "Crédito por gastos de capacitación (SENCE)",
+      "monto": 120000
+     }
+    ],
+    "totalCreditos": 420000,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 1500000,
+    "ppmReajustado": 1552500,
+    "reaj": 3.5,
+    "saldo": -1552500,
+    "aPagar": 0,
+    "devolucion": 1552500,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14D8:perdidaGrande",
+   "asientos": "dm",
+   "regimen": "14D8",
+   "datos": {
+    "regimen": "14D8",
+    "tasa": null,
+    "perdidaArrastre": 90000000,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 400000,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D8",
+    "tasa": 0,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     }
+    ],
+    "totalAgregados": 7600000,
+    "totalDeducciones": 58000000,
+    "rliAntesPerdida": -35200000,
+    "perdidaPrevia": 90000000,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 125200000,
+    "rli": -35200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 400000,
+    "ppmReajustado": 400000,
+    "reaj": 0,
+    "saldo": -400000,
+    "aPagar": 0,
+    "devolucion": 400000,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:14D8:credMayor",
+   "asientos": "dm",
+   "regimen": "14D8",
+   "datos": {
+    "regimen": "14D8",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 99000000
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 100,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D8",
+    "tasa": 0,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     }
+    ],
+    "totalAgregados": 7600000,
+    "totalDeducciones": 58000000,
+    "rliAntesPerdida": -35200000,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 35200000,
+    "rli": -35200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [
+     {
+      "cod": "366",
+      "lbl": "Crédito por inversión en activo fijo (Art. 33 bis)",
+      "monto": 99000000
+     }
+    ],
+    "totalCreditos": 99000000,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 100,
+    "ppmReajustado": 100,
+    "reaj": 0,
+    "saldo": -100,
+    "aPagar": 0,
+    "devolucion": 100,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:34AGRI:presunta",
+   "asientos": "dm",
+   "regimen": "34AGRI",
+   "datos": {
+    "regimen": "34AGRI",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 250000000,
+    "pctPresuncion": null,
+    "ppmManual": 200000,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "34AGRI",
+    "tasa": 25,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7600000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 11038095,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 0,
+    "rli": 11038095,
+    "baseImponible": 25000000,
+    "idpc": 6250000,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 6250000,
+    "presunta": {
+     "lbl": "Avalúo fiscal del predio al 1 de enero",
+     "valor": 250000000,
+     "pct": 10,
+     "renta": 25000000
+    },
+    "ppmF29": 0,
+    "ppmBase": 200000,
+    "ppmReajustado": 200000,
+    "reaj": 0,
+    "saldo": 6050000,
+    "aPagar": 6050000,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:34AGRI:presuntaPct",
+   "asientos": "dm",
+   "regimen": "34AGRI",
+   "datos": {
+    "regimen": "34AGRI",
+    "tasa": 20,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 250000000,
+    "pctPresuncion": 8,
+    "ppmManual": 0,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "34AGRI",
+    "tasa": 20,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     },
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Pérdida/deudora contabilizada: se agrega para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7600000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 11038095,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 0,
+    "rli": 11038095,
+    "baseImponible": 20000000,
+    "idpc": 4000000,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 4000000,
+    "presunta": {
+     "lbl": "Avalúo fiscal del predio al 1 de enero",
+     "valor": 250000000,
+     "pct": 8,
+     "renta": 20000000
+    },
+    "ppmF29": 0,
+    "ppmBase": 0,
+    "ppmReajustado": 0,
+    "reaj": 0,
+    "saldo": 4000000,
+    "aPagar": 4000000,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:NOSUJ:base",
+   "asientos": "dm",
+   "regimen": "NOSUJ",
+   "datos": {
+    "regimen": "NOSUJ",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": null,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "NOSUJ",
+    "tasa": 25,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 10738095,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 0,
+    "rli": 10738095,
+    "baseImponible": 10738095,
+    "idpc": 2684524,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 2684524,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 0,
+    "ppmReajustado": 0,
+    "reaj": 0,
+    "saldo": 2684524,
+    "aPagar": 2684524,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:NOSUJ:ajustes",
+   "asientos": "dm",
+   "regimen": "NOSUJ",
+   "datos": {
+    "regimen": "NOSUJ",
+    "tasa": null,
+    "perdidaArrastre": 5000000,
+    "rechazadas": [
+     "3202050",
+     "3202070"
+    ],
+    "agregados": [
+     {
+      "lbl": "Agregado X",
+      "monto": 100000
+     }
+    ],
+    "deducciones": [
+     {
+      "lbl": "Ingreso no renta",
+      "monto": 50000
+     }
+    ],
+    "creditos": {
+     "af33bis": 300000,
+     "sence": 120000,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 1500000,
+    "reajustePPM": 3.5,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "NOSUJ",
+    "tasa": 25,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado: Multas e infracciones",
+      "monto": 350000,
+      "auto": true,
+      "cuenta": "3202050",
+      "nota": "Multas y sanciones (Art. 31 inc. 2°)"
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado: Gastos particulares socios",
+      "monto": 600000,
+      "auto": true,
+      "cuenta": "3202070",
+      "nota": "Retiros y gastos particulares del dueño (Art. 21)"
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     },
+     {
+      "cod": "",
+      "lbl": "Agregado X",
+      "monto": 100000,
+      "auto": false,
+      "idx": 0
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     },
+     {
+      "cod": "",
+      "lbl": "Ingreso no renta",
+      "monto": 50000,
+      "auto": false,
+      "idx": 0
+     }
+    ],
+    "totalAgregados": 8350000,
+    "totalDeducciones": 11811905,
+    "rliAntesPerdida": 11738095,
+    "perdidaPrevia": 5000000,
+    "perdidaImputada": 5000000,
+    "perdidaRemanente": 0,
+    "rli": 6738095,
+    "baseImponible": 6738095,
+    "idpc": 1684524,
+    "creditos": [
+     {
+      "cod": "366",
+      "lbl": "Crédito por inversión en activo fijo (Art. 33 bis)",
+      "monto": 300000
+     },
+     {
+      "cod": "82",
+      "lbl": "Crédito por gastos de capacitación (SENCE)",
+      "monto": 120000
+     }
+    ],
+    "totalCreditos": 420000,
+    "idpcNeto": 1264524,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 1500000,
+    "ppmReajustado": 1552500,
+    "reaj": 3.5,
+    "saldo": -287976,
+    "aPagar": 0,
+    "devolucion": 287976,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:NOSUJ:perdidaGrande",
+   "asientos": "dm",
+   "regimen": "NOSUJ",
+   "datos": {
+    "regimen": "NOSUJ",
+    "tasa": null,
+    "perdidaArrastre": 90000000,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 400000,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "NOSUJ",
+    "tasa": 25,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 10738095,
+    "perdidaPrevia": 90000000,
+    "perdidaImputada": 10738095,
+    "perdidaRemanente": 79261905,
+    "rli": 0,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 400000,
+    "ppmReajustado": 400000,
+    "reaj": 0,
+    "saldo": -400000,
+    "aPagar": 0,
+    "devolucion": 400000,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "dm:NOSUJ:credMayor",
+   "asientos": "dm",
+   "regimen": "NOSUJ",
+   "datos": {
+    "regimen": "NOSUJ",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 99000000
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": 100,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -10550000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": 300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "NOSUJ",
+    "tasa": 25,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": 300000,
+    "impContab": 2000000,
+    "gastos": 35200000,
+    "resultadoBalance": 15200000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 10738095,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 0,
+    "rli": 10738095,
+    "baseImponible": 10738095,
+    "idpc": 2684524,
+    "creditos": [
+     {
+      "cod": "366",
+      "lbl": "Crédito por inversión en activo fijo (Art. 33 bis)",
+      "monto": 99000000
+     }
+    ],
+    "totalCreditos": 99000000,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 100,
+    "ppmReajustado": 100,
+    "reaj": 0,
+    "saldo": -100,
+    "aPagar": 0,
+    "devolucion": 100,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 57950000,
+    "activos": 74450000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "cm:14D3:base",
+   "asientos": "cm",
+   "regimen": "14D3",
+   "datos": {
+    "regimen": "14D3",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": null,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -9950000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": -300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D3",
+    "tasa": 12.5,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": -300000,
+    "impContab": 2000000,
+    "gastos": 34600000,
+    "resultadoBalance": 15800000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria acreedora contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Ganancia/acreedora contabilizada: se deduce para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     },
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 58300000,
+    "rliAntesPerdida": -35200000,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 35200000,
+    "rli": -35200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 0,
+    "ppmReajustado": 0,
+    "reaj": 0,
+    "saldo": 0,
+    "aPagar": 0,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 58550000,
+    "activos": 75050000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "cm:14A:base",
+   "asientos": "cm",
+   "regimen": "14A",
+   "datos": {
+    "regimen": "14A",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": null,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -9950000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": -300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14A",
+    "tasa": 27,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": -300000,
+    "impContab": 2000000,
+    "gastos": 34600000,
+    "resultadoBalance": 15800000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 11338095,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 0,
+    "rli": 11338095,
+    "baseImponible": 11338095,
+    "idpc": 3061286,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 3061286,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 0,
+    "ppmReajustado": 0,
+    "reaj": 0,
+    "saldo": 3061286,
+    "aPagar": 3061286,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 58550000,
+    "activos": 75050000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "cm:14D8:base",
+   "asientos": "cm",
+   "regimen": "14D8",
+   "datos": {
+    "regimen": "14D8",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": null,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -9950000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": -300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "14D8",
+    "tasa": 0,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": -300000,
+    "impContab": 2000000,
+    "gastos": 34600000,
+    "resultadoBalance": 15800000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera porque el régimen aplica depreciación tributaria instantánea."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1146",
+      "lbl": "Corrección monetaria acreedora contabilizada (se reversa)",
+      "monto": 300000,
+      "auto": true,
+      "nota": "Ganancia/acreedora contabilizada: se deduce para reversarla porque el régimen no aplica corrección monetaria tributaria."
+     },
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria instantánea del activo fijo adquirido en 2026",
+      "monto": 58000000,
+      "auto": true,
+      "nota": "1 bien(es) adquiridos en el ejercicio, usando su valor tributario."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 58300000,
+    "rliAntesPerdida": -35200000,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 35200000,
+    "rli": -35200000,
+    "baseImponible": 0,
+    "idpc": 0,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 0,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 0,
+    "ppmReajustado": 0,
+    "reaj": 0,
+    "saldo": 0,
+    "aPagar": 0,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 58000000,
+     "diferencia": 50642857,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 0,
+       "diferencia": -4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 58000000,
+       "diferencia": 55142857,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": true
+    },
+    "depFin": 4500000,
+    "cpt": 58550000,
+    "activos": 75050000,
+    "pasivoExigible": 16500000
+   }
+  },
+  {
+   "clave": "cm:NOSUJ:base",
+   "asientos": "cm",
+   "regimen": "NOSUJ",
+   "datos": {
+    "regimen": "NOSUJ",
+    "tasa": null,
+    "perdidaArrastre": 0,
+    "rechazadas": [],
+    "agregados": [],
+    "deducciones": [],
+    "creditos": {
+     "af33bis": 0,
+     "sence": 0,
+     "donaciones": 0,
+     "otros": 0
+    },
+    "basePresunta": 0,
+    "pctPresuncion": null,
+    "ppmManual": null,
+    "reajustePPM": 0,
+    "notas": ""
+   },
+   "saldos": {
+    "1101201": {
+     "nombre": "Banco Estado",
+     "saldo": -9950000
+    },
+    "1104001": {
+     "nombre": "Clientes",
+     "saldo": 59500000
+    },
+    "1201001": {
+     "nombre": "Terrenos",
+     "saldo": 30000000
+    },
+    "1202001": {
+     "nombre": "Dep acumulada",
+     "saldo": -4500000
+    },
+    "2102001": {
+     "nombre": "Proveedores",
+     "saldo": -5000000
+    },
+    "2103003": {
+     "nombre": "IVA DF",
+     "saldo": -9500000
+    },
+    "2104003": {
+     "nombre": "Impuesto por pagar",
+     "saldo": -2000000
+    },
+    "2301001": {
+     "nombre": "Capital",
+     "saldo": -45000000
+    },
+    "3101001": {
+     "nombre": "Costo de ventas",
+     "saldo": 18000000
+    },
+    "3201001": {
+     "nombre": "Sueldos",
+     "saldo": 9000000
+    },
+    "3202019": {
+     "nombre": "Honorarios",
+     "saldo": 1200000
+    },
+    "3202050": {
+     "nombre": "Multas e infracciones",
+     "saldo": 350000
+    },
+    "3202060": {
+     "nombre": "Gastos generales",
+     "saldo": 1000000
+    },
+    "3202070": {
+     "nombre": "Gastos particulares socios",
+     "saldo": 600000
+    },
+    "3301001": {
+     "nombre": "Depreciación",
+     "saldo": 4500000
+    },
+    "3401001": {
+     "nombre": "Gastos financieros",
+     "saldo": 250000
+    },
+    "3501001": {
+     "nombre": "Corrección monetaria",
+     "saldo": -300000
+    },
+    "3601001": {
+     "nombre": "Impuesto renta",
+     "saldo": 2000000
+    },
+    "4101003": {
+     "nombre": "Ingresos por venta plantaciones",
+     "saldo": -50000000
+    },
+    "4201001": {
+     "nombre": "Intereses ganados",
+     "saldo": -400000
+    }
+   },
+   "rechazoMov": [
+    {
+     "cuenta": "3202060",
+     "debe": 800000,
+     "haber": 0
+    }
+   ],
+   "r": {
+    "anio": 2026,
+    "reg": "NOSUJ",
+    "tasa": 25,
+    "ingresos": 50400000,
+    "ingExp": 50000000,
+    "otrosIng": 400000,
+    "costoExp": 18000000,
+    "gastosOp": 16650000,
+    "gastosNoOp": 250000,
+    "correccMon": -300000,
+    "impContab": 2000000,
+    "gastos": 34600000,
+    "resultadoBalance": 15800000,
+    "ag": [
+     {
+      "cod": "",
+      "lbl": "Impuesto a la renta contabilizado en el ejercicio",
+      "monto": 2000000,
+      "auto": true,
+      "nota": "El IDPC no es un gasto deducible (Art. 31 N°2 LIR). Se agrega para llegar a la base tributaria."
+     },
+     {
+      "cod": "",
+      "lbl": "Gasto rechazado documentado: 3202060 (1 movimiento)",
+      "monto": 800000,
+      "auto": true,
+      "cuenta": "3202060",
+      "nota": "Marcado a nivel de documento como gasto rechazado. Se agrega a la RLI sin reclasificar el asiento financiero."
+     },
+     {
+      "cod": "982",
+      "lbl": "Depreciación financiera del ejercicio (reversa tributaria)",
+      "monto": 4500000,
+      "auto": true,
+      "nota": "Se reversa la depreciación financiera para sustituirla por la depreciación tributaria determinada según la ficha de activo fijo."
+     }
+    ],
+    "de": [
+     {
+      "cod": "1391",
+      "lbl": "Depreciación tributaria del activo fijo 2026",
+      "monto": 11761905,
+      "auto": true,
+      "nota": "2 bien(es) con cuota tributaria en el ejercicio según sus fichas de activo fijo."
+     }
+    ],
+    "totalAgregados": 7300000,
+    "totalDeducciones": 11761905,
+    "rliAntesPerdida": 11338095,
+    "perdidaPrevia": 0,
+    "perdidaImputada": 0,
+    "perdidaRemanente": 0,
+    "rli": 11338095,
+    "baseImponible": 11338095,
+    "idpc": 2834524,
+    "creditos": [],
+    "totalCreditos": 0,
+    "idpcNeto": 2834524,
+    "presunta": null,
+    "ppmF29": 0,
+    "ppmBase": 0,
+    "ppmReajustado": 0,
+    "reaj": 0,
+    "saldo": 2834524,
+    "aPagar": 2834524,
+    "devolucion": 0,
+    "depConc": {
+     "contable": 7357143,
+     "tributaria": 11761905,
+     "diferencia": 4404762,
+     "detalle": [
+      {
+       "id": "a2",
+       "nm": "Tractor",
+       "fecha": "2025-03-10",
+       "contable": 4500000,
+       "tributaria": 9000000,
+       "diferencia": 4500000,
+       "valorTributario": 45000000
+      },
+      {
+       "id": "a3",
+       "nm": "Camión",
+       "fecha": "2026-08-20",
+       "contable": 2857143,
+       "tributaria": 2761905,
+       "diferencia": -95238,
+       "valorTributario": 58000000
+      }
+     ],
+     "instantanea": false
+    },
+    "depFin": 4500000,
+    "cpt": 58550000,
+    "activos": 75050000,
+    "pasivoExigible": 16500000
+   }
+  }
+ ]
+}
