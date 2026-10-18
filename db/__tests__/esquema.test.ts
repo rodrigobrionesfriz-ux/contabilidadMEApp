@@ -1,33 +1,13 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import { PGlite } from '@electric-sql/pglite';
-import fs from 'node:fs';
-import path from 'node:path';
-
-// Simula lo que Supabase provee: esquema auth, auth.uid() desde el JWT y el rol authenticated.
-const AUTH_STUB = `
-create schema auth;
-create table auth.users (id uuid primary key, email text, raw_user_meta_data jsonb default '{}');
-create function auth.uid() returns uuid language sql stable as
-  $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
-create role authenticated nologin;
-create role anon nologin;
-`;
+import type { PGlite } from '@electric-sql/pglite';
+import { baseDePrueba } from './helpers';
 
 const U1 = '11111111-1111-1111-1111-111111111111';
 const U2 = '22222222-2222-2222-2222-222222222222';
 const U3 = '33333333-3333-3333-3333-333333333333';
 
 let db: PGlite;
-
-/** Ejecuta como un usuario autenticado (RLS activo). */
-async function como<T = Record<string, unknown>>(uid: string, sql: string, params: unknown[] = []) {
-  await db.exec(`reset role; select set_config('request.jwt.claim.sub', '${uid}', false); set role authenticated;`);
-  try {
-    return (await db.query<T>(sql, params)).rows;
-  } finally {
-    await db.exec('reset role;');
-  }
-}
+let como: Awaited<ReturnType<typeof baseDePrueba>>['como'];
 
 const lineas = (arr: unknown[]) => JSON.stringify(arr);
 
@@ -36,12 +16,9 @@ describe('esquema base', () => {
   let emp2: string;
 
   beforeAll(async () => {
-    db = new PGlite();
-    await db.exec(AUTH_STUB);
-    const dir = path.resolve(__dirname, '../../supabase/migrations');
-    for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.sql')).sort()) {
-      await db.exec(fs.readFileSync(path.join(dir, f), 'utf8'));
-    }
+    const b = await baseDePrueba();
+    db = b.db;
+    como = b.como;
     await db.exec(`insert into auth.users (id, email) values
       ('${U1}', 'rodrigo@test.cl'), ('${U2}', 'otro@test.cl'), ('${U3}', 'consulta@test.cl')`);
   });
