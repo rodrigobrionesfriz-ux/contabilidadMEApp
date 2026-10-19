@@ -139,8 +139,11 @@ export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centr
   const dato = (t: string, v: React.ReactNode, cls = '') => (
     <div className={cls}><div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">{t}</div><div className="text-sm font-medium">{v}</div></div>
   );
-  const monto = (t: string, v: number) => (
-    <div><div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">{t}</div><div className="num text-right text-sm font-semibold">{pesos(v)}</div></div>
+  const monto = (t: string, v: number, total = false) => (
+    <div className={`rounded-md border px-3 py-2 text-right ${total ? 'border-info/40 bg-info/10' : 'border-borde bg-panel'}`}>
+      <div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">{t}</div>
+      <div className={`num text-sm font-semibold ${total ? 'text-info' : ''}`}>{pesos(v)}</div>
+    </div>
   );
   const ctrl: [string, number, number][] = [
     [`Neto (líneas afectas)`, r.sumAfecto, r.neto],
@@ -157,21 +160,25 @@ export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centr
         <button type="button" onClick={cancelar} className="boton-sec px-2.5 py-1" aria-label="Cerrar edición">✕</button>
       </div>
 
-      {/* Datos del documento */}
-      <div className="grid grid-cols-2 gap-x-6 gap-y-3 rounded-lg border border-borde bg-panel-2 p-4 sm:grid-cols-5">
-        {dato('Tipo de documento', `${d.tipoDTE} · ${dteNombre}`)}
-        {dato('Folio', <span className="num">{d.numero}</span>)}
-        {dato('Fecha emisión', <span className="num">{d.fecha}</span>)}
-        <div><div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">Fecha vencimiento</div>
-          <input type="date" value={vence} onChange={(e) => setVence(e.target.value)} className="campo num py-1 text-xs" aria-label="Fecha de vencimiento" /></div>
-        {dato(`RUT ${aux}`, <span className="num">{rut.replace(/^(\d{1,3})(\d{3})(\d{3})-/, '$1.$2.$3-')}</span>)}
-        {dato('Auxiliar', d.razonSocial)}
-        {monto('Exento', d.exento)}
-        {monto('Neto', d.neto)}
-        {monto('IVA', d.iva)}
-        {tipo === 'compra' ? monto('Otros impuestos', d.otrosImpuestos) : <div />}
-        <div><div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">Total</div><div className="num pl-6 text-sm font-bold text-info">{pesos(d.total)}</div></div>
-        {tipo === 'compra' && d.fecha.slice(0, 7) < periodo && <div className="col-span-4 self-end text-xs text-tenue">Documento de un mes anterior: se contabiliza el 1 de {MESES[Number(periodo.slice(5, 7)) - 1]} {periodo.slice(0, 4)}.</div>}
+      {/* Datos del documento: identificación arriba, montos en casillas alineadas a la derecha abajo */}
+      <div className="space-y-3 rounded-lg border border-borde bg-panel-2 p-4">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-6">
+          {dato('Tipo de documento', `${d.tipoDTE} · ${dteNombre}`)}
+          {dato('Folio', <span className="num">{d.numero}</span>)}
+          {dato('Fecha emisión', <span className="num">{d.fecha}</span>)}
+          <div><div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">Fecha vencimiento</div>
+            <input type="date" value={vence} onChange={(e) => setVence(e.target.value)} className="campo num py-1 text-xs" aria-label="Fecha de vencimiento" /></div>
+          {dato(`RUT ${aux}`, <span className="num">{rut.replace(/^(\d{1,3})(\d{3})(\d{3})-/, '$1.$2.$3-')}</span>)}
+          {dato('Auxiliar', <span className="block truncate" title={d.razonSocial}>{d.razonSocial}</span>)}
+        </div>
+        <div className={`grid grid-cols-2 gap-2 ${tipo === 'compra' ? 'sm:grid-cols-5' : 'sm:grid-cols-4'}`}>
+          {monto('Exento', d.exento)}
+          {monto('Neto', d.neto)}
+          {monto('IVA', d.iva)}
+          {tipo === 'compra' && monto('Otros impuestos', d.otrosImpuestos)}
+          {monto('Total', d.total, true)}
+        </div>
+        {tipo === 'compra' && d.fecha.slice(0, 7) < periodo && <p className="text-xs text-tenue">Documento de un mes anterior: se contabiliza el 1 de {MESES[Number(periodo.slice(5, 7)) - 1]} {periodo.slice(0, 4)}.</p>}
       </div>
 
       <div>
