@@ -88,7 +88,7 @@ function DetalleToma({ c, t, volver }: { c: Ctx; t: TomaI; volver: () => void })
           {editable && <button type="button" className="boton" disabled={c.pendiente} onClick={() => confirm(`¿Cerrar ${t.folio} y enviarla a autorización?`) && c.run(() => cambiarEstadoToma(c.empresaId, t.id, 'cerrar'))}>Cerrar para autorización</button>}
         </div>
       </div>
-      {t.estado === 'DEVUELTA' && <p className="rounded-md border border-amber-500/40 bg-amber-500/10 p-2 text-sm text-amber-500"><strong>Devuelta:</strong> {t.motivo}</p>}
+      {t.estado === 'DEVUELTA' && <p className="rounded-md border border-aviso/40 bg-aviso/10 p-2 text-sm text-aviso"><strong>Devuelta:</strong> {t.motivo}</p>}
       {t.estado === 'RECHAZADA' && <p className="rounded-md border border-peligro/40 bg-peligro/10 p-2 text-sm text-peligro"><strong>Rechazada:</strong> {t.motivo}</p>}
       {t.estado === 'APLICADA' && <p className="rounded-md border border-acento/40 bg-acento/10 p-2 text-sm"><strong>Ajustes aplicados:</strong> {t.movimientosAjuste.join(', ') || 'sin diferencias'} · autorizada por {t.resueltoPor || '–'}</p>}
       <div className="grid gap-3 sm:grid-cols-4"><Kpi lbl="Líneas" v={t.lineas.length} /><Kpi lbl="Contadas" v={contadas} /><Kpi lbl="Pendientes" v={pend} aviso={pend > 0} /><Kpi lbl="Diferencias actuales" v={difs} aviso={difs > 0} /></div>
@@ -98,7 +98,7 @@ function DetalleToma({ c, t, volver }: { c: Ctx; t: TomaI; volver: () => void })
         <tbody>{lineas.length ? lineas.map(({ l, p }) => {
           const r = l.contado ? rev(l) : null, dif = r?.diferencia || 0;
           return (
-            <tr key={l.id} className={`border-b border-borde/30 ${l.contado && Math.abs(dif) > 1e-6 ? 'bg-amber-500/5' : ''}`}>
+            <tr key={l.id} className={`border-b border-borde/30 ${l.contado && Math.abs(dif) > 1e-6 ? 'bg-aviso/5' : ''}`}>
               <td className="num p-2">{p?.codigo}</td><td className="font-medium">{p?.descripcion || l.productoId} <span className="text-tenue">{p?.unidad}</span></td>
               <td className="num">{l.lote || '–'} <span className="text-tenue">{l.fechaVencimiento ? fechaCorta(l.fechaVencimiento) : ''}</span></td>
               <td className="num text-right">{fmt(l.teoricoBase)}</td>

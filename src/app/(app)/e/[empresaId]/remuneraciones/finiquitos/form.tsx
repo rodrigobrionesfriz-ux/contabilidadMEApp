@@ -82,7 +82,7 @@ export function FormularioFiniquito({ empresaId, id, datos, trabajadores, inicia
             <select id="fin-trab" value={f.trab} onChange={(e) => { const nt = trabajadores.find((x) => x.id === e.target.value); set({ trab: e.target.value, codigoLRE: nt?.lre?.causalTermino || '' }); }} className="campo">
               {trabajadores.map((x) => <option key={x.id} value={x.id}>{x.nombre}{x.rut ? ` · ${x.rut}` : ''}</option>)}
             </select>
-            <p className="mt-1 text-[10px] text-tenue">{t?.lre?.fechaInicio ? `Ingreso ${fechaCL(t.lre.fechaInicio)} · ${t.contrato === 'plazo' ? 'plazo fijo' : t.contrato === 'obra' ? 'por obra' : 'indefinido'}` : <span className="text-amber-500">⚠️ Falta la fecha de inicio en la ficha</span>}</p>
+            <p className="mt-1 text-[10px] text-tenue">{t?.lre?.fechaInicio ? `Ingreso ${fechaCL(t.lre.fechaInicio)} · ${t.contrato === 'plazo' ? 'plazo fijo' : t.contrato === 'obra' ? 'por obra' : 'indefinido'}` : <span className="text-aviso">⚠️ Falta la fecha de inicio en la ficha</span>}</p>
           </div>
           {campo('fechaTermino', 'Fecha de término', { tipo: 'date' })}
           <div className="sm:col-span-2">
@@ -158,7 +158,7 @@ export function FormularioFiniquito({ empresaId, id, datos, trabajadores, inicia
 
       <aside className="tarjeta h-fit space-y-2 p-4 text-xs xl:sticky xl:top-4">
         <h2 className="text-sm font-semibold">Vista previa del cálculo</h2>
-        {!r ? <p className="text-tenue">Selecciona un trabajador.</p> : !r.ok ? <p className="text-amber-500">⚠️ {r.motivo}</p> : (
+        {!r ? <p className="text-tenue">Selecciona un trabajador.</p> : !r.ok ? <p className="text-aviso">⚠️ {r.motivo}</p> : (
           <>
             <p className="text-tenue">Antigüedad {r.ant.anios} año(s), {r.ant.meses} mes(es) y {r.ant.dias} día(s) · última remuneración {clp(r.ultimaRem)}{r.baseIndem < r.ultimaRem ? ` (tope 90 UF ${clp(r.tope90)})` : ''}</p>
             <table className="w-full">
@@ -170,7 +170,7 @@ export function FormularioFiniquito({ empresaId, id, datos, trabajadores, inicia
               </tbody>
             </table>
             <p className="text-tenue">Feriado: saldo {r.feriado.saldo == null ? '–' : n2(r.feriado.saldo)} + proporcional {n2(r.feriado.fraccion)} = {n2(r.feriado.habilesCalc)} días hábiles · {n2(r.feriado.corridos)} corridos (hasta {fechaCL(r.feriado.hasta)}) · diario {clp(r.feriado.diario)}</p>
-            {r.avisos.map((a, i) => <p key={i} className="text-amber-500">⚠️ {a}</p>)}
+            {r.avisos.map((a, i) => <p key={i} className="text-aviso">⚠️ {a}</p>)}
             <p className="text-[10px] text-tenue">Las indemnizaciones por término y el feriado compensado al término no son imponibles ni tributables (Art. 178).</p>
           </>
         )}

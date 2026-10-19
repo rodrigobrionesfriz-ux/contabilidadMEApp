@@ -54,7 +54,7 @@ export function ListaContratos({ empresaId, filas, total, todos, escribe, hoy }:
                   <td className="px-3 py-1.5"><input type="checkbox" aria-label={`Seleccionar ${f.nombre}`} disabled={!f.ok || !escribe} checked={sel.has(f.id)} onChange={(e) => toggle(f.id, e.target.checked)} /></td>
                   <td className="px-2 py-1.5"><div className="font-medium">{f.nombre}</div><div className="text-tenue">{f.rut} · {f.cargo || 'sin cargo'} · {f.plantilla}</div></td>
                   <td className="px-2 py-1.5">{f.ok ? <span className="text-acento">✅ Completo</span> : <span className="text-peligro" title={f.faltan.join(', ')}>⛔ Faltan {f.faltan.length}: {f.faltan.slice(0, 3).join(', ')}{f.faltan.length > 3 ? '…' : ''}</span>}
-                    {f.avisos.map((a, i) => <div key={i} className="text-amber-500">⚠️ {a}</div>)}</td>
+                    {f.avisos.map((a, i) => <div key={i} className="text-aviso">⚠️ {a}</div>)}</td>
                   <td className="num px-2 py-1.5">{f.suscripcion ? fechaCL(f.suscripcion) : '–'}</td>
                   <td className={`num px-2 py-1.5 ${atrasado ? 'text-peligro' : ''}`}>{f.vence ? fechaCL(f.vence) : '–'}{atrasado ? ' · vencido' : ''}</td>
                   <td className="px-2 py-1.5">{f.informado ? `✓ Informado ${fechaCL(f.informado)}` : 'Pendiente'}</td>

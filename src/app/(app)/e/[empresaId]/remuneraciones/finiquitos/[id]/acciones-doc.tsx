@@ -53,7 +53,7 @@ export function AccionesFiniquito({ empresaId, id, escribe, ratificado, contabil
         {contabilizado ? <p>✅ Contabilizado en el asiento <Link className="text-acento hover:underline" href={`/e/${empresaId}/diario?anio=${contabilizado.fecha.slice(0, 4)}#n${contabilizado.numero}`}>N° {contabilizado.numero}</Link> del {fechaCL(contabilizado.fecha)}. Para rehacerlo, anula ese asiento en el libro diario.</p>
           : <p className="text-tenue">Sin contabilizar.{anulado ? ' El asiento anterior está anulado.' : ''}</p>}
         {escribe && !contabilizado && puedeContabilizar && !abierto && <button type="button" className="boton-sec" onClick={() => setAbierto(true)}>📒 Generar asiento</button>}
-        {escribe && !contabilizado && !puedeContabilizar && <p className="text-xs text-amber-500">Para contabilizar, el total debe ser mayor que cero y coincidir con el cálculo vigente.</p>}
+        {escribe && !contabilizado && !puedeContabilizar && <p className="text-xs text-aviso">Para contabilizar, el total debe ser mayor que cero y coincidir con el cálculo vigente.</p>}
         {abierto && !contabilizado && (
           <div className="space-y-3">
             <div className="grid gap-3 sm:grid-cols-3">
@@ -82,7 +82,7 @@ export function AccionesFiniquito({ empresaId, id, escribe, ratificado, contabil
                     <tr className="font-semibold"><td colSpan={2} className="py-1">Totales</td><td className="num text-right">{clp(prop.debe)}</td><td className="num text-right">{clp(prop.haber)}</td></tr>
                   </tbody>
                 </table>
-                {prop.avisos.map((a, i) => <p key={i} className="text-xs text-amber-500">⚠️ {a}</p>)}
+                {prop.avisos.map((a, i) => <p key={i} className="text-xs text-aviso">⚠️ {a}</p>)}
                 {prop.errores.map((a, i) => <p key={i} className="text-xs text-peligro">❌ {a}</p>)}
               </>
             )}

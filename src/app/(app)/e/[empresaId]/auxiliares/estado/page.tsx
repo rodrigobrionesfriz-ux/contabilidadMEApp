@@ -56,7 +56,7 @@ export default async function EstadoCuentaPage({ params, searchParams }: PagePro
         </div>
         <div className="grid grid-cols-3 gap-3 text-center">
           <div><div className="text-[10px] text-tenue uppercase">Documentos con saldo</div><div className="num text-lg font-semibold">{s.items.length}</div></div>
-          <div><div className="text-[10px] text-tenue uppercase">Vencido</div><div className="num text-lg font-semibold text-amber-500">{clp(s.items.filter((i) => diasEntre(i.vence, hasta) > 0).reduce((x, i) => x + i.saldo, 0))}</div></div>
+          <div><div className="text-[10px] text-tenue uppercase">Vencido</div><div className="num text-lg font-semibold text-aviso">{clp(s.items.filter((i) => diasEntre(i.vence, hasta) > 0).reduce((x, i) => x + i.saldo, 0))}</div></div>
           <div><div className="text-[10px] text-tenue uppercase">{esCliente ? 'Saldo por cobrar' : 'Saldo por pagar'}</div><div className="num text-lg font-bold">{clp(s.saldo)}</div></div>
         </div>
         <section>
@@ -65,11 +65,11 @@ export default async function EstadoCuentaPage({ params, searchParams }: PagePro
             <thead className="text-left text-tenue"><tr className="border-b border-borde"><th className="py-1">Documento</th><th>Emisión</th><th>Vence</th><th className="text-right">Cargo</th><th className="text-right">Abonos</th><th className="text-right">Saldo</th></tr></thead>
             <tbody>{s.items.length ? s.items.map((i) => { const d = diasEntre(i.vence, hasta); return (
               <tr key={i.clave} className="border-b border-borde/30"><td className="py-1">{i.folio ? <span className="num">{i.tipo_dte} N° {i.folio}</span> : i.descripcion}</td><td className="num">{fechaCL(i.fecha)}</td>
-                <td className={`num ${d > 0 ? 'text-amber-500' : ''}`}>{fechaCL(i.vence)}{d > 0 ? ` (${d} d)` : ''}</td><td className="num text-right">{clp(i.cargo)}</td><td className="num text-right">{i.abonos ? clp(i.abonos) : ''}</td><td className="num text-right font-semibold">{clp(i.saldo)}</td></tr>); })
+                <td className={`num ${d > 0 ? 'text-aviso' : ''}`}>{fechaCL(i.vence)}{d > 0 ? ` (${d} d)` : ''}</td><td className="num text-right">{clp(i.cargo)}</td><td className="num text-right">{i.abonos ? clp(i.abonos) : ''}</td><td className="num text-right font-semibold">{clp(i.saldo)}</td></tr>); })
               : <tr><td colSpan={6} className="py-4 text-center text-tenue">No quedan documentos con saldo pendiente.</td></tr>}</tbody>
             <tfoot><tr className="font-semibold"><td colSpan={5} className="py-1">Total</td><td className="num text-right">{clp(s.items.reduce((x, i) => x + i.saldo, 0))}</td></tr></tfoot>
           </table>
-          {s.aFavor < 0 && <p className="mt-1 text-xs text-amber-500">Saldo a favor sin imputar: {clp(-s.aFavor)}</p>}
+          {s.aFavor < 0 && <p className="mt-1 text-xs text-aviso">Saldo a favor sin imputar: {clp(-s.aFavor)}</p>}
         </section>
         {vista === 'todos' && (
           <section>

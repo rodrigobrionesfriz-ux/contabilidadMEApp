@@ -43,7 +43,7 @@ export function AsignarCC({ empresaId, filas, centros, escribe }: { empresaId: s
   return (
     <div className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-3">
-        <div className="tarjeta p-3"><div className="text-[10px] text-tenue uppercase">Sin centro</div><div className="num text-lg font-semibold text-amber-500">{pendientes.length} mov. · {clp(montoPend)}</div></div>
+        <div className="tarjeta p-3"><div className="text-[10px] text-tenue uppercase">Sin centro</div><div className="num text-lg font-semibold text-aviso">{pendientes.length} mov. · {clp(montoPend)}</div></div>
         <div className="tarjeta p-3"><div className="text-[10px] text-tenue uppercase">Con centro</div><div className="num text-lg font-semibold">{filas.length - pendientes.length}</div></div>
         <div className="tarjeta p-3"><div className="text-[10px] text-tenue uppercase">Avance</div><div className="num text-lg font-semibold text-acento">{filas.length ? Math.round((1 - pendientes.length / filas.length) * 100) : 100}%</div></div>
       </div>
@@ -76,7 +76,7 @@ export function AsignarCC({ empresaId, filas, centros, escribe }: { empresaId: s
             <td><span className="num">{m.cuenta}</span> {m.nombreCuenta}</td>
             <td className="max-w-xs truncate" title={`${m.glosa} ${m.doc}`}>{m.glosa}{m.doc && <span className="text-tenue"> · {m.doc}</span>}</td>
             <td className={`num text-right ${m.monto < 0 ? 'text-peligro' : ''}`}>{clp(m.monto)}</td>
-            <td className="pr-2">{escribe ? <select className={`campo !py-1 ${m.cc ? '' : 'border-amber-500/50'}`} aria-label={`Centro del movimiento ${m.id}`} value={m.cc} disabled={pendiente} onChange={(e) => run([m.id], e.target.value || null)}><option value="">Sin centro</option>{opciones}</select> : (m.cc || '–')}</td>
+            <td className="pr-2">{escribe ? <select className={`campo !py-1 ${m.cc ? '' : 'border-aviso/50'}`} aria-label={`Centro del movimiento ${m.id}`} value={m.cc} disabled={pendiente} onChange={(e) => run([m.id], e.target.value || null)}><option value="">Sin centro</option>{opciones}</select> : (m.cc || '–')}</td>
           </tr>
         )) : <tr><td colSpan={7} className="p-6 text-center text-tenue">{ver === 'pendientes' && !mes && !cuenta && !q ? '✅ No quedan movimientos sin centro de costo en el año.' : 'Sin movimientos para mostrar.'}</td></tr>}</tbody>
       </table></div>

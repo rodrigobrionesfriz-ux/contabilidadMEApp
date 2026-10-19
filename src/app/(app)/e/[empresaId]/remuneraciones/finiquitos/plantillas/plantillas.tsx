@@ -67,7 +67,7 @@ export function Plantillas({ empresaId, lista, escribe, causales, marcadores }: 
           </div>
           <textarea aria-label="Texto de la plantilla" rows={18} value={ed.texto} onChange={(e) => setEd({ ...ed, texto: e.target.value })} className="campo num w-full text-xs leading-relaxed" />
           <p className="text-[10px] leading-relaxed text-tenue">Marcadores: {marcadores.map(([k, d]) => <code key={k} title={d} className="mr-1 cursor-pointer hover:text-acento" onClick={() => setEd({ ...ed, texto: ed.texto + `{{${k}}}` })}>{`{{${k}}}`}</code>)}</p>
-          {faltantes.length > 0 && <p className="text-xs text-amber-500">⚠️ La plantilla no usa {faltantes.map((k) => `{{${k}}}`).join(', ')}.</p>}
+          {faltantes.length > 0 && <p className="text-xs text-aviso">⚠️ La plantilla no usa {faltantes.map((k) => `{{${k}}}`).join(', ')}.</p>}
           {desconocidos.length > 0 && <p className="text-xs text-peligro">❌ Marcadores desconocidos (quedarán a la vista en el documento): {desconocidos.map((k) => `{{${k}}}`).join(', ')}</p>}
           <div className="flex gap-2">
             <button type="button" className="boton" disabled={pendiente} onClick={() => run(() => guardarPlantilla(empresaId, ed))}>Guardar plantilla</button>

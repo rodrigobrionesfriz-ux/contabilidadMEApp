@@ -87,7 +87,7 @@ export function FormDatosDT({ empresaId, trabajador, D, inicial, escribe }: { em
         <div className={`sm:col-span-4 ${f.horarioPropio ? '' : 'opacity-50'}`}><EditorHorario prefijo="cdt" horario={f.horario} onChange={(h) => set({ horario: h })} disabled={!escribe || !f.horarioPropio} /></div>
       </section>
       {v.faltan.length > 0 && <p className="text-xs text-peligro">⛔ Falta: {v.faltan.join(', ')}</p>}
-      {v.avisos.map((a, i) => <p key={i} className="text-xs text-amber-500">⚠️ {a}</p>)}
+      {v.avisos.map((a, i) => <p key={i} className="text-xs text-aviso">⚠️ {a}</p>)}
       {v.ok && <p className="text-xs text-acento">✅ Datos completos para la DT.</p>}
       {escribe && (
         <div className="flex flex-wrap gap-2">

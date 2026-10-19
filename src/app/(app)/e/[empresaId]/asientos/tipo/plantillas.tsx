@@ -66,7 +66,7 @@ export function Plantillas({ empresaId, lista, cuentas, centros, otras, escribe 
             ))}</tbody>
           </table></div>
           <div className="flex flex-wrap items-center gap-3"><button type="button" className="boton-sec" onClick={() => set({ lineas: [...f.lineas, lineaVacia()] })}>+ Línea</button>
-            {f.guardaMontos && <span className={`text-xs ${Math.abs(cuadreL) < 1 ? 'text-acento' : 'text-amber-500'}`}>{Math.abs(cuadreL) < 1 ? '✓ Cuadra' : `Diferencia ${clp(cuadreL)} (se puede completar al usarla)`}</span>}</div>
+            {f.guardaMontos && <span className={`text-xs ${Math.abs(cuadreL) < 1 ? 'text-acento' : 'text-aviso'}`}>{Math.abs(cuadreL) < 1 ? '✓ Cuadra' : `Diferencia ${clp(cuadreL)} (se puede completar al usarla)`}</span>}</div>
           <div className="rounded-md border border-borde p-3">
             <label className="flex items-center gap-2 font-medium"><input type="checkbox" checked={f.distActiva} onChange={(e) => set({ distActiva: e.target.checked })} />Distribuir un gasto por porcentaje entre varias cuentas o centros</label>
             {f.distActiva && <div className="mt-2 space-y-2">
@@ -82,7 +82,7 @@ export function Plantillas({ empresaId, lista, cuentas, centros, otras, escribe 
               <div className="flex flex-wrap items-center gap-2">
                 <button type="button" className="boton-sec" onClick={() => set({ dist: [...f.dist, { cd: '', pct: '', cc: '' }] })}>+ Tramo</button>
                 <button type="button" className="boton-sec" onClick={() => set({ dist: repartirIgual(f.dist.map((d) => ({ ...d, pct: decimalCL(d.pct) }))).map((d) => ({ ...d, pct: String(d.pct).replace('.', ',') })) })}>Repartir en partes iguales</button>
-                <span className={`text-xs ${Math.abs(sumaPct - 100) < 0.01 ? 'text-acento' : 'text-amber-500'}`}>Suma {String(Math.round(sumaPct * 100) / 100).replace('.', ',')}% {Math.abs(sumaPct - 100) < 0.01 ? '✓' : `· faltan ${String(Math.round((100 - sumaPct) * 100) / 100).replace('.', ',')}%`}</span>
+                <span className={`text-xs ${Math.abs(sumaPct - 100) < 0.01 ? 'text-acento' : 'text-aviso'}`}>Suma {String(Math.round(sumaPct * 100) / 100).replace('.', ',')}% {Math.abs(sumaPct - 100) < 0.01 ? '✓' : `· faltan ${String(Math.round((100 - sumaPct) * 100) / 100).replace('.', ',')}%`}</span>
               </div>
             </div>}
           </div>

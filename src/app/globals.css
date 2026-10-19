@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
-/* Paleta del sistema actual (tema oscuro) */
+/* Paleta del sistema actual (tema oscuro, por defecto) */
 :root {
+  color-scheme: dark;
   --fondo: #0d1117;
   --panel: #161b22;
   --panel-2: #1c2330;
@@ -10,8 +11,29 @@
   --tenue: #8b98a9;
   --acento: #3fb68b;
   --acento-2: #2f9a74;
+  --sobre-acento: #06281c;
   --peligro: #f0616d;
   --aviso: #e3b341;
+  --info: #5cb3e6;
+  --velo: rgb(0 0 0 / 0.6);
+}
+
+/* Tema claro azul grisáceo. Se elige con el botón de la barra (cookie "tema"). */
+:root[data-theme='claro'] {
+  color-scheme: light;
+  --fondo: #e9eef3;
+  --panel: #ffffff;
+  --panel-2: #f3f6f9;
+  --borde: #cdd6e0;
+  --texto: #1f2b38;
+  --tenue: #5a6a7d;
+  --acento: #1f7d5a;
+  --acento-2: #186649;
+  --sobre-acento: #ffffff;
+  --peligro: #c2323e;
+  --aviso: #9a5b06;
+  --info: #23629e;
+  --velo: rgb(31 43 56 / 0.45);
 }
 
 @theme inline {
@@ -25,6 +47,9 @@
   --color-acento-2: var(--acento-2);
   --color-peligro: var(--peligro);
   --color-aviso: var(--aviso);
+  --color-info: var(--info);
+  --color-velo: var(--velo);
+  --color-sobre-acento: var(--sobre-acento);
   --font-sans: 'Sora Variable', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
@@ -42,7 +67,7 @@ body {
     @apply mb-1 block text-xs font-medium uppercase tracking-wide text-tenue;
   }
   .boton {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-acento px-4 py-2 text-sm font-semibold text-[#06281c] hover:bg-acento-2 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-acento px-4 py-2 text-sm font-semibold text-sobre-acento hover:bg-acento-2 disabled:cursor-not-allowed disabled:opacity-60;
   }
   .boton-sec {
     @apply inline-flex items-center justify-center gap-2 rounded-md border border-borde px-3 py-1.5 text-sm text-texto hover:bg-panel-2;

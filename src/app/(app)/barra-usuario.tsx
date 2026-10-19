@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { salir } from '../(auth)/acciones';
 import type { Usuario } from '@/lib/auth';
+import { BotonTema } from '@/components/tema';
 
 export function BarraUsuario({ usuario, children }: { usuario: Usuario; children?: React.ReactNode }) {
   return (
@@ -11,6 +12,7 @@ export function BarraUsuario({ usuario, children }: { usuario: Usuario; children
         <div className="font-medium">{usuario.nombre}</div>
         <div className="text-tenue">{usuario.email}</div>
       </div>
+      <BotonTema />
       <form action={salir}>
         <button className="boton-sec" type="submit">Salir</button>
       </form>

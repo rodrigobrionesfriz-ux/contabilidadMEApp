@@ -49,7 +49,7 @@ export function Declaraciones({ empresaId, anio, at, regimen, catalogo, propio, 
         <div className="text-right">
           <div className="text-[10px] text-tenue uppercase">Le corresponden</div>
           <div className="num text-2xl font-semibold text-acento">{propias.length}</div>
-          <div className={`text-[11px] ${sinPresentar ? 'text-amber-500' : 'text-acento'}`}>{sinPresentar ? `${sinPresentar} sin presentar` : 'todas al día'}</div>
+          <div className={`text-[11px] ${sinPresentar ? 'text-aviso' : 'text-acento'}`}>{sinPresentar ? `${sinPresentar} sin presentar` : 'todas al día'}</div>
         </div>
       </section>
 
@@ -86,9 +86,9 @@ export function Declaraciones({ empresaId, anio, at, regimen, catalogo, propio, 
                   {d.cert && <span>· 📄 {d.cert}</span>}
                   {d.fuente && FUENTES[d.fuente] && <span>· 🔗 {FUENTES[d.fuente]}</span>}
                   {dias != null && dias < 0 && <span className="rounded bg-peligro/15 px-1.5 text-peligro">Venció hace {-dias} día(s)</span>}
-                  {dias != null && dias >= 0 && dias <= 15 && <span className="rounded bg-amber-500/15 px-1.5 text-amber-500">Vence en {dias} día(s)</span>}
+                  {dias != null && dias >= 0 && dias <= 15 && <span className="rounded bg-aviso/15 px-1.5 text-aviso">Vence en {dias} día(s)</span>}
                 </div>
-                {d.nota && <p className="mt-1 text-xs text-amber-500">⚠ {d.nota}</p>}
+                {d.nota && <p className="mt-1 text-xs text-aviso">⚠ {d.nota}</p>}
               </div>
               <div className="flex items-center gap-2">
                 <select aria-label={`Estado de la N°${d.n}`} className={`campo w-36 ${(ESTADOS_DJ[st.estado] || ESTADOS_DJ.pendiente).tono}`} value={st.estado} disabled={!escribe || pendiente}

@@ -84,7 +84,7 @@ export function PlantillasContrato({ empresaId, lista, escribe }: { empresaId: s
           <textarea aria-label="Texto de la plantilla" rows={18} value={ed.texto} onChange={(e) => setEd({ ...ed, texto: e.target.value })} className="campo num w-full text-xs leading-relaxed" />
           <p className="text-[10px] leading-relaxed text-tenue">Marcadores: {MARCADORES_CONTRATO.map(([k, d]) => <code key={k} title={d} className="mr-1 cursor-pointer hover:text-acento" onClick={() => setEd({ ...ed, texto: ed.texto + `{{${k}}}` })}>{`{{${k}}}`}</code>)}</p>
           {v.errores.map((e, i) => <p key={i} className="text-xs text-peligro">⛔ {e}</p>)}
-          {v.avisos.map((e, i) => <p key={i} className="text-xs text-amber-500">⚠️ {e}</p>)}
+          {v.avisos.map((e, i) => <p key={i} className="text-xs text-aviso">⚠️ {e}</p>)}
           {v.ok && !v.avisos.length && <p className="text-xs text-acento">✅ Marcadores correctos.</p>}
           <div className="flex flex-wrap gap-2">
             <button type="button" className="boton" disabled={pendiente || !v.ok} onClick={() => run(() => guardarPlantillaContrato(empresaId, ed))}>Guardar plantilla</button>

@@ -97,7 +97,7 @@ export function Navegacion({ base, rol, empresa, buscador }: { base: string; rol
         <button type="button" className="boton-sec px-2.5" onClick={() => setAbierto(true)} aria-label="Abrir menú" aria-expanded={abierto}>☰</button>
         <span className="truncate text-sm text-tenue">{enInicio ? '🏠 Inicio' : actual ? `${actual.icono} ${actual.nombre}` : ''}</span>
       </div>
-      {abierto && <div className="no-print fixed inset-0 z-40 bg-black/60 md:hidden" onClick={cerrar} aria-hidden />}
+      {abierto && <div className="no-print fixed inset-0 z-40 bg-velo md:hidden" onClick={cerrar} aria-hidden />}
 
       <aside
         className={`no-print fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col border-r border-borde bg-panel transition-transform md:sticky md:top-0 md:z-auto md:h-[calc(100dvh-3.5rem)] md:w-60 md:max-w-none md:translate-x-0 ${abierto ? 'translate-x-0' : '-translate-x-full'}`}

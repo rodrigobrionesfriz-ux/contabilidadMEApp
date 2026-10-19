@@ -75,7 +75,7 @@ export function Cierre({ empresaId, d, escribe, admin }: { empresaId: string; d:
               <table className="w-full text-xs">
                 <thead className="text-left text-tenue"><tr className="border-b border-borde"><th className="py-1">Trabajador</th><th className="text-right">Saldo hábiles</th><th className="text-right">Corridos</th><th className="text-right">Diario</th><th className="text-right">Monto</th></tr></thead>
                 <tbody>{d.vacaciones.map((v) => (
-                  <tr key={v.nombre} className="border-b border-borde/30"><td className="py-0.5">{v.nombre}{v.motivo && <span className="text-amber-500"> · {v.motivo}</span>}</td><td className="num text-right">{v.saldo == null ? '–' : n2(v.saldo)}</td><td className="num text-right">{v.corridos ? n2(v.corridos) : ''}</td><td className="num text-right">{v.diario ? clp(v.diario) : ''}</td><td className="num text-right">{v.monto ? clp(v.monto) : ''}</td></tr>
+                  <tr key={v.nombre} className="border-b border-borde/30"><td className="py-0.5">{v.nombre}{v.motivo && <span className="text-aviso"> · {v.motivo}</span>}</td><td className="num text-right">{v.saldo == null ? '–' : n2(v.saldo)}</td><td className="num text-right">{v.corridos ? n2(v.corridos) : ''}</td><td className="num text-right">{v.diario ? clp(v.diario) : ''}</td><td className="num text-right">{v.monto ? clp(v.monto) : ''}</td></tr>
                 ))}</tbody>
                 <tfoot className="font-semibold"><tr><td className="py-1" colSpan={4}>Provisión requerida · ya provisionado {clp(d.provVacaciones)}</td><td className="num text-right">{clp(sugerido)}</td></tr></tfoot>
               </table>
@@ -110,7 +110,7 @@ export function Cierre({ empresaId, d, escribe, admin }: { empresaId: string; d:
           <tr className="border-t border-borde font-bold"><td className="py-1.5">{d.resultado.resultado >= 0 ? 'UTILIDAD' : 'PÉRDIDA'} DEL EJERCICIO</td><td className={`num text-right ${d.resultado.resultado >= 0 ? 'text-acento' : 'text-peligro'}`}>{clp(d.resultado.resultado)}</td></tr>
         </tbody></table>
         {cerrado ? (
-          <div className="space-y-2 rounded-md border border-amber-500/40 p-3">
+          <div className="space-y-2 rounded-md border border-aviso/40 p-3">
             <p>🔒 Ejercicio {d.anio} cerrado con el asiento N° {d.cierre!.numero} del {d.cierre!.fecha.split('-').reverse().join('/')}.</p>
             {escribe && (
               <div className="flex flex-wrap items-end gap-2">
@@ -128,7 +128,7 @@ export function Cierre({ empresaId, d, escribe, admin }: { empresaId: string; d:
         <h2 className="font-semibold">4 · Apertura de {d.anio + 1}</h2>
         <p className="text-xs text-tenue">Crea el asiento N° 0 al 1 de enero de {d.anio + 1} con los saldos de activos, pasivos y patrimonio. En clientes, proveedores y honorarios conserva cada documento con saldo (RUT, tipo y folio), así los auxiliares y pagos siguen funcionando.</p>
         {d.apertura ? <p>✅ {d.anio + 1} ya tiene apertura (asiento N° {d.apertura.numero}). Para rehacerla, anúlala en el libro diario y vuelve a generarla.</p>
-          : !cerrado ? <p className="text-xs text-amber-500">Primero cierra el ejercicio {d.anio}.</p>
+          : !cerrado ? <p className="text-xs text-aviso">Primero cierra el ejercicio {d.anio}.</p>
           : escribe && <button type="button" className="boton" disabled={pendiente} onClick={() => run(() => generarApertura(empresaId, d.anio + 1), `¿Generar la apertura de ${d.anio + 1} con los saldos al 31-12-${d.anio}?`)}>🔰 Generar apertura {d.anio + 1}</button>}
       </section>
     </div>

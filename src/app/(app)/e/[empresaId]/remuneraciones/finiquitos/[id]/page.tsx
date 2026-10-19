@@ -39,10 +39,10 @@ export default async function FiniquitoPage({ params }: PageProps<'/e/[empresaId
         <Link href={`/e/${empresaId}/remuneraciones/finiquitos`} className="text-sm text-tenue hover:text-texto">← Finiquitos</Link>
         <span className="text-xs text-tenue">{f.estado === 'ratificado' ? `✅ Ratificado${f.ratificado_en ? ' el ' + new Date(f.ratificado_en).toLocaleDateString('es-CL') : ''}` : 'Borrador'}</span>
       </div>
-      {pendientes.length > 0 && <p className="no-print text-xs text-amber-500">⚠️ Marcadores sin reemplazar: {pendientes.join(', ')}</p>}
-      {faltan && <p className="no-print text-xs text-amber-500">⚠️ Faltan datos en el texto (fecha de aviso o hechos). Complétalos editando el finiquito.</p>}
-      {(!E.rep || !E.rutrep || !E.domicilio) && <p className="no-print text-xs text-amber-500">⚠️ Faltan datos de la empresa para el documento (representante legal, su RUT o domicilio). Complétalos en Configuración → Empresa.</p>}
-      {cambio && <p className="no-print text-xs text-amber-500">⚠️ El cálculo cambió desde que se guardó (guardado {clp(f.total)}, ahora {clp(r!.total)}): edita y guarda el finiquito de nuevo.</p>}
+      {pendientes.length > 0 && <p className="no-print text-xs text-aviso">⚠️ Marcadores sin reemplazar: {pendientes.join(', ')}</p>}
+      {faltan && <p className="no-print text-xs text-aviso">⚠️ Faltan datos en el texto (fecha de aviso o hechos). Complétalos editando el finiquito.</p>}
+      {(!E.rep || !E.rutrep || !E.domicilio) && <p className="no-print text-xs text-aviso">⚠️ Faltan datos de la empresa para el documento (representante legal, su RUT o domicilio). Complétalos en Configuración → Empresa.</p>}
+      {cambio && <p className="no-print text-xs text-aviso">⚠️ El cálculo cambió desde que se guardó (guardado {clp(f.total)}, ahora {clp(r!.total)}): edita y guarda el finiquito de nuevo.</p>}
       <article className="hoja tarjeta mx-auto max-w-3xl space-y-4 p-10 text-sm leading-relaxed">
         {bloques.map((b, i) => b.tipo === 'titulo' ? <h1 key={i} className="text-center text-base font-bold tracking-wide whitespace-pre-line">{b.texto}</h1>
           : b.tipo === 'detalle' ? (

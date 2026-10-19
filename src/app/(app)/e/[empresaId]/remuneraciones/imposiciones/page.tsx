@@ -42,7 +42,7 @@ export default async function ImposicionesPage({ params, searchParams }: PagePro
         <div className="grid gap-3 sm:grid-cols-4">
           {([['Total a pagar', I.totales.total], ['Descontado a trabajadores', I.totales.trabajador], ['Aporte del empleador', I.totales.empleador], ['Asignación familiar (se descuenta)', -I.totales.asigFam]] as [string, number][]).map(([k, v]) => <div key={k} className="tarjeta p-3"><div className="text-[10px] text-tenue uppercase">{k}</div><div className="num text-lg font-semibold">{clp(v)}</div></div>)}
         </div>
-        {I.avisos.includes('libro') && <p className="rounded-md border border-amber-500/40 p-2 text-sm text-amber-500">Aviso: el libro de este mes se cerró con una versión anterior; la comisión AFP va incluida en la cotización obligatoria. Reábrelo y ciérralo de nuevo para separarla.</p>}
+        {I.avisos.includes('libro') && <p className="rounded-md border border-aviso/40 p-2 text-sm text-aviso">Aviso: el libro de este mes se cerró con una versión anterior; la comisión AFP va incluida en la cotización obligatoria. Reábrelo y ciérralo de nuevo para separarla.</p>}
         <div className="tarjeta overflow-x-auto p-3"><table className="w-full min-w-[700px] text-xs">
           <thead className="text-left text-tenue"><tr className="border-b border-borde"><th className="py-1">Institución</th><th>Concepto</th><th>Cargo de</th><th className="text-right">Trabajadores</th><th className="text-right">Monto</th></tr></thead>
           <tbody>{I.instituciones.map((i) => [

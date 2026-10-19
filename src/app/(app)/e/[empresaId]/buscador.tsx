@@ -44,7 +44,7 @@ export function Buscador({ empresaId }: { empresaId: string }) {
       </button>
       {/* En portal: dentro de la barra lateral (que usa transform) un «fixed» quedaría encerrado en ella */}
       {abierto && createPortal(
-        <div className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 p-4 pt-[10vh]" role="dialog" aria-modal="true" aria-label="Búsqueda global" onClick={cerrar}>
+        <div className="fixed inset-0 z-[60] flex items-start justify-center bg-velo p-4 pt-[10vh]" role="dialog" aria-modal="true" aria-label="Búsqueda global" onClick={cerrar}>
           <div className="tarjeta w-full max-w-2xl p-2" onClick={(e) => e.stopPropagation()}>
             <input ref={input} className="campo text-base" value={q} placeholder="Busca documentos, asientos, trabajadores, cuentas, activos o productos…" aria-label="Texto a buscar"
               onChange={(e) => cambiar(e.target.value)}

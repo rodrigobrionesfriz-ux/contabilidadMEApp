@@ -68,7 +68,7 @@ export function diasParaVencer(dj: DJ, at: number, hoy: string) {
 
 export const ESTADOS_DJ: Record<string, { lbl: string; tono: string }> = {
   pendiente: { lbl: 'Pendiente', tono: 'text-tenue' },
-  preparada: { lbl: 'Preparada', tono: 'text-amber-500' },
+  preparada: { lbl: 'Preparada', tono: 'text-aviso' },
   presentada: { lbl: 'Presentada', tono: 'text-acento' },
   noaplica: { lbl: 'No aplica', tono: 'text-tenue' },
 };

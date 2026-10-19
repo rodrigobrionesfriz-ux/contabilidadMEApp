@@ -81,7 +81,7 @@ export function Renta({ empresaId, anio, empresa, M, bienes, ppmF29, datosInicia
         <div className="rounded-md border border-borde p-3 text-xs">
           <strong>{R.reg.nm}</strong> · {R.reg.art}<br />{R.reg.desc}<br />
           <span className="text-tenue">Contabilidad {R.reg.contabilidad} · {R.reg.correccionMonetaria ? 'aplica' : 'liberado de'} corrección monetaria · depreciación {R.reg.deprInstantanea ? 'instantánea' : 'según vida útil'} · crédito IDPC a los dueños {R.reg.creditoIDPC}%{R.reg.topeIngresosUF ? ` · tope ${Number(R.reg.topeIngresosUF).toLocaleString('es-CL')} UF de ingresos` : ''}</span>
-          {typeof R.reg.nota === 'string' && <><br /><span className="text-amber-500">⚠ {R.reg.nota}</span></>}
+          {typeof R.reg.nota === 'string' && <><br /><span className="text-aviso">⚠ {R.reg.nota}</span></>}
         </div>
         {R.presunta && (
           <div className="rounded-md border border-acento/50 p-3">
@@ -92,17 +92,17 @@ export function Renta({ empresaId, anio, empresa, M, bienes, ppmF29, datosInicia
               <div><div className="etiqueta">Renta presunta</div><div className="num text-base font-semibold text-acento">{clp(R.presunta.renta)}</div></div>
             </div>
             <p className="mt-2 text-xs text-tenue">La contabilidad se sigue llevando para el IVA y el control interno, pero no determina la base: el impuesto se calcula sobre la renta presunta. El resultado contable ({clp(R.resultadoBalance)}) queda como referencia y para vigilar el tope de ingresos.
-              {R.reg.k === '34AGRI' && <span className="block text-amber-500">⚠ El 10% aplica al propietario o usufructuario del predio. Si explotas bajo otro título (arrendamiento), verifica el porcentaje antes de declarar.</span>}
-              {R.reg.k === '34MIN' && <span className="block text-amber-500">⚠ El porcentaje va de 4% a 20% según el precio promedio anual de la libra de cobre: actualízalo cada año.</span>}</p>
+              {R.reg.k === '34AGRI' && <span className="block text-aviso">⚠ El 10% aplica al propietario o usufructuario del predio. Si explotas bajo otro título (arrendamiento), verifica el porcentaje antes de declarar.</span>}
+              {R.reg.k === '34MIN' && <span className="block text-aviso">⚠ El porcentaje va de 4% a 20% según el precio promedio anual de la libra de cobre: actualízalo cada año.</span>}</p>
           </div>
         )}
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {R.presunta ? <><Kpi lbl="Base de la presunción" v={R.presunta.valor} /><Kpi lbl={`Renta presunta (${fmtPct(R.presunta.pct)}%)`} v={R.presunta.renta} tono="text-acento" /></>
             : <><Kpi lbl="Resultado según balance" v={R.resultadoBalance} tono={R.resultadoBalance >= 0 ? 'text-acento' : 'text-peligro'} /><Kpi lbl={R.rli >= 0 ? 'Renta líquida imponible' : 'Pérdida tributaria'} v={Math.abs(R.rli)} tono={R.rli >= 0 ? 'text-acento' : 'text-peligro'} /></>}
           {transparente ? <><Kpi lbl="IDPC que paga la empresa" v={0} /><Kpi lbl="Base atribuible a los dueños" v={Math.max(0, R.rli)} tono="text-acento" /></>
-            : <><Kpi lbl="Impuesto 1ª categoría" v={R.idpcNeto} tono="text-amber-500" />{R.aPagar > 0 ? <Kpi lbl="Impuesto a pagar" v={R.aPagar} tono="text-peligro" /> : <Kpi lbl="Devolución solicitada" v={R.devolucion} tono="text-acento" />}</>}
+            : <><Kpi lbl="Impuesto 1ª categoría" v={R.idpcNeto} tono="text-aviso" />{R.aPagar > 0 ? <Kpi lbl="Impuesto a pagar" v={R.aPagar} tono="text-peligro" /> : <Kpi lbl="Devolución solicitada" v={R.devolucion} tono="text-acento" />}</>}
         </div>
-        {transparente && <p className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-500">⚠️ En el régimen 14 D N°8 (Transparente) la empresa no paga Impuesto de Primera Categoría: la base imponible se atribuye a los dueños según su participación y ellos la declaran en su Global Complementario. Los PPM también se les atribuyen.</p>}
+        {transparente && <p className="rounded-md border border-aviso/40 bg-aviso/10 p-3 text-xs text-aviso">⚠️ En el régimen 14 D N°8 (Transparente) la empresa no paga Impuesto de Primera Categoría: la base imponible se atribuye a los dueños según su participación y ellos la declaran en su Global Complementario. Los PPM también se les atribuyen.</p>}
         <Mensaje {...msg} />
         {guardadoEn && !sucio && <p className="text-[11px] text-tenue">Última vez guardada: {fechaCL(guardadoEn.slice(0, 10))} {guardadoEn.slice(11, 16)}</p>}
       </section>
@@ -158,10 +158,10 @@ function BloqueRLI({ R, empresaId }: { R: ResultadoRenta; empresaId: string }) {
         <Fila cod={cod.ingresos} lbl="Ingresos del giro y otros ingresos" monto={R.ingresos} tono="text-acento" />
         <Fila cod={cod.gastos} lbl="Costos y gastos del ejercicio" monto={R.gastos} signo="−" tono="text-peligro" />
         <Fila cod="645" lbl="RESULTADO SEGÚN BALANCE (antes de impuesto)" monto={R.resultadoBalance} fuerte fondo="bg-panel-2" />
-        <tr><td colSpan={3} className="pt-3 pb-1 text-[11px] font-semibold tracking-wide text-amber-500">AGREGADOS</td></tr>
-        {R.ag.length ? R.ag.map((a, i) => <Fila key={i} cod={a.cod} lbl={a.lbl} monto={a.monto} signo="+" nota={a.nota} tono="text-amber-500" />)
+        <tr><td colSpan={3} className="pt-3 pb-1 text-[11px] font-semibold tracking-wide text-aviso">AGREGADOS</td></tr>
+        {R.ag.length ? R.ag.map((a, i) => <Fila key={i} cod={a.cod} lbl={a.lbl} monto={a.monto} signo="+" nota={a.nota} tono="text-aviso" />)
           : <tr><td colSpan={3} className="py-1 text-tenue">Sin agregados. Marca los gastos no deducibles en la pestaña Ajustes.</td></tr>}
-        <Fila lbl="Total agregados" monto={R.totalAgregados} fuerte tono="text-amber-500" />
+        <Fila lbl="Total agregados" monto={R.totalAgregados} fuerte tono="text-aviso" />
         <tr><td colSpan={3} className="pt-3 pb-1 text-[11px] font-semibold tracking-wide text-acento">DEDUCCIONES</td></tr>
         {R.de.length ? R.de.map((d, i) => <Fila key={i} cod={d.cod} lbl={d.lbl} monto={d.monto} signo="−" nota={d.nota} tono="text-acento" />)
           : <tr><td colSpan={3} className="py-1 text-tenue">Sin deducciones.</td></tr>}
@@ -170,9 +170,9 @@ function BloqueRLI({ R, empresaId }: { R: ResultadoRenta; empresaId: string }) {
         {R.perdidaPrevia > 0 && <Fila cod="634" lbl="Pérdida tributaria de ejercicios anteriores imputada (Art. 31 N°3)" monto={R.perdidaImputada} signo="−" tono="text-acento" nota={`Disponible: ${clp(R.perdidaPrevia)}. Sólo se imputa hasta absorber la renta positiva del ejercicio.`} />}
         <Fila cod={cod.base} lbl={R.rli >= 0 ? 'RENTA LÍQUIDA IMPONIBLE' : 'PÉRDIDA TRIBUTARIA DEL EJERCICIO'} monto={Math.abs(R.rli)} fuerte fondo={R.rli >= 0 ? 'bg-acento/10' : 'bg-peligro/10'} tono={R.rli >= 0 ? 'text-acento' : 'text-peligro'} />
       </tbody></table></div>
-      {R.perdidaRemanente > 0 && <p className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-500">⚠️ Queda una pérdida tributaria de arrastre de <strong>{clp(R.perdidaRemanente)}</strong> para ejercicios siguientes. Anótala en «Pérdida de arrastre» de la declaración del año {R.anio + 1}.</p>}
+      {R.perdidaRemanente > 0 && <p className="rounded-md border border-aviso/40 bg-aviso/10 p-3 text-xs text-aviso">⚠️ Queda una pérdida tributaria de arrastre de <strong>{clp(R.perdidaRemanente)}</strong> para ejercicios siguientes. Anótala en «Pérdida de arrastre» de la declaración del año {R.anio + 1}.</p>}
       <p className="text-xs text-tenue">🏗️ Conciliación de activo fijo: depreciación financiera según fichas {clp(R.depConc.contable)} · tributaria {clp(R.depConc.tributaria)} · diferencia del ejercicio <strong>{clp(R.depConc.diferencia)}</strong>. {R.reg.deprInstantanea ? 'La base tributaria usa el valor tributario de las adquisiciones del año.' : 'La base tributaria usa la vida y método tributario de cada ficha.'} <Link className="text-acento hover:underline" href={`/e/${empresaId}/activo-fijo?anio=${R.anio}`}>Ver fichas</Link>
-        {Math.abs(R.depFin - R.depConc.contable) > 0.5 && <span className="block text-amber-500">⚠ La depreciación cargada a resultados (cuentas 3301, {clp(R.depFin)}) no coincide con la de las fichas ({clp(R.depConc.contable)}): revisa si falta contabilizar la depreciación del año o hay bienes sin ficha.</span>}</p>
+        {Math.abs(R.depFin - R.depConc.contable) > 0.5 && <span className="block text-aviso">⚠ La depreciación cargada a resultados (cuentas 3301, {clp(R.depFin)}) no coincide con la de las fichas ({clp(R.depConc.contable)}): revisa si falta contabilizar la depreciación del año o hay bienes sin ficha.</span>}</p>
       <p className="text-xs text-tenue">🧮 Capital propio tributario referencial: {clp(R.cpt)} (activos {clp(R.activos)} − pasivo exigible {clp(R.pasivoExigible)}). Es una aproximación contable: el CPT tributario puede diferir si hay activos o pasivos con valorización tributaria distinta.</p>
     </section>
   );
@@ -193,7 +193,7 @@ function BloqueF22({ R, at, exportar }: { R: ResultadoRenta; at: number; exporta
         <thead className="text-left text-tenue"><tr className="border-b border-borde"><th>Lín.</th><th>Cód.</th><th>Concepto</th><th className="text-right">Monto</th></tr></thead>
         <tbody>
           <Ln c={cod.base} lbl="Base imponible de primera categoría" monto={R.baseImponible} fuerte fondo="bg-panel-2" />
-          {transparente ? <tr><td colSpan={4} className="py-2 text-amber-500">Régimen transparente: la base imponible se atribuye a los dueños. La empresa no determina IDPC.</td></tr> : <>
+          {transparente ? <tr><td colSpan={4} className="py-2 text-aviso">Régimen transparente: la base imponible se atribuye a los dueños. La empresa no determina IDPC.</td></tr> : <>
             <Ln linea={String(R.reg.linea)} c={String(R.reg.codLinea)} lbl={`Impuesto primera categoría (${fmtPct(R.tasa)}% sobre la base)`} monto={R.idpc} tono="text-peligro" />
             <tr><td colSpan={4} className="pt-3 pb-1 text-[11px] font-semibold tracking-wide text-acento">CRÉDITOS IMPUTABLES AL IDPC</td></tr>
             {R.creditos.length ? R.creditos.map((c) => <Ln key={c.lbl} c={c.cod} lbl={c.lbl} monto={c.monto} tono="text-acento" />) : <tr><td colSpan={4} className="py-1 text-tenue">Sin créditos informados. Agrégalos en la pestaña Ajustes.</td></tr>}
@@ -248,7 +248,7 @@ function BloqueAjustes({ R, M, datos, escribe, cambiar, toggleCuenta, abiertas, 
     <div className="space-y-4">
       <section className="tarjeta space-y-2 p-4 text-sm">
         <h2 className="font-semibold">Gastos rechazados (Art. 21 / Art. 31 LIR)</h2>
-        <p className="text-xs text-tenue">Marca la cuenta completa si todo su saldo es no deducible, o ábrela (▸) para marcar movimientos sueltos.{sugeridas > 0 && <span className="text-amber-500"> Hay {sugeridas} cuenta(s) con indicios de no ser deducibles.</span>}</p>
+        <p className="text-xs text-tenue">Marca la cuenta completa si todo su saldo es no deducible, o ábrela (▸) para marcar movimientos sueltos.{sugeridas > 0 && <span className="text-aviso"> Hay {sugeridas} cuenta(s) con indicios de no ser deducibles.</span>}</p>
         <div className="max-h-[480px] overflow-auto"><table className="w-full min-w-[460px] text-xs">
           <thead className="sticky top-0 bg-panel text-left text-tenue"><tr className="border-b border-borde"><th className="w-7" /><th className="w-7" /><th className="w-16">Código</th><th>Cuenta</th><th className="text-right">Saldo {R.anio}</th></tr></thead>
           <tbody>{gastos.length ? gastos.map((g) => {
@@ -259,7 +259,7 @@ function BloqueAjustes({ R, M, datos, escribe, cambiar, toggleCuenta, abiertas, 
                   <td className="text-center"><input type="checkbox" aria-label={`Rechazar cuenta ${g.cd}`} checked={g.marcada} disabled={!escribe} onChange={() => toggleCuenta(g.cd)} /></td>
                   <td><button type="button" className="text-tenue hover:text-texto" onClick={() => abrir(g.cd)} aria-label="Ver movimientos">{ab ? '▾' : '▸'}</button></td>
                   <td className="num text-tenue">{g.cd}</td>
-                  <td className="py-1">{g.nm}{g.sugerido && <div className="text-[10px] text-amber-500">⚠ {g.sugerido}</div>}</td>
+                  <td className="py-1">{g.nm}{g.sugerido && <div className="text-[10px] text-aviso">⚠ {g.sugerido}</div>}</td>
                   <td className="num text-right">{clp(g.monto)}</td>
                 </tr>
                 {ab && <tr><td colSpan={5} className="bg-panel-2/50 px-8 py-1">
@@ -280,7 +280,7 @@ function BloqueAjustes({ R, M, datos, escribe, cambiar, toggleCuenta, abiertas, 
       </section>
 
       <section className="tarjeta grid gap-4 p-4 text-sm md:grid-cols-2">
-        <div><h3 className="mb-2 text-xs font-semibold text-amber-500">AGREGADOS (+)</h3><ListaManual items={datos.agregados} escribe={escribe} onCambio={(v) => cambiar({ agregados: v })} /></div>
+        <div><h3 className="mb-2 text-xs font-semibold text-aviso">AGREGADOS (+)</h3><ListaManual items={datos.agregados} escribe={escribe} onCambio={(v) => cambiar({ agregados: v })} /></div>
         <div><h3 className="mb-2 text-xs font-semibold text-acento">DEDUCCIONES (−)</h3><ListaManual items={datos.deducciones} escribe={escribe} onCambio={(v) => cambiar({ deducciones: v })} /></div>
       </section>
 

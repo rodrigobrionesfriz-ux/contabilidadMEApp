@@ -43,7 +43,7 @@ export function Conciliacion({ empresaId, cuenta, anio, escribe, saldoBanco, mov
         {kpi('Saldo según libros', r.saldoLibros)}{kpi('Saldo según banco', r.saldoBanco)}{kpi('Diferencia', r.diferencia, Math.abs(r.diferencia) < 1 ? 'text-acento' : 'text-peligro')}{kpi('Sin conciliar', `${r.pendientes} (${clp(r.sumaPendientes)})`)}
       </div>
       {r.cuadra && <p className="text-sm text-acento">✅ Conciliado: el saldo de libros coincide con el del banco.</p>}
-      {!r.cuadra && r.saldoBanco !== 0 && <p className="text-sm text-amber-500">La diferencia de {clp(r.diferencia)} debería explicarse por los movimientos sin conciliar ({clp(r.sumaPendientes)}) y por cargos del banco aún no registrados.</p>}
+      {!r.cuadra && r.saldoBanco !== 0 && <p className="text-sm text-aviso">La diferencia de {clp(r.diferencia)} debería explicarse por los movimientos sin conciliar ({clp(r.sumaPendientes)}) y por cargos del banco aún no registrados.</p>}
       <Mensaje {...msg} />
       {escribe && (
         <div className="tarjeta flex flex-wrap items-end gap-3 p-4 text-sm">

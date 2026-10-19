@@ -36,7 +36,7 @@ export default async function EstadosPage({ params, searchParams }: PageProps<'/
   const alDia = `${fecha.getUTCDate()} de ${MESES[fecha.getUTCMonth()].toLowerCase()} de ${anio}`;
   const q = (c: Record<string, string | number>) => '?' + new URLSearchParams(Object.entries({ anio, mes: mes || '', vista, cmp: cmp || '', ...c }).filter(([, v]) => v !== '' && v !== 0).map(([k, v]) => [k, String(v)])).toString();
   const filas = (ls: LineaEF[]) => ls.length ? ls.map((l) => (
-    <tr key={l.cuenta}><td className="py-0.5 pl-4"><span className="num text-[10px] text-tenue">{l.cuenta}</span> {l.nombre}{l.correctora ? <span className="text-tenue"> (−)</span> : l.invertida ? <span className="text-amber-500" title="Saldo contrario a la naturaleza de la cuenta: revísala"> ⚠</span> : null}</td>
+    <tr key={l.cuenta}><td className="py-0.5 pl-4"><span className="num text-[10px] text-tenue">{l.cuenta}</span> {l.nombre}{l.correctora ? <span className="text-tenue"> (−)</span> : l.invertida ? <span className="text-aviso" title="Saldo contrario a la naturaleza de la cuenta: revísala"> ⚠</span> : null}</td>
       <td className={`num text-right ${l.valor < 0 ? 'text-peligro' : ''}`}>{monto(l.valor)}</td></tr>
   )) : <tr><td className="py-0.5 pl-4 text-tenue">Sin movimientos</td><td className="text-right">–</td></tr>;
   const total = (nm: string, v: number, fuerte = false) => <tr className={`border-t border-borde font-semibold ${fuerte ? 'text-sm' : ''}`}><td className="py-1">{nm}</td><td className="num text-right">{clp(v)}</td></tr>;
@@ -71,7 +71,7 @@ export default async function EstadosPage({ params, searchParams }: PageProps<'/
           <table className="w-full text-xs">
             <thead className="text-left text-tenue"><tr className="border-b border-borde"><th className="py-1">Concepto</th><th className="text-right">{anio}</th><th className="text-right">{cmp}</th><th className="text-right">Var. %</th></tr></thead>
             <tbody>{cmpFilas.map((f) => (
-              <tr key={f.nm} className={`border-b border-borde/30 ${f.sig ? 'bg-amber-500/10' : ''}`}><td className="py-1">{f.sig ? '⚡ ' : ''}{f.nm}</td><td className="num text-right">{clp(f.actual)}</td><td className="num text-right text-tenue">{clp(f.anterior)}</td>
+              <tr key={f.nm} className={`border-b border-borde/30 ${f.sig ? 'bg-aviso/10' : ''}`}><td className="py-1">{f.sig ? '⚡ ' : ''}{f.nm}</td><td className="num text-right">{clp(f.actual)}</td><td className="num text-right text-tenue">{clp(f.anterior)}</td>
                 <td className={`num text-right font-semibold ${f.tono === 'positivo' ? 'text-acento' : f.tono === 'negativo' ? 'text-peligro' : 'text-tenue'}`}>{f.txt}</td></tr>
             ))}</tbody>
           </table>
@@ -104,9 +104,9 @@ export default async function EstadosPage({ params, searchParams }: PageProps<'/
                 {total('TOTAL PASIVOS + PATRIMONIO', b.totalPasivosPatrimonio, true)}
               </tbody></table>
             </div>
-            <p className={`no-print ${b.cuadra ? 'text-acento' : 'text-amber-500'}`}>{b.cuadra ? '✅ Balance cuadrado' : `⚠️ Diferencia: ${clp(b.diferencia)}`}</p>
+            <p className={`no-print ${b.cuadra ? 'text-acento' : 'text-aviso'}`}>{b.cuadra ? '✅ Balance cuadrado' : `⚠️ Diferencia: ${clp(b.diferencia)}`}</p>
             {b.invertidas.length > 0 && (
-              <div className="no-print rounded-md border border-amber-500/40 p-3 text-amber-500">
+              <div className="no-print rounded-md border border-aviso/40 p-3 text-aviso">
                 ⚠️ {b.invertidas.length === 1 ? 'Una cuenta tiene' : `${b.invertidas.length} cuentas tienen`} saldo contrario a su naturaleza y aparece{b.invertidas.length === 1 ? '' : 'n'} restando, entre paréntesis:
                 {b.invertidas.map((cd) => <div key={cd} className="num">{cd} {M[cd].nombre} · {clp(Math.abs(M[cd].saldo))} {cd.startsWith('1') ? 'acreedor' : 'deudor'}</div>)}
                 <p className="mt-1">El balance cuadra igual, pero casi siempre es un dato pendiente: un banco con pagos sin depósitos o sin apertura, un proveedor sobrepagado, un cliente con notas de crédito de más. Revisa su mayor.</p>
@@ -129,7 +129,7 @@ export default async function EstadosPage({ params, searchParams }: PageProps<'/
                   </details>
                 </td></tr>
               ))}
-              <tr><td className="py-1"><span className="text-tenue">− </span>Impuesto a la renta ({String(r.tasa).replace('.', ',')}%){r.estimado && <span className="text-amber-500"> estimado</span>}</td><td className="num text-right">{clp(r.impuesto)}</td></tr>
+              <tr><td className="py-1"><span className="text-tenue">− </span>Impuesto a la renta ({String(r.tasa).replace('.', ',')}%){r.estimado && <span className="text-aviso"> estimado</span>}</td><td className="num text-right">{clp(r.impuesto)}</td></tr>
               <tr className={`border-t-2 border-borde text-sm font-bold ${r.utilidadNeta < 0 ? 'text-peligro' : 'text-acento'}`}><td className="py-2">{r.utilidadNeta < 0 ? 'PÉRDIDA' : 'UTILIDAD'} NETA DEL EJERCICIO</td><td className="num text-right">{clp(r.utilidadNeta)}</td></tr>
             </tbody></table>
             <p className="text-center text-tenue">Margen bruto {String(r.margenes.bruto).replace('.', ',')}% · operacional {String(r.margenes.operacional).replace('.', ',')}% · neto {String(r.margenes.neto).replace('.', ',')}%</p>

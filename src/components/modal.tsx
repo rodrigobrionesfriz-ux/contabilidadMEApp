@@ -10,7 +10,7 @@ export function Modal({ titulo, sub, onCerrar, children, ancho = 'max-w-3xl' }: 
     return () => window.removeEventListener('keydown', k);
   }, [onCerrar]);
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 p-4" role="dialog" aria-modal="true" aria-label={titulo}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-velo p-4" role="dialog" aria-modal="true" aria-label={titulo}>
       <div className={`tarjeta my-8 w-full ${ancho} space-y-3 p-5 text-sm`}>
         <div className="flex items-start justify-between gap-3">
           <div><h2 className="text-base font-semibold">{titulo}</h2>{sub && <p className="text-xs text-tenue">{sub}</p>}</div>

@@ -89,14 +89,14 @@ export function HojasFoliadas({ empresaId, empresa, escribe, libro, desde, hasta
         </div>
         <label className="flex items-center gap-2"><input type="checkbox" checked={cfg.mostrarFolio} onChange={(e) => setC({ mostrarFolio: e.target.checked })} />Imprimir también el número de folio previsto al pie (desmárcalo si la hoja ya lo trae preimpreso)</label>
         <div className="grid gap-2 sm:grid-cols-4">{([[LIBROS[libro], libro === 'inventario' ? `al ${fechaCL(hasta)}` : `${fechaCL(desde)} al ${fechaCL(hasta)}`], ['Líneas', filas.length], ['Hojas', paginas.length], ['Folios previstos', bloque ? `${bloque[0]}–${bloque[bloque.length - 1]}` : '–']] as [string, string | number][]).map(([k, v]) => <div key={k} className="rounded-md border border-borde p-2"><div className="text-[10px] text-tenue uppercase">{k}</div><div className="num font-semibold">{v}</div></div>)}</div>
-        {!activo ? <p className="text-amber-500">⚠️ Primero registra un rango de folios previamente autorizado o timbrado por el SII.</p>
-          : !bloque ? <p className="text-amber-500">⚠️ No quedan {paginas.length} folios consecutivos disponibles en el rango activo.</p> : null}
+        {!activo ? <p className="text-aviso">⚠️ Primero registra un rango de folios previamente autorizado o timbrado por el SII.</p>
+          : !bloque ? <p className="text-aviso">⚠️ No quedan {paginas.length} folios consecutivos disponibles en el rango activo.</p> : null}
         {libro === 'inventario' && <p className="text-xs text-tenue">ℹ️ Este libro imprime la base por cuentas y saldos. Cuando una cuenta requiera individualizar bienes o deudas, compleméntalo con el detalle de inventario antes de cerrar el libro.</p>}
         <div className="flex flex-wrap gap-2">
           <button type="button" className="boton-sec" onClick={() => setImp({ libro, desde, hasta, cfg, paginas, folios: paginas.map((_, i) => i + 1), prueba: true })}>🧪 Prueba en hoja blanca</button>
           {escribe && <button type="button" className="boton" disabled={pendiente || !bloque || !filas.length} onClick={reservar}>🖨️ Reservar folios e imprimir</button>}
         </div>
-        <p className="text-xs text-amber-500">Antes del primer uso real imprime una prueba en hoja blanca y superponla sobre una hoja autorizada para calibrar márgenes. No cargues hojas foliadas durante la prueba.</p>
+        <p className="text-xs text-aviso">Antes del primer uso real imprime una prueba en hoja blanca y superponla sobre una hoja autorizada para calibrar márgenes. No cargues hojas foliadas durante la prueba.</p>
       </section>
 
       <section className="tarjeta space-y-3 p-4 text-sm">
@@ -105,7 +105,7 @@ export function HojasFoliadas({ empresaId, empresa, escribe, libro, desde, hasta
         <table className="w-full text-xs"><thead className="text-left text-tenue"><tr className="border-b border-borde"><th className="py-1">Folios</th><th>Libro</th><th>Período</th><th>Estado</th><th>Usuario</th><th /></tr></thead>
           <tbody>{reservas.length ? reservas.map((m) => (
             <tr key={m.id} className="border-b border-borde/30"><td className="num py-1">{m.folios[0]}–{m.folios[m.folios.length - 1]}</td><td>{LIBROS[m.libro]}</td><td>{fechaCL(m.desde)} al {fechaCL(m.hasta)}</td>
-              <td className={m.estado === 'usado' ? 'text-acento' : m.estado === 'inutilizado' ? 'text-peligro' : 'text-amber-500'}>{m.estado.toUpperCase()}</td><td>{m.usuario}</td>
+              <td className={m.estado === 'usado' ? 'text-acento' : m.estado === 'inutilizado' ? 'text-peligro' : 'text-aviso'}>{m.estado.toUpperCase()}</td><td>{m.usuario}</td>
               <td className="text-right whitespace-nowrap">{m.estado === 'reservado' && <>
                 <button type="button" className="boton-sec !px-2 !py-0.5" onClick={() => setImp({ libro: m.libro, desde: m.desde, hasta: m.hasta, cfg: { ...cfg, ...m.config } as ConfigFolios, paginas: m.paginas, folios: m.folios, prueba: false })}>🖨️ Reimprimir</button>
                 {escribe && <><button type="button" className="boton-sec ml-1 !px-2 !py-0.5" onClick={() => confirm(`¿Confirmas que las hojas ${m.folios[0]}–${m.folios[m.folios.length - 1]} quedaron USADAS?`) && run(() => cerrarReserva(empresaId, m.id, 'usado'))}>✓ Usadas</button>

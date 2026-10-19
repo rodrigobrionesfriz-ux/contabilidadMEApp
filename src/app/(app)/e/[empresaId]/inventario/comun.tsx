@@ -23,11 +23,11 @@ export const bodegasActivas = (c: Ctx) => c.datos.bodegas.filter((b) => b.activo
 export const productosDisponibles = (c: Ctx) => c.datos.productos.filter((p) => p.activo !== false && p.inventariable !== false);
 
 export function Badge({ tono = 'ok', children }: { tono?: 'ok' | 'mal' | 'aviso' | 'tenue' | 'info'; children: React.ReactNode }) {
-  const t = { ok: 'bg-acento/15 text-acento', mal: 'bg-peligro/15 text-peligro', aviso: 'bg-amber-500/15 text-amber-500', tenue: 'bg-panel-2 text-tenue', info: 'bg-sky-500/15 text-sky-400' }[tono];
+  const t = { ok: 'bg-acento/15 text-acento', mal: 'bg-peligro/15 text-peligro', aviso: 'bg-aviso/15 text-aviso', tenue: 'bg-panel-2 text-tenue', info: 'bg-info/15 text-info' }[tono];
   return <span className={`inline-block rounded px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap ${t}`}>{children}</span>;
 }
 export function Kpi({ lbl, v, aviso }: { lbl: string; v: React.ReactNode; aviso?: boolean }) {
-  return <div className={`rounded-md border p-3 ${aviso ? 'border-amber-500/50' : 'border-borde'}`}><div className="text-[10px] tracking-wide text-tenue uppercase">{lbl}</div><div className={`num mt-1 text-lg font-semibold ${aviso ? 'text-amber-500' : ''}`}>{v}</div></div>;
+  return <div className={`rounded-md border p-3 ${aviso ? 'border-aviso/50' : 'border-borde'}`}><div className="text-[10px] tracking-wide text-tenue uppercase">{lbl}</div><div className={`num mt-1 text-lg font-semibold ${aviso ? 'text-aviso' : ''}`}>{v}</div></div>;
 }
 export function Vacio({ cols, children }: { cols: number; children: React.ReactNode }) {
   return <tr><td colSpan={cols} className="py-6 text-center text-tenue">{children}</td></tr>;

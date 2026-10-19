@@ -65,7 +65,7 @@ export function DocumentoContrato({ empresaId, trabajador, vals, plantillas, pla
           </div>
         </div>
       )}
-      {faltan.length > 0 && <p className="no-print text-xs text-amber-500">⚠️ Datos vacíos en el contrato: {faltan.join(', ')}.</p>}
+      {faltan.length > 0 && <p className="no-print text-xs text-aviso">⚠️ Datos vacíos en el contrato: {faltan.join(', ')}.</p>}
       <Mensaje {...msg} />
       <article className="hoja tarjeta mx-auto max-w-3xl space-y-4 p-10 text-sm leading-relaxed">
         <Bloques texto={combinado} />

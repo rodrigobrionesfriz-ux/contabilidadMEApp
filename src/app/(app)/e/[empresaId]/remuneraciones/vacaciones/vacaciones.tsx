@@ -66,9 +66,9 @@ export function Vacaciones({ empresaId, filas, escribe, admin, feriadosTexto, nF
                       <td className="num px-2 py-1.5 text-right">{s.inicial != null ? f2(s.inicial) : '–'}{s.inicial != null && <div className="text-[10px] text-tenue">al {fechaCL(s.desdeDev)}</div>}</td>
                       <td className="num px-2 py-1.5 text-right">{f2(s.devengado)}</td>
                       <td className="num px-2 py-1.5 text-right text-peligro">{s.diasTomados || '–'}</td>
-                      <td className={`num px-2 py-1.5 text-right font-semibold ${s.saldo < 0 ? 'text-peligro' : s.excede ? 'text-amber-500' : 'text-acento'}`}>{f2(s.saldo)}{s.excede && <div className="text-[10px]">⚠️ más de 2 períodos</div>}</td>
+                      <td className={`num px-2 py-1.5 text-right font-semibold ${s.saldo < 0 ? 'text-peligro' : s.excede ? 'text-aviso' : 'text-acento'}`}>{f2(s.saldo)}{s.excede && <div className="text-[10px]">⚠️ más de 2 períodos</div>}</td>
                       <td className="num px-2 py-1.5 text-right">{f2(s.saldo / s.anual)}</td>
-                    </>) : <td colSpan={7} className="px-2 py-1.5 text-amber-500">⚠️ {t.motivo}</td>}
+                    </>) : <td colSpan={7} className="px-2 py-1.5 text-aviso">⚠️ {t.motivo}</td>}
                     <td className="px-3 py-1.5 text-right whitespace-nowrap">
                       {escribe && s && <button type="button" className="boton-sec py-1 text-xs" onClick={() => { setAbierto({ id: t.id, modo: 'vac' }); setVac({ desde: hoyISO(), hasta: hoyISO(), obs: '' }); }}>+ Vacaciones</button>}
                       {escribe && <button type="button" className="ml-2 text-tenue hover:text-texto" title="Saldo inicial, años anteriores, zona extrema" aria-label={`Configurar vacaciones de ${t.nombre}`}

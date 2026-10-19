@@ -39,7 +39,7 @@ export function DetalleModal({ tipo, plan, centros, filas, indice, seleccionable
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 p-2 sm:p-6" role="dialog" aria-modal="true" aria-label="Detalle del documento">
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-velo p-2 sm:p-6" role="dialog" aria-modal="true" aria-label="Detalle del documento">
       <div className="tarjeta w-full max-w-5xl space-y-4 p-4 sm:p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>

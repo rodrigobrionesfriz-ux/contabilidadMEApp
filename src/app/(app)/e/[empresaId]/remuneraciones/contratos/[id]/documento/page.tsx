@@ -25,7 +25,7 @@ export default async function ContratoDocPage({ params }: PageProps<'/e/[empresa
         <Link href={`/e/${empresaId}/remuneraciones/contratos`} className="text-sm text-tenue hover:text-texto">← Contratos</Link>
         <Link href={`/e/${empresaId}/remuneraciones/contratos/${id}`} className="text-sm text-acento hover:underline">Datos del contrato (DT)</Link>
       </div>
-      {!v.ok && <p className="no-print text-xs text-amber-500">⚠️ Faltan datos del registro DT: {v.faltan.join(', ')}. Los datos vacíos aparecen entre corchetes en el contrato.</p>}
+      {!v.ok && <p className="no-print text-xs text-aviso">⚠️ Faltan datos del registro DT: {v.faltan.join(', ')}. Los datos vacíos aparecen entre corchetes en el contrato.</p>}
       <DocumentoContrato empresaId={empresaId} trabajador={{ id: t.id, nombre: t.nombre, cargo: t.cargo || '' }} vals={valoresContrato(t, c.D, c.empresa, c.imponible(t))}
         plantillas={pls.map((p) => ({ id: p.id, nombre: p.nombre, texto: p.texto, tipo: !!p.tipo }))} plantillaId={sugerida.id} textoPropio={item?.texto || ''}
         empresa={{ nombre: c.empresa.nombre || '', rut: c.empresa.rut || '', rep: c.empresa.rep || '' }} escribe={puedeEscribir(empresa.rol)} />
