@@ -97,7 +97,7 @@ export function EditorLineas({ tipo, doc, lineas, onChange, plan, centros, lista
       </div>
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
         <button type="button" className="boton-sec py-1 text-xs"
-          onClick={() => onChange([...lineas, { cuenta: lineas[0]?.cuenta ?? '', desc: '', monto: 0, cc: lineas[0]?.cc ?? '', afecto: true }])}>+ Línea</button>
+          onClick={() => onChange([...lineas, { cuenta: lineas[0]?.cuenta ?? '', desc: '', monto: 0, cc: lineas[0]?.cc ?? '', afecto: true }])} title="Agregar otra línea para repartir en otra cuenta o centro de costo">+ Línea (otra cuenta o centro)</button>
         <div className="num flex flex-wrap gap-x-4 text-tenue">
           <span>Afecto {clp(r.sumAfecto)} / {clp(r.neto)}</span>
           <span>Exento {clp(r.sumExento)} / {clp(r.exento)}</span>

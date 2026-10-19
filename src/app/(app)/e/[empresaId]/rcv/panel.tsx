@@ -5,7 +5,7 @@ import type { PlanCuentas } from '@/motor/plan-cuentas';
 import { dteC, dteV } from '@/motor/dte';
 import type { TipoRCV } from '@/rcv/leer';
 import { lineasIniciales, validarDetalleRCV, type LineaDetalle } from '@/rcv/detalle';
-import type { Asignacion } from '@/rcv/documento';
+import { construirRegistro, type Asignacion } from '@/rcv/documento';
 import { EditorLineas, type CentroOpcion } from '@/components/editor-lineas';
 import { clp, fechaCL, MESES } from '@/lib/formato';
 import { importarDocumento, type FichaAuxiliar } from './acciones';
@@ -32,6 +32,8 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
   const [lineas, setLineasBase] = useState<LineaDetalle[]>(() => fila.detalle?.lineas ?? conDescripciones(tipo, lineasIniciales(tipo, { ...d, cuenta: fila.cuenta, cc: fila.cc })));
   /** Al elegir la cuenta o el centro en una línea, se copian a las líneas que aún no lo tienen */
   const setLineas = (nuevas: LineaDetalle[]) => {
+    // Línea agregada para repartir: hereda la cuenta de la primera y recibe descripción (obligatoria con varias líneas)
+    if (nuevas.length > lineas.length) return setLineasBase(conDescripciones(tipo, nuevas.map((l, i) => (i >= lineas.length ? { ...l, cc: '', monto: 0 } : l))));
     const cambio = nuevas.findIndex((l, i) => lineas[i] && (l.cuenta !== lineas[i].cuenta || (l.cc ?? '') !== (lineas[i].cc ?? '')));
     if (cambio < 0 || nuevas.length !== lineas.length) return setLineasBase(nuevas);
     const ref = nuevas[cambio];
@@ -65,6 +67,13 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
   const nombreCC = (cc?: string) => (cc ? centros.find((c) => c.codigo === cc)?.nombre ?? cc : 'sin centro de costo');
   const cuentaTxt = (cd?: string) => (cd ? `${cd} ${plan.nombre(cd) ?? ''}`.trim() : 'sin cuenta');
   const difiereDeFicha = !!ficha && !!primera && (primera.cuenta !== ficha.cuenta || (primera.cc ?? '') !== (ficha.cc ?? ''));
+
+  // Asiento completo que se generará (mismo motor que contabiliza en el servidor)
+  const asignacionActual: Asignacion = {
+    detalle: { lineas, glosa: glosa.trim(), aceptaRedondeo: redondeo }, fechaVencimiento: vence, ...(tipo === 'venta' ? { formaPago } : {}),
+  };
+  const vista = v.ok && ccValido ? construirRegistro(tipo, d, periodo, asignacionActual, plan) : null;
+  const nombreCC2 = (cc?: string) => (cc ? centros.find((c) => c.codigo === cc)?.nombre ?? cc : '');
 
   function contabilizar() {
     setMsg({});
@@ -159,9 +168,45 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
       )}
 
       <EditorLineas tipo={tipo} doc={d} lineas={lineas} onChange={setLineas} plan={plan} centros={centros} listaId="cuentas-rcv" validacion={v} />
+      <p className="text-xs text-tenue">Para repartir el {tipo === 'compra' ? 'gasto' : 'ingreso'} en varias cuentas o centros de costo: <b>+ Línea</b>, elige la cuenta y el centro, escribe su monto y completa la primera línea con <b>⇥</b>.</p>
       <label className="flex items-center gap-2 text-xs text-tenue">
         <input type="checkbox" checked={redondeo} onChange={(e) => setRedondeo(e.target.checked)} /> Aceptar diferencia de $1 (redondeo del emisor)
       </label>
+
+      <div className="space-y-1">
+        <h3 className="text-xs font-semibold tracking-wide text-tenue uppercase">Asiento que se generará</h3>
+        {vista?.ok ? (
+          <div className="overflow-x-auto rounded-md border border-borde">
+            <table className="w-full text-xs">
+              <thead className="text-left text-tenue">
+                <tr className="border-b border-borde"><th className="px-2 py-1.5">Cuenta</th><th className="px-2 py-1.5">Detalle</th>
+                  <th className="w-[15ch] px-2 py-1.5 text-right">Debe</th><th className="w-[15ch] px-2 py-1.5 text-right">Haber</th></tr>
+              </thead>
+              <tbody>
+                {vista.registro.asiento.lineas.map((l, k) => (
+                  <tr key={k} className="border-b border-borde/40">
+                    <td className="px-2 py-1"><span className="num">{l.cuenta}</span> {plan.nombre(l.cuenta)}</td>
+                    <td className="px-2 py-1 text-tenue">{[l.glosa, l.cc && !(l.glosa ?? '').includes(l.cc) && `CC ${nombreCC2(l.cc)}`, l.rut && !(l.glosa ?? '').includes('RUT') && `RUT ${l.rut}`].filter(Boolean).join(' · ')}</td>
+                    <td className="num px-2 py-1 text-right whitespace-nowrap">{l.debe ? clp(l.debe) : ''}</td>
+                    <td className="num px-2 py-1 text-right whitespace-nowrap">{l.haber ? clp(l.haber) : ''}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="font-semibold">
+                  <td colSpan={2} className="px-2 py-1.5">{vista.registro.asiento.glosa} · {fechaCL(vista.registro.asiento.fecha)}</td>
+                  <td className="num px-2 py-1.5 text-right whitespace-nowrap">{clp(vista.registro.asiento.lineas.reduce((t, l) => t + l.debe, 0))}</td>
+                  <td className="num px-2 py-1.5 text-right whitespace-nowrap">{clp(vista.registro.asiento.lineas.reduce((t, l) => t + l.haber, 0))}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        ) : (
+          <p className="rounded-md border border-dashed border-borde px-3 py-2 text-xs text-tenue">
+            {vista && !vista.ok ? vista.errores.join(' ') : 'Aparece cuando las líneas cuadran con el documento y tienen cuenta (y centro de costo si la cuenta lo exige).'}
+          </p>
+        )}
+      </div>
 
       <div className="space-y-2 rounded-md border border-borde bg-panel-2 p-3 text-sm">
         {!ficha ? (

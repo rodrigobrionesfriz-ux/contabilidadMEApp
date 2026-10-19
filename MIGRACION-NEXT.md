@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (314): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (316): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -120,6 +120,10 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Tabla auxiliares (fichas de proveedores y clientes): empresa, tipo (proveedor/cliente), RUT validado, razón social, giro, correo, teléfono, dirección, cuenta y centro de costo por defecto, forma de cobro (clientes), activo. Lectura para miembros; escritura sólo por guardar_auxiliar.
 - guardar_auxiliar(...): crea o actualiza (valida RUT, cuenta imputable y centro con centro_costo_codigo, de la 0020); p_solo_crear no pisa una ficha existente. Queda en auditoría.
 - Poblado inicial: una ficha por RUT con documentos, con la cuenta y el centro del documento vigente más reciente (centro traducido desde el id antiguo).
+
+### 0021 (10l)
+- rcv_cargas (empresa, tipo, período): RCV leído (docs con su registro SII completo y filas descartadas), archivo, quién y cuándo. RLS: ver miembros; crear, editar y borrar contador o admin.
+- rcv_resumen(empresa, tipo): por período, total de documentos del RCV guardado y cuántos faltan en el libro (sin documento vigente con el mismo RUT, tipo DTE y folio).
 
 ## Importador del respaldo Excel (fase 1)
 - **Fuente:** el botón "📥 Exportar Excel" en Sistema y Respaldos del sistema actual. Un año por archivo.
@@ -260,6 +264,13 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Secciones del sistema actual que quedaron dentro de otras: PPM en Formulario 29; provisiones, corrección monetaria y cierres mensuales en Cierre del Ejercicio; Sistema y Respaldos y Carga desde Excel pasan a Importar respaldo y Exportar a Excel.
 - Computador: fija a la izquierda con empresa activa y buscador arriba. Celular: botón ☰ con la sección actual; el menú se abre encima y se cierra al elegir.
 - El modal de búsqueda se dibuja en un portal a `document.body`, porque la barra usa `transform` y un `fixed` quedaría encerrado en ella.
+
+## RCV guardado por mes y asiento completo (10l)
+- Cada RCV subido se guarda en rcv_cargas en su mes (periodoSugerido); si ya había uno de ese mes, se combinan los documentos (el nuevo reemplaza al de la misma clave). Acciones: guardarCarga, abrirCarga, resumenCargas, quitarCarga.
+- La página abre el mes pedido (?periodo=), si no el más reciente con pendientes, si no el último cargado o el mes actual. El selector "Mes del RCV y del libro" muestra los pendientes de cada mes y abre el RCV guardado; arriba aparecen como botones los otros meses con documentos por importar. "Quitar este RCV" borra la carga (no toca lo contabilizado).
+- Panel de importación: vista previa del asiento completo que se generará (gasto o ingreso, IVA crédito o débito, proveedor o cliente, retenciones y otros impuestos) con el mismo motor que contabiliza (construirRegistro).
+- Repartir: "+ Línea (otra cuenta o centro)" agrega una línea con la misma cuenta, sin centro, monto cero y descripción propuesta; ⇥ completa la primera con lo que falta.
+- next.config: serverActions.bodySizeLimit 4mb (el RCV con su registro SII completo se guarda por acción del servidor).
 
 ## RCV en dos pasos con fichas (10j)
 - Paso 1: archivo y período del libro. El lector guarda el registro completo del SII de cada documento (todas las columnas con sus encabezados originales, más las filas de continuación de otros impuestos) en DocRCV.registroSII y en datos.registroSII del documento; las filas no importables quedan listadas con su motivo (tipo de DTE, RUT, sin fecha, sin folio, total cero, repetido).

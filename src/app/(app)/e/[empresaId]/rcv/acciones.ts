@@ -5,7 +5,7 @@ import { crearClienteServidor } from '@/lib/supabase/server';
 import { planDeEmpresa } from '@/lib/datos/maestros';
 import { PlanCuentas } from '@/motor/plan-cuentas';
 import { construirRegistro, refDocumento, type Asignacion } from '@/rcv/documento';
-import type { DocRCV, TipoRCV } from '@/rcv/leer';
+import type { DocRCV, FilaDescartada, TipoRCV } from '@/rcv/leer';
 
 export interface ItemRegistro { doc: DocRCV; asignacion: Asignacion }
 export interface ResultadoItem { ref: string; ok: boolean; numero?: number; error?: string }
@@ -113,4 +113,60 @@ export async function importarDocumento(empresaId: string, tipo: TipoRCV, period
   // El documento ya quedó registrado: un problema con la ficha sólo se avisa
   if (error) return { ...r, avisoFicha: `El documento quedó registrado, pero no se pudo guardar la ficha: ${error.message}` };
   return { ...r, ficha: { razonSocial: ficha.razonSocial.trim() || item.doc.razonSocial, cuenta, cc, ...(tipo === 'venta' ? { formaPago: a.formaPago ?? 'clientes' } : {}) } };
+}
+
+// ─────────────── RCV guardados por período (para retomar en otra sesión) ───────────────
+
+export interface ResumenCarga { periodo: string; archivo: string; total: number; pendientes: number; actualizado: string }
+export interface CargaRCV { periodo: string; archivo: string; docs: DocRCV[]; descartadas: FilaDescartada[]; actualizado: string; previos: EstadoPrevio }
+
+const periodoOk = (p: string) => /^\d{4}-(0[1-9]|1[0-2])$/.test(p);
+
+export async function resumenCargas(empresaId: string, tipo: TipoRCV): Promise<ResumenCarga[]> {
+  const supabase = await crearClienteServidor();
+  const { data, error } = await supabase.rpc('rcv_resumen', { p_empresa: empresaId, p_tipo: tipo });
+  if (error) throw new Error(error.message);
+  return (data ?? []) as ResumenCarga[];
+}
+
+/** Guarda lo leído del archivo en el período; si ya había un RCV de ese mes, combina los documentos. */
+export async function guardarCarga(empresaId: string, tipo: TipoRCV, periodo: string, archivo: string, docs: DocRCV[], descartadas: FilaDescartada[]):
+  Promise<{ ok: true; total: number; nuevos: number } | { ok: false; error: string }> {
+  if (tipo !== 'compra' && tipo !== 'venta') return { ok: false, error: 'Tipo no válido' };
+  if (!periodoOk(periodo)) return { ok: false, error: 'Período no válido' };
+  if (!Array.isArray(docs) || docs.length > 5000) return { ok: false, error: 'El archivo tiene demasiados documentos' };
+  const supabase = await crearClienteServidor();
+  const { data: previa, error: e1 } = await supabase.from('rcv_cargas').select('docs').eq('empresa_id', empresaId).eq('tipo', tipo).eq('periodo', periodo).maybeSingle();
+  if (e1) return { ok: false, error: e1.message };
+  const porClave = new Map<string, DocRCV>(((previa?.docs ?? []) as DocRCV[]).map((d) => [refDocumento(tipo, d), d]));
+  const antes = porClave.size;
+  for (const d of docs) porClave.set(refDocumento(tipo, d), d);
+  const todos = [...porClave.values()].sort((a, b) => a.fecha.localeCompare(b.fecha) || a.razonSocial.localeCompare(b.razonSocial));
+  const { error } = await supabase.from('rcv_cargas').upsert({
+    empresa_id: empresaId, tipo, periodo, archivo: archivo.slice(0, 200), docs: todos, descartadas: descartadas.slice(0, 500), actualizado: new Date().toISOString(),
+  });
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/e/${empresaId}/rcv`);
+  return { ok: true, total: todos.length, nuevos: todos.length - antes };
+}
+
+/** Abre el RCV guardado de un período con lo necesario para el paso 2 (registrados, fichas, último uso). */
+export async function abrirCarga(empresaId: string, tipo: TipoRCV, periodo: string): Promise<CargaRCV | null> {
+  if (!periodoOk(periodo)) return null;
+  const supabase = await crearClienteServidor();
+  const { data, error } = await supabase.from('rcv_cargas').select('periodo,archivo,docs,descartadas,actualizado')
+    .eq('empresa_id', empresaId).eq('tipo', tipo).eq('periodo', periodo).maybeSingle();
+  if (error) throw new Error(error.message);
+  if (!data) return null;
+  const docs = data.docs as DocRCV[];
+  const previos = await consultarPrevios(empresaId, tipo, docs.map((d) => `${d.rutCodigo}-${d.rutDV}`));
+  return { periodo: String(data.periodo), archivo: data.archivo, docs, descartadas: (data.descartadas ?? []) as FilaDescartada[], actualizado: data.actualizado, previos };
+}
+
+export async function quitarCarga(empresaId: string, tipo: TipoRCV, periodo: string): Promise<{ error?: string }> {
+  const supabase = await crearClienteServidor();
+  const { error } = await supabase.from('rcv_cargas').delete().eq('empresa_id', empresaId).eq('tipo', tipo).eq('periodo', periodo);
+  if (error) return { error: error.message };
+  revalidatePath(`/e/${empresaId}/rcv`);
+  return {};
 }

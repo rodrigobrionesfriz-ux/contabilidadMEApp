@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { PlanCuentas, type CuentaBase } from '@/motor/plan-cuentas';
 import { dteC, dteV } from '@/motor/dte';
@@ -9,7 +9,7 @@ import type { LineaDetalle } from '@/rcv/detalle';
 import { claveDocumento, periodoSugerido } from '@/rcv/documento';
 import { clp, fechaCL, MESES } from '@/lib/formato';
 import { ListaCuentas, type CentroOpcion } from '@/components/editor-lineas';
-import { consultarPrevios, type FichaAuxiliar } from './acciones';
+import { abrirCarga, guardarCarga, quitarCarga, resumenCargas, type CargaRCV, type FichaAuxiliar, type ResumenCarga } from './acciones';
 import { PanelDocumento } from './panel';
 
 export interface Fila {
@@ -27,16 +27,39 @@ export interface Fila {
 type Filtro = 'pendientes' | 'todos' | 'registrados';
 const rutDe = (d: Pick<DocRCV, 'rutCodigo' | 'rutDV'>) => `${d.rutCodigo}-${d.rutDV}`;
 
-export function ImportadorRCV({ empresaId, tipo, cuentas, centros }: { empresaId: string; tipo: TipoRCV; cuentas: CuentaBase[]; centros: CentroOpcion[] }) {
+/** Filas del paso 2 a partir del RCV guardado y lo ya registrado / las fichas */
+function armarFilas(tipo: TipoRCV, c: CargaRCV): Fila[] {
+  const existentes = new Set(c.previos.existentes.map((k) => k.toUpperCase()));
+  return c.docs.map((doc) => {
+    const rut = rutDe(doc);
+    const ficha = c.previos.fichas[rut];
+    const u = c.previos.ultima[rut];
+    const cuentaDte = tipo === 'venta' ? (dteV(doc.tipoDTE)?.cuenta ?? '') : '';
+    return {
+      doc, vence: doc.fechaVencimiento,
+      duplicado: existentes.has(claveDocumento(rut, doc.tipoDTE, doc.numero).toUpperCase()),
+      cuenta: ficha?.cuenta || u?.cuenta || cuentaDte, cc: ficha?.cc ?? u?.cc ?? '',
+      formaPago: ((ficha?.formaPago ?? u?.formaPago) as Fila['formaPago']) ?? 'clientes',
+    };
+  });
+}
+const nombrePeriodo = (p: string) => (p ? `${MESES[Number(p.slice(5, 7)) - 1]} ${p.slice(0, 4)}` : '');
+
+export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicial, periodoInicial, cargaInicial }: {
+  empresaId: string; tipo: TipoRCV; cuentas: CuentaBase[]; centros: CentroOpcion[];
+  resumenInicial: ResumenCarga[]; periodoInicial: string; cargaInicial: CargaRCV | null;
+}) {
   const plan = useMemo(() => new PlanCuentas(cuentas), [cuentas]);
-  const [archivo, setArchivo] = useState('');
-  const [filas, setFilas] = useState<Fila[]>([]);
-  const [descartadas, setDescartadas] = useState<FilaDescartada[]>([]);
-  const [fichas, setFichas] = useState<Record<string, FichaAuxiliar>>({});
-  const [ultima, setUltima] = useState<Record<string, { cuenta: string; cc: string; formaPago?: string }>>({});
+  const [carga, setCarga] = useState<{ archivo: string; actualizado: string } | null>(cargaInicial ? { archivo: cargaInicial.archivo, actualizado: cargaInicial.actualizado } : null);
+  const [filas, setFilas] = useState<Fila[]>(() => (cargaInicial ? armarFilas(tipo, cargaInicial) : []));
+  const [descartadas, setDescartadas] = useState<FilaDescartada[]>(cargaInicial?.descartadas ?? []);
+  const [fichas, setFichas] = useState<Record<string, FichaAuxiliar>>(cargaInicial?.previos.fichas ?? {});
+  const [ultima, setUltima] = useState<Record<string, { cuenta: string; cc: string; formaPago?: string }>>(cargaInicial?.previos.ultima ?? {});
+  const [resumen, setResumen] = useState<ResumenCarga[]>(resumenInicial);
   const [info, setInfo] = useState('');
   const [error, setError] = useState('');
-  const [periodo, setPeriodo] = useState('');
+  const [periodo, setPeriodo] = useState(periodoInicial);
+  const [cargando, iniciarCarga] = useTransition();
   const [sel, setSel] = useState<number | null>(null);
   const [editando, setEditando] = useState(false);
   const [filtro, setFiltro] = useState<Filtro>('pendientes');
@@ -44,36 +67,52 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros }: { empresaId
   const aux = tipo === 'compra' ? 'proveedor' : 'cliente';
   const signo = (d: DocRCV) => ((tipo === 'compra' ? dteC(d.tipoDTE) : dteV(d.tipoDTE))?.signo ?? 1);
 
-  async function leer(f: File) {
-    setError(''); setInfo(''); setFilas([]); setSel(null); setEditando(false); setDescartadas([]);
-    try {
-      const { leerArchivoRCV } = await import('@/rcv/leer');
-      const r = await leerArchivoRCV(f.name, await f.arrayBuffer(), tipo);
-      if (!r.docs.length) throw new Error('El archivo no tiene documentos válidos.');
-      const prev = await consultarPrevios(empresaId, tipo, r.docs.map(rutDe));
-      const existentes = new Set(prev.existentes.map((k) => k.toUpperCase()));
-      setPeriodo(periodoSugerido(r.docs));
-      setArchivo(f.name);
-      setFichas(prev.fichas);
-      setUltima(prev.ultima);
-      setDescartadas(r.filasDescartadas ?? []);
-      setInfo(`${r.docs.length} documentos leídos del registro del SII${r.continuaciones ? ` · ${r.continuaciones} filas de otros impuestos agregadas a su documento` : ''}${r.descartados ? ` · ${r.descartados} filas no importables` : ''}.`);
-      setFilas(r.docs.map((doc) => {
-        const rut = rutDe(doc);
-        const ficha = prev.fichas[rut];
-        const u = prev.ultima[rut];
-        const cuentaDte = tipo === 'venta' ? (dteV(doc.tipoDTE)?.cuenta ?? '') : '';
-        return {
-          doc, vence: doc.fechaVencimiento,
-          duplicado: existentes.has(claveDocumento(rut, doc.tipoDTE, doc.numero).toUpperCase()),
-          cuenta: ficha?.cuenta || u?.cuenta || cuentaDte, cc: ficha?.cc ?? u?.cc ?? '',
-          formaPago: ((ficha?.formaPago ?? u?.formaPago) as Fila['formaPago']) ?? 'clientes',
-        };
-      }));
-      setFiltro('pendientes');
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
-    }
+  function mostrar(c: CargaRCV | null) {
+    setSel(null); setEditando(false); setFiltro('pendientes'); setBusca('');
+    setCarga(c ? { archivo: c.archivo, actualizado: c.actualizado } : null);
+    setFilas(c ? armarFilas(tipo, c) : []);
+    setDescartadas(c?.descartadas ?? []);
+    setFichas(c?.previos.fichas ?? {});
+    setUltima(c?.previos.ultima ?? {});
+  }
+
+  /** Abre el RCV guardado del período elegido */
+  function abrir(per: string) {
+    setPeriodo(per); setError(''); setInfo('');
+    iniciarCarga(async () => {
+      try { mostrar(await abrirCarga(empresaId, tipo, per)); } catch (e) { setError(e instanceof Error ? e.message : String(e)); }
+    });
+  }
+
+  /** Lee el archivo, lo guarda en su período (combinando si ya había uno) y lo abre */
+  function leer(f: File) {
+    setError(''); setInfo('');
+    iniciarCarga(async () => {
+      try {
+        const { leerArchivoRCV } = await import('@/rcv/leer');
+        const r = await leerArchivoRCV(f.name, await f.arrayBuffer(), tipo);
+        if (!r.docs.length) throw new Error('El archivo no tiene documentos válidos.');
+        const per = periodoSugerido(r.docs);
+        const g = await guardarCarga(empresaId, tipo, per, f.name, r.docs, r.filasDescartadas ?? []);
+        if (!g.ok) throw new Error(g.error);
+        setPeriodo(per);
+        mostrar(await abrirCarga(empresaId, tipo, per));
+        setResumen(await resumenCargas(empresaId, tipo));
+        setInfo(`${r.docs.length} documentos leídos del registro del SII de ${nombrePeriodo(per)}${g.nuevos < r.docs.length ? ` (${g.nuevos} nuevos; ya había un RCV de ese mes y se combinaron)` : ''}${r.continuaciones ? ` · ${r.continuaciones} filas de otros impuestos agregadas a su documento` : ''}${r.descartados ? ` · ${r.descartados} filas no importables` : ''}. Quedó guardado: puedes seguir en otra sesión.`);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : String(e));
+      }
+    });
+  }
+
+  function quitar() {
+    if (!window.confirm(`¿Quitar el RCV guardado de ${nombrePeriodo(periodo)}? Los documentos ya contabilizados no se tocan.`)) return;
+    iniciarCarga(async () => {
+      const r = await quitarCarga(empresaId, tipo, periodo);
+      if (r.error) return setError(r.error);
+      mostrar(null);
+      setResumen(await resumenCargas(empresaId, tipo));
+    });
   }
 
   const pendiente = (f: Fila) => !f.duplicado && !f.resultado?.ok;
@@ -101,6 +140,7 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros }: { empresaId
       return f;
     });
     setFilas(nuevas);
+    if (r.ok) setResumen((rs) => rs.map((x) => (x.periodo === periodo ? { ...x, pendientes: Math.max(0, x.pendientes - 1) } : x)));
     if (r.ok) {
       // Siguiente pendiente de la lista (en el orden visible), sin abrir la edición
       const orden = visibles.map((v) => v.i);
@@ -126,27 +166,46 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros }: { empresaId
       </div>
 
       <div className="flex flex-wrap items-end gap-3">
+        <div>
+          <label className="etiqueta" htmlFor="periodo">Mes del RCV y del libro</label>
+          <select id="periodo" value={periodo} disabled={cargando} onChange={(e) => abrir(e.target.value)} className="campo w-60">
+            {[anio + 1, anio, anio - 1].flatMap((y) => MESES.map((m, i) => {
+              const v = `${y}-${String(i + 1).padStart(2, '0')}`;
+              const r = resumen.find((x) => x.periodo === v);
+              return <option key={v} value={v}>{m} {y}{r ? (r.pendientes ? ` · ${r.pendientes} pendientes` : ' · ✓ completo') : ''}</option>;
+            }))}
+          </select>
+        </div>
         <label className="flex min-w-72 flex-1 cursor-pointer items-center gap-3 rounded-lg border-2 border-dashed border-borde p-3 hover:border-acento">
           <span className="text-2xl">📄</span>
-          <span className="text-sm">{archivo ? `${archivo} (elige otro para cambiarlo)` : 'Elige el archivo del RCV (.csv o .xlsx)'}</span>
-          <input type="file" accept=".csv,.xlsx,.xls" className="sr-only" onChange={(e) => e.target.files?.[0] && leer(e.target.files[0])} />
+          <span className="text-sm">{cargando ? 'Cargando…' : carga ? `Subir otro RCV (se guarda en su mes; si es el mismo mes, se combina)` : 'Sube el archivo del RCV (.csv o .xlsx): queda guardado para seguir en otra sesión'}</span>
+          <input type="file" accept=".csv,.xlsx,.xls" className="sr-only" disabled={cargando} onChange={(e) => { if (e.target.files?.[0]) leer(e.target.files[0]); e.target.value = ''; }} />
         </label>
-        {filas.length > 0 && (
-          <div>
-            <label className="etiqueta" htmlFor="periodo">Período del libro</label>
-            <select id="periodo" value={periodo} onChange={(e) => setPeriodo(e.target.value)} className="campo w-44">
-              {[anio - 1, anio].flatMap((y) => MESES.map((m, i) => {
-                const v = `${y}-${String(i + 1).padStart(2, '0')}`;
-                return <option key={v} value={v}>{m} {y}</option>;
-              }))}
-            </select>
-          </div>
-        )}
       </div>
+
+      {resumen.some((r) => r.pendientes > 0 && r.periodo !== periodo) && (
+        <div className="flex flex-wrap items-center gap-2 text-xs">
+          <span className="text-tenue">Meses con documentos por importar:</span>
+          {resumen.filter((r) => r.pendientes > 0 && r.periodo !== periodo).map((r) => (
+            <button key={r.periodo} type="button" disabled={cargando} onClick={() => abrir(r.periodo)} className="rounded-full border border-aviso/40 bg-aviso/10 px-2.5 py-0.5 text-aviso hover:bg-aviso/20">
+              {nombrePeriodo(r.periodo)} · {r.pendientes} de {r.total}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {carga ? (
+        <p className="text-xs text-tenue">
+          RCV de {nombrePeriodo(periodo)} guardado: <b className="text-texto">{carga.archivo}</b> · actualizado {new Date(carga.actualizado).toLocaleString('es-CL', { dateStyle: 'short', timeStyle: 'short' })}
+          {' · '}<button type="button" className="hover:text-peligro" onClick={quitar} disabled={cargando}>Quitar este RCV</button>
+        </p>
+      ) : !cargando && (
+        <div className="tarjeta p-6 text-center text-sm text-tenue">No hay un RCV de {tipo === 'compra' ? 'compras' : 'ventas'} guardado para {nombrePeriodo(periodo)}. Sube el archivo del SII para empezar.</div>
+      )}
       {error && <p role="alert" className="rounded-md border border-peligro/40 bg-peligro/10 px-3 py-2 text-sm text-peligro">{error}</p>}
       {info && <p className="text-sm text-tenue">{info}</p>}
 
-      {filas.length > 0 && (
+      {filas.length > 0 && !cargando && (
         <div className="grid items-start gap-4 lg:grid-cols-[360px_1fr]">
           {/* ── Columna izquierda: el registro completo ── */}
           <aside className="tarjeta flex max-h-[calc(100vh-9rem)] flex-col lg:sticky lg:top-4">
@@ -192,7 +251,7 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros }: { empresaId
             </ul>
             <div className="border-t border-borde px-3 py-2 text-[11px] text-tenue">
               {nReg > 0 && <span className="text-acento">✓ {nReg} contabilizados · </span>}
-              {nPend} pendientes{sinFicha ? ` · ${sinFicha} ${aux === 'proveedor' ? 'proveedores' : 'clientes'} nuevos` : ''}
+              {nPend} pendiente{nPend === 1 ? '' : 's'}{sinFicha ? ` · ${sinFicha} ${sinFicha === 1 ? aux : aux === 'proveedor' ? 'proveedores' : 'clientes'} nuevo${sinFicha === 1 ? '' : 's'}` : ''}
               {nReg > 0 && <> · <Link className="text-acento hover:underline" href={`../libro?tipo=${tipo}&anio=${periodo.slice(0, 4)}&mes=${Number(periodo.slice(5, 7))}`}>ver libro</Link></>}
             </div>
           </aside>
