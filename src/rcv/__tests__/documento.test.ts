@@ -15,6 +15,11 @@ const por = (folio: string) => compras.find((d) => d.numero === folio)!;
 const cuadra = (l: { debe: number; haber: number }[]) => l.reduce((s, x) => s + x.debe - x.haber, 0);
 
 describe('registro de documentos RCV', () => {
+  it('el documento registrado guarda el registro completo del SII', () => {
+    const d = compras[0];
+    const r = construirRegistro('compra', d, d.fecha.slice(0, 7), { cuenta: '3202024' }, plan);
+    expect(r.ok && r.registro.documento.datos.registroSII).toEqual(d.registroSII);
+  });
   it('sugiere el período más frecuente', () => expect(periodoSugerido(compras)).toBe('2026-03'));
 
   it('todas las compras del archivo generan asientos cuadrados con cuenta rápida', () => {

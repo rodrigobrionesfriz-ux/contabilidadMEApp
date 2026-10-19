@@ -3,7 +3,7 @@
 import { tipoLinea, completarLinea, type LineaDetalle, type DocParaDetalle, type ResultadoValidacion } from '@/rcv/detalle';
 import type { PlanCuentas } from '@/motor/plan-cuentas';
 import type { TipoRCV } from '@/rcv/leer';
-import { clp } from '@/lib/formato';
+import { clp, milesInput } from '@/lib/formato';
 
 export interface CentroOpcion { codigo: string; nombre: string; nivel: number; padre: string | null }
 
@@ -25,6 +25,8 @@ export function SelectorCC({ valor, onChange, centros, deshabilitado, requerido,
   return (
     <select value={valor} disabled={deshabilitado} onChange={(e) => onChange(e.target.value)} className="campo py-1 text-xs" aria-label={etiqueta ?? 'Centro de costo'}>
       <option value="">{deshabilitado ? 'No admite CC' : requerido ? 'Centro de costo *' : 'Sin centro de costo'}</option>
+      {/* Un valor que no está en la lista (p. ej. un id del sistema anterior) se muestra en vez de esconderse */}
+      {valor && !centros.some((c) => c.codigo === valor) && <option value={valor}>⚠️ {valor} (no existe)</option>}
       {principales.map((p) => {
         const hijos = centros.filter((c) => c.padre === p.codigo);
         if (!hijos.length) return <option key={p.codigo} value={p.codigo}>{p.nombre}</option>;
@@ -69,7 +71,7 @@ export function EditorLineas({ tipo, doc, lineas, onChange, plan, centros, lista
                   <td className="px-2 py-1"><input value={l.desc ?? ''} onChange={(e) => set(i, { desc: e.target.value })} className="campo py-1" aria-label={`Descripción línea ${i + 1}`} /></td>
                   <td className="px-2 py-1">
                     <div className="flex gap-1">
-                      <input inputMode="numeric" value={l.monto || ''} onChange={(e) => set(i, { monto: Math.round(Number(e.target.value.replace(/\./g, '')) || 0) })}
+                      <input inputMode="numeric" maxLength={13} value={l.monto ? milesInput(l.monto) : ''} onChange={(e) => set(i, { monto: Math.round(Number(e.target.value.replace(/[^0-9]/g, '').slice(0, 10)) || 0) })}
                         className="campo num py-1 text-right" aria-label={`Monto línea ${i + 1}`} />
                       <button type="button" title="Completar con lo que falta" className="text-tenue hover:text-acento" onClick={() => set(i, { monto: completarLinea(tipo, doc, lineas, i) })}>⇥</button>
                     </div>

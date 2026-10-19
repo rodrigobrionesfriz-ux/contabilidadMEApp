@@ -88,6 +88,8 @@ export function construirRegistro(tipo: TipoRCV, d: DocRCV, periodo: string, a: 
     origenRegistro: a.origen ?? 'RCV', estado: 'activo',
     ...(glosa ? { glosa } : {}),
     ...(lineasDetalle?.length ? { detalleRCV: { v: 2, lineas: lineasDetalle, glosa, aceptaRedondeo: !!a.detalle?.aceptaRedondeo, revisado: true } } : {}),
+    // Registro completo del SII tal como venía en el archivo (todas las columnas)
+    ...(d.registroSII?.length ? { registroSII: d.registroSII } : {}),
   };
 
   let doc: Documento;

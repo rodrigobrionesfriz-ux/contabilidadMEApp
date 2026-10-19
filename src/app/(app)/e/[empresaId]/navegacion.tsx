@@ -25,6 +25,7 @@ const GRUPOS: Grupo[] = [
       { ruta: '/honorarios', nombre: 'Honorarios', icono: '📝' },
       { ruta: '/remuneraciones', nombre: 'Remuneraciones', icono: '👷' },
       { ruta: '/pagos', nombre: 'Pagos y Cobros', icono: '💳', roles: ESCRIBE },
+      { ruta: '/fichas', nombre: 'Proveedores y Clientes', icono: '📇' },
       { ruta: '/auxiliares', nombre: 'Auxiliares', icono: '📒' },
       { ruta: '/asientos/nuevo', nombre: 'Comprobantes', icono: '📔', roles: ESCRIBE },
       { ruta: '/asientos/tipo', nombre: 'Asientos tipo', icono: '📋' },

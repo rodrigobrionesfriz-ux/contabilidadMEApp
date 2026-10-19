@@ -41,11 +41,15 @@ export async function anularDocumento(empresaId: string, id: string, motivo: str
   return {};
 }
 
+export interface FichaAuxiliar { razonSocial: string; cuenta: string; cc: string; formaPago?: string }
+
 export interface EstadoPrevio {
   /** Claves rut|dte|folio ya registradas (no anuladas) */
   existentes: string[];
-  /** Última cuenta y CC usados por RUT, para proponer en documentos nuevos */
+  /** Última cuenta y CC usados por RUT (respaldo cuando el auxiliar aún no tiene ficha) */
   ultima: Record<string, { cuenta: string; cc: string; formaPago?: string }>;
+  /** Fichas de los auxiliares del archivo (por RUT 12345678-9): cuenta y CC por defecto */
+  fichas: Record<string, FichaAuxiliar>;
 }
 
 export async function consultarPrevios(empresaId: string, tipo: TipoRCV, ruts: string[]): Promise<EstadoPrevio> {
@@ -53,6 +57,10 @@ export async function consultarPrevios(empresaId: string, tipo: TipoRCV, ruts: s
   const unicos = [...new Set(ruts)].slice(0, 2000);
   const existentes: string[] = [];
   const ultima: EstadoPrevio['ultima'] = {};
+  // Los documentos importados pueden traer el id del centro en el sistema anterior: se traduce al código vigente
+  const { data: ccs } = await supabase.from('centros_costo').select('codigo,ref_origen').eq('empresa_id', empresaId);
+  const codigoCC = new Map<string, string>();
+  for (const c of ccs ?? []) { codigoCC.set(c.codigo, c.codigo); if (c.ref_origen) codigoCC.set(c.ref_origen, c.codigo); }
   for (let i = 0; i < unicos.length; i += 150) {
     const { data, error } = await supabase.from('documentos')
       .select('rut,tipo_dte,folio,estado,fecha,cuenta:datos->dist->0->>cuenta,cc:datos->dist->0->>cc,ingreso:datos->>cuentaIngreso,fp:datos->>formaPago')
@@ -62,8 +70,47 @@ export async function consultarPrevios(empresaId: string, tipo: TipoRCV, ruts: s
     for (const d of data as { rut: string; tipo_dte: number; folio: string; estado: string | null; cuenta: string | null; cc: string | null; ingreso: string | null; fp: string | null }[]) {
       if (d.estado !== 'anulado') existentes.push(`${d.rut.replace('-', '')}|${d.tipo_dte}|${d.folio}`);
       const cuenta = d.cuenta || d.ingreso;
-      if (cuenta && !ultima[d.rut] && d.estado !== 'anulado') ultima[d.rut] = { cuenta, cc: d.cc ?? '', ...(d.fp ? { formaPago: d.fp } : {}) };
+      if (cuenta && !ultima[d.rut] && d.estado !== 'anulado') ultima[d.rut] = { cuenta, cc: (d.cc && codigoCC.get(d.cc)) || '', ...(d.fp ? { formaPago: d.fp } : {}) };
     }
   }
-  return { existentes, ultima };
+  const fichas: EstadoPrevio['fichas'] = {};
+  const tipoAux = tipo === 'compra' ? 'proveedor' : 'cliente';
+  for (let i = 0; i < unicos.length; i += 150) {
+    const { data, error } = await supabase.from('auxiliares').select('rut,razon_social,cuenta,centro_costo,forma_pago')
+      .eq('empresa_id', empresaId).eq('tipo', tipoAux).in('rut', unicos.slice(i, i + 150));
+    if (error) throw new Error(error.message);
+    for (const f of data ?? []) fichas[f.rut] = { razonSocial: f.razon_social, cuenta: f.cuenta ?? '', cc: f.centro_costo ?? '', ...(f.forma_pago ? { formaPago: f.forma_pago } : {}) };
+  }
+  return { existentes, ultima, fichas };
+}
+
+export interface OpcionFicha {
+  /** Crear la ficha si el auxiliar no tiene (con la cuenta y CC de este asiento) */
+  crear: boolean;
+  /** Reemplazar la cuenta y CC por defecto de una ficha existente */
+  actualizar: boolean;
+  razonSocial: string;
+}
+
+/**
+ * Importa un documento del RCV ya revisado en el paso 2: lo contabiliza (pasa al libro) y, si corresponde,
+ * crea o actualiza la ficha del auxiliar con la cuenta y el centro de costo de la primera línea del asiento.
+ */
+export async function importarDocumento(empresaId: string, tipo: TipoRCV, periodo: string, item: ItemRegistro, ficha: OpcionFicha):
+  Promise<ResultadoItem & { ficha?: FichaAuxiliar; avisoFicha?: string }> {
+  const [r] = await registrarDocumentos(empresaId, tipo, periodo, [item]);
+  if (!r?.ok || (!ficha.crear && !ficha.actualizar)) return r;
+  const a = item.asignacion;
+  const primera = a.detalle?.lineas.find((l) => !l.otroImp);
+  const cuenta = primera?.cuenta ?? a.cuenta ?? '';
+  const cc = primera?.cc ?? a.cc ?? '';
+  const supabase = await crearClienteServidor();
+  const { error } = await supabase.rpc('guardar_auxiliar', {
+    p_empresa: empresaId, p_tipo: tipo === 'compra' ? 'proveedor' : 'cliente', p_rut: `${item.doc.rutCodigo}-${item.doc.rutDV}`,
+    p_razon_social: ficha.razonSocial.trim() || item.doc.razonSocial, p_cuenta: cuenta, p_cc: cc,
+    p_forma_pago: tipo === 'venta' ? (a.formaPago ?? 'clientes') : null, p_solo_crear: !ficha.actualizar,
+  });
+  // El documento ya quedó registrado: un problema con la ficha sólo se avisa
+  if (error) return { ...r, avisoFicha: `El documento quedó registrado, pero no se pudo guardar la ficha: ${error.message}` };
+  return { ...r, ficha: { razonSocial: ficha.razonSocial.trim() || item.doc.razonSocial, cuenta, cc, ...(tipo === 'venta' ? { formaPago: a.formaPago ?? 'clientes' } : {}) } };
 }

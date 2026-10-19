@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (304): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (314): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -111,6 +111,16 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ### 0017 (10h)
 - editar_asiento(id, fecha, glosa, líneas, motivo): edita un comprobante conservando su número, con las mismas validaciones de crear_asiento. No permite anulados, cierre ni apertura (la apertura va por guardar_apertura), cambiar de año ni tocar meses cerrados (origen o destino). Guarda en auditoría la versión anterior (fecha, glosa y líneas) y el motivo. El documento asociado (compra/venta/honorario) no se modifica.
 
+### 0018 (10i)
+- centro_costo_codigo(empresa, cc): devuelve el código del centro a partir del código o del id del sistema anterior (ref_origen); vacío = sin centro; si no existe, error claro.
+- registrar_documento traduce el centro de cada línea con esa función antes de crear el asiento.
+- Corrección única: datos.dist[].cc y datos.cc de los documentos importados pasan del id antiguo al código nuevo.
+
+### 0019 (10j)
+- Tabla auxiliares (fichas de proveedores y clientes): empresa, tipo (proveedor/cliente), RUT validado, razón social, giro, correo, teléfono, dirección, cuenta y centro de costo por defecto, forma de cobro (clientes), activo. Lectura para miembros; escritura sólo por guardar_auxiliar.
+- guardar_auxiliar(...): crea o actualiza (valida RUT, cuenta imputable y centro con centro_costo_codigo); p_solo_crear no pisa una ficha existente. Queda en auditoría.
+- Poblado inicial: una ficha por RUT con documentos, con la cuenta y el centro del documento vigente más reciente (centro traducido desde el id antiguo).
+
 ## Importador del respaldo Excel (fase 1)
 - **Fuente:** el botón "📥 Exportar Excel" en Sistema y Respaldos del sistema actual. Un año por archivo.
 - **Equivalencia con genDiario:**
@@ -147,7 +157,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
   - Ventas: formaPago (clientes, banco o deudores) y cuentaIngreso.
 - **Seguridad:** la acción del servidor recalcula el asiento con el plan de la base (respeta las reglas editadas de cada cuenta); no confía en los datos del navegador.
 - **Pantallas:**
-  - Importar RCV: período sugerido, cuenta y CC en lote, propone la última cuenta usada por RUT, detecta los documentos ya registrados, paso 2 en un panel con navegación entre documentos, contabiliza en lotes de 25.
+  - Importar RCV: ver "RCV en dos pasos con fichas (10j)": lista del registro a la izquierda, edición por documento a la derecha, cuenta y CC desde la ficha del auxiliar.
   - Libro de compras/ventas: resumen por tipo de DTE con signo (las NC restan), enlace al asiento y anulación.
   - Nuevo documento manual: cabecera, IVA del 19% automático y el mismo editor de líneas.
 
@@ -251,6 +261,21 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Computador: fija a la izquierda con empresa activa y buscador arriba. Celular: botón ☰ con la sección actual; el menú se abre encima y se cierra al elegir.
 - El modal de búsqueda se dibuja en un portal a `document.body`, porque la barra usa `transform` y un `fixed` quedaría encerrado en ella.
 
+## RCV en dos pasos con fichas (10j)
+- Paso 1: archivo y período del libro. El lector guarda el registro completo del SII de cada documento (todas las columnas con sus encabezados originales, más las filas de continuación de otros impuestos) en DocRCV.registroSII y en datos.registroSII del documento; las filas no importables quedan listadas con su motivo (tipo de DTE, RUT, sin fecha, sin folio, total cero, repetido).
+- Paso 2: columna izquierda con todo el registro (nombre, folio, fecha y monto; filtros pendientes/registrados/todos y búsqueda; ★ nuevo = sin ficha). Al elegir una línea aparece "Importar"; el panel derecho muestra el documento y, al importar, la edición de glosa, vencimiento, líneas (cuenta, descripción, monto, centro de costo, tipo) y forma de cobro en ventas.
+- Cuenta y centro por defecto desde la ficha del auxiliar (si no hay ficha: último uso; en ventas, la cuenta del DTE). Al escribir la cuenta o el centro en una línea se copian a las líneas vacías; con varias líneas se proponen descripciones; la diferencia de $1 por redondeo del emisor se acepta sola mientras no se cambie a mano.
+- Auxiliar nuevo: opción (marcada) de crear su ficha al contabilizar con la cuenta y el centro de la primera línea; desde ahí son los valores por defecto, también para los demás documentos del mismo RUT en la lista. Con ficha existente se puede marcar que la cuenta y centro usados pasen a ser los nuevos valores por defecto.
+- Recién al "Contabilizar y pasar al libro" se registra el documento y su asiento (importarDocumento → registrar_documento + guardar_auxiliar). Después se selecciona el siguiente pendiente.
+- Se quitó la grilla con cuenta masiva y la ventana modal del paso 2 (detalle-modal.tsx).
+- Pantalla Registros → Proveedores y Clientes (/fichas): búsqueda, filtro sin cuenta, nueva ficha y edición.
+
+## Centros de costo en el RCV (10i)
+- Error corregido: 'insert or update on table "asiento_lineas" violates foreign key constraint' al contabilizar el RCV. Causa: la propuesta de cuenta y centro por RUT (consultarPrevios) leía datos.dist[0].cc de los documentos importados, que traen el id del sistema anterior (p. ej. cc_mu188amoxkl), no el código (AGRI). El selector lo mostraba como "Sin centro de costo", pero se enviaba igual. Sólo fallaban las cuentas que admiten centro.
+- consultarPrevios traduce el centro al código vigente (o lo deja vacío si no existe).
+- SelectorCC muestra un valor desconocido como "⚠️ X (no existe)" en vez de esconderlo; la grilla del importador lo marca como error antes de enviar.
+- La base traduce y valida el centro (migración 0018).
+
 ## Editar comprobantes (10h)
 - Botón ✏️ Editar en el comprobante (/asientos/[id]) y acceso directo en cada asiento del libro diario (sólo admin y contador, vigente, mes abierto; la apertura lleva a Balance de apertura).
 - Pantalla /asientos/[id]/editar: fecha (mismo año), glosa, cuentas, montos, detalle por línea, centro de costo y auxiliar (RUT, tipo, folio); motivo opcional para el registro de actividad.
@@ -316,4 +341,4 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Reimportar La Cabaña 2026 con 10d y repetir el cuadre (script de comparación: respaldo vs PDF del Balance General).
 - Importar el resto de empresas y años, y comparar cifras con el sistema actual hasta validarlas.
 - Opcional: traer al F29 nuevo los F29 declarados del sistema actual (f29Detalle.declarado de los asientos ivaf29) como presentados, para que el remanente arrastre igual.
-- Pendientes menores: fichas de proveedores (hoy salen de las compras), rechazo de gastos desde el documento de compra y asientos contables del inventario (hoy es auxiliar, igual que el sistema actual).
+- Pendientes menores: usar las fichas en las órdenes de compra (hoy salen de las compras), rechazo de gastos desde el documento de compra y asientos contables del inventario (hoy es auxiliar, igual que el sistema actual).

@@ -38,12 +38,18 @@ export interface DocRCV {
   netoAF: number;
   tipoCompra?: string;
   numeroInternoSII?: string;
+  /** Registro completo del SII: la fila del documento y sus filas de continuación, con los encabezados originales */
+  registroSII?: Record<string, string>[];
 }
+
+export interface FilaDescartada { fila: Record<string, string>; motivo: string }
 
 export interface LecturaRCV {
   docs: DocRCV[];
   descartados: number;
   continuaciones: number;
+  /** Filas del archivo que no son documentos importables, con el motivo */
+  filasDescartadas?: FilaDescartada[];
 }
 
 const num = (v: unknown) => Number(v) || 0;
@@ -114,7 +120,17 @@ export function parseFilas(rows: unknown[][], tipo: TipoRCV): LecturaRCV {
   if (headerIdx < 0) {
     throw new Error(`No se encontró la fila de encabezados. ¿Es el archivo "Detalle de Registro de ${tipo === 'compra' ? 'Compras' : 'Ventas'}" del SII?`);
   }
+  let descartados = 0;
   const headers = rows[headerIdx].map((h) => String(h || '').toLowerCase().trim().replace(/"/g, ''));
+  const titulos = rows[headerIdx].map((h, i) => String(h || '').trim().replace(/"/g, '') || `Columna ${i + 1}`);
+  /** Fila con sus encabezados originales (sólo celdas con valor) */
+  const filaSII = (r: unknown[]): Record<string, string> => {
+    const o: Record<string, string> = {};
+    r.forEach((v, i) => { const t = String(v ?? '').trim(); if (t) o[titulos[i] ?? `Columna ${i + 1}`] = t; });
+    return o;
+  };
+  const filasDescartadas: FilaDescartada[] = [];
+  const descartar = (r: unknown[], motivo: string) => { descartados++; filasDescartadas.push({ fila: filaSII(r), motivo }); };
   const cTipo = findCol(headers, 'tipo doc', 'tipo dte');
   const cRut = findCol(headers, tipo === 'compra' ? 'rut proveedor' : 'rut cliente', 'rut receptor', 'rut emisor', 'rut');
   const cRazon = findCol(headers, 'razon social', 'razón social', 'razonsocial');
@@ -147,7 +163,6 @@ export function parseFilas(rows: unknown[][], tipo: TipoRCV): LecturaRCV {
   }
   const dteValido = tipo === 'compra' ? dteC : dteV;
   const docs: DocRCV[] = [];
-  let descartados = 0;
   let continuaciones = 0;
   const claves = new Set<string>();
   const cel = (r: unknown[], c: number) => (c >= 0 ? r[c] : undefined);
@@ -160,6 +175,7 @@ export function parseFilas(rows: unknown[][], tipo: TipoRCV): LecturaRCV {
     const numero = String(r[cNro] || '').trim();
     if (cNroSII >= 0 && !nroSII) {
       if (docs.length) {
+        docs[docs.length - 1].registroSII?.push(filaSII(r));
         const extra = cOtro >= 0 ? Math.abs(parseNumSII(r[cOtro])) : 0;
         if (extra > 0) {
           const anterior = docs[docs.length - 1];
@@ -180,11 +196,11 @@ export function parseFilas(rows: unknown[][], tipo: TipoRCV): LecturaRCV {
       continue;
     }
     const tipoDTE = parseInt(String(r[cTipo]), 10) || 0;
-    if (!tipoDTE || !dteValido(tipoDTE)) { descartados++; continue; }
+    if (!tipoDTE || !dteValido(tipoDTE)) { descartar(r, `Tipo de documento ${String(r[cTipo] ?? '').trim() || '(vacío)'} no corresponde a ${tipo === 'compra' ? 'compras' : 'ventas'}`); continue; }
     const rutInfo = rutParse(String(r[cRut] || ''));
-    if (!rutInfo.codigo) { descartados++; continue; }
+    if (!rutInfo.codigo) { descartar(r, 'RUT vacío o no válido'); continue; }
     const fecha = parseFechaSII(r[cFecha]);
-    if (!fecha) { descartados++; continue; }
+    if (!fecha) { descartar(r, 'Sin fecha del documento'); continue; }
     const vencArchivo = cVenc >= 0 ? parseFechaSII(r[cVenc]) : '';
     const neto = Math.abs(parseNumSII(cel(r, cNeto)));
     const netoAF = cNetoAF >= 0 ? Math.abs(parseNumSII(r[cNetoAF])) : 0;
@@ -198,7 +214,7 @@ export function parseFilas(rows: unknown[][], tipo: TipoRCV): LecturaRCV {
     const total = Math.abs(parseNumSII(r[cTotal]));
     const otrosImpuestos = cOtro >= 0 ? Math.abs(parseNumSII(r[cOtro])) : 0;
     const impuestoSinDerechoCredito = cSinDerecho >= 0 ? Math.abs(parseNumSII(r[cSinDerecho])) : 0;
-    if (!numero || total === 0) { descartados++; continue; }
+    if (!numero || total === 0) { descartar(r, !numero ? 'Sin folio' : 'Total en cero'); continue; }
 
     let otrosFinal = otrosImpuestos;
     const facturaCompra = tipoDTE === 45 || tipoDTE === 46;
@@ -206,7 +222,7 @@ export function parseFilas(rows: unknown[][], tipo: TipoRCV): LecturaRCV {
     if (facturaCompra || ncFacturaCompra) otrosFinal = 0;
 
     const claveDoc = `${rutInfo.codigo}|${tipoDTE}|${numero}`;
-    if (claves.has(claveDoc)) { descartados++; continue; }
+    if (claves.has(claveDoc)) { descartar(r, 'Repetido en el archivo'); continue; }
     claves.add(claveDoc);
 
     const tasaOtro = cTasaOtro >= 0 ? Math.abs(parseNumSII(r[cTasaOtro])) : 0;
@@ -236,6 +252,7 @@ export function parseFilas(rows: unknown[][], tipo: TipoRCV): LecturaRCV {
       netoAF,
       ...(cTipoCompra >= 0 && txtCel(r, cTipoCompra) ? { tipoCompra: txtCel(r, cTipoCompra) } : {}),
       ...(cNumeroInterno >= 0 && txtCel(r, cNumeroInterno) ? { numeroInternoSII: txtCel(r, cNumeroInterno) } : {}),
+      registroSII: [filaSII(r)],
     };
     docs.push(d);
   }
@@ -260,7 +277,7 @@ export function parseFilas(rows: unknown[][], tipo: TipoRCV): LecturaRCV {
       }
     }
   }
-  return { docs, descartados, continuaciones };
+  return { docs, descartados, continuaciones, filasDescartadas };
 }
 
 export function leerCSV(texto: string, tipo: TipoRCV): LecturaRCV {
