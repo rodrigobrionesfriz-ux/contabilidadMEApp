@@ -12,7 +12,7 @@ Proyecto **nuevo e independiente** del sistema actual. El sistema de GitHub Page
 | Roles por empresa: admin / contador / consulta | ✅ |
 | Login con Supabase Auth: ingreso, registro, recuperación de contraseña | ✅ |
 | Selector de empresas, creación de empresa con plan de cuentas base (295 cuentas) | ✅ |
-| Plan de cuentas, libro diario, nuevo asiento manual | ✅ |
+| Plan de cuentas, libro diario, nuevo asiento manual, **balance de apertura** (N° 0) manual, pegado desde Excel o generado desde el cierre | ✅ |
 | Motor contable (compras, ventas, honorarios) en TypeScript, idéntico al actual | ✅ 29 casos verificados contra el motor actual |
 | **Importador del respaldo Excel** del sistema actual (un año por archivo), con verificación de saldos | ✅ fase 1 |
 | Libro mayor y balance tributario de 8 columnas | ✅ fase 1 |
@@ -124,7 +124,7 @@ Para sumar a otra persona: primero ella crea su cuenta y después un administrad
 5. **Generar apertura** del año siguiente: asiento N° 0 al 1 de enero con los saldos de balance; en clientes, proveedores y honorarios conserva cada documento con saldo.
 6. En **Reportes → Renta anual (F22)** revisa la RLI del año, marca los gastos rechazados y guarda; **Declaraciones juradas** lleva el control de presentación.
 
-Se importa un año por archivo; para varios años, repite con cada respaldo. Si necesitas rehacer un año, usa **Eliminar importación** (sólo borra datos importados y se niega si ya registraste asientos nuevos en ese año).
+Se importa un año por archivo; para varios años, repite con cada respaldo. Si necesitas rehacer un año, usa **Eliminar importación** (borra los datos importados y los asientos propios anulados de ese año; se niega si hay asientos propios vigentes).
 
 ## 3. Publicar (GitHub + Vercel)
 

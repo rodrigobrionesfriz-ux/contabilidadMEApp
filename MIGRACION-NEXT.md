@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (285): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (294): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -104,6 +104,9 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 
 ### 0015 (10d)
 - eliminar_importacion ya no se niega por asientos propios anulados: los borra junto con lo importado (queda en auditoría como anulados_propios). Los asientos propios vigentes siguen bloqueando.
+
+### 0016 (10f)
+- guardar_apertura(empresa, año, glosa, líneas): registra o corrige el balance de apertura del año. Sólo cuentas 1 y 2 imputables y activas; las de auxiliar exigen RUT (tipo DTE y folio opcionales); debe cuadrar. Si hay apertura vigente reemplaza sus líneas y conserva el número (versión anterior en auditoría); si no, la crea como N° 0 al 1 de enero (o el siguiente número si el 0 lo ocupa una anulada), con origen 'apertura-manual:AAAA' para no bloquear la reapertura del año anterior. Se niega con enero o el ejercicio cerrados.
 
 ## Importador del respaldo Excel (fase 1)
 - **Fuente:** el botón "📥 Exportar Excel" en Sistema y Respaldos del sistema actual. Un año por archivo.
@@ -245,6 +248,14 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Computador: fija a la izquierda con empresa activa y buscador arriba. Celular: botón ☰ con la sección actual; el menú se abre encima y se cierra al elegir.
 - El modal de búsqueda se dibuja en un portal a `document.body`, porque la barra usa `transform` y un `fixed` quedaría encerrado en ella.
 
+## Balance de apertura (10f)
+- Pantalla Configuración → Balance de Apertura (/apertura?anio=AAAA). Muestra la apertura vigente del año (enlace al comprobante), las anuladas y si el año está bloqueado.
+- Editor de líneas con cuenta, debe, haber, auxiliar (RUT, tipo, folio) y glosa; totales de activo y de pasivo más patrimonio.
+- Pegar desde Excel (src/motor/apertura.ts, con pruebas): cuenta, debe, haber [, RUT, tipo, folio, glosa] o cuenta y saldo con signo; admite columna de nombre, montos chilenos, paréntesis como negativo, y omite encabezados, totales y ceros.
+- Saldar la diferencia contra una cuenta de patrimonio (por defecto 2303001).
+- Si el año anterior está cerrado y no hay apertura, ofrece generarla desde ese cierre (generar_apertura).
+- Motivo: la primera carga de La Cabaña 2026 vino con la hoja Apertura vacía, así que el balance no mostraba capital ni saldos iniciales.
+
 ## Tema claro (10e)
 - Paleta clara azul grisácea en src/app/globals.css (`:root[data-theme='claro']`), con las mismas variables que el tema oscuro, que sigue siendo el de defecto.
 - Variables nuevas: info (antes sky fijo), velo (fondo de las ventanas modales) y sobre-acento (texto de los botones principales). Los 57 `amber-500` fijos pasaron a `aviso`, que en claro es un ámbar más oscuro y legible.
@@ -265,7 +276,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
   - Tributario SII: Formulario 29 y PPM, Declaración de renta (F22: RLI, formulario, ajustes y créditos, Excel), Declaraciones juradas.
   - Activo fijo: fichas, depreciación del año y contabilización.
   - Cierre de ejercicio: cierre del ejercicio.
-  - Configuración: Empresas, Empresa (admin), Centros de costo, Asignar centros de costo, Plan de cuentas, Importar respaldo (admin), Exportar a Excel, Usuarios (admin), Registro de actividad (admin).
+  - Configuración: Empresas, Empresa (admin), Centros de costo, Asignar centros de costo, Plan de cuentas, Balance de apertura, Importar respaldo (admin), Exportar a Excel, Usuarios (admin), Registro de actividad (admin).
   - Búsqueda global (Ctrl+K) en la barra lateral.
 
 ## Notas técnicas
@@ -284,6 +295,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
   - Solución: con 10d desplegado, anular en Next esos asientos generados en el F29, Eliminar importación 2026 y volver a importar el respaldo. Después, repetir el cuadre.
 
 ## Próximas fases
+- Ingresar la apertura 2026 de cada empresa en Configuración → Balance de Apertura (saldos al 31-12-2025 del sistema actual o del balance tributario) y repetir el cuadre.
 - Reimportar La Cabaña 2026 con 10d y repetir el cuadre (script de comparación: respaldo vs PDF del Balance General).
 - Importar el resto de empresas y años, y comparar cifras con el sistema actual hasta validarlas.
 - Opcional: traer al F29 nuevo los F29 declarados del sistema actual (f29Detalle.declarado de los asientos ivaf29) como presentados, para que el remanente arrastre igual.

@@ -60,6 +60,7 @@ const GRUPOS: Grupo[] = [
       { ruta: '/centros-costo', nombre: 'Centros de Costo', icono: '📊' },
       { ruta: '/asignar-cc', nombre: 'Asignar Centros de Costo', icono: '🎯' },
       { ruta: '/plan-cuentas', nombre: 'Plan de Cuentas', icono: '📋' },
+      { ruta: '/apertura', nombre: 'Balance de Apertura', icono: '🏁' },
       { ruta: '/importar', nombre: 'Importar respaldo', icono: '📥', roles: ['admin'] },
       { ruta: '/exportar', nombre: 'Exportar a Excel', icono: '📊' },
       { ruta: '/usuarios', nombre: 'Usuarios', icono: '👥', roles: ['admin'] },
