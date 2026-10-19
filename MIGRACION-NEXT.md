@@ -265,6 +265,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Computador: fija a la izquierda con empresa activa y buscador arriba. Celular: botón ☰ con la sección actual; el menú se abre encima y se cierra al elegir.
 - El modal de búsqueda se dibuja en un portal a `document.body`, porque la barra usa `transform` y un `fixed` quedaría encerrado en ella.
 
+## Paso 2 del RCV como el sistema actual (10o)
+- Paso 1 en la página (mes, subir archivo, meses con pendientes, resumen del RCV guardado y botón "Paso 2"). Al subir un archivo se abre el paso 2.
+- Paso 2 a pantalla completa: cabecera "RCV Compras/Ventas · paso 2: contabilizar documento por documento" con archivo y conteos; período en mes y año; "Vista tabla" (todo el registro en una tabla; al elegir una fila vuelve a la vista documento); "⬇ Importar"; ✕. Columna izquierda: buscador, filtros Por contabilizar / En el libro / Todos y lista (nombre, tipo-folio, fecha, monto). Derecha: documento elegido con "Toca ⬇ Importar"; al importar, el editor.
+- Editor (panel.tsx, EditorDocumento): bloque con tipo de documento, folio, fecha de emisión, vencimiento (editable), RUT, auxiliar, exento, neto, IVA, otros impuestos y total; glosa general; asiento editable con columnas # · Cuenta · Descripción · Centro de costo · Tipo · Debe · Haber, con ⇥ y ✕ por línea; debajo, las filas automáticas (IVA crédito o débito, IVA retenido, proveedor o cliente, banco) desde asientoProvisional, y los totales del asiento; "+ Agregar línea" y "Aceptar diferencia de $1"; tabla CONTROL (líneas contra RCV con diferencia) y "Documento cuadrado: listo para contabilizar"; ficha del auxiliar; Cancelar y "📒 Contabilizar documento".
+- documento.ts: armarDocumento (sin validar) y asientoProvisional (asiento del motor aunque aún no cuadre; las primeras líneas son las del paso 2).
+
 ## RCV guardado por mes y asiento completo (10l)
 - Cada RCV subido se guarda en rcv_cargas en su mes (periodoSugerido); si ya había uno de ese mes, se combinan los documentos (el nuevo reemplaza al de la misma clave). Acciones: guardarCarga, abrirCarga, resumenCargas, quitarCarga.
 - La página abre el mes pedido (?periodo=), si no el más reciente con pendientes, si no el último cargado o el mes actual. El selector "Mes del RCV y del libro" muestra los pendientes de cada mes y abre el RCV guardado; arriba aparecen como botones los otros meses con documentos por importar. "Quitar este RCV" borra la carga (no toca lo contabilizado).

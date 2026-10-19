@@ -1,37 +1,55 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import type { PlanCuentas } from '@/motor/plan-cuentas';
+import type { CuentaBase, PlanCuentas } from '@/motor/plan-cuentas';
 import { dteC, dteV } from '@/motor/dte';
 import type { TipoRCV } from '@/rcv/leer';
-import { lineasIniciales, validarDetalleRCV, type LineaDetalle } from '@/rcv/detalle';
-import { construirRegistro, type Asignacion } from '@/rcv/documento';
-import { EditorLineas, type CentroOpcion } from '@/components/editor-lineas';
-import { clp, fechaCL, MESES } from '@/lib/formato';
+import { completarLinea, lineasIniciales, tipoLinea, validarDetalleRCV, type LineaDetalle } from '@/rcv/detalle';
+import { asientoProvisional, type Asignacion } from '@/rcv/documento';
+import { SelectorCC, type CentroOpcion } from '@/components/editor-lineas';
+import { MESES } from '@/lib/formato';
 import { importarDocumento, type FichaAuxiliar } from './acciones';
 import type { Fila } from './importador';
+
+/** $ 1.234.567 (como el sistema actual) */
+export const pesos = (n: number) => `$ ${Math.round(n || 0).toLocaleString('es-CL')}`;
+const miles = (n: number) => (n ? Math.round(n).toLocaleString('es-CL') : '');
 
 /** Sólo las líneas de otros impuestos reciben descripción automática; la del gasto o activo la escribe quien importa. */
 function conDescripciones(ls: LineaDetalle[]): LineaDetalle[] {
   return ls.map((l) => (l.otroImp && !l.desc?.trim() ? { ...l, desc: 'Otros impuestos' } : l));
 }
 
-export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, ficha, ultima, editando, onImportar, onCancelar, onGuardarBorrador, onRegistrado }: {
-  empresaId: string; tipo: TipoRCV; periodo: string; plan: PlanCuentas; centros: CentroOpcion[];
-  fila: Fila; ficha: FichaAuxiliar | null; ultima: { cuenta: string; cc: string } | null; editando: boolean;
-  onImportar: () => void; onCancelar: () => void;
+/** Etiqueta de la columna Tipo para las filas automáticas del asiento */
+function tipoAutomatica(cuenta: string, plan: PlanCuentas): string {
+  const fijas: Record<string, string> = {
+    '1108002': 'IVA crédito', '1108008': 'IVA crédito activo fijo', '2103003': 'IVA débito', '2103005': 'IVA retenido',
+    '2103002': 'Retención', '1108006': 'Otro imp. recuperable',
+  };
+  if (fijas[cuenta]) return fijas[cuenta];
+  const aux = plan.regla(cuenta)?.tipoAuxiliar;
+  if (aux === 'proveedor') return 'Proveedor';
+  if (aux === 'cliente') return 'Cliente';
+  if (aux) return aux.charAt(0).toUpperCase() + aux.slice(1);
+  if (cuenta.startsWith('1101')) return 'Banco';
+  return 'Automática';
+}
+
+/** Editor del paso 2 (igual al sistema actual): datos del documento, glosa, asiento editable y control contra el RCV. */
+export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centros, fila, ficha, ultima, onCancelar, onGuardarBorrador, onRegistrado }: {
+  empresaId: string; tipo: TipoRCV; periodo: string; plan: PlanCuentas; cuentas: CuentaBase[]; centros: CentroOpcion[];
+  fila: Fila; ficha: FichaAuxiliar | null; ultima: { cuenta: string; cc: string } | null;
+  onCancelar: () => void;
   onGuardarBorrador: (cambios: Partial<Fila>) => void;
   onRegistrado: (r: { ok: boolean; numero?: number; error?: string; ficha?: FichaAuxiliar }) => void;
 }) {
   const d = fila.doc;
   const aux = tipo === 'compra' ? 'proveedor' : 'cliente';
-  const dte = (tipo === 'compra' ? dteC(d.tipoDTE) : dteV(d.tipoDTE))?.nm ?? `DTE ${d.tipoDTE}`;
+  const dteNombre = (tipo === 'compra' ? dteC(d.tipoDTE) : dteV(d.tipoDTE))?.nm ?? `DTE ${d.tipoDTE}`;
   const rut = `${d.rutCodigo}-${d.rutDV}`;
   const [lineas, setLineasBase] = useState<LineaDetalle[]>(() => fila.detalle?.lineas ?? conDescripciones(lineasIniciales(tipo, { ...d, cuenta: fila.cuenta, cc: fila.cc })));
   /** Al elegir la cuenta o el centro en una línea, se copian a las líneas que aún no lo tienen */
   const setLineas = (nuevas: LineaDetalle[]) => {
-    // Línea agregada para repartir: hereda la cuenta de la primera, sin centro, en cero y sin descripción (se escribe)
-    if (nuevas.length > lineas.length) return setLineasBase(nuevas.map((l, i) => (i >= lineas.length ? { ...l, cc: '', monto: 0, desc: '' } : l)));
     const cambio = nuevas.findIndex((l, i) => lineas[i] && (l.cuenta !== lineas[i].cuenta || (l.cc ?? '') !== (lineas[i].cc ?? '')));
     if (cambio < 0 || nuevas.length !== lineas.length) return setLineasBase(nuevas);
     const ref = nuevas[cambio];
@@ -43,8 +61,9 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
       return l;
     }));
   };
+  const set = (i: number, cambios: Partial<LineaDetalle>) => setLineas(lineas.map((l, j) => (j === i ? { ...l, ...cambios } : l)));
   const [glosa, setGlosa] = useState(fila.detalle?.glosa ?? '');
-  // Diferencia de $1 por redondeo del emisor: se acepta sola (como la cuenta única de antes) mientras no se cambie a mano
+  // Diferencia de $1 por redondeo del emisor: se acepta sola mientras no se cambie a mano
   const [redondeoManual, setRedondeo] = useState<boolean | null>(fila.detalle?.aceptaRedondeo ?? null);
   const redondeo = redondeoManual
     ?? validarDetalleRCV(tipo, d, lineas, plan, { aceptaRedondeo: true }).errores.length < validarDetalleRCV(tipo, d, lineas, plan).errores.length;
@@ -53,116 +72,102 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
   const [crearFicha, setCrearFicha] = useState(true);
   const [actualizarFicha, setActualizarFicha] = useState(!!ficha && !ficha.cuenta);
   const [razon, setRazon] = useState(ficha?.razonSocial ?? d.razonSocial);
-  const [msg, setMsg] = useState<{ error?: string; aviso?: string }>({});
+  const [error, setError] = useState('');
   const [pendiente, iniciar] = useTransition();
 
-  const registrado = fila.resultado?.ok || fila.duplicado;
-  const fueraPeriodo = tipo === 'compra' ? d.fecha.slice(0, 7) > periodo : d.fecha.slice(0, 7) !== periodo;
-  const perTxt = periodo ? `${MESES[Number(periodo.slice(5, 7)) - 1]} ${periodo.slice(0, 4)}` : '';
+  // ── Validación (la del sistema actual + detalle obligatorio en gasto/ingreso/activo) ──
   const vRCV = validarDetalleRCV(tipo, d, lineas, plan, { aceptaRedondeo: redondeo });
-  // El detalle de cada línea de gasto, ingreso o activo es obligatorio también con una sola línea (el validador lo exige con varias)
   const queEs = tipo === 'compra' ? 'el gasto o la compra' : 'el ingreso';
   const faltaDetalle = lineas.filter((l) => !l.otroImp).length === 1
     ? lineas.flatMap((l, i) => (!l.otroImp && !(l.desc ?? '').trim() ? [`Línea ${i + 1}: escribe en Descripción a qué corresponde ${queEs}.`] : []))
     : [];
-  const v = { ...vRCV, ok: vRCV.ok && !faltaDetalle.length, errores: [...faltaDetalle, ...vRCV.errores] };
   const ccValido = lineas.every((l) => !l.cc || !plan.regla(l.cuenta)?.aceptaCentroCosto || centros.some((c) => c.codigo === l.cc));
+  const errores = [...faltaDetalle, ...vRCV.errores, ...(ccValido ? [] : ['Hay un centro de costo que no existe: elige otro.'])];
+  const fueraPeriodo = tipo === 'compra' ? d.fecha.slice(0, 7) > periodo : d.fecha.slice(0, 7) !== periodo;
+  if (fueraPeriodo) errores.unshift(`La fecha del documento no corresponde al período ${MESES[Number(periodo.slice(5, 7)) - 1]} ${periodo.slice(0, 4)}.`);
+  const cuadrado = errores.length === 0;
+  const r = vRCV.resumen as Record<string, number>;
+
+  // ── Asiento: filas del paso 2 (editables) y filas automáticas (IVA, proveedor/cliente, retenciones) ──
+  const asignacion: Asignacion = {
+    detalle: { lineas: lineas.map((l) => ({ ...l, desc: (l.desc ?? '').trim() })), glosa: glosa.trim(), aceptaRedondeo: redondeo },
+    fechaVencimiento: vence, ...(tipo === 'venta' ? { formaPago } : {}),
+  };
+  const prov = asientoProvisional(tipo, d, periodo, asignacion, plan);
+  const automaticas = prov.filter((l) => l.origen === null);
+  const lado = (i: number): 'debe' | 'haber' => {
+    const p = prov.find((x) => x.origen === i);
+    if (p) return p.haber > 0 && !p.debe ? 'haber' : 'debe';
+    const signo = (tipo === 'compra' ? dteC(d.tipoDTE) : dteV(d.tipoDTE))?.signo ?? 1;
+    return (tipo === 'compra') === (signo > 0) ? 'debe' : 'haber';
+  };
+  const totDebe = prov.reduce((s, l) => s + l.debe, 0);
+  const totHaber = prov.reduce((s, l) => s + l.haber, 0);
+
   const primera = lineas.find((l) => !l.otroImp);
   const nombreCC = (cc?: string) => (cc ? centros.find((c) => c.codigo === cc)?.nombre ?? cc : 'sin centro de costo');
-  const cuentaTxt = (cd?: string) => (cd ? `${cd} ${plan.nombre(cd) ?? ''}`.trim() : 'sin cuenta');
+  const cuentaTxt = (cd?: string) => (cd ? `${cd} – ${plan.nombre(cd) ?? ''}`.trim() : 'sin cuenta');
   const difiereDeFicha = !!ficha && !!primera && (primera.cuenta !== ficha.cuenta || (primera.cc ?? '') !== (ficha.cc ?? ''));
 
-  // Asiento completo que se generará (mismo motor que contabiliza en el servidor)
-  const asignacionActual: Asignacion = {
-    detalle: { lineas, glosa: glosa.trim(), aceptaRedondeo: redondeo }, fechaVencimiento: vence, ...(tipo === 'venta' ? { formaPago } : {}),
-  };
-  const vista = v.ok && ccValido ? construirRegistro(tipo, d, periodo, asignacionActual, plan) : null;
-  const nombreCC2 = (cc?: string) => (cc ? centros.find((c) => c.codigo === cc)?.nombre ?? cc : '');
-
   function contabilizar() {
-    setMsg({});
-    if (!v.ok) return setMsg({ error: v.errores[0] });
-    if (!ccValido) return setMsg({ error: 'Hay un centro de costo que no existe: elige otro.' });
-    const asignacion: Asignacion = {
-      detalle: { lineas: lineas.map((l) => ({ ...l, desc: (l.desc ?? '').trim() })), glosa: glosa.trim(), aceptaRedondeo: redondeo },
-      fechaVencimiento: vence, ...(tipo === 'venta' ? { formaPago } : {}),
-    };
+    setError('');
+    if (!cuadrado) return setError(errores[0]);
     iniciar(async () => {
       try {
-        const r = await importarDocumento(empresaId, tipo, periodo, { doc: d, asignacion },
+        const res = await importarDocumento(empresaId, tipo, periodo, { doc: d, asignacion },
           { crear: !ficha && crearFicha, actualizar: !!ficha && actualizarFicha && (difiereDeFicha || !ficha.cuenta), razonSocial: razon });
-        if (!r.ok) { setMsg({ error: r.error ?? 'No se pudo contabilizar' }); onGuardarBorrador({ detalle: asignacion.detalle as Fila['detalle'], vence, formaPago, resultado: r }); return; }
-        onGuardarBorrador({ detalle: asignacion.detalle as Fila['detalle'], vence, formaPago });
-        if ('avisoFicha' in r && r.avisoFicha) window.alert(r.avisoFicha);
-        onRegistrado({ ok: true, numero: r.numero, ficha: 'ficha' in r ? r.ficha : undefined });
+        onGuardarBorrador({ detalle: asignacion.detalle as Fila['detalle'], vence, formaPago, ...(res.ok ? {} : { resultado: res }) });
+        if (!res.ok) return setError(res.error ?? 'No se pudo contabilizar');
+        if ('avisoFicha' in res && res.avisoFicha) window.alert(res.avisoFicha);
+        onRegistrado({ ok: true, numero: res.numero, ficha: 'ficha' in res ? res.ficha : undefined });
       } catch (e) {
-        setMsg({ error: e instanceof Error ? e.message : String(e) });
+        setError(e instanceof Error ? e.message : String(e));
       }
     });
   }
+  const cancelar = () => { onGuardarBorrador({ detalle: { lineas, glosa, aceptaRedondeo: redondeo }, vence, formaPago }); onCancelar(); };
 
-  const cabecera = (
-    <div className="flex flex-wrap items-start justify-between gap-3">
-      <div>
-        <div className="text-xs text-tenue uppercase">{dte}</div>
-        <h2 className="text-lg font-semibold">N° {d.numero} · {d.razonSocial}</h2>
-        <div className="text-sm text-tenue"><span className="num">{rut}</span> · emitido {fechaCL(d.fecha)}{tipo === 'compra' && d.fecha.slice(0, 7) < periodo ? ` · se contabiliza el 1 de ${perTxt}` : ''}</div>
-      </div>
-      {fila.resultado?.ok && <span className="rounded bg-acento/15 px-2 py-1 text-sm text-acento">✓ Contabilizado N° {fila.resultado.numero}</span>}
-      {fila.duplicado && <span className="rounded bg-panel-2 px-2 py-1 text-sm text-tenue">Ya registrado en el libro</span>}
-    </div>
+  const dato = (t: string, v: React.ReactNode, cls = '') => (
+    <div className={cls}><div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">{t}</div><div className="text-sm font-medium">{v}</div></div>
   );
-  const montos = (
-    <div className="grid grid-cols-2 gap-2 text-xs sm:grid-cols-5">
-      {([['Exento', d.exento], ['Neto', d.neto], ['IVA', d.iva], ['Otros imp.', d.otrosImpuestos], ['Total', d.total]] as const).map(([t, m]) => (
-        <div key={t} className="rounded-md bg-panel-2 px-3 py-2"><div className="text-tenue uppercase">{t}</div><div className="num font-semibold">{clp(m)}</div></div>
-      ))}
-    </div>
+  const monto = (t: string, v: number) => (
+    <div><div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">{t}</div><div className="num text-right text-sm font-semibold">{pesos(v)}</div></div>
   );
-  const registroSII = d.registroSII?.length ? (
-    <details className="text-xs">
-      <summary className="cursor-pointer text-tenue hover:text-texto">Registro completo del SII ({Object.keys(d.registroSII[0]).length} columnas{d.registroSII.length > 1 ? ` · ${d.registroSII.length - 1} filas de otros impuestos` : ''})</summary>
-      <div className="mt-2 overflow-x-auto rounded-md border border-borde">
-        <table className="w-full text-[11px]">
-          <tbody>
-            {Object.keys(d.registroSII[0]).map((k) => (
-              <tr key={k} className="border-b border-borde/40">
-                <td className="w-56 px-2 py-0.5 text-tenue">{k}</td>
-                {d.registroSII!.map((f, j) => <td key={j} className="num px-2 py-0.5">{f[k] ?? ''}</td>)}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </details>
-  ) : null;
-
-  if (!editando || registrado) {
-    return (
-      <div className="tarjeta space-y-4 p-5">
-        {cabecera}
-        {montos}
-        <p className="text-sm">
-          {ficha ? <>📇 Ficha del {aux}: <b>{cuentaTxt(ficha.cuenta)}</b> · {nombreCC(ficha.cc)}</>
-            : <><span className="text-info">★ {aux === 'proveedor' ? 'Proveedor' : 'Cliente'} nuevo</span>: sin ficha. Al importar puedes crearla{ultima?.cuenta ? <> (último uso: {cuentaTxt(ultima.cuenta)})</> : ''}.</>}
-        </p>
-        {fila.resultado && !fila.resultado.ok && <p role="alert" className="rounded-md border border-peligro/40 bg-peligro/10 px-3 py-2 text-sm text-peligro">{fila.resultado.error}</p>}
-        {fueraPeriodo && !registrado && <p className="text-sm text-aviso">⚠ La fecha del documento no corresponde al período del libro ({perTxt}){tipo === 'compra' ? ': es posterior' : ''}. Cambia el período arriba para importarlo.</p>}
-        {!registrado && <button type="button" className="boton" disabled={fueraPeriodo} onClick={onImportar}>Importar →</button>}
-        {registroSII}
-      </div>
-    );
-  }
+  const ctrl: [string, number, number][] = [
+    [`Neto (líneas afectas)`, r.sumAfecto, r.neto],
+    [`Exento (líneas exentas)`, r.sumExento, r.exento],
+    [`IVA (línea del asiento)`, r.ivaCalc, r.iva],
+    ...(tipo === 'compra' ? [[`Otros impuestos (líneas)`, r.sumOtros, r.otros] as [string, number, number]] : []),
+    [`Total`, r.totalCalc, r.total],
+  ];
 
   return (
-    <div className="tarjeta space-y-4 p-5">
-      {cabecera}
-      {montos}
-      <div className="grid gap-3 sm:grid-cols-[1fr_170px]">
-        <div><label className="etiqueta" htmlFor="glosa-doc">Glosa del asiento</label>
-          <input id="glosa-doc" value={glosa} onChange={(e) => setGlosa(e.target.value)} className="campo" placeholder={`${dte} N°${d.numero} — ${d.razonSocial}`} autoFocus /></div>
-        <div><label className="etiqueta" htmlFor="vence">Vencimiento</label>
-          <input id="vence" type="date" value={vence} onChange={(e) => setVence(e.target.value)} className="campo" /></div>
+    <div className="space-y-4 p-4 sm:p-5">
+      <div className="flex items-start justify-between gap-3">
+        <h2 className="text-lg font-semibold">📝 {d.razonSocial} · <span className="num">{d.tipoDTE}-{d.numero}</span></h2>
+        <button type="button" onClick={cancelar} className="boton-sec px-2.5 py-1" aria-label="Cerrar edición">✕</button>
+      </div>
+
+      {/* Datos del documento */}
+      <div className="grid grid-cols-2 gap-x-6 gap-y-3 rounded-lg border border-borde bg-panel-2 p-4 sm:grid-cols-5">
+        {dato('Tipo de documento', `${d.tipoDTE} · ${dteNombre}`)}
+        {dato('Folio', <span className="num">{d.numero}</span>)}
+        {dato('Fecha emisión', <span className="num">{d.fecha}</span>)}
+        <div><div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">Fecha vencimiento</div>
+          <input type="date" value={vence} onChange={(e) => setVence(e.target.value)} className="campo num py-1 text-xs" aria-label="Fecha de vencimiento" /></div>
+        {dato(`RUT ${aux}`, <span className="num">{rut.replace(/^(\d{1,3})(\d{3})(\d{3})-/, '$1.$2.$3-')}</span>)}
+        {dato('Auxiliar', d.razonSocial)}
+        {monto('Exento', d.exento)}
+        {monto('Neto', d.neto)}
+        {monto('IVA', d.iva)}
+        {tipo === 'compra' ? monto('Otros impuestos', d.otrosImpuestos) : <div />}
+        <div><div className="text-[10px] font-semibold tracking-wide text-tenue uppercase">Total</div><div className="num pl-6 text-sm font-bold text-info">{pesos(d.total)}</div></div>
+        {tipo === 'compra' && d.fecha.slice(0, 7) < periodo && <div className="col-span-4 self-end text-xs text-tenue">Documento de un mes anterior: se contabiliza el 1 de {MESES[Number(periodo.slice(5, 7)) - 1]} {periodo.slice(0, 4)}.</div>}
+      </div>
+
+      <div>
+        <label className="etiqueta" htmlFor="glosa-doc">Descripción general del documento (glosa)</label>
+        <input id="glosa-doc" value={glosa} onChange={(e) => setGlosa(e.target.value)} className="campo" placeholder="Ej: Seguro flota camiones 2026" autoFocus />
       </div>
       {tipo === 'venta' && (
         <div className="w-64"><label className="etiqueta" htmlFor="fpago">Forma de cobro</label>
@@ -171,53 +176,122 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
           </select></div>
       )}
 
-      <EditorLineas tipo={tipo} doc={d} lineas={lineas} onChange={setLineas} plan={plan} centros={centros} listaId="cuentas-rcv" validacion={v} placeholderDesc={`¿A qué corresponde ${queEs}? (obligatorio)`} />
-      <p className="text-xs text-tenue">Para repartir el {tipo === 'compra' ? 'gasto' : 'ingreso'} en varias cuentas o centros de costo: <b>+ Línea</b>, elige la cuenta y el centro, escribe su monto y completa la primera línea con <b>⇥</b>.</p>
-      <label className="flex items-center gap-2 text-xs text-tenue">
-        <input type="checkbox" checked={redondeo} onChange={(e) => setRedondeo(e.target.checked)} /> Aceptar diferencia de $1 (redondeo del emisor)
-      </label>
-
-      <div className="space-y-1">
-        <h3 className="text-xs font-semibold tracking-wide text-tenue uppercase">Asiento que se generará</h3>
-        {vista?.ok ? (
-          <div className="overflow-x-auto rounded-md border border-borde">
-            <table className="w-full text-xs">
-              <thead className="text-left text-tenue">
-                <tr className="border-b border-borde"><th className="px-2 py-1.5">Cuenta</th><th className="px-2 py-1.5">Detalle</th>
-                  <th className="w-[15ch] px-2 py-1.5 text-right">Debe</th><th className="w-[15ch] px-2 py-1.5 text-right">Haber</th></tr>
-              </thead>
-              <tbody>
-                {vista.registro.asiento.lineas.map((l, k) => (
-                  <tr key={k} className="border-b border-borde/40">
-                    <td className="px-2 py-1"><span className="num">{l.cuenta}</span> {plan.nombre(l.cuenta)}</td>
-                    <td className="px-2 py-1 text-tenue">{[l.glosa, l.cc && !(l.glosa ?? '').includes(l.cc) && `CC ${nombreCC2(l.cc)}`, l.rut && !(l.glosa ?? '').includes('RUT') && `RUT ${l.rut}`].filter(Boolean).join(' · ')}</td>
-                    <td className="num px-2 py-1 text-right whitespace-nowrap">{l.debe ? clp(l.debe) : ''}</td>
-                    <td className="num px-2 py-1 text-right whitespace-nowrap">{l.haber ? clp(l.haber) : ''}</td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr className="font-semibold">
-                  <td colSpan={2} className="px-2 py-1.5">{vista.registro.asiento.glosa} · {fechaCL(vista.registro.asiento.fecha)}</td>
-                  <td className="num px-2 py-1.5 text-right whitespace-nowrap">{clp(vista.registro.asiento.lineas.reduce((t, l) => t + l.debe, 0))}</td>
-                  <td className="num px-2 py-1.5 text-right whitespace-nowrap">{clp(vista.registro.asiento.lineas.reduce((t, l) => t + l.haber, 0))}</td>
+      {/* Asiento editable */}
+      <datalist id="cuentas-asiento">{cuentas.filter((c) => plan.regla(c.cd)?.aceptaMovimientos && plan.regla(c.cd)?.activa).map((c) => <option key={c.cd} value={`${c.cd} – ${c.nm}`} />)}</datalist>
+      <div className="overflow-x-auto rounded-lg border border-borde">
+        <table className="w-full min-w-[1020px] table-fixed text-sm">
+          <thead className="bg-panel-2 text-left text-[11px] font-semibold tracking-wide text-tenue uppercase">
+            <tr className="border-b border-borde">
+              <th className="w-8 px-2 py-2 text-center">#</th><th className="w-[250px] px-2 py-2">Cuenta</th><th className="px-2 py-2">Descripción</th>
+              <th className="w-40 px-2 py-2">Centro de costo</th><th className="w-32 px-2 py-2">Tipo</th>
+              <th className="w-28 px-2 py-2 text-right">Debe</th><th className="w-28 px-2 py-2 text-right">Haber</th><th className="w-20" />
+            </tr>
+          </thead>
+          <tbody>
+            {lineas.map((l, i) => {
+              const regla = plan.regla(l.cuenta);
+              const ld = lado(i);
+              const input = (
+                <input inputMode="numeric" maxLength={13} value={miles(l.monto)} onChange={(e) => set(i, { monto: Math.round(Number(e.target.value.replace(/[^0-9]/g, '').slice(0, 10)) || 0) })}
+                  className="campo num w-full py-1 text-right" aria-label={`Monto línea ${i + 1}`} />
+              );
+              return (
+                <tr key={i} className="border-b border-borde/50 align-top">
+                  <td className="px-2 py-1.5 text-center text-tenue">{i + 1}</td>
+                  <td className="px-2 py-1.5">
+                    <input list="cuentas-asiento" value={regla ? `${l.cuenta} – ${plan.nombre(l.cuenta)}` : l.cuenta}
+                      onChange={(e) => set(i, { cuenta: (e.target.value.match(/^\d+/) ?? [''])[0] || e.target.value })}
+                      onFocus={(e) => e.target.select()} placeholder="Cuenta" className="campo num py-1" aria-label={`Cuenta línea ${i + 1}`} />
+                    {l.cuenta && !regla && <div className="mt-0.5 text-[11px] text-aviso">⚠️ cuenta no encontrada</div>}
+                  </td>
+                  <td className="px-2 py-1.5">
+                    <input value={l.desc ?? ''} onChange={(e) => set(i, { desc: e.target.value })} placeholder={l.otroImp ? 'Descripción' : `¿A qué corresponde ${queEs}?`}
+                      className={`campo py-1 ${!l.otroImp && !(l.desc ?? '').trim() ? 'border-aviso/60' : ''}`} aria-label={`Descripción línea ${i + 1}`} />
+                  </td>
+                  <td className="px-2 py-1.5">
+                    <SelectorCC valor={l.cc ?? ''} onChange={(v) => set(i, { cc: v })} centros={centros}
+                      deshabilitado={!!regla && !regla.aceptaCentroCosto && !l.cc} requerido={regla?.requiereCentroCosto} etiqueta={`Centro de costo línea ${i + 1}`} />
+                  </td>
+                  <td className="px-2 py-1.5">
+                    <select value={tipoLinea(l)} onChange={(e) => set(i, { afecto: e.target.value === 'afecto', otroImp: e.target.value === 'otro' || undefined })}
+                      className="campo py-1 text-xs" aria-label={`Tipo línea ${i + 1}`}>
+                      <option value="afecto">Afecto</option><option value="exento">Exento</option>
+                      {tipo === 'compra' && <option value="otro">Otro impuesto</option>}
+                    </select>
+                  </td>
+                  <td className="px-2 py-1.5">{ld === 'debe' && input}</td>
+                  <td className="px-2 py-1.5">{ld === 'haber' && input}</td>
+                  <td className="px-2 py-1.5">
+                    <div className="flex justify-end gap-1">
+                      <button type="button" title="Completar con lo que falta" className="boton-sec px-2 py-0.5 text-xs" onClick={() => set(i, { monto: completarLinea(tipo, d, lineas, i) })}>⇥</button>
+                      {lineas.length > 1 && <button type="button" title="Quitar línea" className="rounded-md border border-peligro/40 px-2 py-0.5 text-xs text-peligro hover:bg-peligro/10" onClick={() => setLineasBase(lineas.filter((_, j) => j !== i))}>✕</button>}
+                    </div>
+                  </td>
                 </tr>
-              </tfoot>
-            </table>
-          </div>
-        ) : (
-          <p className="rounded-md border border-dashed border-borde px-3 py-2 text-xs text-tenue">
-            {vista && !vista.ok ? vista.errores.join(' ') : 'Aparece cuando las líneas cuadran con el documento y tienen cuenta (y centro de costo si la cuenta lo exige).'}
-          </p>
-        )}
+              );
+            })}
+            {automaticas.map((l, k) => (
+              <tr key={`a${k}`} className="border-b border-borde/50 bg-info/5 text-tenue">
+                <td className="px-2 py-1.5 text-center">·</td>
+                <td className="truncate px-2 py-1.5" title={`${l.cuenta} – ${plan.nombre(l.cuenta)}`}><span className="num">{l.cuenta}</span> – {plan.nombre(l.cuenta)}</td>
+                <td className="truncate px-2 py-1.5" title={l.glosa}>{l.glosa}</td>
+                <td className="px-2 py-1.5">—</td>
+                <td className="px-2 py-1.5">{tipoAutomatica(l.cuenta, plan)}</td>
+                <td className="num px-2 py-1.5 text-right whitespace-nowrap text-texto">{l.debe ? miles(l.debe) : ''}</td>
+                <td className="num px-2 py-1.5 text-right whitespace-nowrap text-texto">{l.haber ? miles(l.haber) : ''}</td>
+                <td />
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr className="bg-panel-2 font-semibold">
+              <td /><td colSpan={4} className="px-2 py-2">Totales del asiento</td>
+              <td className="num px-2 py-2 text-right whitespace-nowrap text-info">{pesos(totDebe)}</td>
+              <td className="num px-2 py-2 text-right whitespace-nowrap text-info">{pesos(totHaber)}</td><td />
+            </tr>
+          </tfoot>
+        </table>
       </div>
 
-      <div className="space-y-2 rounded-md border border-borde bg-panel-2 p-3 text-sm">
+      <div className="flex flex-wrap items-center gap-4">
+        <button type="button" className="boton-sec" title="Repartir en otra cuenta o centro de costo"
+          onClick={() => setLineasBase([...lineas, { cuenta: primera?.cuenta ?? '', desc: '', monto: 0, cc: '', afecto: primera?.afecto !== false }])}>+ Agregar línea</button>
+        <label className="flex items-center gap-2 text-xs text-tenue">
+          <input type="checkbox" checked={redondeo} onChange={(e) => setRedondeo(e.target.checked)} /> Aceptar diferencia de $1 por redondeo del emisor
+        </label>
+      </div>
+
+      {/* Control contra el RCV */}
+      <div className="overflow-x-auto rounded-lg border border-borde">
+        <table className="w-full text-xs">
+          <thead className="bg-panel-2 text-[11px] font-semibold tracking-wide text-tenue uppercase">
+            <tr className="border-b border-borde"><th className="px-3 py-1.5 text-left">Control</th><th className="px-3 py-1.5 text-right">Líneas</th><th className="px-3 py-1.5 text-right">RCV</th><th className="w-20 px-3 py-1.5 text-right">Dif.</th></tr>
+          </thead>
+          <tbody>
+            {ctrl.map(([t, a, b]) => {
+              const dif = Math.round(a - b);
+              return (
+                <tr key={t} className="border-b border-borde/40">
+                  <td className="px-3 py-1">{t}</td><td className="num px-3 py-1 text-right">{pesos(a)}</td><td className="num px-3 py-1 text-right">{pesos(b)}</td>
+                  <td className={`num px-3 py-1 text-right ${dif === 0 ? 'text-acento' : Math.abs(dif) <= 1 && redondeo ? 'text-aviso' : 'text-peligro'}`}>{dif === 0 ? '✓' : (dif > 0 ? '+' : '') + miles(dif)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      {cuadrado
+        ? <p className="text-sm font-semibold text-acento">✅ Documento cuadrado: listo para contabilizar.</p>
+        : <ul className="list-disc space-y-0.5 pl-5 text-xs text-peligro">{errores.map((e, k) => <li key={k}>{e}</li>)}</ul>}
+      {vRCV.avisos.length > 0 && <ul className="list-disc pl-5 text-xs text-aviso">{vRCV.avisos.map((e, k) => <li key={k}>{e}</li>)}</ul>}
+
+      {/* Ficha del auxiliar */}
+      <div className="space-y-2 rounded-md border border-borde p-3 text-sm">
         {!ficha ? (
           <>
             <label className="flex items-start gap-2">
               <input type="checkbox" className="mt-1" checked={crearFicha} onChange={(e) => setCrearFicha(e.target.checked)} />
-              <span><b className="text-info">★ {aux === 'proveedor' ? 'Proveedor' : 'Cliente'} nuevo.</b> Crear su ficha al contabilizar, con <b>{cuentaTxt(primera?.cuenta)}</b> y <b>{nombreCC(primera?.cc)}</b> como valores por defecto para sus próximos documentos.</span>
+              <span><b className="text-info">★ {aux === 'proveedor' ? 'Proveedor' : 'Cliente'} nuevo.</b> Crear su ficha al contabilizar, con <b>{cuentaTxt(primera?.cuenta)}</b> y <b>{nombreCC(primera?.cc)}</b> como valores por defecto para sus próximos documentos.{ultima?.cuenta ? <span className="text-tenue"> (Último uso: {cuentaTxt(ultima.cuenta)}.)</span> : null}</span>
             </label>
             {crearFicha && (
               <div className="grid gap-2 pl-6 sm:grid-cols-[1fr_160px]">
@@ -241,15 +315,11 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
         )}
       </div>
 
-      {msg.error && <p role="alert" className="rounded-md border border-peligro/40 bg-peligro/10 px-3 py-2 text-sm text-peligro">{msg.error}</p>}
-      <div className="flex flex-wrap items-center gap-2 border-t border-borde pt-3">
-        <button type="button" className="boton" disabled={pendiente || !v.ok || !ccValido || fueraPeriodo} onClick={contabilizar}>
-          {pendiente ? 'Contabilizando…' : `Contabilizar y pasar al libro de ${tipo === 'compra' ? 'compras' : 'ventas'}`}
-        </button>
-        <button type="button" className="boton-sec" disabled={pendiente} onClick={() => { onGuardarBorrador({ detalle: { lineas, glosa, aceptaRedondeo: redondeo }, vence, formaPago }); onCancelar(); }}>Cancelar</button>
-        <span className="text-xs text-tenue">Nada se registra hasta contabilizar.</span>
+      {error && <p role="alert" className="rounded-md border border-peligro/40 bg-peligro/10 px-3 py-2 text-sm text-peligro">{error}</p>}
+      <div className="flex items-center justify-between gap-2 border-t border-borde pt-3">
+        <button type="button" className="rounded-md border border-peligro/50 px-3 py-1 text-sm font-semibold text-peligro hover:bg-peligro/10" disabled={pendiente} onClick={cancelar}>Cancelar</button>
+        <button type="button" className="boton" disabled={pendiente || !cuadrado} onClick={contabilizar}>{pendiente ? 'Contabilizando…' : '📒 Contabilizar documento'}</button>
       </div>
-      {registroSII}
     </div>
   );
 }

@@ -80,6 +80,32 @@ export function construirRegistro(tipo: TipoRCV, d: DocRCV, periodo: string, a: 
     return { ok: false, errores: [`La fecha del documento (${d.fecha}) es posterior al período ${periodo}.`] };
   }
 
+  const doc = armarDocumento(tipo, d, periodo, a);
+  const e = tipo === 'compra' ? asientoCompra(doc, plan) : asientoVenta(doc, plan);
+  if (!e.cuadre.ok) return { ok: false, errores: [`El asiento no cuadra (diferencia ${e.cuadre.diferencia}).`] };
+  const { lineas: crudas, descuadre } = redondear(lineasDe(e.movs as MovLegado[]));
+  if (descuadre) return { ok: false, errores: [`El asiento no cuadra al redondear (diferencia ${descuadre}).`] };
+  // Las líneas de impuestos y retenciones sin detalle (IVA crédito/débito, IVA retenido, crédito de activo fijo,
+  // otros impuestos recuperables, retención de honorarios) llevan el nombre de su cuenta. Las de gasto, ingreso
+  // y activo no: su detalle lo escribe quien importa en el paso 2.
+  const lineas = crudas.map((l) => (!l.glosa?.trim() && esCuentaImpuesto(l.cuenta) ? { ...l, glosa: plan.nombre(l.cuenta) || undefined } : l));
+  return {
+    ok: true,
+    avisos,
+    registro: {
+      documento: {
+        tipo, ref: refDocumento(tipo, d), tipo_dte: d.tipoDTE, folio: d.numero, fecha: d.fecha,
+        rut: `${d.rutCodigo}-${d.rutDV}`, razon_social: d.razonSocial,
+        neto: Math.round(d.neto), exento: Math.round(d.exento), iva: Math.round(d.iva), total: Math.round(d.total), datos: doc,
+      },
+      asiento: { fecha: String(e.fecha), glosa: e.glosa, lineas },
+    },
+  };
+}
+
+/** Documento contable a partir del RCV y la asignación (sin validar). */
+function armarDocumento(tipo: TipoRCV, d: DocRCV, periodo: string, a: Asignacion): Documento {
+  const lineasDetalle = a.detalle?.lineas;
   const glosa = (a.detalle?.glosa ?? a.glosa ?? '').trim();
   const base: Documento = {
     id: refDocumento(tipo, d),
@@ -139,26 +165,31 @@ export function construirRegistro(tipo: TipoRCV, d: DocRCV, periodo: string, a: 
     };
   }
 
+  return doc;
+}
+
+export interface LineaProvisional extends LineaImport {
+  /** Índice de la línea del paso 2 que la origina (gasto, ingreso, activo u otro impuesto); null = automática */
+  origen: number | null;
+}
+
+/**
+ * Asiento provisional para mostrar mientras se edita, aunque aún no cuadre: mismas reglas del motor,
+ * sin validar ni redondear. Las primeras líneas corresponden, en orden, a las líneas del paso 2.
+ */
+export function asientoProvisional(tipo: TipoRCV, d: DocRCV, periodo: string, a: Asignacion, plan: PlanCuentas): LineaProvisional[] {
+  const doc = armarDocumento(tipo, d, periodo, a);
   const e = tipo === 'compra' ? asientoCompra(doc, plan) : asientoVenta(doc, plan);
-  if (!e.cuadre.ok) return { ok: false, errores: [`El asiento no cuadra (diferencia ${e.cuadre.diferencia}).`] };
-  const { lineas: crudas, descuadre } = redondear(lineasDe(e.movs as MovLegado[]));
-  if (descuadre) return { ok: false, errores: [`El asiento no cuadra al redondear (diferencia ${descuadre}).`] };
-  // Las líneas de impuestos y retenciones sin detalle (IVA crédito/débito, IVA retenido, crédito de activo fijo,
-  // otros impuestos recuperables, retención de honorarios) llevan el nombre de su cuenta. Las de gasto, ingreso
-  // y activo no: su detalle lo escribe quien importa en el paso 2.
-  const lineas = crudas.map((l) => (!l.glosa?.trim() && esCuentaImpuesto(l.cuenta) ? { ...l, glosa: plan.nombre(l.cuenta) || undefined } : l));
-  return {
-    ok: true,
-    avisos,
-    registro: {
-      documento: {
-        tipo, ref: refDocumento(tipo, d), tipo_dte: d.tipoDTE, folio: d.numero, fecha: d.fecha,
-        rut: `${d.rutCodigo}-${d.rutDV}`, razon_social: d.razonSocial,
-        neto: Math.round(d.neto), exento: Math.round(d.exento), iva: Math.round(d.iva), total: Math.round(d.total), datos: doc,
-      },
-      asiento: { fecha: String(e.fecha), glosa: e.glosa, lineas },
-    },
-  };
+  const ls = lineasDe(e.movs as MovLegado[]).map((l) => ({ ...l, debe: Math.round(l.debe), haber: Math.round(l.haber) }));
+  const n = a.detalle?.lineas.length ?? 0;
+  const propias = a.detalle?.lineas ?? [];
+  // Las primeras n líneas del motor son las del paso 2 si coinciden en cuenta (con cuenta vacía el motor puede omitirlas)
+  const coincide = propias.every((l, i) => ls[i] && ls[i].cuenta === (l.cuenta || '').replace(/[^0-9]/g, ''));
+  return ls.map((l, i) => ({
+    ...l,
+    origen: coincide && i < n ? i : null,
+    ...(!l.glosa?.trim() && esCuentaImpuesto(l.cuenta) ? { glosa: plan.nombre(l.cuenta) || undefined } : {}),
+  }));
 }
 
 /** Período más frecuente entre las fechas de los documentos (YYYY-MM). */
