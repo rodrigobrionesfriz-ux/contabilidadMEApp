@@ -20,6 +20,14 @@ function conDescripciones(ls: LineaDetalle[]): LineaDetalle[] {
   return ls.map((l) => (l.otroImp && !l.desc?.trim() ? { ...l, desc: 'Otros impuestos' } : l));
 }
 
+/** Detalle de la línea del auxiliar (proveedor o cliente) que arma el motor: "Nombre · Tipo de documento N°folio" */
+function glosaAuxiliar(tipo: TipoRCV, d: Fila['doc'], periodo: string, plan: PlanCuentas, lineas: LineaDetalle[]): string {
+  const prov = asientoProvisional(tipo, d, periodo, { detalle: { lineas, glosa: '' } }, plan);
+  const aux = prov.find((l) => l.origen === null && plan.regla(l.cuenta)?.tipoAuxiliar && l.glosa?.trim());
+  const dte = (tipo === 'compra' ? dteC(d.tipoDTE) : dteV(d.tipoDTE))?.nm ?? `DTE ${d.tipoDTE}`;
+  return aux?.glosa?.trim() || `${d.razonSocial} · ${dte} N°${d.numero}`;
+}
+
 /** Etiqueta de la columna Tipo para las filas automáticas del asiento */
 function tipoAutomatica(cuenta: string, plan: PlanCuentas): string {
   const fijas: Record<string, string> = {
@@ -62,7 +70,8 @@ export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centr
     }));
   };
   const set = (i: number, cambios: Partial<LineaDetalle>) => setLineas(lineas.map((l, j) => (j === i ? { ...l, ...cambios } : l)));
-  const [glosa, setGlosa] = useState(fila.detalle?.glosa ?? '');
+  // Glosa por defecto: la misma de la línea del proveedor o cliente (auxiliar · tipo de documento · folio)
+  const [glosa, setGlosa] = useState(() => fila.detalle?.glosa || glosaAuxiliar(tipo, d, periodo, plan, lineas));
   // Diferencia de $1 por redondeo del emisor: se acepta sola mientras no se cambie a mano
   const [redondeoManual, setRedondeo] = useState<boolean | null>(fila.detalle?.aceptaRedondeo ?? null);
   const redondeo = redondeoManual
