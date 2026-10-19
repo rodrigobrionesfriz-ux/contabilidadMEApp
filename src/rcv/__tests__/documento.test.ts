@@ -20,6 +20,15 @@ describe('registro de documentos RCV', () => {
     const r = construirRegistro('compra', d, d.fecha.slice(0, 7), { cuenta: '3202024' }, plan);
     expect(r.ok && r.registro.documento.datos.registroSII).toEqual(d.registroSII);
   });
+  it('las líneas de IVA llevan como detalle el nombre de su cuenta', () => {
+    const c = compras.find((d) => d.iva > 0 && d.tipoDTE === 33)!;
+    const rc = construirRegistro('compra', c, c.fecha.slice(0, 7) < '2026-03' ? '2026-03' : c.fecha.slice(0, 7), { cuenta: '3202024' }, plan);
+    expect(rc.ok && rc.registro.asiento.lineas.find((l) => l.cuenta === '1108002')?.glosa).toBe(plan.nombre('1108002'));
+    const v = ventas.find((d) => d.iva > 0)!;
+    const rv = construirRegistro('venta', v, v.fecha.slice(0, 7), { cuenta: '4101001' }, plan);
+    expect(rv.ok && rv.registro.asiento.lineas.find((l) => l.cuenta === '2103003')?.glosa).toBe(plan.nombre('2103003'));
+    if (rc.ok) for (const l of rc.registro.asiento.lineas) expect(l.glosa?.trim()).toBeTruthy();
+  });
   it('sugiere el período más frecuente', () => expect(periodoSugerido(compras)).toBe('2026-03'));
 
   it('todas las compras del archivo generan asientos cuadrados con cuenta rápida', () => {

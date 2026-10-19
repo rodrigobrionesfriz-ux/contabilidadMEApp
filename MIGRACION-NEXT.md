@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (316): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (317): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -270,6 +270,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - La página abre el mes pedido (?periodo=), si no el más reciente con pendientes, si no el último cargado o el mes actual. El selector "Mes del RCV y del libro" muestra los pendientes de cada mes y abre el RCV guardado; arriba aparecen como botones los otros meses con documentos por importar. "Quitar este RCV" borra la carga (no toca lo contabilizado).
 - Panel de importación: vista previa del asiento completo que se generará (gasto o ingreso, IVA crédito o débito, proveedor o cliente, retenciones y otros impuestos) con el mismo motor que contabiliza (construirRegistro).
 - Repartir: "+ Línea (otra cuenta o centro)" agrega una línea con la misma cuenta, sin centro, monto cero y descripción propuesta; ⇥ completa la primera con lo que falta.
+- Las líneas del asiento que el motor deja sin detalle (IVA crédito y débito, IVA retenido, crédito de activo fijo) llevan el nombre de su cuenta (construirRegistro; vale para el RCV y el documento manual).
 - next.config: serverActions.bodySizeLimit 4mb (el RCV con su registro SII completo se guarda por acción del servidor).
 
 ## RCV en dos pasos con fichas (10j)

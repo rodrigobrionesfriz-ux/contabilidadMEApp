@@ -138,8 +138,10 @@ export function construirRegistro(tipo: TipoRCV, d: DocRCV, periodo: string, a: 
 
   const e = tipo === 'compra' ? asientoCompra(doc, plan) : asientoVenta(doc, plan);
   if (!e.cuadre.ok) return { ok: false, errores: [`El asiento no cuadra (diferencia ${e.cuadre.diferencia}).`] };
-  const { lineas, descuadre } = redondear(lineasDe(e.movs as MovLegado[]));
+  const { lineas: crudas, descuadre } = redondear(lineasDe(e.movs as MovLegado[]));
   if (descuadre) return { ok: false, errores: [`El asiento no cuadra al redondear (diferencia ${descuadre}).`] };
+  // Las líneas que el motor deja sin detalle (IVA crédito/débito, IVA retenido, etc.) llevan el nombre de su cuenta
+  const lineas = crudas.map((l) => (l.glosa?.trim() ? l : { ...l, glosa: plan.nombre(l.cuenta) || undefined }));
   return {
     ok: true,
     avisos,
