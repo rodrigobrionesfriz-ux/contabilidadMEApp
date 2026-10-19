@@ -3,15 +3,20 @@
 import { revalidatePath } from 'next/cache';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { entradaF29, asientosF29 } from '@/lib/datos/f29';
-import { calcularF29Anual, CODIGOS_DECLARABLES } from '@/tributario/f29';
+import { calcularF29Anual, CODIGOS_DECLARABLES, montoDeclarado } from '@/tributario/f29';
 import { compensacionIVA, pagoF29, CUENTA_REMANENTE, type ConceptoPago } from '@/tributario/asientos-f29';
 
 type Res = { ok: true; mensaje: string } | { ok: false; error: string };
 const per = (anio: number, mes: number) => `${anio}-${String(mes).padStart(2, '0')}`;
 const ultimoDia = (anio: number, mes: number) => new Date(Date.UTC(anio, mes, 0)).toISOString().slice(0, 10);
-const limpiar = (d: Record<string, unknown>) => Object.fromEntries(Object.entries(d)
-  .filter(([k, v]) => (CODIGOS_DECLARABLES as readonly number[]).includes(+k) && v !== '' && v != null && Number.isFinite(Number(v)))
-  .map(([k, v]) => [k, Math.round(Number(v))]));
+const limpiar = (d: Record<string, unknown>): Record<string, number> => {
+  const r: Record<string, number> = {};
+  for (const [k, v] of Object.entries(d)) {
+    const n = (CODIGOS_DECLARABLES as readonly number[]).includes(+k) ? montoDeclarado(v) : null;
+    if (n !== null) r[k] = n;
+  }
+  return r;
+};
 
 export async function guardarF29(empresaId: string, anio: number, mes: number, declarado: Record<string, unknown>, utm: number | null, remanenteInicial: number | null): Promise<Res> {
   const supabase = await crearClienteServidor();
@@ -23,11 +28,16 @@ export async function guardarF29(empresaId: string, anio: number, mes: number, d
 
 export async function presentarF29(empresaId: string, anio: number, mes: number, declarado: Record<string, unknown>): Promise<Res> {
   const calc = calcularF29Anual(await entradaF29(empresaId, anio))[mes - 1];
+  // Lo no digitado en "Declarado" se presenta con lo calculado
+  const digitado = limpiar(declarado);
+  const final: Record<string, number> = { ...Object.fromEntries(CODIGOS_DECLARABLES.map((c) => [String(c), Math.round(calc.codigos[c] ?? 0)])), ...digitado };
+  // El total a pagar sigue a los componentes declarados, salvo que se haya digitado
+  if (digitado['91'] == null) final['91'] = final['89'] + final['62'] + final['151'] + final['48'];
   const supabase = await crearClienteServidor();
-  const { error } = await supabase.rpc('presentar_f29', { p_empresa: empresaId, p_periodo: per(anio, mes), p_declarado: limpiar(declarado), p_calculado: calc.codigos });
+  const { error } = await supabase.rpc('presentar_f29', { p_empresa: empresaId, p_periodo: per(anio, mes), p_declarado: final, p_calculado: calc.codigos });
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/e/${empresaId}/f29`);
-  return { ok: true, mensaje: 'F29 marcado como presentado. Los meses siguientes arrastran el remanente declarado.' };
+  return { ok: true, mensaje: 'F29 marcado como presentado. Ahora genera el asiento de compensación de IVA y luego registra el pago. Los meses siguientes arrastran el remanente declarado.' };
 }
 
 export async function reabrirF29(empresaId: string, anio: number, mes: number): Promise<Res> {

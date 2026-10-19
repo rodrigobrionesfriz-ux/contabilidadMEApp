@@ -28,6 +28,11 @@ export interface EntradaF29 {
   honorarios: HonorarioF29[];
   /** Impuesto único de segunda categoría por período (YYYY-MM) */
   iusc: Record<string, number>;
+  /**
+   * Retención de honorarios contabilizada por período (abonos netos a 2103002 fuera de los asientos del F29).
+   * Se usa sólo en los meses sin boletas registradas, para no perder retenciones ingresadas por asiento.
+   */
+  retencionLibro?: Record<string, number>;
   /** Declaraciones del año */
   declaraciones: Record<string, DeclaracionF29>;
   /** Declaraciones del año anterior (diciembre para el remanente inicial) */
@@ -47,6 +52,15 @@ export interface MesF29 {
   declaracion: DeclaracionF29 | null;
 }
 
+/** Monto digitado: acepta número o texto con separador de miles ("5.887.130"). Vacío = sin declarar. */
+export const montoDeclarado = (v: unknown): number | null => {
+  if (v == null || v === '') return null;
+  if (typeof v === 'number') return Number.isFinite(v) ? Math.round(v) : null;
+  const t = String(v).trim().replace(/\$/g, '').replace(/\s/g, '').replace(/\./g, '').replace(',', '.');
+  if (!t) return null;
+  const n = Number(t);
+  return Number.isFinite(n) ? Math.round(n) : null;
+};
 export const CODIGOS_DECLARABLES = [538, 39, 537, 504, 77, 89, 563, 62, 151, 48, 91] as const;
 export const esPresentado = (d?: DeclaracionF29 | null) => !!(d && ['presentado', 'cerrado'].includes(d.estado));
 const codDecl = (d: DeclaracionF29 | null | undefined, cod: number, def = 0) => {
@@ -139,9 +153,11 @@ export function calcularF29Anual(e: EntradaF29): MesF29[] {
     }
     const creditoMes = credito + creditoActivoFijo;
     const honM = e.honorarios.filter((h) => h.estado !== 'anulado' && h.mes === m);
-    const retencionHon = Math.round(honM.reduce((s, h) => s + (h.retencion != null
-      ? Math.abs(+h.retencion || 0)
-      : Math.round(Math.abs(+(h.bruto ?? 0) || 0) * (h.tasaRetencion != null ? +h.tasaRetencion : retencionHonorarios(anio)))), 0));
+    const retencionHon = honM.length
+      ? Math.round(honM.reduce((s, h) => s + (h.retencion != null
+        ? Math.abs(+h.retencion || 0)
+        : Math.round(Math.abs(+(h.bruto ?? 0) || 0) * (h.tasaRetencion != null ? +h.tasaRetencion : retencionHonorarios(anio)))), 0))
+      : Math.max(0, Math.round(e.retencionLibro?.[per] ?? 0));
     const iusc = Math.max(0, Math.round(e.iusc[per] ?? 0));
     const utmP = utmPeriodo(per);
     const utmImputacion = utmDeclaracion(per);

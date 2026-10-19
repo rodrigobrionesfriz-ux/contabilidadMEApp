@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (294): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (297): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -247,6 +247,14 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Secciones del sistema actual que quedaron dentro de otras: PPM en Formulario 29; provisiones, corrección monetaria y cierres mensuales en Cierre del Ejercicio; Sistema y Respaldos y Carga desde Excel pasan a Importar respaldo y Exportar a Excel.
 - Computador: fija a la izquierda con empresa activa y buscador arriba. Celular: botón ☰ con la sección actual; el menú se abre encima y se cierra al elegir.
 - El modal de búsqueda se dibuja en un portal a `document.body`, porque la barra usa `transform` y un `fixed` quedaría encerrado en ella.
+
+## F29 en orden (10g)
+- Columna Declarado: formato de miles al digitar; las casillas vacías muestran el calculado en gris. Arreglo: antes "5.887.130" se guardaba como 6 (el servidor leía el punto como decimal); ahora `montoDeclarado` (src/tributario/f29.ts) quita los separadores.
+- Marcar presentado: los códigos sin valor digitado se presentan con lo calculado; si el 91 no se digitó, se recalcula como 89 + 62 + 151 + 48 de lo declarado.
+- Orden de pasos: 1. Declaración → 2. Compensación de IVA (aparece al presentar) → 3. Pago (aparece al generar la compensación, o si el mes no tiene IVA que compensar). Si el mes ya tiene esos asientos (p. ej. importados), se muestran igual.
+- Montos del pago derivados de lo declarado al presentar (sin quedar pegados a lo calculado); formato de miles.
+- Aviso si el IVA declarado (89) difiere del calculado: la compensación salda los libros con lo calculado.
+- Cód. 151: además de las boletas de Honorarios, toma la retención contabilizada en 2103002 (abonos netos fuera de asientos tributario, cierre y apertura) en los meses sin boletas. Cód. 48: sigue saliendo del asiento del libro de remuneraciones (2104002); sin libro cerrado en el mes, queda en 0.
 
 ## Balance de apertura (10f)
 - Pantalla Configuración → Balance de Apertura (/apertura?anio=AAAA). Muestra la apertura vigente del año (enlace al comprobante), las anuladas y si el año está bloqueado.

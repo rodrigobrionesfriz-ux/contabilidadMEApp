@@ -7,7 +7,7 @@ import type { DeclaracionF29, EntradaF29, HonorarioF29, VentaF29 } from '@/tribu
 /** Reúne todo lo que necesita el cálculo del F29 de un año. */
 export async function entradaF29(empresaId: string, anio: number): Promise<EntradaF29> {
   const supabase = await crearClienteServidor();
-  const [emp, ventas, compras, honorarios, iusc, decl] = await Promise.all([
+  const [emp, ventas, compras, honorarios, iusc, decl, retLibro] = await Promise.all([
     supabase.from('empresas').select('tasa_ppm').eq('id', empresaId).single(),
     traerTodo((d, h) => supabase.from('documentos').select('tipo_dte,fecha,neto,exento,iva,total,estado')
       .eq('empresa_id', empresaId).eq('tipo', 'venta').gte('fecha', `${anio}-01-01`).lte('fecha', `${anio}-12-31`).order('fecha').range(d, h)),
@@ -18,6 +18,11 @@ export async function entradaF29(empresaId: string, anio: number): Promise<Entra
     supabase.rpc('iusc_por_periodo', { p_empresa: empresaId, p_anio: anio }),
     supabase.from('f29_declaraciones').select('periodo,estado,declarado,utm,remanente_inicial').eq('empresa_id', empresaId)
       .gte('periodo', `${anio - 1}-12`).lte('periodo', `${anio}-12`),
+    // Retención de honorarios contabilizada (2103002), sin los asientos del propio F29, cierre ni apertura
+    traerTodo((d, h) => supabase.from('asiento_lineas').select('debe,haber,asientos!inner(fecha,tipo,anulado,anio)')
+      .eq('empresa_id', empresaId).eq('cuenta', '2103002').eq('asientos.anio', anio).eq('asientos.anulado', false)
+      .not('asientos.tipo', 'in', '(tributario,cierre,apertura)').order('id').range(d, h))
+      .catch(() => []), // si falla, el F29 sigue funcionando con las boletas registradas
   ]);
   if (emp.error) throw new Error(emp.error.message);
   if (iusc.error) throw new Error(iusc.error.message);
@@ -43,9 +48,22 @@ export async function entradaF29(empresaId: string, anio: number): Promise<Entra
         estado: h.estado ?? undefined,
       })),
     iusc: Object.fromEntries((iusc.data as { periodo: string; monto: number }[]).map((r) => [r.periodo, Number(r.monto)])),
+    retencionLibro: sumarPorPeriodo(retLibro as unknown as LineaRet[]),
     declaraciones,
     anteriores,
   };
+}
+
+type LineaRet = { debe: number; haber: number; asientos: { fecha: string } | { fecha: string }[] };
+function sumarPorPeriodo(lineas: LineaRet[]): Record<string, number> {
+  const r: Record<string, number> = {};
+  for (const l of lineas) {
+    const a = Array.isArray(l.asientos) ? l.asientos[0] : l.asientos;
+    if (!a?.fecha) continue;
+    const per = String(a.fecha).slice(0, 7);
+    r[per] = (r[per] ?? 0) + Number(l.haber) - Number(l.debe);
+  }
+  return r;
 }
 
 export interface AsientoF29 { id: string; numero: number; fecha: string; origen_id: string; anulado: boolean }

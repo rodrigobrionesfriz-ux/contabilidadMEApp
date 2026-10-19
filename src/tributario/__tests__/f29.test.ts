@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import oro from '../__fixtures__/f29-oro.json';
-import { calcularF29Anual, reajustarRemanente, type EntradaF29 } from '../f29';
+import { calcularF29Anual, reajustarRemanente, montoDeclarado, type EntradaF29 } from '../f29';
 
 interface Caso { nombre: string; entrada: Record<string, unknown> & { tasaPPM: number; anterior: object; items: object; ventas: never[]; compras: never[]; honorarios: never[]; asientos: { anulado?: boolean; tipo: string; fecha: string; periodo?: string; movs: { cd: string; debe: number; haber: number }[] }[] }; resultado: unknown[] }
 
@@ -46,5 +46,31 @@ describe('asientos del F29', () => {
     const p = pagoF29(meses[0], 2026, montosSugeridos(meses[0]), '1101201');
     expect(p.lineas.at(-1)).toMatchObject({ cuenta: '1101201', haber: p.total });
     expect(p.total).toBe(meses[0].ppm + meses[0].retencionHon + meses[0].iusc + meses[0].ivaAPagar);
+  });
+});
+
+describe('F29: declarado, retenciones e impuesto único', () => {
+  const base: EntradaF29 = { anio: 2026, tasaPPM: 1, ventas: [], compras: [], honorarios: [], iusc: {}, declaraciones: {}, anteriores: {} };
+
+  it('lee lo digitado con separador de miles', () => {
+    expect(montoDeclarado('5.887.130')).toBe(5887130);
+    expect(montoDeclarado('$ 1.234')).toBe(1234);
+    expect(montoDeclarado(42)).toBe(42);
+    expect(montoDeclarado('')).toBeNull();
+    expect(montoDeclarado('abc')).toBeNull();
+  });
+
+  it('impuesto único y retención de honorarios entran solos al cód. 48, 151 y al total 91', () => {
+    const r = calcularF29Anual({ ...base, iusc: { '2026-04': 35210 }, honorarios: [{ mes: 4, bruto: 1000000, tasaRetencion: 0.1525 }] })[3];
+    expect(r.codigos[48]).toBe(35210);
+    expect(r.codigos[151]).toBe(152500);
+    expect(r.codigos[91]).toBe(35210 + 152500);
+  });
+
+  it('sin boletas en el mes, toma la retención contabilizada en 2103002; con boletas no la suma dos veces', () => {
+    const sinBoletas = calcularF29Anual({ ...base, retencionLibro: { '2026-05': 76250 } })[4];
+    expect(sinBoletas.codigos[151]).toBe(76250);
+    const conBoletas = calcularF29Anual({ ...base, honorarios: [{ mes: 5, bruto: 500000, retencion: 76250 }], retencionLibro: { '2026-05': 76250 } })[4];
+    expect(conBoletas.codigos[151]).toBe(76250);
   });
 });
