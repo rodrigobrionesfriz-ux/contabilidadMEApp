@@ -42,3 +42,31 @@ export async function anularAsiento(empresaId: string, id: string, motivo: strin
   revalidatePath(`/e/${empresaId}/diario`);
   return {};
 }
+
+const lineaEdicion = linea.extend({
+  tipo_dte: z.string().trim().regex(/^\d{0,3}$/, 'Tipo de documento no válido').optional(),
+  folio: z.string().trim().max(30).optional(),
+});
+const edicion = z.object({
+  empresaId: z.guid(),
+  id: z.guid(),
+  fecha: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Fecha no válida'),
+  glosa: z.string().trim().min(1, 'Ingresa la glosa'),
+  motivo: z.string().trim().max(300).optional(),
+  lineas: z.array(lineaEdicion).min(2, 'El asiento necesita al menos dos líneas'),
+});
+
+export async function editarAsiento(entrada: z.input<typeof edicion>): Promise<ResultadoAsiento> {
+  const p = edicion.safeParse(entrada);
+  if (!p.success) return { ok: false, error: p.error.issues[0].message };
+  const supabase = await crearClienteServidor();
+  // Validación contable definitiva (permisos, período, cuentas, auxiliar, cuadratura) en la base.
+  const { data, error } = await supabase.rpc('editar_asiento', {
+    p_id: p.data.id, p_fecha: p.data.fecha, p_glosa: p.data.glosa, p_motivo: p.data.motivo || null,
+    p_lineas: p.data.lineas.map((l) => ({ ...l, glosa: l.glosa || undefined, centro_costo: l.centro_costo || undefined,
+      rut_auxiliar: l.rut_auxiliar || undefined, tipo_dte: l.tipo_dte || undefined, folio: l.folio || undefined })),
+  });
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/e/${p.data.empresaId}`, 'layout');
+  return { ok: true, numero: (data as { numero: number }[])[0].numero };
+}

@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { guardarAsiento } from '../acciones';
-import { clp, hoyISO } from '@/lib/formato';
+import { clp, hoyISO, milesInput, ANCHO_MONTO } from '@/lib/formato';
 import { rutParse } from '@/motor/rut';
 import { Mensaje } from '@/components/form-estado';
 import { lineasDesdeComprobante, pideMontoDist, type ComprobanteTipo } from '@/herramientas/comprobantes-tipo';
@@ -34,7 +34,7 @@ export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
   const cambiar = (i: number, campo: keyof Linea, v: string) =>
     setLineas((ls) => ls.map((l, j) => {
       if (j !== i) return l;
-      const n = { ...l, [campo]: v };
+      const n = { ...l, [campo]: campo === 'debe' || campo === 'haber' ? milesInput(v, 10).replace('-', '') : v };
       if (campo === 'cuenta') n.cuenta = v.split(' ')[0]; // acepta "1101201 · Banco" desde la lista
       if (campo === 'debe' && v) n.haber = '';
       if (campo === 'haber' && v) n.debe = '';
@@ -52,7 +52,7 @@ export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
     }
     if (lineas.some((l) => l.cuenta || l.debe || l.haber) && !window.confirm(`¿Aplicar «${c.nombre}»? Se reemplazarán las líneas escritas.`)) return;
     const d = lineasDesdeComprobante(c, montoDist, (cd) => porCodigo.get(cd)?.nombre || '');
-    setLineas(d.lineas.map((l) => ({ cuenta: l.cd, debe: l.debe ? String(l.debe) : '', haber: l.haber ? String(l.haber) : '', cc: porCodigo.get(l.cd)?.acepta_centro_costo ? l.cc : '', rut: '', glosa: l.desc })));
+    setLineas(d.lineas.map((l) => ({ cuenta: l.cd, debe: l.debe ? milesInput(l.debe) : '', haber: l.haber ? milesInput(l.haber) : '', cc: porCodigo.get(l.cd)?.acepta_centro_costo ? l.cc : '', rut: '', glosa: l.desc })));
     if (d.glosa) setGlosa(d.glosa);
     setMsg({ ok: `Plantilla aplicada: ${c.nombre}${d.distribuido ? ` · gasto repartido en ${d.distribuido} cuentas` : ''}.` });
   };
@@ -124,7 +124,7 @@ export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
         <table className="w-full min-w-[760px] text-sm">
           <thead className="text-left text-xs text-tenue uppercase">
             <tr className="border-b border-borde">
-              <th className="px-2 py-2">Cuenta</th><th className="px-2 py-2 w-36">Debe</th><th className="px-2 py-2 w-36">Haber</th>
+              <th className="px-2 py-2">Cuenta</th><th className={`px-2 py-2 text-right ${ANCHO_MONTO}`}>Debe</th><th className={`px-2 py-2 text-right ${ANCHO_MONTO}`}>Haber</th>
               <th className="px-2 py-2">Detalle</th><th className="w-8" />
             </tr>
           </thead>
@@ -138,8 +138,8 @@ export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
                       placeholder="Código o nombre" className="campo num" aria-label={`Cuenta línea ${i + 1}`} />
                     <div className="mt-0.5 truncate text-xs text-tenue">{c?.nombre ?? (l.cuenta ? '⚠️ cuenta no encontrada' : '')}</div>
                   </td>
-                  <td className="px-2 py-1.5"><input inputMode="numeric" value={l.debe} onChange={(e) => cambiar(i, 'debe', e.target.value)} className="campo num text-right" aria-label={`Debe línea ${i + 1}`} /></td>
-                  <td className="px-2 py-1.5"><input inputMode="numeric" value={l.haber} onChange={(e) => cambiar(i, 'haber', e.target.value)} className="campo num text-right" aria-label={`Haber línea ${i + 1}`} /></td>
+                  <td className="px-2 py-1.5"><input inputMode="numeric" maxLength={13} value={l.debe} onChange={(e) => cambiar(i, 'debe', e.target.value)} className={`campo num text-right ${ANCHO_MONTO}`} aria-label={`Debe línea ${i + 1}`} /></td>
+                  <td className="px-2 py-1.5"><input inputMode="numeric" maxLength={13} value={l.haber} onChange={(e) => cambiar(i, 'haber', e.target.value)} className={`campo num text-right ${ANCHO_MONTO}`} aria-label={`Haber línea ${i + 1}`} /></td>
                   <td className="space-y-1 px-2 py-1.5">
                     {c?.tipo_auxiliar && (
                       <input value={l.rut} onChange={(e) => cambiar(i, 'rut', e.target.value)} placeholder={`RUT ${c.tipo_auxiliar} *`} className="campo num" />
@@ -166,8 +166,8 @@ export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
               <td className="px-2 py-2">
                 <button type="button" onClick={() => setLineas((ls) => [...ls, vacia()])} className="boton-sec">+ Línea</button>
               </td>
-              <td className="num px-2 py-2 text-right">{clp(totalD)}</td>
-              <td className="num px-2 py-2 text-right">{clp(totalH)}</td>
+              <td className="num px-2 py-2 text-right whitespace-nowrap">{clp(totalD)}</td>
+              <td className="num px-2 py-2 text-right whitespace-nowrap">{clp(totalH)}</td>
               <td colSpan={2} className={`px-2 py-2 ${cuadra ? 'text-acento' : 'text-aviso'}`}>
                 {cuadra ? '✓ Cuadrado' : `Diferencia ${clp(totalD - totalH)}`}
               </td>

@@ -45,3 +45,19 @@ export function decimalCL(v: string | number | null | undefined): number {
 
 /** Muestra un decimal con coma ("41247,63"). */
 export const decimalTexto = (n: number | null | undefined) => (n ? String(n).replace('.', ',') : '');
+
+/**
+ * Monto mientras se digita: sólo dígitos (y signo menos al inicio), con separador de miles.
+ * `maxDigitos` limita el largo (10 dígitos = "9.999.999.999", 13 caracteres).
+ */
+export function milesInput(v: string | number | null | undefined, maxDigitos?: number): string {
+  const t = String(v ?? '').trim();
+  const neg = t.startsWith('-');
+  let dig = t.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '');
+  if (maxDigitos && dig.length > maxDigitos) dig = dig.slice(0, maxDigitos);
+  if (!dig) return neg ? '-' : '';
+  return (neg ? '-' : '') + dig.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+/** Ancho de las columnas Debe y Haber: caben 13 caracteres ("9.999.999.999") alineados a la derecha. */
+export const ANCHO_MONTO = 'w-[calc(13ch+1.75rem)]';

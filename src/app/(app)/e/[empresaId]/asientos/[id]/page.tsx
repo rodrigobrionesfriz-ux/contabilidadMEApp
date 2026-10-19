@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { requerirEmpresa } from '@/lib/auth';
+import { requerirEmpresa, puedeEscribir } from '@/lib/auth';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { clp, fechaCL } from '@/lib/formato';
 import { BotonImprimir } from '@/components/boton-imprimir';
@@ -25,11 +25,19 @@ export default async function AsientoPage({ params }: PageProps<'/e/[empresaId]/
   const ls = lineas.data ?? [];
   const td = ls.reduce((s, l) => s + Number(l.debe), 0), th = ls.reduce((s, l) => s + Number(l.haber), 0);
   const x = a.data;
+  const { data: cerrado } = await supabase.from('periodos_cerrados').select('periodo').eq('empresa_id', empresaId).eq('periodo', String(x.fecha).slice(0, 7)).maybeSingle();
+  const editable = puedeEscribir(empresa.rol) && !x.anulado && x.tipo !== 'cierre' && !cerrado;
   return (
     <div className="space-y-4">
       <div className="no-print flex flex-wrap items-center justify-between gap-2">
         <Link href={`/e/${empresaId}/diario?anio=${String(x.fecha).slice(0, 4)}&mes=${Number(String(x.fecha).slice(5, 7))}`} className="boton-sec">← Libro diario</Link>
-        <BotonImprimir />
+        <div className="flex gap-2">
+          {editable && (x.tipo === 'apertura'
+            ? <Link href={`/e/${empresaId}/apertura?anio=${String(x.fecha).slice(0, 4)}`} className="boton-sec">✏️ Editar apertura</Link>
+            : <Link href={`/e/${empresaId}/asientos/${x.id}/editar`} className="boton">✏️ Editar</Link>)}
+          {!editable && cerrado && !x.anulado && <span className="self-center text-xs text-tenue">Período {String(x.fecha).slice(0, 7)} cerrado: no se puede editar</span>}
+          <BotonImprimir />
+        </div>
       </div>
       <article className="hoja tarjeta mx-auto max-w-4xl space-y-4 p-8 text-sm">
         <div className="flex flex-wrap items-start justify-between gap-3">
@@ -39,15 +47,15 @@ export default async function AsientoPage({ params }: PageProps<'/e/[empresaId]/
         {x.anulado && <p className="rounded-md border border-peligro/40 bg-peligro/10 p-2 text-peligro"><strong>ANULADO</strong>{x.anulado_en ? ` el ${fechaCL(String(x.anulado_en).slice(0, 10))}` : ''}{x.motivo_anulacion ? `: ${x.motivo_anulacion}` : ''}</p>}
         <p><span className="text-tenue">Glosa:</span> {x.glosa}</p>
         <table className="w-full text-xs">
-          <thead className="text-left text-tenue"><tr className="border-b border-borde"><th className="py-1">Cuenta</th><th>Detalle</th><th className="text-right">Debe</th><th className="text-right">Haber</th></tr></thead>
+          <thead className="text-left text-tenue"><tr className="border-b border-borde"><th className="py-1">Cuenta</th><th>Detalle</th><th className="w-[15ch] pl-4 text-right">Debe</th><th className="w-[15ch] pl-4 text-right">Haber</th></tr></thead>
           <tbody>{ls.map((l) => (
             <tr key={l.orden} className="border-b border-borde/30 align-top">
               <td className="py-1"><span className="num">{l.cuenta}</span> {nombre.get(l.cuenta)}</td>
               <td className="text-tenue">{[l.glosa, l.centro_costo && `CC ${l.centro_costo}`, l.rut_auxiliar && `RUT ${l.rut_auxiliar}`, l.folio && `DTE ${l.tipo_dte} N° ${l.folio}`].filter(Boolean).join(' · ')}</td>
-              <td className="num text-right">{Number(l.debe) ? clp(l.debe) : ''}</td><td className="num text-right">{Number(l.haber) ? clp(l.haber) : ''}</td>
+              <td className="num pl-4 text-right whitespace-nowrap">{Number(l.debe) ? clp(l.debe) : ''}</td><td className="num pl-4 text-right whitespace-nowrap">{Number(l.haber) ? clp(l.haber) : ''}</td>
             </tr>
           ))}</tbody>
-          <tfoot><tr className="font-semibold"><td colSpan={2} className="py-1">Totales</td><td className="num text-right">{clp(td)}</td><td className="num text-right">{clp(th)}</td></tr></tfoot>
+          <tfoot><tr className="font-semibold"><td colSpan={2} className="py-1">Totales</td><td className="num pl-4 text-right whitespace-nowrap">{clp(td)}</td><td className="num pl-4 text-right whitespace-nowrap">{clp(th)}</td></tr></tfoot>
         </table>
         {(docs.data ?? []).length > 0 && (
           <div className="rounded-md border border-borde p-3 text-xs">

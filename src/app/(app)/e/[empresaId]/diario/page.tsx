@@ -23,13 +23,15 @@ export default async function DiarioPage({ params, searchParams }: PageProps<'/e
   const { desde, hasta } = mes ? rangoAnio(anio, mes, mes) : rangoAnio(anio);
   const empresa = await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
-  const [data, cuentas] = await Promise.all([
+  const [data, cuentas, per] = await Promise.all([
     traerTodo((d, h) => supabase.from('asientos')
       .select('id,numero,fecha,glosa,tipo,anulado,motivo_anulacion,asiento_lineas(orden,cuenta,debe,haber,glosa,centro_costo,rut_auxiliar)')
       .eq('empresa_id', empresaId).eq('anio', anio).gte('fecha', desde).lte('fecha', hasta)
       .order('fecha').order('numero').order('orden', { referencedTable: 'asiento_lineas' }).range(d, h)),
     supabase.from('cuentas').select('codigo,nombre').eq('empresa_id', empresaId).limit(5000),
+    supabase.from('periodos_cerrados').select('periodo').eq('empresa_id', empresaId).like('periodo', `${anio}-%`),
   ]);
+  const cerrados = new Set((per.data ?? []).map((p) => p.periodo as string));
   const nombre = new Map((cuentas.data ?? []).map((c) => [c.codigo, c.nombre]));
   const asientos = data as AsientoDB[];
   const vigentes = asientos.filter((a) => !a.anulado);
@@ -51,6 +53,10 @@ export default async function DiarioPage({ params, searchParams }: PageProps<'/e
             <span className="num text-tenue">{fechaCL(a.fecha)}</span>
             <span className="min-w-0 flex-1 truncate">{a.glosa}</span>
             {a.anulado && <span className="rounded bg-peligro/20 px-2 py-0.5 text-xs font-semibold text-peligro" title={a.motivo_anulacion ?? ''}>ANULADO</span>}
+            {!a.anulado && escribe && a.tipo !== 'cierre' && !cerrados.has(a.fecha.slice(0, 7)) && (
+              <Link href={a.tipo === 'apertura' ? `/e/${empresaId}/apertura?anio=${a.fecha.slice(0, 4)}` : `/e/${empresaId}/asientos/${a.id}/editar`}
+                className="text-xs text-tenue hover:text-acento" title={`Editar el comprobante N° ${a.numero}`}>✏️ Editar</Link>
+            )}
             {!a.anulado && escribe && <BotonAnular empresaId={empresaId} id={a.id} numero={a.numero} />}
           </header>
           <table className="w-full text-sm">
@@ -64,8 +70,8 @@ export default async function DiarioPage({ params, searchParams }: PageProps<'/e
                       {[l.rut_auxiliar, l.centro_costo && `CC ${l.centro_costo}`, l.glosa].filter(Boolean).join(' · ')}
                     </span>
                   </td>
-                  <td className="num w-36 px-2 py-1 text-right">{Number(l.debe) ? clp(l.debe) : ''}</td>
-                  <td className="num w-36 px-4 py-1 text-right">{Number(l.haber) ? clp(l.haber) : ''}</td>
+                  <td className="num w-[16ch] px-2 py-1 text-right whitespace-nowrap">{Number(l.debe) ? clp(l.debe) : ''}</td>
+                  <td className="num w-[16ch] px-4 py-1 text-right whitespace-nowrap">{Number(l.haber) ? clp(l.haber) : ''}</td>
                 </tr>
               ))}
             </tbody>

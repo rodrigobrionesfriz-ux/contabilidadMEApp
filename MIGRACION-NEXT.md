@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (297): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (304): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -107,6 +107,9 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 
 ### 0016 (10f)
 - guardar_apertura(empresa, año, glosa, líneas): registra o corrige el balance de apertura del año. Sólo cuentas 1 y 2 imputables y activas; las de auxiliar exigen RUT (tipo DTE y folio opcionales); debe cuadrar. Si hay apertura vigente reemplaza sus líneas y conserva el número (versión anterior en auditoría); si no, la crea como N° 0 al 1 de enero (o el siguiente número si el 0 lo ocupa una anulada), con origen 'apertura-manual:AAAA' para no bloquear la reapertura del año anterior. Se niega con enero o el ejercicio cerrados.
+
+### 0017 (10h)
+- editar_asiento(id, fecha, glosa, líneas, motivo): edita un comprobante conservando su número, con las mismas validaciones de crear_asiento. No permite anulados, cierre ni apertura (la apertura va por guardar_apertura), cambiar de año ni tocar meses cerrados (origen o destino). Guarda en auditoría la versión anterior (fecha, glosa y líneas) y el motivo. El documento asociado (compra/venta/honorario) no se modifica.
 
 ## Importador del respaldo Excel (fase 1)
 - **Fuente:** el botón "📥 Exportar Excel" en Sistema y Respaldos del sistema actual. Un año por archivo.
@@ -247,6 +250,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Secciones del sistema actual que quedaron dentro de otras: PPM en Formulario 29; provisiones, corrección monetaria y cierres mensuales en Cierre del Ejercicio; Sistema y Respaldos y Carga desde Excel pasan a Importar respaldo y Exportar a Excel.
 - Computador: fija a la izquierda con empresa activa y buscador arriba. Celular: botón ☰ con la sección actual; el menú se abre encima y se cierra al elegir.
 - El modal de búsqueda se dibuja en un portal a `document.body`, porque la barra usa `transform` y un `fixed` quedaría encerrado en ella.
+
+## Editar comprobantes (10h)
+- Botón ✏️ Editar en el comprobante (/asientos/[id]) y acceso directo en cada asiento del libro diario (sólo admin y contador, vigente, mes abierto; la apertura lleva a Balance de apertura).
+- Pantalla /asientos/[id]/editar: fecha (mismo año), glosa, cuentas, montos, detalle por línea, centro de costo y auxiliar (RUT, tipo, folio); motivo opcional para el registro de actividad.
+- Advertencia en vivo y confirmación al guardar si el comprobante tiene documento (RCV o manual) y los montos dejan de coincidir: total, IVA (1108002/1108008 en compras, 2103003 en ventas) o saldo del proveedor/cliente por RUT (src/motor/edicion.ts, con pruebas).
+- Debe y Haber: columnas para 13 caracteres ("9.999.999.999") alineadas a la derecha, con miles al digitar y tope de 10 dígitos (ANCHO_MONTO y milesInput en src/lib/formato.ts), en editar, nuevo asiento, comprobante impreso y libro diario.
 
 ## F29 en orden (10g)
 - Columna Declarado: formato de miles al digitar; las casillas vacías muestran el calculado en gris. Arreglo: antes "5.887.130" se guardaba como 6 (el servidor leía el punto como decimal); ahora `montoDeclarado` (src/tributario/f29.ts) quita los separadores.
