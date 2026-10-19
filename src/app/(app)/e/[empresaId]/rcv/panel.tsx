@@ -11,11 +11,9 @@ import { clp, fechaCL, MESES } from '@/lib/formato';
 import { importarDocumento, type FichaAuxiliar } from './acciones';
 import type { Fila } from './importador';
 
-/** Con varias líneas el validador exige descripción: se proponen según el tipo de línea. */
-function conDescripciones(tipo: TipoRCV, ls: LineaDetalle[]): LineaDetalle[] {
-  if (ls.length < 2) return ls;
-  const base = tipo === 'compra' ? 'Compra' : 'Venta';
-  return ls.map((l) => (l.desc?.trim() ? l : { ...l, desc: l.otroImp ? 'Otros impuestos' : l.afecto === false ? `${base} exenta` : `${base} afecta` }));
+/** Sólo las líneas de otros impuestos reciben descripción automática; la del gasto o activo la escribe quien importa. */
+function conDescripciones(ls: LineaDetalle[]): LineaDetalle[] {
+  return ls.map((l) => (l.otroImp && !l.desc?.trim() ? { ...l, desc: 'Otros impuestos' } : l));
 }
 
 export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, ficha, ultima, editando, onImportar, onCancelar, onGuardarBorrador, onRegistrado }: {
@@ -29,11 +27,11 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
   const aux = tipo === 'compra' ? 'proveedor' : 'cliente';
   const dte = (tipo === 'compra' ? dteC(d.tipoDTE) : dteV(d.tipoDTE))?.nm ?? `DTE ${d.tipoDTE}`;
   const rut = `${d.rutCodigo}-${d.rutDV}`;
-  const [lineas, setLineasBase] = useState<LineaDetalle[]>(() => fila.detalle?.lineas ?? conDescripciones(tipo, lineasIniciales(tipo, { ...d, cuenta: fila.cuenta, cc: fila.cc })));
+  const [lineas, setLineasBase] = useState<LineaDetalle[]>(() => fila.detalle?.lineas ?? conDescripciones(lineasIniciales(tipo, { ...d, cuenta: fila.cuenta, cc: fila.cc })));
   /** Al elegir la cuenta o el centro en una línea, se copian a las líneas que aún no lo tienen */
   const setLineas = (nuevas: LineaDetalle[]) => {
-    // Línea agregada para repartir: hereda la cuenta de la primera y recibe descripción (obligatoria con varias líneas)
-    if (nuevas.length > lineas.length) return setLineasBase(conDescripciones(tipo, nuevas.map((l, i) => (i >= lineas.length ? { ...l, cc: '', monto: 0 } : l))));
+    // Línea agregada para repartir: hereda la cuenta de la primera, sin centro, en cero y sin descripción (se escribe)
+    if (nuevas.length > lineas.length) return setLineasBase(nuevas.map((l, i) => (i >= lineas.length ? { ...l, cc: '', monto: 0, desc: '' } : l)));
     const cambio = nuevas.findIndex((l, i) => lineas[i] && (l.cuenta !== lineas[i].cuenta || (l.cc ?? '') !== (lineas[i].cc ?? '')));
     if (cambio < 0 || nuevas.length !== lineas.length) return setLineasBase(nuevas);
     const ref = nuevas[cambio];
@@ -61,7 +59,13 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
   const registrado = fila.resultado?.ok || fila.duplicado;
   const fueraPeriodo = tipo === 'compra' ? d.fecha.slice(0, 7) > periodo : d.fecha.slice(0, 7) !== periodo;
   const perTxt = periodo ? `${MESES[Number(periodo.slice(5, 7)) - 1]} ${periodo.slice(0, 4)}` : '';
-  const v = validarDetalleRCV(tipo, d, lineas, plan, { aceptaRedondeo: redondeo });
+  const vRCV = validarDetalleRCV(tipo, d, lineas, plan, { aceptaRedondeo: redondeo });
+  // El detalle de cada línea de gasto, ingreso o activo es obligatorio también con una sola línea (el validador lo exige con varias)
+  const queEs = tipo === 'compra' ? 'el gasto o la compra' : 'el ingreso';
+  const faltaDetalle = lineas.filter((l) => !l.otroImp).length === 1
+    ? lineas.flatMap((l, i) => (!l.otroImp && !(l.desc ?? '').trim() ? [`Línea ${i + 1}: escribe en Descripción a qué corresponde ${queEs}.`] : []))
+    : [];
+  const v = { ...vRCV, ok: vRCV.ok && !faltaDetalle.length, errores: [...faltaDetalle, ...vRCV.errores] };
   const ccValido = lineas.every((l) => !l.cc || !plan.regla(l.cuenta)?.aceptaCentroCosto || centros.some((c) => c.codigo === l.cc));
   const primera = lineas.find((l) => !l.otroImp);
   const nombreCC = (cc?: string) => (cc ? centros.find((c) => c.codigo === cc)?.nombre ?? cc : 'sin centro de costo');
@@ -167,7 +171,7 @@ export function PanelDocumento({ empresaId, tipo, periodo, plan, centros, fila, 
           </select></div>
       )}
 
-      <EditorLineas tipo={tipo} doc={d} lineas={lineas} onChange={setLineas} plan={plan} centros={centros} listaId="cuentas-rcv" validacion={v} />
+      <EditorLineas tipo={tipo} doc={d} lineas={lineas} onChange={setLineas} plan={plan} centros={centros} listaId="cuentas-rcv" validacion={v} placeholderDesc={`¿A qué corresponde ${queEs}? (obligatorio)`} />
       <p className="text-xs text-tenue">Para repartir el {tipo === 'compra' ? 'gasto' : 'ingreso'} en varias cuentas o centros de costo: <b>+ Línea</b>, elige la cuenta y el centro, escribe su monto y completa la primera línea con <b>⇥</b>.</p>
       <label className="flex items-center gap-2 text-xs text-tenue">
         <input type="checkbox" checked={redondeo} onChange={(e) => setRedondeo(e.target.checked)} /> Aceptar diferencia de $1 (redondeo del emisor)

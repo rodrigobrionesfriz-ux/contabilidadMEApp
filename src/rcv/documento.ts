@@ -10,6 +10,9 @@ import type { DocRCV, TipoRCV } from './leer';
 
 export const CUENTA_OTRO_IMP_RECUPERABLE = '1108006';
 
+/** Cuentas de impuestos y retenciones: créditos fiscales y PPM (1108), retenciones e IVA débito (2103), impuestos por pagar (2104). */
+export const esCuentaImpuesto = (cuenta: string) => /^(1108|2103|2104)/.test(cuenta);
+
 export interface Asignacion {
   /** Paso 1: cuenta y CC para todo el documento */
   cuenta?: string;
@@ -140,8 +143,10 @@ export function construirRegistro(tipo: TipoRCV, d: DocRCV, periodo: string, a: 
   if (!e.cuadre.ok) return { ok: false, errores: [`El asiento no cuadra (diferencia ${e.cuadre.diferencia}).`] };
   const { lineas: crudas, descuadre } = redondear(lineasDe(e.movs as MovLegado[]));
   if (descuadre) return { ok: false, errores: [`El asiento no cuadra al redondear (diferencia ${descuadre}).`] };
-  // Las líneas que el motor deja sin detalle (IVA crédito/débito, IVA retenido, etc.) llevan el nombre de su cuenta
-  const lineas = crudas.map((l) => (l.glosa?.trim() ? l : { ...l, glosa: plan.nombre(l.cuenta) || undefined }));
+  // Las líneas de impuestos y retenciones sin detalle (IVA crédito/débito, IVA retenido, crédito de activo fijo,
+  // otros impuestos recuperables, retención de honorarios) llevan el nombre de su cuenta. Las de gasto, ingreso
+  // y activo no: su detalle lo escribe quien importa en el paso 2.
+  const lineas = crudas.map((l) => (!l.glosa?.trim() && esCuentaImpuesto(l.cuenta) ? { ...l, glosa: plan.nombre(l.cuenta) || undefined } : l));
   return {
     ok: true,
     avisos,

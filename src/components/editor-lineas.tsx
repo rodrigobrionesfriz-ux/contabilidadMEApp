@@ -41,9 +41,11 @@ export function SelectorCC({ valor, onChange, centros, deshabilitado, requerido,
   );
 }
 
-export function EditorLineas({ tipo, doc, lineas, onChange, plan, centros, listaId, validacion }: {
+export function EditorLineas({ tipo, doc, lineas, onChange, plan, centros, listaId, validacion, placeholderDesc }: {
   tipo: TipoRCV; doc: DocParaDetalle; lineas: LineaDetalle[]; onChange: (l: LineaDetalle[]) => void;
   plan: PlanCuentas; centros: CentroOpcion[]; listaId: string; validacion: ResultadoValidacion;
+  /** Texto de ayuda en la descripción de las líneas de gasto/ingreso (no en las de otros impuestos) */
+  placeholderDesc?: string;
 }) {
   const set = (i: number, cambios: Partial<LineaDetalle>) => onChange(lineas.map((l, j) => (j === i ? { ...l, ...cambios } : l)));
   const cambiarTipo = (i: number, t: string) => set(i, { afecto: t === 'afecto', otroImp: t === 'otro' || undefined });
@@ -68,7 +70,7 @@ export function EditorLineas({ tipo, doc, lineas, onChange, plan, centros, lista
                       className="campo num py-1" placeholder="Cuenta" aria-label={`Cuenta línea ${i + 1}`} />
                     <div className="mt-0.5 truncate text-[11px] text-tenue">{regla ? plan.nombre(l.cuenta) : l.cuenta ? '⚠️ no existe' : ''}</div>
                   </td>
-                  <td className="px-2 py-1"><input value={l.desc ?? ''} onChange={(e) => set(i, { desc: e.target.value })} className="campo py-1" aria-label={`Descripción línea ${i + 1}`} /></td>
+                  <td className="px-2 py-1"><input value={l.desc ?? ''} onChange={(e) => set(i, { desc: e.target.value })} placeholder={l.otroImp ? '' : placeholderDesc} className="campo py-1" aria-label={`Descripción línea ${i + 1}`} /></td>
                   <td className="px-2 py-1">
                     <div className="flex gap-1">
                       <input inputMode="numeric" maxLength={13} value={l.monto ? milesInput(l.monto) : ''} onChange={(e) => set(i, { monto: Math.round(Number(e.target.value.replace(/[^0-9]/g, '').slice(0, 10)) || 0) })}
