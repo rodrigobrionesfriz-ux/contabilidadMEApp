@@ -111,14 +111,14 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ### 0017 (10h)
 - editar_asiento(id, fecha, glosa, líneas, motivo): edita un comprobante conservando su número, con las mismas validaciones de crear_asiento. No permite anulados, cierre ni apertura (la apertura va por guardar_apertura), cambiar de año ni tocar meses cerrados (origen o destino). Guarda en auditoría la versión anterior (fecha, glosa y líneas) y el motivo. El documento asociado (compra/venta/honorario) no se modifica.
 
-### 0018 (10i)
+### 0020 (10i, renumerada)
 - centro_costo_codigo(empresa, cc): devuelve el código del centro a partir del código o del id del sistema anterior (ref_origen); vacío = sin centro; si no existe, error claro.
 - registrar_documento traduce el centro de cada línea con esa función antes de crear el asiento.
 - Corrección única: datos.dist[].cc y datos.cc de los documentos importados pasan del id antiguo al código nuevo.
 
 ### 0019 (10j)
 - Tabla auxiliares (fichas de proveedores y clientes): empresa, tipo (proveedor/cliente), RUT validado, razón social, giro, correo, teléfono, dirección, cuenta y centro de costo por defecto, forma de cobro (clientes), activo. Lectura para miembros; escritura sólo por guardar_auxiliar.
-- guardar_auxiliar(...): crea o actualiza (valida RUT, cuenta imputable y centro con centro_costo_codigo); p_solo_crear no pisa una ficha existente. Queda en auditoría.
+- guardar_auxiliar(...): crea o actualiza (valida RUT, cuenta imputable y centro con centro_costo_codigo, de la 0020); p_solo_crear no pisa una ficha existente. Queda en auditoría.
 - Poblado inicial: una ficha por RUT con documentos, con la cuenta y el centro del documento vigente más reciente (centro traducido desde el id antiguo).
 
 ## Importador del respaldo Excel (fase 1)
@@ -274,7 +274,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Error corregido: 'insert or update on table "asiento_lineas" violates foreign key constraint' al contabilizar el RCV. Causa: la propuesta de cuenta y centro por RUT (consultarPrevios) leía datos.dist[0].cc de los documentos importados, que traen el id del sistema anterior (p. ej. cc_mu188amoxkl), no el código (AGRI). El selector lo mostraba como "Sin centro de costo", pero se enviaba igual. Sólo fallaban las cuentas que admiten centro.
 - consultarPrevios traduce el centro al código vigente (o lo deja vacío si no existe).
 - SelectorCC muestra un valor desconocido como "⚠️ X (no existe)" en vez de esconderlo; la grilla del importador lo marca como error antes de enviar.
-- La base traduce y valida el centro (migración 0018).
+- La base traduce y valida el centro (migración 0020; se entregó como 0018 en el 10i y se renumeró a 0020 porque la 0019 ya estaba aplicada).
 
 ## Editar comprobantes (10h)
 - Botón ✏️ Editar en el comprobante (/asientos/[id]) y acceso directo en cada asiento del libro diario (sólo admin y contador, vigente, mes abierto; la apertura lleva a Balance de apertura).
