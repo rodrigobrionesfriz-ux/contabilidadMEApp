@@ -19,3 +19,23 @@ export function indicadoresDesdeAPI(anio: number, uf: SerieAPI, utm: SerieAPI): 
     return { periodo: `${anio}-${mm}`, uf: vUF && vUF > 0 ? Math.round(vUF * 100) / 100 : null, utm: vUTM && vUTM > 0 ? Math.round(vUTM) : null };
   }).filter((x) => x.uf != null || x.utm != null);
 }
+
+/** Lee las dos series del año desde mindicador.cl (sirve en el navegador y en el servidor). */
+export async function leerIndicadoresAPI(anio: number, ms = 20000): Promise<IndicadorAPI[]> {
+  const leer = async (k: 'uf' | 'utm'): Promise<SerieAPI> => {
+    const r = await fetch(`${API_INDICADORES}/${k}/${anio}`, { cache: 'no-store', signal: AbortSignal.timeout(ms) });
+    if (!r.ok) throw new Error(`respondió ${r.status} al pedir la ${k.toUpperCase()}`);
+    return r.json();
+  };
+  const [uf, utm] = await Promise.all([leer('uf'), leer('utm')]);
+  return indicadoresDesdeAPI(anio, uf, utm);
+}
+
+/** Revisa lo que llega del navegador antes de guardarlo. */
+export function datosAPIValidos(anio: number, x: unknown): IndicadorAPI[] | null {
+  if (!Array.isArray(x) || x.length > 12) return null;
+  const ok = x.every((r) => r && typeof r === 'object' && typeof r.periodo === 'string' && r.periodo.startsWith(`${anio}-`) && /^\d{4}-(0[1-9]|1[0-2])$/.test(r.periodo)
+    && (r.uf == null || (typeof r.uf === 'number' && r.uf >= 10000 && r.uf <= 100000))
+    && (r.utm == null || (typeof r.utm === 'number' && r.utm >= 30000 && r.utm <= 200000)));
+  return ok ? (x as IndicadorAPI[]).map((r) => ({ periodo: r.periodo, uf: r.uf ?? null, utm: r.utm ?? null })) : null;
+}

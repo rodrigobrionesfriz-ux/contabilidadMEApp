@@ -6,7 +6,8 @@ import { decimalCL, MESES } from '@/lib/formato';
 
 const txt = (n: number | null | undefined, dec: number) => (n ? n.toLocaleString('es-CL', { minimumFractionDigits: dec, maximumFractionDigits: dec }) : '');
 import { Mensaje } from '@/components/form-estado';
-import { guardarIndicador, actualizarIndicadoresAPI } from '../acciones';
+import { guardarIndicador } from '../acciones';
+import { actualizarIndicadores } from '../indicadores-cliente';
 
 interface Fila { periodo: string; uf: number | null; utm: number | null; actualizado: string }
 
@@ -45,7 +46,7 @@ export function TablaUF({ empresaId, anio, filas, utmSII, cerrados, editable }: 
         </div>
         <div className="flex flex-wrap gap-2 text-xs">
           {editable && <button type="button" className="boton py-1" disabled={pendiente} title="UF del último día de cada mes y UTM, desde mindicador.cl"
-            onClick={() => iniciar(async () => { const r = await actualizarIndicadoresAPI(empresaId, anio); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) router.refresh(); })}>
+            onClick={() => iniciar(async () => { const r = await actualizarIndicadores(empresaId, anio); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) router.refresh(); })}>
             {pendiente ? 'Consultando…' : '🔄 Actualizar desde mindicador.cl'}</button>}
           <a className="boton-sec py-1" href={`?anio=${anio - 1}#uf-mensual`}>← {anio - 1}</a>
           <a className="boton-sec py-1" href={`?anio=${anio + 1}#uf-mensual`}>{anio + 1} →</a>

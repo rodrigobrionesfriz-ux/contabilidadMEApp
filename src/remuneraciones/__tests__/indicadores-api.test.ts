@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { indicadoresDesdeAPI } from '../indicadores-api';
+import { indicadoresDesdeAPI, datosAPIValidos } from '../indicadores-api';
 
 describe('UF y UTM desde mindicador.cl', () => {
   it('toma la UF del último día de cada mes y la UTM del mes', () => {
@@ -17,4 +17,11 @@ describe('UF y UTM desde mindicador.cl', () => {
     ]);
   });
   it('sin datos no devuelve nada', () => expect(indicadoresDesdeAPI(2026, {}, {})).toEqual([]));
+
+  it('valida lo que llega del navegador', () => {
+    expect(datosAPIValidos(2026, [{ periodo: '2026-09', uf: 41100.5, utm: null }])).toEqual([{ periodo: '2026-09', uf: 41100.5, utm: null }]);
+    expect(datosAPIValidos(2026, [{ periodo: '2025-09', uf: 41100.5 }])).toBeNull();
+    expect(datosAPIValidos(2026, [{ periodo: '2026-09', uf: 4110050 }])).toBeNull();
+    expect(datosAPIValidos(2026, 'x')).toBeNull();
+  });
 });

@@ -4,7 +4,8 @@ import { useState, useTransition } from 'react';
 import { decimalCL, MESES } from '@/lib/formato';
 import { useRouter } from 'next/navigation';
 import { Mensaje } from '@/components/form-estado';
-import { cerrarLibro, reabrirLibro, guardarIndicador, actualizarIndicadoresAPI } from '../acciones';
+import { cerrarLibro, reabrirLibro, guardarIndicador } from '../acciones';
+import { actualizarIndicadores } from '../indicadores-cliente';
 
 const fmtUF = (n: number) => n.toLocaleString('es-CL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -43,7 +44,7 @@ export function AccionesLibro({ empresaId, anio, mes, uf, utm, ufTabla, cerrado,
         </>)}
         {!cerrado && escribe && (<>
           <button type="button" className="boton-sec" disabled={pendiente} title="UF del último día del mes y UTM, desde mindicador.cl"
-            onClick={() => iniciar(async () => { const r = await actualizarIndicadoresAPI(empresaId, anio); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) { setEditar(false); router.refresh(); } })}>
+            onClick={() => iniciar(async () => { const r = await actualizarIndicadores(empresaId, anio); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) { setEditar(false); router.refresh(); } })}>
             🔄 Traer de mindicador.cl</button>
         </>)}
         {!cerrado && escribe && (
