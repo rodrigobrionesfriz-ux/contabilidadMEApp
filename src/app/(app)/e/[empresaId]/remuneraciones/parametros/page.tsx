@@ -27,7 +27,7 @@ export default async function ParametrosPage({ params, searchParams }: PageProps
         <p className="text-sm text-tenue">Valores de referencia Previred / Superintendencia de Pensiones (oct-2026). Actualízalos cuando cambien por ley o resolución.</p>
       </div>
       <Pestanas empresaId={empresaId} activa="/parametros" />
-      <TablaUF key={`${anio}-${filas.map((f) => f.periodo + f.uf + f.utm).join()}`} empresaId={empresaId} anio={anio} filas={filas}
+      <TablaUF empresaId={empresaId} anio={anio} filas={filas}
         utmSII={Array.from({ length: 12 }, (_, i) => UTM_SII[anio]?.[i] ?? null)} cerrados={(libros.data ?? []).map((l) => String(l.periodo))} editable={puedeEscribir(empresa.rol)} />
       <FormParametros empresaId={empresaId} P={P} editable={empresa.rol === 'admin'} />
       <section className="tarjeta p-4 text-xs">

@@ -2,7 +2,8 @@
 
 import { revalidatePath } from 'next/cache';
 import { crearClienteServidor } from '@/lib/supabase/server';
-import { contextoRemuneraciones, indicadoresMes } from '@/lib/datos/remuneraciones';
+import { contextoRemuneraciones, indicadoresMes, indicadoresTabla } from '@/lib/datos/remuneraciones';
+import { API_INDICADORES, indicadoresDesdeAPI, type SerieAPI } from '@/remuneraciones/indicadores-api';
 import { MESES } from '@/lib/formato';
 import { liquidacionMes } from '@/remuneraciones/calculo';
 import { lineaLibro, totalizar, asientoRemuneraciones, lineaVacia } from '@/remuneraciones/libro';
@@ -132,6 +133,35 @@ export async function guardarIndicador(empresaId: string, periodo: string, uf: n
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/e/${empresaId}`, 'layout');
   return { ok: true, mensaje: `UF de ${periodo} guardada. Las liquidaciones del mes se recalcularon con ella.` };
+}
+
+/** Trae de mindicador.cl la UF del último día de cada mes y la UTM del año, y guarda lo que cambió. */
+export async function actualizarIndicadoresAPI(empresaId: string, anio: number): Promise<Res> {
+  if (!(anio >= 2000 && anio <= 2100)) return { ok: false, error: 'Año inválido.' };
+  const leer = async (k: 'uf' | 'utm'): Promise<SerieAPI> => {
+    const r = await fetch(`${API_INDICADORES}/${k}/${anio}`, { cache: 'no-store', signal: AbortSignal.timeout(15000) });
+    if (!r.ok) throw new Error(`mindicador.cl respondió ${r.status} al pedir la ${k.toUpperCase()}`);
+    return r.json();
+  };
+  let api;
+  try { const [uf, utm] = await Promise.all([leer('uf'), leer('utm')]); api = indicadoresDesdeAPI(anio, uf, utm); }
+  catch (e) { return { ok: false, error: `No se pudo consultar mindicador.cl (${e instanceof Error ? e.message : String(e)}). Intenta de nuevo o ingrésalos a mano.` }; }
+  if (!api.length) return { ok: false, error: `mindicador.cl aún no tiene valores de ${anio}.` };
+  const actuales = await indicadoresTabla(anio);
+  const supabase = await crearClienteServidor();
+  let n = 0;
+  for (const x of api) {
+    const a = actuales.find((r) => r.periodo === x.periodo);
+    const uf = x.uf != null && x.uf !== a?.uf ? x.uf : null;
+    const utm = x.utm != null && x.utm !== a?.utm ? x.utm : null;
+    if (uf == null && utm == null) continue;
+    const { error } = await supabase.rpc('guardar_indicador', { p_periodo: x.periodo, p_uf: uf, p_utm: utm });
+    if (error) return { ok: false, error: `${x.periodo}: ${error.message}` };
+    n++;
+  }
+  revalidatePath(`/e/${empresaId}`, 'layout');
+  const conUF = api.filter((x) => x.uf != null).map((x) => x.periodo.slice(5));
+  return { ok: true, mensaje: n ? `Actualizado desde mindicador.cl: ${n} ${n === 1 ? 'mes' : 'meses'} (UF al cierre de ${conUF.length} meses). Las liquidaciones abiertas se recalcularon.` : 'Los indicadores ya estaban al día.' };
 }
 
 export async function reabrirLibro(empresaId: string, anio: number, mes: number): Promise<Res> {

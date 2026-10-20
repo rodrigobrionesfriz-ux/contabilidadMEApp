@@ -6,7 +6,7 @@ import { decimalCL, MESES } from '@/lib/formato';
 
 const txt = (n: number | null | undefined, dec: number) => (n ? n.toLocaleString('es-CL', { minimumFractionDigits: dec, maximumFractionDigits: dec }) : '');
 import { Mensaje } from '@/components/form-estado';
-import { guardarIndicador } from '../acciones';
+import { guardarIndicador, actualizarIndicadoresAPI } from '../acciones';
 
 interface Fila { periodo: string; uf: number | null; utm: number | null; actualizado: string }
 
@@ -18,6 +18,10 @@ export function TablaUF({ empresaId, anio, filas, utmSII, cerrados, editable }: 
   const per = (m: number) => `${anio}-${String(m).padStart(2, '0')}`;
   const inicial = () => Object.fromEntries(MESES.map((_, i) => { const f = filas.find((x) => x.periodo === per(i + 1)); return [per(i + 1), { uf: txt(f?.uf, 2), utm: txt(f?.utm, 0) }]; }));
   const [v, setV] = useState<Record<string, { uf: string; utm: string }>>(inicial);
+  // Si llegan valores nuevos del servidor (después de guardar o de la API), la tabla se rearma.
+  const firma = `${anio}|${filas.map((f) => `${f.periodo}:${f.uf}:${f.utm}`).join()}`;
+  const [firmaVista, setFirmaVista] = useState(firma);
+  if (firma !== firmaVista) { setFirmaVista(firma); setV(inicial()); }
   const [msg, setMsg] = useState<{ ok?: string; error?: string }>({});
   const [pendiente, iniciar] = useTransition();
   const original = inicial();
@@ -39,7 +43,10 @@ export function TablaUF({ empresaId, anio, filas, utmSII, cerrados, editable }: 
           <h2 className="font-semibold">UF y UTM por mes · {anio}</h2>
           <p className="text-xs text-tenue">Las remuneraciones usan la UF del último día del mes (sii.cl → Valores y fechas). Es la misma para todas las empresas. Sin la UF del mes no se puede cerrar el libro.</p>
         </div>
-        <div className="flex gap-2 text-xs">
+        <div className="flex flex-wrap gap-2 text-xs">
+          {editable && <button type="button" className="boton py-1" disabled={pendiente} title="UF del último día de cada mes y UTM, desde mindicador.cl"
+            onClick={() => iniciar(async () => { const r = await actualizarIndicadoresAPI(empresaId, anio); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) router.refresh(); })}>
+            {pendiente ? 'Consultando…' : '🔄 Actualizar desde mindicador.cl'}</button>}
           <a className="boton-sec py-1" href={`?anio=${anio - 1}#uf-mensual`}>← {anio - 1}</a>
           <a className="boton-sec py-1" href={`?anio=${anio + 1}#uf-mensual`}>{anio + 1} →</a>
         </div>

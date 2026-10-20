@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import { decimalCL, MESES } from '@/lib/formato';
 import { useRouter } from 'next/navigation';
 import { Mensaje } from '@/components/form-estado';
-import { cerrarLibro, reabrirLibro, guardarIndicador } from '../acciones';
+import { cerrarLibro, reabrirLibro, guardarIndicador, actualizarIndicadoresAPI } from '../acciones';
 
 const fmtUF = (n: number) => n.toLocaleString('es-CL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -14,6 +14,9 @@ export function AccionesLibro({ empresaId, anio, mes, uf, utm, ufTabla, cerrado,
   const router = useRouter();
   const [editar, setEditar] = useState(!ufTabla && !cerrado && escribe);
   const [v, setV] = useState({ uf: ufTabla ? fmtUF(uf) : '', utm: utm ? utm.toLocaleString('es-CL') : '' });
+  const firma = `${uf}|${utm}|${ufTabla}`;
+  const [firmaVista, setFirmaVista] = useState(firma);
+  if (firma !== firmaVista) { setFirmaVista(firma); setV({ uf: ufTabla ? fmtUF(uf) : '', utm: utm ? utm.toLocaleString('es-CL') : '' }); }
   const [msg, setMsg] = useState<{ error?: string; ok?: string }>({});
   const [pendiente, iniciar] = useTransition();
   const periodo = `${anio}-${String(mes).padStart(2, '0')}`;
@@ -37,6 +40,11 @@ export function AccionesLibro({ empresaId, anio, mes, uf, utm, ufTabla, cerrado,
           <div><div className="etiqueta">UF {cerrado ? 'del libro' : `al ${ultimoDia}/${String(mes).padStart(2, '0')}`}</div><div className="num py-1.5 font-semibold">{fmtUF(uf)}</div></div>
           <div><div className="etiqueta">UTM</div><div className="num py-1.5 font-semibold">${utm.toLocaleString('es-CL')}</div></div>
           {!cerrado && escribe && <button type="button" className="boton-sec" onClick={() => setEditar(true)}>Cambiar UF</button>}
+        </>)}
+        {!cerrado && escribe && (<>
+          <button type="button" className="boton-sec" disabled={pendiente} title="UF del último día del mes y UTM, desde mindicador.cl"
+            onClick={() => iniciar(async () => { const r = await actualizarIndicadoresAPI(empresaId, anio); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) { setEditar(false); router.refresh(); } })}>
+            🔄 Traer de mindicador.cl</button>
         </>)}
         {!cerrado && escribe && (
           <button type="button" className="boton ml-auto" disabled={pendiente || !hayLineas || !ufTabla} title={ufTabla ? '' : 'Primero ingresa la UF del último día del mes'}

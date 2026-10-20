@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (321): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (323): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -130,6 +130,9 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - guardar_indicador(periodo, uf, utm): admin o contador de cualquier empresa; valida rangos (UF 10.000 a 100.000, UTM 30.000 a 200.000); UTM vacía conserva la anterior.
 - Trigger libro_rem_exige_uf en libros_remuneraciones: no deja cerrar sin la UF del mes en indicadores, ni con una UF distinta a la de la tabla.
 
+### 0023 (10u)
+- guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
+
 ## Importador del respaldo Excel (fase 1)
 - **Fuente:** el botón "📥 Exportar Excel" en Sistema y Respaldos del sistema actual. Un año por archivo.
 - **Equivalencia con genDiario:**
@@ -228,6 +231,8 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
   - Liquidación: aviso si el líquido queda negativo, contrato "más de 11 años" con su nombre y gratificación sin paréntesis dobles.
 
 - **UF del último día del mes (10t):** las remuneraciones usan la UF de la tabla indicadores (común a todas las empresas), ingresada a mano en Parámetros → "UF y UTM por mes" (por año, con estado: falta, fecha de actualización o libro cerrado). Si falta, se calcula con la UF de referencia de los parámetros y se avisa en Trabajadores y en el Libro. En el Libro se ve la UF del mes con "Cambiar UF" (guarda en la tabla y recalcula); "Cerrar libro" queda bloqueado sin UF y, al cerrar, el servidor recalcula todo con la UF de la tabla (ya no recibe UF ni UTM digitadas). La UTM sale de la tabla o, si está vacía, de la publicada por el SII. LRE y Previred usan los mismos valores.
+
+- **Indicadores desde API (10u)** (src/remuneraciones/indicadores-api.ts): botón "🔄 Actualizar desde mindicador.cl" en Parámetros → UF y UTM por mes y "🔄 Traer de mindicador.cl" en el Libro. La consulta la hace el servidor (/api/uf/AAAA y /api/utm/AAAA); toma la UF del último día de cada mes (la UF se publica hasta el día 9 del mes siguiente, así que la del cierre suele estar disponible antes de fin de mes) y la UTM de cada mes, y guarda solo lo que cambió. Si la API no responde, se avisa y se puede ingresar a mano.
 
 ## Contratos de trabajo (fase 5c)
 - **Registro DT** (src/remuneraciones/contrato-dt.ts): traslado fiel de contratos-dt.js (Instructivo DT v21.04.22). 100 columnas, ";", CRLF, ANSI; un archivo por cargo, máximo 1.000 filas. Tablas DT de comunas (no son el código CUT; Angol = 226) y nacionalidades. Plazo de registro: 15 días hábiles aproximados.

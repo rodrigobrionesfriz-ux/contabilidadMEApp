@@ -39,6 +39,9 @@ describe('remuneraciones en la base', () => {
     await b.como(CONT, `select guardar_indicador('2026-03', 41000, 69889)`);
     await expect(cerrar()).rejects.toThrow(/Recalcula/);
     await b.como(CONT, `select guardar_indicador('2026-03', 41247.63, null)`);
+    await b.como(CONT, `select guardar_indicador('2026-04', null, 69889)`);
+    await expect(b.como(CONT, `select guardar_indicador('2026-04', null, null)`)).rejects.toThrow(/Indica la UF o la UTM/);
+    expect(await b.como(CONT, `select uf, utm::text from indicadores where periodo = '2026-04'`)).toEqual([{ uf: null, utm: '69889' }]);
     expect(await b.como(CONT, `select uf::text, utm::text from indicadores where periodo = '2026-03'`)).toEqual([{ uf: '41247.63', utm: '69889' }]);
     const [r] = await cerrar();
     expect(r.numero).toBeGreaterThan(0);
