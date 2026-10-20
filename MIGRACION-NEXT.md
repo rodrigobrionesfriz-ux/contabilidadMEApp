@@ -374,6 +374,9 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - src/app/manifest.ts: nombre, colores e íconos para instalar la app (Chrome/Edge muestran ⊕ "Instalar"; Android, "Agregar a pantalla de inicio"). proxy.ts deja pasar /manifest.webmanifest sin sesión.
 - La barra superior y el login usan el ícono en vez del emoji 📊.
 
+## Plan de cuentas fijo (10z2)
+- En escritorio la página ocupa el alto de la ventana: título, buscador y "+ Nueva cuenta" quedan fijos arriba y solo la tabla se desplaza, con sus títulos (Código, Nombre, Tipo...) fijos. En celular, la tabla tiene alto máximo y títulos fijos.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:
