@@ -29,8 +29,18 @@ describe('remuneraciones en la base', () => {
     const lineas = [lineaLibro(t, l, '2026-03')];
     const tot = totalizar(lineas);
     const a = asientoRemuneraciones(tot, 2026, 3);
-    const [r] = await b.como<{ numero: number }>(CONT, `select * from cerrar_libro_remuneraciones($1, '2026-03', 41247.63, 69889, $2, $3, $4, $5, $6)`,
+    const cerrar = () => b.como<{ numero: number }>(CONT, `select * from cerrar_libro_remuneraciones($1, '2026-03', 41247.63, 69889, $2, $3, $4, $5, $6)`,
       [emp, j(lineas), j(tot), a.fecha, a.glosa, j(a.lineas)]);
+    await expect(cerrar()).rejects.toThrow(/Falta la UF/);
+    await expect(b.como(CONT, `select guardar_indicador('2026-03', 4124763, 69889)`)).rejects.toThrow(/fuera de rango/);
+    await b.db.exec(`insert into auth.users (id, email) values ('99999999-9999-9999-9999-999999999999', 'x@t.cl')`);
+    await expect(b.como('99999999-9999-9999-9999-999999999999', `select guardar_indicador('2026-03', 41000, 69889)`)).rejects.toThrow(/administrador o contador/);
+    await expect(b.como(CONT, `insert into indicadores (periodo, uf) values ('2026-04', 41000)`)).rejects.toThrow();
+    await b.como(CONT, `select guardar_indicador('2026-03', 41000, 69889)`);
+    await expect(cerrar()).rejects.toThrow(/Recalcula/);
+    await b.como(CONT, `select guardar_indicador('2026-03', 41247.63, null)`);
+    expect(await b.como(CONT, `select uf::text, utm::text from indicadores where periodo = '2026-03'`)).toEqual([{ uf: '41247.63', utm: '69889' }]);
+    const [r] = await cerrar();
     expect(r.numero).toBeGreaterThan(0);
     const [{ ant }] = await b.como<{ ant: string }>(CONT, `select sum(haber)::text ant from asiento_lineas where empresa_id=$1 and cuenta='1106001'`, [emp]);
     expect(Number(ant)).toBe(100000);

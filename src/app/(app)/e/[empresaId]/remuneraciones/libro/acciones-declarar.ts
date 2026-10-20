@@ -9,8 +9,8 @@ import { construirPrevired, textoArchivoPrevired, type CfgPrevired } from '@/rem
 export type ResArchivo = { ok: boolean; nombre: string; texto?: string; errores: Observacion[]; advertencias: Observacion[]; lineas?: number };
 
 /** Valida y arma el CSV del LRE (Mi DT) del mes. Sólo devuelve el texto si no hay errores. */
-export async function archivoLRE(empresaId: string, anio: number, mes: number, uf: number, utm: number): Promise<ResArchivo> {
-  const [{ lineas, trabajadores, guardado, ctx }, emp] = await Promise.all([lineasDelMes(empresaId, anio, mes, uf, utm), empresaParaDocumentos(empresaId)]);
+export async function archivoLRE(empresaId: string, anio: number, mes: number): Promise<ResArchivo> {
+  const [{ lineas, trabajadores, guardado, ctx }, emp] = await Promise.all([lineasDelMes(empresaId, anio, mes), empresaParaDocumentos(empresaId)]);
   const perfiles = Object.fromEntries(trabajadores.map((t) => [t.id, (t.lre || {}) as Record<string, unknown>]));
   const v = validarLibroLRE(lineas, ctx.P.patronal, !!guardado, perfiles);
   const nombre = nombreArchivoLRE(emp.rut || '', anio, mes);
@@ -20,9 +20,9 @@ export async function archivoLRE(empresaId: string, anio: number, mes: number, u
 }
 
 /** Valida y arma el archivo de carga masiva Previred del mes. */
-export async function archivoPrevired(empresaId: string, anio: number, mes: number, uf: number, utm: number): Promise<ResArchivo> {
+export async function archivoPrevired(empresaId: string, anio: number, mes: number): Promise<ResArchivo> {
   const [{ lineas, trabajadores, guardado, ctx, uf: ufMes, previred }, emp] = await Promise.all([
-    lineasDelMes(empresaId, anio, mes, uf, utm), empresaParaDocumentos(empresaId)]);
+    lineasDelMes(empresaId, anio, mes), empresaParaDocumentos(empresaId)]);
   const r = construirPrevired({ anio, mes, lineas, cerrado: !!guardado, uf: ufMes, trabajadores, eventos: ctx.eventos, patronal: ctx.P.patronal,
     topeAFP_UF: +ctx.P.ind.topeAFP_UF!, rutEmpresa: emp.rut || '', cfg: previred });
   return { ok: r.ok, nombre: r.nombre, texto: r.ok ? textoArchivoPrevired(r) : undefined, errores: r.errores, advertencias: r.advertencias, lineas: r.lineas.length };

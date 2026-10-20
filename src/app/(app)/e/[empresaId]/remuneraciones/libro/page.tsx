@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { requerirEmpresa, puedeEscribir } from '@/lib/auth';
 import { lineasDelMes } from '@/lib/datos/remuneraciones';
 import type { LineaLibro, Totales } from '@/remuneraciones/libro';
-import { clp, param, MESES, decimalCL } from '@/lib/formato';
+import { clp, param, MESES } from '@/lib/formato';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { Pestanas } from '../pestanas';
 import { AccionesLibro } from './acciones-libro';
@@ -23,7 +23,7 @@ export default async function LibroRemPage({ params, searchParams }: PageProps<'
   const anio = Number(param(sp.anio)) || new Date().getFullYear();
   const mes = Number(param(sp.mes)) || new Date().getMonth() + 1;
   const empresa = await requerirEmpresa(empresaId);
-  const { guardado, uf, utm, lineas, totales: tot, previred } = await lineasDelMes(empresaId, anio, mes, decimalCL(param(sp.uf)), decimalCL(param(sp.utm)));
+  const { guardado, uf, utm, ufTabla, lineas, totales: tot, previred } = await lineasDelMes(empresaId, anio, mes);
 
   return (
     <div className="space-y-4">
@@ -35,7 +35,7 @@ export default async function LibroRemPage({ params, searchParams }: PageProps<'
         <SelectorPeriodo anio={anio} mes={mes} etiquetaMes="Mes" conAnioCompleto={false} />
       </div>
       <Pestanas empresaId={empresaId} activa="/libro" query={`?anio=${anio}&mes=${mes}`} />
-      <AccionesLibro empresaId={empresaId} anio={anio} mes={mes} uf={uf} utm={utm} cerrado={!!guardado} escribe={puedeEscribir(empresa.rol)} admin={empresa.rol === 'admin'} hayLineas={lineas.length > 0} />
+      <AccionesLibro empresaId={empresaId} anio={anio} mes={mes} uf={uf} utm={utm} ufTabla={ufTabla} cerrado={!!guardado} escribe={puedeEscribir(empresa.rol)} admin={empresa.rol === 'admin'} hayLineas={lineas.length > 0} />
       <div className="tarjeta overflow-x-auto">
         <table className="w-full min-w-[1300px] text-[11px]">
           <thead className="text-left text-tenue uppercase">
@@ -57,7 +57,7 @@ export default async function LibroRemPage({ params, searchParams }: PageProps<'
           </tfoot>
         </table>
       </div>
-      {lineas.length > 0 && <Declarar empresaId={empresaId} anio={anio} mes={mes} uf={uf} utm={utm} cerrado={!!guardado} admin={empresa.rol === 'admin'} previred={previred} />}
+      {lineas.length > 0 && <Declarar empresaId={empresaId} anio={anio} mes={mes} cerrado={!!guardado} admin={empresa.rol === 'admin'} previred={previred} />}
     </div>
   );
 }

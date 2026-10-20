@@ -2,7 +2,8 @@
 
 import { revalidatePath } from 'next/cache';
 import { crearClienteServidor } from '@/lib/supabase/server';
-import { contextoRemuneraciones } from '@/lib/datos/remuneraciones';
+import { contextoRemuneraciones, indicadoresMes } from '@/lib/datos/remuneraciones';
+import { MESES } from '@/lib/formato';
 import { liquidacionMes } from '@/remuneraciones/calculo';
 import { lineaLibro, totalizar, asientoRemuneraciones, lineaVacia } from '@/remuneraciones/libro';
 import { rutParse } from '@/motor/rut';
@@ -101,11 +102,12 @@ export async function borrarAnticipo(empresaId: string, id: string): Promise<Res
 }
 
 /** Cierra el libro: recalcula todo en el servidor, guarda la foto y genera el asiento. */
-export async function cerrarLibro(empresaId: string, anio: number, mes: number, uf: number, utm: number): Promise<Res> {
-  if (!(uf > 0) || !(utm > 0)) return { ok: false, error: 'Ingresa la UF y la UTM del mes.' };
-  if (uf < 10000 || uf > 100000 || utm < 30000 || utm > 200000) return { ok: false, error: `Revisa la UF (${uf}) y la UTM (${utm}): están fuera de rango. Usa coma para decimales, por ejemplo 39.383,07.` };
+export async function cerrarLibro(empresaId: string, anio: number, mes: number): Promise<Res> {
   const periodo = `${anio}-${String(mes).padStart(2, '0')}`;
-  const { ctx, trabajadores } = await contextoRemuneraciones(empresaId, anio);
+  const { ctx, trabajadores, indicadores } = await contextoRemuneraciones(empresaId, anio);
+  // Se recalcula todo con la UF del último día del mes de la tabla indicadores (requisito para cerrar).
+  const { uf, utm, ufTabla } = indicadoresMes(ctx.P, anio, mes, indicadores);
+  if (!ufTabla) return { ok: false, error: `Falta la UF del último día de ${MESES[mes - 1].toLowerCase()} ${anio}. Ingrésala arriba o en Parámetros → UF y UTM por mes.` };
   const lineas = trabajadores.filter((t) => t.activo).map((t) => lineaLibro(t, liquidacionMes(t, uf, utm, anio, mes, ctx), periodo)).filter((l) => !lineaVacia(l));
   if (!lineas.length) return { ok: false, error: 'No hay trabajadores con remuneraciones en el mes.' };
   const tot = totalizar(lineas);
@@ -118,6 +120,18 @@ export async function cerrarLibro(empresaId: string, anio: number, mes: number, 
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/e/${empresaId}`, 'layout');
   return { ok: true, mensaje: `Libro cerrado: ${lineas.length} trabajadores, asiento N° ${(data as { numero: number }[])[0].numero}.` };
+}
+
+/** UF del último día del mes (y UTM) en la tabla común de indicadores. */
+export async function guardarIndicador(empresaId: string, periodo: string, uf: number, utm: number | null): Promise<Res> {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(periodo)) return { ok: false, error: 'Período inválido.' };
+  if (!(uf >= 10000 && uf <= 100000)) return { ok: false, error: `Revisa la UF (${uf}): está fuera de rango. Usa coma para decimales, por ejemplo 39.383,07.` };
+  if (utm != null && !(utm >= 30000 && utm <= 200000)) return { ok: false, error: `Revisa la UTM (${utm}): está fuera de rango.` };
+  const supabase = await crearClienteServidor();
+  const { error } = await supabase.rpc('guardar_indicador', { p_periodo: periodo, p_uf: uf, p_utm: utm });
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/e/${empresaId}`, 'layout');
+  return { ok: true, mensaje: `UF de ${periodo} guardada. Las liquidaciones del mes se recalcularon con ella.` };
 }
 
 export async function reabrirLibro(empresaId: string, anio: number, mes: number): Promise<Res> {

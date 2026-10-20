@@ -125,6 +125,11 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - rcv_cargas (empresa, tipo, período): RCV leído (docs con su registro SII completo y filas descartadas), archivo, quién y cuándo. RLS: ver miembros; crear, editar y borrar contador o admin.
 - rcv_resumen(empresa, tipo): por período, total de documentos del RCV guardado y cuántos faltan en el libro (sin documento vigente con el mismo RUT, tipo DTE y folio).
 
+### 0022 (10t)
+- indicadores (tabla común que ya existía, solo lectura): se agrega actualizado_por.
+- guardar_indicador(periodo, uf, utm): admin o contador de cualquier empresa; valida rangos (UF 10.000 a 100.000, UTM 30.000 a 200.000); UTM vacía conserva la anterior.
+- Trigger libro_rem_exige_uf en libros_remuneraciones: no deja cerrar sin la UF del mes en indicadores, ni con una UF distinta a la de la tabla.
+
 ## Importador del respaldo Excel (fase 1)
 - **Fuente:** el botón "📥 Exportar Excel" en Sistema y Respaldos del sistema actual. Un año por archivo.
 - **Equivalencia con genDiario:**
@@ -221,6 +226,8 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
   - Impuesto único: la salud (7% más adicional Isapre) rebaja la base con tope del 7% del tope imponible en UF, según el SII. El sistema actual rebajaba el plan completo; la diferencia está declarada en las pruebas de oro (DIVERGENCIAS en calculo.test.ts).
   - Ficha: aviso cuando el contrato AFC es "Indefinido, más de 11 años" (el trabajador no paga cesantía) y la fecha de inicio no calza.
   - Liquidación: aviso si el líquido queda negativo, contrato "más de 11 años" con su nombre y gratificación sin paréntesis dobles.
+
+- **UF del último día del mes (10t):** las remuneraciones usan la UF de la tabla indicadores (común a todas las empresas), ingresada a mano en Parámetros → "UF y UTM por mes" (por año, con estado: falta, fecha de actualización o libro cerrado). Si falta, se calcula con la UF de referencia de los parámetros y se avisa en Trabajadores y en el Libro. En el Libro se ve la UF del mes con "Cambiar UF" (guarda en la tabla y recalcula); "Cerrar libro" queda bloqueado sin UF y, al cerrar, el servidor recalcula todo con la UF de la tabla (ya no recibe UF ni UTM digitadas). La UTM sale de la tabla o, si está vacía, de la publicada por el SII. LRE y Previred usan los mismos valores.
 
 ## Contratos de trabajo (fase 5c)
 - **Registro DT** (src/remuneraciones/contrato-dt.ts): traslado fiel de contratos-dt.js (Instructivo DT v21.04.22). 100 columnas, ";", CRLF, ANSI; un archivo por cargo, máximo 1.000 filas. Tablas DT de comunas (no son el código CUT; Angol = 226) y nacionalidades. Plazo de registro: 15 días hábiles aproximados.

@@ -55,6 +55,7 @@ export async function contextoRemuneraciones(empresaId: string, anio: number) {
     traerTodo((d, h) => supabase.from('libros_remuneraciones').select('periodo,uf,utm,lineas,totales,asiento_id,cerrado_en')
       .eq('empresa_id', empresaId).gte('periodo', `${anio - 1}-07`).lte('periodo', `${anio}-12`).range(d, h)),
   ]);
+  const indicadores = await indicadoresTabla(anio);
   const P = par.P;
   const ants = anticipos as { id: string; trabajador_id: string; fecha: string; monto: number; motivo: string | null; mes_desc: string; asiento_id: string | null }[];
   const trabajadores: (Trabajador & { activo: boolean })[] = (filas as FilaTrabajador[]).map((f) => ({
@@ -72,27 +73,42 @@ export async function contextoRemuneraciones(empresaId: string, anio: number) {
     horas: horasMap,
     libros: librosMap,
   };
-  return { ctx, trabajadores, anticipos: ants, libros: libros as LibroGuardado[], feriados: par.feriados, previred: par.previred };
+  return { ctx, trabajadores, anticipos: ants, libros: libros as LibroGuardado[], feriados: par.feriados, previred: par.previred, indicadores };
 }
 
-/** UF y UTM por defecto para un mes: UTM del SII (o la del parámetro) y UF de los parámetros. */
-export function indicadoresMes(P: Parametros, anio: number, mes: number) {
-  return { uf: +P.ind.uf, utm: +(UTM_SII[anio]?.[mes - 1] ?? 0) || +P.ind.utm };
+export interface IndicadorFila { periodo: string; uf: number | null; utm: number | null; actualizado: string }
+
+/** UF (último día del mes) y UTM ingresadas a mano en la tabla indicadores, de un año. */
+export async function indicadoresTabla(anio: number): Promise<IndicadorFila[]> {
+  const supabase = await crearClienteServidor();
+  const { data } = await supabase.from('indicadores').select('periodo,uf,utm,actualizado').gte('periodo', `${anio}-01`).lte('periodo', `${anio}-12`).order('periodo');
+  return ((data ?? []) as IndicadorFila[]).map((r) => ({ ...r, uf: r.uf == null ? null : Number(r.uf), utm: r.utm == null ? null : Number(r.utm) }));
+}
+
+/**
+ * UF y UTM de un mes. UF: la del último día del mes en la tabla indicadores; si falta, la de referencia de los
+ * parámetros (ufTabla = false, el libro no se puede cerrar). UTM: la de la tabla, la del SII o la del parámetro.
+ */
+export function indicadoresMes(P: Parametros, anio: number, mes: number, tabla: IndicadorFila[] = []) {
+  const per = `${anio}-${String(mes).padStart(2, '0')}`;
+  const fila = tabla.find((r) => r.periodo === per);
+  const ufTabla = !!(fila?.uf && fila.uf > 0);
+  return { uf: ufTabla ? fila!.uf! : +P.ind.uf, utm: fila?.utm || +(UTM_SII[anio]?.[mes - 1] ?? 0) || +P.ind.utm, ufTabla };
 }
 
 /** Líneas del libro de un mes: la foto si está cerrado; si no, el cálculo con las fichas vigentes. */
-export async function lineasDelMes(empresaId: string, anio: number, mes: number, ufManual?: number, utmManual?: number) {
+export async function lineasDelMes(empresaId: string, anio: number, mes: number) {
   const base = await contextoRemuneraciones(empresaId, anio);
   const { ctx, trabajadores, libros } = base;
   const periodo = `${anio}-${String(mes).padStart(2, '0')}`;
   const guardado = libros.find((l) => l.periodo === periodo);
-  const def = indicadoresMes(ctx.P, anio, mes);
-  const uf = guardado ? Number(guardado.uf) : ufManual || def.uf;
-  const utm = guardado ? Number(guardado.utm) : utmManual || def.utm;
+  const def = indicadoresMes(ctx.P, anio, mes, base.indicadores);
+  const uf = guardado ? Number(guardado.uf) : def.uf;
+  const utm = guardado ? Number(guardado.utm) : def.utm;
   const lineas: LineaLibro[] = guardado ? (guardado.lineas as LineaLibro[])
     : trabajadores.filter((t) => t.activo).map((t) => lineaLibro(t, liquidacionMes(t, uf, utm, anio, mes, ctx), periodo)).filter((l) => !lineaVacia(l));
   const totales = guardado ? (guardado.totales as Totales) : totalizar(lineas);
-  return { ...base, periodo, guardado, uf, utm, lineas, totales };
+  return { ...base, periodo, guardado, uf, utm, ufTabla: def.ufTabla, ufIndicador: base.indicadores.find((r) => r.periodo === periodo)?.uf ?? null, lineas, totales };
 }
 
 /** Todo lo que necesita el cálculo de un finiquito con término en `anio`. */
@@ -145,7 +161,7 @@ export async function contextoContratos(empresaId: string) {
   const cfgDefaults = (cfg.data?.defaults ?? {}) as DefaultsContrato;
   const D = defaultsEmpresa(empresa, cfgDefaults);
   const { P, libros } = base.ctx;
-  const ind = indicadoresMes(P, anio, new Date().getMonth() + 1);
+  const ind = indicadoresMes(P, anio, new Date().getMonth() + 1, base.indicadores);
   const imponible = (t: Trabajador) => { try { return calcularLiquidacion(t, ind.uf, ind.utm, undefined, P, libros).totalImponible as number; } catch { return +(t.base || 0); } };
   return {
     ...base, empresa, cfgDefaults, D, imponible,

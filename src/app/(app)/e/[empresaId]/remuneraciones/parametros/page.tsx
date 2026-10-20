@@ -1,16 +1,25 @@
 import type { Metadata } from 'next';
-import { requerirEmpresa } from '@/lib/auth';
-import { parametrosDeEmpresa } from '@/lib/datos/remuneraciones';
+import { requerirEmpresa, puedeEscribir } from '@/lib/auth';
+import { parametrosDeEmpresa, indicadoresTabla } from '@/lib/datos/remuneraciones';
+import { crearClienteServidor } from '@/lib/supabase/server';
+import { UTM_SII } from '@/tributario/utm';
+import { param } from '@/lib/formato';
+import { TablaUF } from './tabla-uf';
 import { iuscTabla } from '@/remuneraciones/parametros';
 import { Pestanas } from '../pestanas';
 import { FormParametros } from './form';
 
 export const metadata: Metadata = { title: 'Parámetros de remuneraciones' };
 
-export default async function ParametrosPage({ params }: PageProps<'/e/[empresaId]/remuneraciones/parametros'>) {
+export default async function ParametrosPage({ params, searchParams }: PageProps<'/e/[empresaId]/remuneraciones/parametros'>) {
   const { empresaId } = await params;
+  const anio = Number(param((await searchParams).anio)) || new Date().getFullYear();
   const empresa = await requerirEmpresa(empresaId);
-  const { P } = await parametrosDeEmpresa(empresaId);
+  const supabase = await crearClienteServidor();
+  const [{ P }, filas, libros] = await Promise.all([
+    parametrosDeEmpresa(empresaId), indicadoresTabla(anio),
+    supabase.from('libros_remuneraciones').select('periodo').eq('empresa_id', empresaId).like('periodo', `${anio}-%`),
+  ]);
   return (
     <div className="space-y-4">
       <div>
@@ -18,6 +27,8 @@ export default async function ParametrosPage({ params }: PageProps<'/e/[empresaI
         <p className="text-sm text-tenue">Valores de referencia Previred / Superintendencia de Pensiones (oct-2026). Actualízalos cuando cambien por ley o resolución.</p>
       </div>
       <Pestanas empresaId={empresaId} activa="/parametros" />
+      <TablaUF key={`${anio}-${filas.map((f) => f.periodo + f.uf + f.utm).join()}`} empresaId={empresaId} anio={anio} filas={filas}
+        utmSII={Array.from({ length: 12 }, (_, i) => UTM_SII[anio]?.[i] ?? null)} cerrados={(libros.data ?? []).map((l) => String(l.periodo))} editable={puedeEscribir(empresa.rol)} />
       <FormParametros empresaId={empresaId} P={P} editable={empresa.rol === 'admin'} />
       <section className="tarjeta p-4 text-xs">
         <h2 className="mb-2 text-sm font-semibold">Impuesto único de segunda categoría (Art. 43 N°1 LIR, en UTM)</h2>

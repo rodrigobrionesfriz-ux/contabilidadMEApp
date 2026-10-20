@@ -16,10 +16,10 @@ export default async function RemuneracionesPage({ params, searchParams }: PageP
   const anio = Number(param(sp.anio)) || new Date().getFullYear();
   const mes = Number(param(sp.mes)) || new Date().getMonth() + 1;
   const empresa = await requerirEmpresa(empresaId);
-  const { ctx, trabajadores, libros } = await contextoRemuneraciones(empresaId, anio);
+  const { ctx, trabajadores, libros, indicadores } = await contextoRemuneraciones(empresaId, anio);
   const periodo = `${anio}-${String(mes).padStart(2, '0')}`;
   const libro = libros.find((l) => l.periodo === periodo);
-  const { uf, utm } = libro ? { uf: Number(libro.uf), utm: Number(libro.utm) } : indicadoresMes(ctx.P, anio, mes);
+  const { uf, utm, ufTabla } = libro ? { uf: Number(libro.uf), utm: Number(libro.utm), ufTabla: true } : indicadoresMes(ctx.P, anio, mes, indicadores);
   const filas = trabajadores.map((t) => ({ t, l: t.activo ? liquidacionMes(t, uf, utm, anio, mes, ctx) : null }));
   const activos = filas.filter((f) => f.l);
   const sum = (k: 'totalImponible' | 'totalDescuentos' | 'liquido' | 'costoEmpresa') => activos.reduce((s, f) => s + Number(f.l![k]), 0);
@@ -31,7 +31,8 @@ export default async function RemuneracionesPage({ params, searchParams }: PageP
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-xl font-semibold">Remuneraciones · {MESES[mes - 1]} {anio}</h1>
-          <p className="text-sm text-tenue">UF {uf.toLocaleString('es-CL')} · UTM {clp(utm)}{libro ? ' · libro cerrado' : ' · cálculo provisorio con los datos vigentes'}</p>
+          <p className="text-sm text-tenue">UF {uf.toLocaleString('es-CL', { minimumFractionDigits: 2 })} · UTM {clp(utm)}{libro ? ' · libro cerrado' : ' · cálculo provisorio con los datos vigentes'}</p>
+          {!ufTabla && <p className="text-xs text-aviso">⚠️ Falta la UF del último día de {MESES[mes - 1].toLowerCase()}: se usa la de referencia. <Link href={`/e/${empresaId}/remuneraciones/parametros?anio=${anio}#uf-mensual`} className="underline">Ingresarla</Link></p>}
         </div>
         <div className="flex flex-wrap items-end gap-2">
           <SelectorPeriodo anio={anio} mes={mes} etiquetaMes="Mes" conAnioCompleto={false} />

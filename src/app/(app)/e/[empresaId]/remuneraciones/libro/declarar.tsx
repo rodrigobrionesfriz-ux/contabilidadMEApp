@@ -14,8 +14,8 @@ function descargar(texto: string, nombre: string, tipo: string) {
 }
 
 /** Archivos para la Dirección del Trabajo (LRE) y Previred, con su validación. */
-export function Declarar({ empresaId, anio, mes, uf, utm, cerrado, admin, previred }: {
-  empresaId: string; anio: number; mes: number; uf: number; utm: number; cerrado: boolean; admin: boolean; previred: CfgPrevired;
+export function Declarar({ empresaId, anio, mes, cerrado, admin, previred }: {
+  empresaId: string; anio: number; mes: number; cerrado: boolean; admin: boolean; previred: CfgPrevired;
 }) {
   const [res, setRes] = useState<(ResArchivo & { tipo: 'LRE' | 'Previred' }) | null>(null);
   const [pendiente, iniciar] = useTransition();
@@ -23,7 +23,7 @@ export function Declarar({ empresaId, anio, mes, uf, utm, cerrado, admin, previr
   const [cods, setCods] = useState(Object.entries(previred.codigos || {}).map(([k, v]) => `${k}=${v}`).join('\n'));
   const [msg, setMsg] = useState<{ ok?: string; error?: string }>({});
   const generar = (tipo: 'LRE' | 'Previred') => iniciar(async () => {
-    const r = tipo === 'LRE' ? await archivoLRE(empresaId, anio, mes, uf, utm) : await archivoPrevired(empresaId, anio, mes, uf, utm);
+    const r = tipo === 'LRE' ? await archivoLRE(empresaId, anio, mes) : await archivoPrevired(empresaId, anio, mes);
     setRes({ ...r, tipo });
     if (r.ok && r.texto) descargar(r.texto, r.nombre, tipo === 'LRE' ? 'text/csv' : 'text/plain');
   });

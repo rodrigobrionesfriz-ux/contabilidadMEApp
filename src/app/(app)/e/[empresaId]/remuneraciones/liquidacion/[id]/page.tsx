@@ -19,7 +19,7 @@ export default async function LiquidacionPage({ params, searchParams }: PageProp
   const mes = Number(param(sp.mes)) || new Date().getMonth() + 1;
   await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
-  const [{ ctx, trabajadores, libros }, { data: emp }] = await Promise.all([
+  const [{ ctx, trabajadores, libros, indicadores }, { data: emp }] = await Promise.all([
     contextoRemuneraciones(empresaId, anio),
     supabase.from('empresas').select('rut,razon_social,giro,domicilio,comuna,ciudad').eq('id', empresaId).single(),
   ]);
@@ -28,7 +28,7 @@ export default async function LiquidacionPage({ params, searchParams }: PageProp
   const guardado = libros.find((l) => l.periodo === periodo);
   let l: LineaLibro | undefined = guardado ? (guardado.lineas as LineaLibro[]).find((x) => x.id === id) : undefined;
   if (!l && t) {
-    const { uf, utm } = indicadoresMes(ctx.P, anio, mes);
+    const { uf, utm } = indicadoresMes(ctx.P, anio, mes, indicadores);
     l = lineaLibro(t, liquidacionMes(t, uf, utm, anio, mes, ctx), periodo);
   }
   if (!l) notFound();
