@@ -201,7 +201,7 @@ export function plantillaSugerida(t: Trabajador, D: Defaults, pls: PlantillaCont
 }
 
 // Opcionales: si están vacíos desaparecen sin aviso (cláusulas que sólo existen si se pactaron)
-const OPCIONALES = new Set(['anticipo', 'beneficios', 'otros_pactos', 'otros_haberes', 'colacion', 'movilizacion', 'email_trabajador', 'telefono_trabajador', 'fecha_termino', 'giro']);
+export const OPCIONALES = new Set(['anticipo', 'beneficios', 'otros_pactos', 'otros_haberes', 'colacion', 'movilizacion', 'email_trabajador', 'telefono_trabajador', 'fecha_termino', 'giro']);
 /** Reemplaza marcadores; un dato vacío no opcional queda como [dato] para que se note. */
 export function combinarContrato(texto: string, vals: Record<string, string>) {
   return String(texto || '').replace(/\{\{\s*([a-z_]+)\s*\}\}/gi, (m, k: string) => { k = k.toLowerCase(); if (!(k in vals)) return m; return vals[k] || (OPCIONALES.has(k) ? '' : `[${k.replace(/_/g, ' ')}]`); });

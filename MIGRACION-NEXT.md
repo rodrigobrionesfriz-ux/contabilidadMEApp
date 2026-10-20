@@ -1,4 +1,4 @@
-# Migración a Next.js + Supabase (estado al 18/10/2026)
+# Migración a Next.js + Supabase (estado al 20/10/2026)
 
 Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publica en Vercel en https://contabilidad-me-app.vercel.app. El sistema actual (GitHub Pages + Firebase) sigue siendo el oficial; solo recibió el arreglo de exportación V2.21.72 (ver Importador).
 
@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (317): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (321): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -221,6 +221,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - **Contrato** (src/remuneraciones/contrato-trabajo.ts): plantillas tipo (indefinido, plazo fijo, obra o faena, agrícola de temporada) y propias por cargo. Datos obligatorios vacíos quedan como [dato] resaltado. Validación de marcadores al subir Word.
 - **Word** (src/lib/docx.ts): traslado de docx-simple.js; el ZIP se escribe con xlsx CFB. Ida y vuelta probada.
 - El representante legal se edita en Configuración → Empresa.
+- **Editor del contrato (10r)** (documento/editor.tsx, src/remuneraciones/contrato-editor.ts): "✏️ Editar contrato" vuelve editable la misma hoja. Los datos de la ficha se ven con su valor real, en azul, y no se pueden borrar ni escribir dentro (bloqueo en beforeinput y, si algo se cuela, se deshace). Datos obligatorios vacíos: recuadro amarillo con el nombre del dato; opcionales vacíos: recuadro gris. "＋ Insertar dato de la ficha" agrega un dato donde está el cursor. Enter hace salto de línea; pegar entra como texto plano. Se guarda con {{marcadores}} por trabajador (contratos_trabajo), así el contrato se actualiza si cambia la ficha; si el texto quedó igual a la plantilla, se guarda solo la plantilla elegida. Si el texto cambió, se ofrece "Guardar como plantilla del cargo «cargo»" mientras se edita y después de guardar. Ya no hace falta bajar el Word para corregir el texto.
 
 ## Estados financieros y cierre (fase 6)
 - **Estados** (src/estados/eeff.ts): traslado fiel de renderBalance, renderResultados, totalesDeMayor, fmtVar y calcularResultadoEjercicio; resultados idénticos en 9 escenarios de oro. Signo de presentación invertido para naturaleza acreedora; aviso de cuentas con saldo contrario salvo correctoras. Impuesto: el contabilizado en 36 o estimado con la tasa del régimen (14D3 12,5% en 2025-2027 y 15% en 2028; 14A 27%; 14D8 0%).

@@ -87,4 +87,5 @@ body {
   main { padding: 0 !important; }
   .hoja { border: none !important; background: #fff !important; color: #000 !important; box-shadow: none !important; }
   .hoja * { color: #000 !important; border-color: #999 !important; }
+  .dato-ct { background: none !important; border: none !important; padding: 0 !important; font-weight: inherit !important; }
 }

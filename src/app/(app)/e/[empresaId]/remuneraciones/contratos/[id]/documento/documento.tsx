@@ -2,7 +2,9 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { combinarContrato, faltantesContrato, MARCADORES_CONTRATO } from '@/remuneraciones/contrato-trabajo';
+import { combinarContrato, faltantesContrato } from '@/remuneraciones/contrato-trabajo';
+import { cambioTexto } from '@/remuneraciones/contrato-editor';
+import { EditorContrato } from './editor';
 import { descargarDocx } from '@/lib/docx';
 import { Mensaje } from '@/components/form-estado';
 import { guardarContratoTrabajador, guardarPlantillaContrato } from '../../acciones';
@@ -35,7 +37,11 @@ export function DocumentoContrato({ empresaId, trabajador, vals, plantillas, pla
   const efectivo = texto.trim() ? texto : base;
   const combinado = combinarContrato(efectivo, vals);
   const faltan = faltantesContrato(efectivo, vals);
-  const run = (f: () => Promise<{ ok: boolean; mensaje?: string; error?: string }>) => iniciar(async () => { const r = await f(); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) router.refresh(); });
+  const modificado = cambioTexto(efectivo, base);
+  const [ofrecer, setOfrecer] = useState(false);
+  const run = (f: () => Promise<{ ok: boolean; mensaje?: string; error?: string }>, despues?: () => void) => iniciar(async () => { const r = await f(); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) { despues?.(); router.refresh(); } });
+  const guardar = () => run(() => guardarContratoTrabajador(empresaId, trabajador.id, pid, modificado ? efectivo : null), () => { setEditar(false); setOfrecer(modificado && !!trabajador.cargo); });
+  const comoPlantilla = () => run(() => guardarPlantillaContrato(empresaId, { nombre: `Contrato ${trabajador.cargo}`, cargos: trabajador.cargo, tipoContrato: '', texto: efectivo, original: base }), () => setOfrecer(false));
   const word = () => iniciar(async () => {
     try {
       await descargarDocx(combinado, `contrato_${slug(trabajador.nombre)}.docx`, { titulo: `Contrato de trabajo · ${trabajador.nombre}`,
@@ -51,24 +57,26 @@ export function DocumentoContrato({ empresaId, trabajador, vals, plantillas, pla
           </select></div>
         <button type="button" className="boton" onClick={() => window.print()}>🖨️ Imprimir / PDF</button>
         <button type="button" className="boton-sec" disabled={pendiente} onClick={word}>📝 Word</button>
-        {escribe && <button type="button" className="boton-sec" onClick={() => { if (!texto) setTexto(base); setEditar(!editar); }}>{editar ? 'Cerrar editor' : '✏️ Editar texto'}</button>}
-        {escribe && <button type="button" className="boton-sec" disabled={pendiente} onClick={() => run(() => guardarContratoTrabajador(empresaId, trabajador.id, pid, texto.trim() && texto !== base ? texto : null))}>💾 Guardar</button>}
+        {escribe && !editar && <button type="button" className="boton-sec" onClick={() => { setOfrecer(false); setEditar(true); }}>✏️ Editar contrato</button>}
+        {escribe && editar && <>
+          <button type="button" className="boton" disabled={pendiente} onClick={guardar}>💾 Guardar contrato</button>
+          <button type="button" className="boton-sec" onClick={() => { setTexto(textoPropio); setEditar(false); }}>Cancelar</button>
+          {modificado && <button type="button" className="text-xs text-peligro hover:underline" onClick={() => setTexto(base)}>Volver a la plantilla</button>}
+        </>}
+        {escribe && !editar && pid !== plantillaId && <button type="button" className="boton" disabled={pendiente} onClick={guardar}>💾 Guardar plantilla elegida</button>}
+        {!editar && textoPropio.trim() && <span className="text-xs text-tenue">Este contrato tiene texto propio.</span>}
       </div>
-      {editar && (
-        <div className="no-print tarjeta space-y-2 p-4">
-          <textarea aria-label="Texto del contrato" rows={18} value={texto || base} onChange={(e) => setTexto(e.target.value)} className="campo num w-full text-xs leading-relaxed" />
-          <p className="text-[10px] leading-relaxed text-tenue">Marcadores: {MARCADORES_CONTRATO.map(([k, d]) => <code key={k} title={d} className="mr-1 cursor-pointer hover:text-acento" onClick={() => setTexto((x) => (x || base) + `{{${k}}}`)}>{`{{${k}}}`}</code>)}</p>
-          <div className="flex flex-wrap gap-3 text-xs">
-            {texto && <button type="button" className="text-peligro hover:underline" onClick={() => setTexto('')}>Volver a la plantilla</button>}
-            {trabajador.cargo && <button type="button" className="text-acento hover:underline" disabled={pendiente}
-              onClick={() => run(() => guardarPlantillaContrato(empresaId, { nombre: `Contrato ${trabajador.cargo}`, cargos: trabajador.cargo, tipoContrato: '', texto: texto || base, original: base }))}>Guardar como plantilla del cargo «{trabajador.cargo}»</button>}
-          </div>
+      {(ofrecer || (editar && modificado)) && escribe && trabajador.cargo && (
+        <div className="no-print flex flex-wrap items-center gap-3 rounded-lg border border-info/40 bg-info/10 px-4 py-2 text-xs">
+          <span>{ofrecer ? 'Contrato guardado con cambios.' : 'Cambiaste el texto de la plantilla.'} ¿Usar esta versión para todos los contratos del cargo «{trabajador.cargo}»?</span>
+          <button type="button" className="boton-sec py-1 text-xs" disabled={pendiente} onClick={comoPlantilla}>Guardar como plantilla del cargo</button>
+          {ofrecer && <button type="button" className="text-tenue hover:underline" onClick={() => setOfrecer(false)}>Ahora no</button>}
         </div>
       )}
       {faltan.length > 0 && <p className="no-print text-xs text-aviso">⚠️ Datos vacíos en el contrato: {faltan.join(', ')}.</p>}
       <Mensaje {...msg} />
       <article className="hoja tarjeta mx-auto max-w-3xl space-y-4 p-10 text-sm leading-relaxed">
-        <Bloques texto={combinado} />
+        {editar ? <EditorContrato texto={efectivo} vals={vals} onCambio={setTexto} /> : <Bloques texto={combinado} />}
         <div className="grid grid-cols-2 gap-10 pt-16 text-center text-xs">
           <div><div className="mb-1 border-t border-current" /><b>{empresa.nombre || 'EMPLEADOR'}</b><div>RUT {empresa.rut}</div>{empresa.rep && <div>p.p. {empresa.rep}</div>}</div>
           <div><div className="mb-1 border-t border-current" /><b>{vals.trabajador}</b><div>{vals.rut_trabajador}</div><div>TRABAJADOR</div></div>
