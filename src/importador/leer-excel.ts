@@ -26,7 +26,7 @@ export function unirTrozos(filas: Fila[]): Fila[] {
 export function leerRespaldo(buf: ArrayBuffer | Uint8Array): HojasRespaldo {
   const wb = XLSX.read(buf, { type: 'array' });
   if (!wb.Sheets['Empresa'] || !wb.Sheets['Asientos']) {
-    throw new Error('El archivo no parece un respaldo del sistema actual (faltan las hojas "Empresa" y "Asientos").');
+    throw new Error('El archivo no parece un respaldo del sistema anterior (faltan las hojas "Empresa" y "Asientos").');
   }
   const h: HojasRespaldo = {
     Empresa: XLSX.utils.sheet_to_json<unknown[]>(wb.Sheets['Empresa'], { header: 1, defval: '' }),

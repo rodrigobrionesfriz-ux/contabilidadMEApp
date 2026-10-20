@@ -84,7 +84,7 @@ export function Conciliacion({ empresaId, cuenta, anio, escribe, saldoBanco, mov
           </tbody>
         </table>
       </div>
-      <p className="text-[10px] text-tenue">{r.conciliados} de {movs.length} conciliados. La cartola se empareja por monto (en valor absoluto) con movimientos pendientes, igual que en el sistema actual.</p>
+      <p className="text-[10px] text-tenue">{r.conciliados} de {movs.length} conciliados. La cartola se empareja por monto (en valor absoluto) con movimientos pendientes, igual que en el sistema anterior.</p>
     </div>
   );
 }

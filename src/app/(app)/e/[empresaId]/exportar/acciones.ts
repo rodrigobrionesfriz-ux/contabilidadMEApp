@@ -32,7 +32,7 @@ export async function datosExportacion(empresaId: string, anio: number): Promise
     const hojas: Hoja[] = [
       { nombre: 'Resumen', filas: [['RESPALDO EN EXCEL'], ['Empresa', empresa.razon_social], ['RUT', empresa.rut], ['Año', anio], ['Generado', new Date().toISOString().slice(0, 16).replace('T', ' ')], [], ['Hoja', 'Filas'],
         ['Plan de cuentas', cuentas.length], ['Diario', (lineas as unknown[]).length], ['Documentos', (docs as unknown[]).length], ['Trabajadores', (trab.data ?? []).length], ['Activo fijo', (activos.data ?? []).length], ['Productos', (productos.data ?? []).length], ['Movimientos inventario', (movs as unknown[]).length],
-        [], ['Respaldo de lectura: sirve para revisar o archivar. Para volver a cargar datos usa el respaldo del sistema actual en Configuración → Importar respaldo.']] },
+        [], ['Respaldo de lectura: sirve para revisar o archivar. Para volver a cargar datos usa el respaldo del sistema anterior en Configuración → Importar respaldo.']] },
       { nombre: 'Plan de cuentas', filas: [['CÓDIGO', 'NOMBRE', 'TIPO', 'NATURALEZA', 'IMPUTABLE', 'CENTRO DE COSTO', 'AUXILIAR', 'ACTIVA'],
         ...(cuentas as Record<string, unknown>[]).map((c) => [c.codigo, c.nombre, c.tipo, c.naturaleza, c.acepta_movimientos ? 'Sí' : 'No', c.acepta_centro_costo ? 'Sí' : 'No', c.tipo_auxiliar || '', c.activa ? 'Sí' : 'No'] as (string | number)[])] },
       { nombre: 'Diario', filas: [['N°', 'FECHA', 'TIPO', 'GLOSA', 'CUENTA', 'NOMBRE CUENTA', 'DEBE', 'HABER', 'DETALLE', 'CENTRO COSTO', 'RUT', 'DTE', 'FOLIO', 'ANULADO'],

@@ -50,11 +50,10 @@ export default async function InicioEmpresa({ params, searchParams }: PageProps<
       </div>
       {empresa.rol === 'admin' && !asientos.count && (
         <Link href={`/e/${empresaId}/importar`} className="tarjeta block border-acento/50 p-4 hover:border-acento">
-          <div className="font-semibold text-acento">📥 Trae tus datos del sistema actual</div>
-          <div className="text-sm text-tenue">Sube el respaldo Excel de cada año y compara el balance en ambos sistemas.</div>
+          <div className="font-semibold text-acento">📥 Trae tus datos del sistema anterior</div>
+          <div className="text-sm text-tenue">Sube el respaldo Excel de cada año para cargar asientos, documentos y saldos.</div>
         </Link>
       )}
-      <p className="text-sm text-tenue">Marcha blanca: mientras se comparan las cifras, el sistema actual sigue siendo el oficial.</p>
     </div>
   );
 }

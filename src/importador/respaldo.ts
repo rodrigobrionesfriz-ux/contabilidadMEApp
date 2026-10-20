@@ -227,6 +227,9 @@ interface AsientoLegado {
   anulado?: unknown;
   motivoAnulacion?: unknown;
   anuladoMotivo?: unknown;
+  origenAuto?: unknown;
+  periodoIVA?: unknown;
+  periodo?: unknown;
   movs?: MovLegado[];
 }
 
@@ -309,11 +312,31 @@ export function construirPlanCarga(h: HojasRespaldo, pdcBase: CuentaBase[]): Pla
   const honorarios = (h.Honorarios ?? []).map((f) => ({ ...f }) as Record<string, unknown>);
 
   // ── Asientos persistidos (maestro) ──
+  // Un JSON que no se puede leer (por ejemplo, una celda cortada en 32.767 caracteres en un
+  // respaldo antiguo) no se omite en silencio: bloquea la importación.
+  const ilegible = (v: unknown) => {
+    if (typeof v !== 'string' || !v.trim()) return false;
+    try { JSON.parse(v); return false; } catch { return true; }
+  };
   const persistidos: AsientoLegado[] = (h.Asientos ?? []).map((f) => {
+    if (ilegible(f.asientoJSON) || (!txt(f.asientoJSON) && ilegible(f.movsJSON))) {
+      err(`Asiento "${txt(f.glosa) || txt(f.id)}" del ${fechaISO(f.fecha) || '(sin fecha)'}: su contenido está cortado o dañado en el respaldo. `
+        + 'Exporta de nuevo el respaldo desde el sistema anterior (versión 2.21.72 o posterior).');
+    }
     const a = json<AsientoLegado | null>(f.asientoJSON, null) ?? { ...(f as AsientoLegado) };
     if (!a.movs) a.movs = json(f.movsJSON, []);
     return a;
   });
+  // Origen con el que el sistema nuevo reconoce los asientos automáticos del sistema actual,
+  // para que el F29 y el libro de remuneraciones no los dupliquen.
+  const origenLegado = (a: AsientoLegado): string | undefined => {
+    const auto = txt(a.origenAuto);
+    const perIVA = txt(a.periodoIVA);
+    if ((auto === 'ivaf29' || auto === 'pagof29') && /^\d{4}-\d{2}$/.test(perIVA)) return `${auto}:${perIVA}`;
+    const per = txt(a.periodo);
+    if (a.tipo === 'remuneraciones' && /^\d{4}-\d{2}$/.test(per)) return `rem:${per}`;
+    return undefined;
+  };
   const vigente = (a: AsientoLegado) => !a.anulado;
   const fuenteDe = (a: AsientoLegado) => txt(a.fuente) || txt(a.referenciaDoc?.fuente);
   const docDe = (a: AsientoLegado) => txt(a.docId) || txt(a.referenciaDoc?.docId);
@@ -386,7 +409,7 @@ export function construirPlanCarga(h: HojasRespaldo, pdcBase: CuentaBase[]): Pla
       glosa: txt(a.glosa),
       tipo: txt(a.tipo) || 'manual',
       ref: txt(a.id) || `asiento:${orden}`,
-      origen_id: docDe(a) || undefined,
+      origen_id: docDe(a) || origenLegado(a),
       anulado: !!a.anulado,
       motivo: txt(a.motivoAnulacion ?? a.anuladoMotivo) || (a.anulado ? 'Anulado en el sistema anterior' : undefined),
       movs: a.movs ?? [],

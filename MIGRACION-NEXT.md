@@ -1,6 +1,6 @@
-# Migración a Next.js + Supabase (estado al 20/10/2026)
+# Contabilidad ME en Next.js + Supabase (estado al 20/10/2026)
 
-Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publica en Vercel en https://contabilidad-me-app.vercel.app. El sistema actual (GitHub Pages + Firebase) sigue siendo el oficial; solo recibió el arreglo de exportación V2.21.72 (ver Importador).
+Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publica en Vercel en https://contabilidad-me-app.vercel.app. **En producción desde el 20/10/2026 (10z3):** se quitó el aviso de marcha blanca y la app pasa a usarse con datos reales. El sistema anterior (GitHub Pages + Firebase) queda como fuente de respaldos para importar (requiere la exportación V2.21.72 o posterior); en la interfaz se le llama "sistema anterior".
 
 ## Stack
 - Next.js 16.4 (App Router, `src/proxy.ts`), React 19, Tailwind 4, TypeScript.
@@ -384,13 +384,14 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Supabase aplica las migraciones desde GitHub (integración con la rama main): revisar en Database > Migrations que estén de la 0001 a la 0014.
 - El saldo de vacaciones usa los eventos de vacaciones de todos los años (eventosVacaciones), no solo los del año consultado.
 
-## Estado de la marcha blanca
+## Historial de la marcha blanca (cerrada el 20/10/2026)
 - 18/10/2026: importado el respaldo 2026 de Soc. Agrícola y Forestal La Cabaña Ltda. (971 asientos, debe del año $8.669.251.867).
 - 18/10/2026, cuadre del Balance General contra el respaldo del mismo día (978 asientos, 972 vigentes, debe $9.287.054.671):
   - Resultado del ejercicio idéntico: $2.472.841.122. Activos de resultado, ventas, compras y remuneraciones cuadran.
   - Diferencia 1: falta en Next el N° 2048 "Pago proveedores Enero 2026" (Banco de Chile contra Proveedores, $617.802.804). Es el único asiento con celdas partidas (__2); la carga se hizo antes del arreglo 10b.
   - Diferencia 2: Next tiene duplicadas la compensación de IVA de enero y febrero y el pago F29 de enero (generados en la pantalla F29 porque los importados venían sin origen_id). Afecta 1101201, 1108002, 2103003, 2103005 y 2104002.
   - Solución: con 10d desplegado, anular en Next esos asientos generados en el F29, Eliminar importación 2026 y volver a importar el respaldo. Después, repetir el cuadre.
+- 20/10/2026: paso a producción. Antes de registrar datos reales, confirmar que el cuadre anterior quedó resuelto (reimportación hecha y Balance igual al del sistema anterior).
 
 ## Próximas fases
 - Ingresar la apertura 2026 de cada empresa en Configuración → Balance de Apertura (saldos al 31-12-2025 del sistema actual o del balance tributario) y repetir el cuadre.

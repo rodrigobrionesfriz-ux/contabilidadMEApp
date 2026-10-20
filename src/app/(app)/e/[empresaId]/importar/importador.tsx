@@ -123,7 +123,7 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
           )}
           {errores.length > 0 && (
             <div className="rounded-md border border-peligro/40 bg-peligro/10 p-3 text-sm">
-              <div className="mb-1 font-semibold text-peligro">{errores.length} problema(s) impiden importar. Corrígelos en el sistema actual y exporta de nuevo:</div>
+              <div className="mb-1 font-semibold text-peligro">{errores.length} problema(s) impiden importar. Corrígelos en el sistema anterior y exporta de nuevo:</div>
               <ul className="max-h-48 list-disc space-y-0.5 overflow-y-auto pl-5">{errores.map((p, i) => <li key={i}>{p.mensaje}</li>)}</ul>
             </div>
           )}

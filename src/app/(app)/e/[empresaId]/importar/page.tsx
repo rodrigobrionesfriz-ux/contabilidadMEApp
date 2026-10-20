@@ -21,11 +21,11 @@ export default async function ImportarPage({ params }: PageProps<'/e/[empresaId]
   return (
     <div className="max-w-5xl space-y-6">
       <div>
-        <h1 className="text-xl font-semibold">Importar respaldo del sistema actual</h1>
+        <h1 className="text-xl font-semibold">Importar respaldo del sistema anterior</h1>
         <p className="mt-1 text-sm text-tenue">
-          En el sistema actual, abre la empresa y el año, entra a <b className="text-texto">⚙️ Sistema y Respaldos</b> y usa{' '}
+          En el sistema anterior, abre la empresa y el año, entra a <b className="text-texto">⚙️ Sistema y Respaldos</b> y usa{' '}
           <b className="text-texto">📥 Exportar Excel</b>. Sube ese archivo aquí.
-          Se carga un año por archivo. El sistema actual no se modifica.
+          Se carga un año por archivo. El sistema anterior no se modifica.
         </p>
       </div>
       <Importador empresaId={empresaId} rutEmpresa={empresa.rut} pdc={pdc} />
