@@ -377,6 +377,10 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ## Plan de cuentas fijo (10z2)
 - En escritorio la página ocupa el alto de la ventana: título, buscador y "+ Nueva cuenta" quedan fijos arriba y solo la tabla se desplaza, con sus títulos (Código, Nombre, Tipo...) fijos. En celular, la tabla tiene alto máximo y títulos fijos.
 
+## Libro diario compacto y flotante (10z4)
+- diario/tabla.tsx (cargarDiario + TablaDiario): una sola tabla de ancho acotado (1.100 px) con columnas fijas Cuenta · Nombre · Detalle · Debe · Haber; una franja por asiento (N°, fecha, glosa, Editar, Anular) y líneas compactas; el detalle largo se corta con su texto completo al pasar el mouse. La tabla se desplaza dentro de su tarjeta con los títulos fijos. Campo "Ir a N°" para saltar a un asiento.
+- "🗗 Ventana flotante" abre /v/[empresa]/diario en una ventana aparte (sin barra ni menú) que se puede mover, redimensionar y llevar a otra pantalla. Ahí los enlaces (N°, Editar) se abren en la ventana principal; Anular solo está en la principal.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:
