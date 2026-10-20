@@ -3,9 +3,10 @@
 import { leerIndicadoresAPI } from '@/remuneraciones/indicadores-api';
 import { actualizarIndicadoresAPI } from './acciones';
 
-/** Consulta mindicador.cl desde el navegador y, si falla (red, CORS), deja que lo intente el servidor. */
+/** El servidor consulta sii.cl (o mindicador.cl); si no puede, el navegador intenta mindicador.cl y manda los valores. */
 export async function actualizarIndicadores(empresaId: string, anio: number) {
-  let datos;
-  try { datos = await leerIndicadoresAPI(anio, 15000); } catch { datos = undefined; }
-  return actualizarIndicadoresAPI(empresaId, anio, datos);
+  const r = await actualizarIndicadoresAPI(empresaId, anio);
+  if (r.ok || !/No se pudo consultar/.test(r.error ?? '')) return r;
+  try { return await actualizarIndicadoresAPI(empresaId, anio, await leerIndicadoresAPI(anio, 10000)); }
+  catch { return { ...r, error: `${r.error} Ingrésalos a mano desde sii.cl → Valores y fechas.` }; }
 }

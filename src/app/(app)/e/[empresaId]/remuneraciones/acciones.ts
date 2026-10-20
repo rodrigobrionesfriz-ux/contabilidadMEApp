@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { contextoRemuneraciones, indicadoresMes, indicadoresTabla } from '@/lib/datos/remuneraciones';
-import { leerIndicadoresAPI, datosAPIValidos, type IndicadorAPI } from '@/remuneraciones/indicadores-api';
+import { leerIndicadoresAPI, leerIndicadoresSII, datosAPIValidos, type IndicadorAPI } from '@/remuneraciones/indicadores-api';
 import { MESES } from '@/lib/formato';
 import { liquidacionMes } from '@/remuneraciones/calculo';
 import { lineaLibro, totalizar, asientoRemuneraciones, lineaVacia } from '@/remuneraciones/libro';
@@ -136,21 +136,27 @@ export async function guardarIndicador(empresaId: string, periodo: string, uf: n
 }
 
 /**
- * Guarda la UF del último día de cada mes y la UTM del año desde mindicador.cl. El navegador intenta la consulta
- * primero (desde Vercel la API a veces no responde) y manda los valores; si no, la hace el servidor.
+ * Guarda la UF del último día de cada mes y la UTM del año. El servidor consulta sii.cl y, si falla, mindicador.cl.
+ * Si ninguno responde, el navegador puede consultar mindicador.cl y mandar los valores (se validan).
  */
 export async function actualizarIndicadoresAPI(empresaId: string, anio: number, desdeNavegador?: unknown): Promise<Res> {
   if (!(anio >= 2000 && anio <= 2100)) return { ok: false, error: 'Año inválido.' };
-  let api: IndicadorAPI[];
+  let api: IndicadorAPI[] = [];
+  let fuente = 'mindicador.cl';
   if (desdeNavegador !== undefined) {
     const v = datosAPIValidos(anio, desdeNavegador);
     if (!v) return { ok: false, error: 'Los valores recibidos de mindicador.cl no son válidos.' };
     api = v;
   } else {
-    try { api = await leerIndicadoresAPI(anio); }
-    catch (e) { return { ok: false, error: `No se pudo consultar mindicador.cl (${e instanceof Error && e.name === 'TimeoutError' ? 'no respondió a tiempo' : e instanceof Error ? e.message : String(e)}). Intenta de nuevo más tarde o ingrésalos a mano.` }; }
+    const errores: string[] = [];
+    const motivo = (e: unknown) => (e instanceof Error && e.name === 'TimeoutError' ? 'no respondió a tiempo' : e instanceof Error ? e.message : String(e));
+    try { api = await leerIndicadoresSII(anio); fuente = 'sii.cl'; } catch (e) { errores.push(`sii.cl: ${motivo(e)}`); }
+    if (!api.length) {
+      try { api = await leerIndicadoresAPI(anio, 10000); fuente = 'mindicador.cl'; } catch (e) { errores.push(`mindicador.cl: ${motivo(e)}`); }
+    }
+    if (!api.length && errores.length) return { ok: false, error: `No se pudo consultar los indicadores (${errores.join('; ')}).` };
   }
-  if (!api.length) return { ok: false, error: `mindicador.cl aún no tiene valores de ${anio}.` };
+  if (!api.length) return { ok: false, error: `${fuente} aún no tiene valores de ${anio}.` };
   const actuales = await indicadoresTabla(anio);
   const supabase = await crearClienteServidor();
   let n = 0;
@@ -165,7 +171,7 @@ export async function actualizarIndicadoresAPI(empresaId: string, anio: number, 
   }
   revalidatePath(`/e/${empresaId}`, 'layout');
   const conUF = api.filter((x) => x.uf != null).map((x) => x.periodo.slice(5));
-  return { ok: true, mensaje: n ? `Actualizado desde mindicador.cl: ${n} ${n === 1 ? 'mes' : 'meses'} (UF al cierre de ${conUF.length} meses). Las liquidaciones abiertas se recalcularon.` : 'Los indicadores ya estaban al día.' };
+  return { ok: true, mensaje: n ? `Actualizado desde ${fuente}: ${n} ${n === 1 ? 'mes' : 'meses'} (UF al cierre de ${conUF.length} meses). Las liquidaciones abiertas se recalcularon.` : 'Los indicadores ya estaban al día.' };
 }
 
 export async function reabrirLibro(empresaId: string, anio: number, mes: number): Promise<Res> {

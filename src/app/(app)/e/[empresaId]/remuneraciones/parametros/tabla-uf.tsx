@@ -45,9 +45,9 @@ export function TablaUF({ empresaId, anio, filas, utmSII, cerrados, editable }: 
           <p className="text-xs text-tenue">Las remuneraciones usan la UF del último día del mes (sii.cl → Valores y fechas). Es la misma para todas las empresas. Sin la UF del mes no se puede cerrar el libro.</p>
         </div>
         <div className="flex flex-wrap gap-2 text-xs">
-          {editable && <button type="button" className="boton py-1" disabled={pendiente} title="UF del último día de cada mes y UTM, desde mindicador.cl"
+          {editable && <button type="button" className="boton py-1" disabled={pendiente} title="UF del último día de cada mes y UTM, desde sii.cl (o mindicador.cl)"
             onClick={() => iniciar(async () => { const r = await actualizarIndicadores(empresaId, anio); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) router.refresh(); })}>
-            {pendiente ? 'Consultando…' : '🔄 Actualizar desde mindicador.cl'}</button>}
+            {pendiente ? 'Consultando…' : '🔄 Actualizar desde el SII'}</button>}
           <a className="boton-sec py-1" href={`?anio=${anio - 1}#uf-mensual`}>← {anio - 1}</a>
           <a className="boton-sec py-1" href={`?anio=${anio + 1}#uf-mensual`}>{anio + 1} →</a>
         </div>

@@ -43,9 +43,9 @@ export function AccionesLibro({ empresaId, anio, mes, uf, utm, ufTabla, cerrado,
           {!cerrado && escribe && <button type="button" className="boton-sec" onClick={() => setEditar(true)}>Cambiar UF</button>}
         </>)}
         {!cerrado && escribe && (<>
-          <button type="button" className="boton-sec" disabled={pendiente} title="UF del último día del mes y UTM, desde mindicador.cl"
+          <button type="button" className="boton-sec" disabled={pendiente} title="UF del último día del mes y UTM, desde sii.cl (o mindicador.cl)"
             onClick={() => iniciar(async () => { const r = await actualizarIndicadores(empresaId, anio); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) { setEditar(false); router.refresh(); } })}>
-            🔄 Traer de mindicador.cl</button>
+            🔄 Traer del SII</button>
         </>)}
         {!cerrado && escribe && (
           <button type="button" className="boton ml-auto" disabled={pendiente || !hayLineas || !ufTabla} title={ufTabla ? '' : 'Primero ingresa la UF del último día del mes'}
