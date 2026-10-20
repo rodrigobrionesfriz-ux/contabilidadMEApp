@@ -26,5 +26,5 @@ export async function crearEmpresa(_: EstadoForm, fd: FormData): Promise<EstadoF
     p_domicilio: p.data.domicilio, p_comuna: p.data.comuna, p_ciudad: p.data.ciudad,
   });
   if (error) return { error: error.message, valores };
-  redirect(`/e/${data}`);
+  redirect(`/e/${data}?bienvenida=1`);
 }

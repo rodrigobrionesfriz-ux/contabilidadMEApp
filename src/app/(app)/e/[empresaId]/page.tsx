@@ -1,14 +1,18 @@
 import Link from 'next/link';
 import { requerirEmpresa, puedeEscribir } from '@/lib/auth';
 import { crearClienteServidor } from '@/lib/supabase/server';
-import { clp } from '@/lib/formato';
+import { clp, param } from '@/lib/formato';
+import { estadoPrimerosPasos } from '@/lib/datos/primeros-pasos';
+import { VentanaPrimerosPasos } from './primeros-pasos/ventana';
 
-export default async function InicioEmpresa({ params }: PageProps<'/e/[empresaId]'>) {
+export default async function InicioEmpresa({ params, searchParams }: PageProps<'/e/[empresaId]'>) {
   const { empresaId } = await params;
+  const bienvenida = param((await searchParams).bienvenida) === '1';
   const empresa = await requerirEmpresa(empresaId);
   const anio = new Date().getFullYear();
   const supabase = await crearClienteServidor();
-  const [asientos, cuentas, saldos] = await Promise.all([
+  const [pp, asientos, cuentas, saldos] = await Promise.all([
+    estadoPrimerosPasos(empresaId),
     supabase.from('asientos').select('id', { count: 'exact', head: true }).eq('empresa_id', empresaId).eq('anio', anio).eq('anulado', false),
     supabase.from('cuentas').select('codigo', { count: 'exact', head: true }).eq('empresa_id', empresaId).eq('acepta_movimientos', true),
     supabase.from('saldos_cuentas').select('debe').eq('empresa_id', empresaId).eq('anio', anio),
@@ -21,7 +25,17 @@ export default async function InicioEmpresa({ params }: PageProps<'/e/[empresaId
   ];
   return (
     <div className="space-y-6">
+      {bienvenida && <VentanaPrimerosPasos empresaId={empresaId} razonSocial={empresa.razon_social} pasos={pp.pasos} hechos={pp.hechos} total={pp.total} escribe={puedeEscribir(empresa.rol)} />}
       <h1 className="text-xl font-semibold">{empresa.razon_social}</h1>
+      {!pp.completo && (
+        <Link href={`/e/${empresaId}/primeros-pasos`} className="tarjeta block space-y-2 border-acento/50 p-4 hover:border-acento">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <span className="font-semibold text-acento">🚀 Primeros pasos: {pp.hechos} de {pp.total}</span>
+            <span className="text-xs text-tenue">{pp.faltanObligatorios ? `Faltan ${pp.faltanObligatorios} pasos clave · ` : ''}Siguiente: {pp.pasos.find((x) => x.estado === 'pendiente')?.titulo} →</span>
+          </div>
+          <div className="h-1.5 overflow-hidden rounded-full bg-panel-2"><div className="h-full bg-acento" style={{ width: `${(pp.hechos / pp.total) * 100}%` }} /></div>
+        </Link>
+      )}
       <div className="grid gap-3 sm:grid-cols-3">
         {tarjetas.map(([t, v]) => (
           <div key={t} className="tarjeta p-4">

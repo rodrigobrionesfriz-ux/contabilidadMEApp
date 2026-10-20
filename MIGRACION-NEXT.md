@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (326): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (330): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -133,6 +133,10 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ### 0023 (10u)
 - guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
 
+### 0024 (10z)
+- empresas.primeros_pasos (jsonb): pasos de la guía marcados a mano como listo u omitido.
+- marcar_paso(empresa, paso, estado | null): contador o admin; null desmarca.
+
 ## Importador del respaldo Excel (fase 1)
 - **Fuente:** el botón "📥 Exportar Excel" en Sistema y Respaldos del sistema actual. Un año por archivo.
 - **Equivalencia con genDiario:**
@@ -240,6 +244,8 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - **Word** (src/lib/docx.ts): traslado de docx-simple.js; el ZIP se escribe con xlsx CFB. Ida y vuelta probada.
 - El representante legal se edita en Configuración → Empresa.
 - **Editor del contrato (10r)** (documento/editor.tsx, src/remuneraciones/contrato-editor.ts): "✏️ Editar contrato" vuelve editable la misma hoja. Los datos de la ficha se ven con su valor real, en azul, y no se pueden borrar ni escribir dentro (bloqueo en beforeinput y, si algo se cuela, se deshace). Datos obligatorios vacíos: recuadro amarillo con el nombre del dato; opcionales vacíos: recuadro gris. "＋ Insertar dato de la ficha" agrega un dato donde está el cursor. Enter hace salto de línea; pegar entra como texto plano. Se guarda con {{marcadores}} por trabajador (contratos_trabajo), así el contrato se actualiza si cambia la ficha; si el texto quedó igual a la plantilla, se guarda solo la plantilla elegida. Si el texto cambió, se ofrece "Guardar como plantilla del cargo «cargo»" mientras se edita y después de guardar. Ya no hace falta bajar el Word para corregir el texto.
+
+- **Editor de plantillas (10y):** Remuneraciones → Contratos → Plantillas usa el mismo editor visual (EditorContrato con nombres): los datos se ven como recuadros azules con su nombre ("Ciudad donde se firma", "Sueldo base"...), sin {{ }}, y no se pueden borrar ni modificar; los opcionales van con borde punteado. Se reemplazó el textarea y la lista de marcadores por "＋ Insertar dato de la ficha". La descarga y subida de Word siguen igual (en el Word los datos van entre {{ }}).
 
 ## Estados financieros y cierre (fase 6)
 - **Estados** (src/estados/eeff.ts): traslado fiel de renderBalance, renderResultados, totalesDeMayor, fmtVar y calcularResultadoEjercicio; resultados idénticos en 9 escenarios de oro. Signo de presentación invertido para naturaleza acreedora; aviso de cuentas con saldo contrario salvo correctoras. Impuesto: el contabilizado en 36 o estimado con la tasa del régimen (14D3 12,5% en 2025-2027 y 15% en 2028; 14A 27%; 14D8 0%).
@@ -357,6 +363,11 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
   - Cierre de ejercicio: cierre del ejercicio.
   - Configuración: Empresas, Empresa (admin), Centros de costo, Asignar centros de costo, Plan de cuentas, Balance de apertura, Importar respaldo (admin), Exportar a Excel, Usuarios (admin), Registro de actividad (admin).
   - Búsqueda global (Ctrl+K) en la barra lateral.
+
+## Primeros pasos de una empresa nueva (10z)
+- Al crear una empresa se abre una ventana de bienvenida (?bienvenida=1) con la guía; después queda en Inicio (tarjeta con avance y siguiente paso, mientras falte algo) y en Configuración → Primeros pasos.
+- Pasos (src/empresa/primeros-pasos.ts): 1 datos y régimen tributario (muestra régimen y tipo de contabilidad; avisa si falta el representante), 2 plan de cuentas, 3 centros de costo (opcional), 4 balance de apertura (texto según contabilidad completa o simplificada del régimen; también vale importar el respaldo), 5 indicadores UF y UTM, 6 proveedores y clientes (opcional), 7 remuneraciones (opcional), 8 usuarios (opcional).
+- Se detectan solos: centros, apertura o importación, UF del mes anterior, fichas, trabajadores, más de un usuario. El resto se marca "listo"; cualquiera se puede omitir ("No aplica" en los opcionales) y deshacer.
 
 ## Ícono e instalación (10x)
 - Ícono: hojas apiladas (multiempresa) con un gráfico de líneas al alza sobre fondo verde. Fuente en src/app/icon.svg; favicon.ico (16, 32, 48), apple-icon.png (180) y public/icons (192, 512 y maskable 512 a sangre completa para Android).

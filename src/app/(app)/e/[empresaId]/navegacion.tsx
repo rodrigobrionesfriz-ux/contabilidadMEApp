@@ -57,6 +57,7 @@ const GRUPOS: Grupo[] = [
   {
     id: 'configuracion', titulo: 'Configuración', icono: '⚙️', items: [
       { ruta: '/empresas', nombre: 'Empresas', icono: '🏢', absoluta: true },
+      { ruta: '/primeros-pasos', nombre: 'Primeros pasos', icono: '🚀' },
       { ruta: '/empresa', nombre: 'Empresa', icono: '🏢', roles: ['admin'] },
       { ruta: '/centros-costo', nombre: 'Centros de Costo', icono: '📊' },
       { ruta: '/asignar-cc', nombre: 'Asignar Centros de Costo', icono: '🎯' },
