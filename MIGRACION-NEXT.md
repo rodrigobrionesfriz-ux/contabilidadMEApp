@@ -216,6 +216,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
   - Documento imprimible con firmas y ministro de fe. Asiento: 3201011 feriado, 3201009 indemnizaciones (o contra provisiones 2105004 y 2202001 hasta su saldo), 3201014 otros haberes, 1106001 descuentos, 2104005 por pagar. El servidor recalcula y exige que el total coincida con el guardado.
   - Al guardar, opcionalmente registra fecha y causal de término (código LRE) en la ficha.
 
+- **Correcciones de liquidación (10s):**
+  - Plan Isapre en UF: el punto se lee como decimal ("3.516" = 3,516 UF; antes se leía como 3.516 UF por miles). Aviso si el plan pasa de 20 UF.
+  - Impuesto único: la salud (7% más adicional Isapre) rebaja la base con tope del 7% del tope imponible en UF, según el SII. El sistema actual rebajaba el plan completo; la diferencia está declarada en las pruebas de oro (DIVERGENCIAS en calculo.test.ts).
+  - Ficha: aviso cuando el contrato AFC es "Indefinido, más de 11 años" (el trabajador no paga cesantía) y la fecha de inicio no calza.
+  - Liquidación: aviso si el líquido queda negativo, contrato "más de 11 años" con su nombre y gratificación sin paréntesis dobles.
+
 ## Contratos de trabajo (fase 5c)
 - **Registro DT** (src/remuneraciones/contrato-dt.ts): traslado fiel de contratos-dt.js (Instructivo DT v21.04.22). 100 columnas, ";", CRLF, ANSI; un archivo por cargo, máximo 1.000 filas. Tablas DT de comunas (no son el código CUT; Angol = 226) y nacionalidades. Plazo de registro: 15 días hábiles aproximados.
 - **Contrato** (src/remuneraciones/contrato-trabajo.ts): plantillas tipo (indefinido, plazo fijo, obra o faena, agrícola de temporada) y propias por cargo. Datos obligatorios vacíos quedan como [dato] resaltado. Validación de marcadores al subir Word.

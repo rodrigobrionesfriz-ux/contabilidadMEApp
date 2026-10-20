@@ -42,6 +42,7 @@ export default async function LiquidacionPage({ params, searchParams }: PageProp
         <Link href={`/e/${empresaId}/remuneraciones?anio=${anio}&mes=${mes}`} className="text-sm text-tenue hover:text-texto">← Remuneraciones</Link>
         <Imprimir />
         {!guardado && <span className="text-xs text-aviso">Provisoria: el libro del mes aún no está cerrado.</span>}
+        {l.liquido < 0 && <span className="text-xs font-semibold text-peligro">⚠️ El líquido es negativo: revisa la ficha del trabajador{l.planUF > 20 ? ` (el plan Isapre dice ${String(l.planUF).replace('.', ',')} UF)` : ''}.</span>}
       </div>
       <article className="hoja tarjeta mx-auto max-w-3xl space-y-4 p-6 text-sm">
         <header className="flex justify-between gap-4 border-b border-borde pb-3">
@@ -54,13 +55,13 @@ export default async function LiquidacionPage({ params, searchParams }: PageProp
           <div><span className="text-tenue">Fecha de incorporación:</span> {lre.fechaInicio ? fechaCL(lre.fechaInicio) : '—'}</div>
           <div><span className="text-tenue">AFP:</span> {l.afp}</div><div><span className="text-tenue">Salud:</span> {l.salud}{l.planUF ? ` (plan ${String(l.planUF).replace('.', ',')} UF)` : ''}</div>
           <div><span className="text-tenue">Días trabajados:</span> {l.horas != null ? `${l.horas} horas` : l.diasPagados}</div>
-          <div><span className="text-tenue">Contrato:</span> {l.contrato === 'plazo' ? 'Plazo fijo' : 'Indefinido'}</div>
+          <div><span className="text-tenue">Contrato:</span> {l.contrato === 'plazo' ? 'Plazo fijo' : l.contrato === 'indefinido11' ? 'Indefinido, más de 11 años' : 'Indefinido'}</div>
         </section>
         <div className="grid gap-6 sm:grid-cols-2">
           <table className="w-full text-xs">
             <thead><tr><th colSpan={2} className="pb-1 text-left text-tenue uppercase">Haberes</th></tr></thead>
             <tbody>
-              {fila('Sueldo base', l.base)}{fila(`Gratificación (${l.gratDetalle})`, l.gratificacion)}{l.otros ? fila('Otros haberes imponibles', l.otros) : null}
+              {fila('Sueldo base', l.base)}{fila(`Gratificación (${l.gratDetalle.replace(' (topeada)', ', con tope')})`, l.gratificacion)}{l.otros ? fila('Otros haberes imponibles', l.otros) : null}
               {fila('Total imponible', l.totalImponible, false, true)}
               {l.colacion ? fila('Colación', l.colacion) : null}{l.movilizacion ? fila('Movilización', l.movilizacion) : null}
               {l.asigFamiliar ? fila(`Asignación familiar (tramo ${l.tramoAF})`, l.asigFamiliar) : null}

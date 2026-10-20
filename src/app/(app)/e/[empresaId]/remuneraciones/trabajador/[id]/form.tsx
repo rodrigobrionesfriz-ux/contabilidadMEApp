@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { liquidacionMes, CONTRATOS_AFC, type Trabajador, type ContextoRem } from '@/remuneraciones/calculo';
 import { rutParse } from '@/motor/rut';
-import { clp, MESES, decimalCL, decimalTexto } from '@/lib/formato';
+import { clp, MESES, decimalCL, decimalCorto, decimalTexto } from '@/lib/formato';
 import { Mensaje } from '@/components/form-estado';
 import { guardarTrabajador } from '../../acciones';
 
@@ -43,12 +43,12 @@ export function FormTrabajador({ empresaId, trabajador, ctx, uf, utm, anio, mes,
   const num = (v: string) => Math.round(Number(v.replace(/\./g, '').replace(',', '.')) || 0);
   const [txt, setTxt] = useState<Record<string, string>>({});
 
-  const C = ({ k, l, tipo = 'monto', disabled }: { k: keyof Ficha; l: string; tipo?: 'monto' | 'texto' | 'dec'; disabled?: boolean }) => (
+  const C = ({ k, l, tipo = 'monto', disabled }: { k: keyof Ficha; l: string; tipo?: 'monto' | 'texto' | 'dec' | 'uf'; disabled?: boolean }) => (
     <div>
       <label className="etiqueta" htmlFor={`f-${String(k)}`}>{l}</label>
       <input id={`f-${String(k)}`} disabled={disabled || !escribe} inputMode={tipo === 'texto' ? undefined : 'decimal'}
-        value={tipo === 'texto' ? String(f[k] ?? '') : tipo === 'dec' ? (txt[k] ?? decimalTexto(f[k] as number)) : (f[k] as number) || ''}
-        onChange={(e) => set(k, tipo === 'texto' ? e.target.value : tipo === 'dec' ? (setTxt((x) => ({ ...x, [k]: e.target.value })), decimalCL(e.target.value)) : num(e.target.value))}
+        value={tipo === 'texto' ? String(f[k] ?? '') : tipo === 'dec' || tipo === 'uf' ? (txt[k] ?? decimalTexto(f[k] as number)) : (f[k] as number) || ''}
+        onChange={(e) => set(k, tipo === 'texto' ? e.target.value : tipo === 'dec' || tipo === 'uf' ? (setTxt((x) => ({ ...x, [k]: e.target.value })), (tipo === 'uf' ? decimalCorto : decimalCL)(e.target.value)) : num(e.target.value))}
         className={`campo ${tipo !== 'texto' ? 'num text-right' : ''}`} />
     </div>
   );
@@ -98,7 +98,8 @@ export function FormTrabajador({ empresaId, trabajador, ctx, uf, utm, anio, mes,
 
         <section className="tarjeta grid gap-3 p-4 sm:grid-cols-3">
           <h2 className="font-semibold sm:col-span-3">Contrato</h2>
-          {S({ k: "contrato", l: "Tipo de contrato (AFC)", ops: CONTRATOS_AFC.map((c) => [c.k, c.nm]) })}
+          <div>{S({ k: "contrato", l: "Tipo de contrato (AFC)", ops: CONTRATOS_AFC.map((c) => [c.k, c.nm]) })}
+            {f.contrato === 'indefinido11' && <p className="mt-1 text-xs text-aviso">Con esta opción el trabajador no paga seguro de cesantía y el empleador paga 0,8%. Úsala solo si lleva más de 11 años{f.lre.fechaInicio && String(f.lre.fechaInicio) > `${new Date().getFullYear() - 11}${new Date().toISOString().slice(4, 10)}` ? ' (según la fecha de inicio, no es el caso)' : ''}.</p>}</div>
           {Lc({ k: "fechaInicio", l: "Fecha de inicio", tipo: "date" })}{Lc({ k: "fechaTermino", l: "Fecha de término", tipo: "date" })}
           {f.lre.fechaTermino && Lc({ k: "causalTermino", l: "Causal de término (código LRE)", tipo: "number" })}
           {S({ lre: true, k: "jornada", l: "Jornada", ops: [['101', 'Completa'], ['201', 'Parcial'], ['301', 'Excepcional / bisemanal']] })}
@@ -120,7 +121,8 @@ export function FormTrabajador({ empresaId, trabajador, ctx, uf, utm, anio, mes,
           <h2 className="font-semibold sm:col-span-3">Previsión y cargas</h2>
           {S({ k: "afp", l: "AFP", ops: ctx.P.afps.map((a) => [a.k, `${a.nm} (${String(a.comision).replace('.', ',')}%)`]) })}
           {S({ k: "salud", l: "Salud", ops: ctx.P.isapres.map((i) => [i.k, i.nm]) })}
-          {C({ k: "plan", l: "Plan Isapre (UF)", tipo: "dec", disabled: f.salud === 'fonasa' })}
+          <div>{C({ k: "plan", l: "Plan Isapre (UF)", tipo: "uf", disabled: f.salud === 'fonasa' })}
+            {f.salud !== 'fonasa' && +f.plan > 20 && <p className="mt-1 text-xs text-peligro">⚠️ {String(f.plan).replace('.', ',')} UF parece un error: un plan suele ser de 2 a 10 UF. Escribe el decimal con coma (3,516).</p>}</div>
           {f.salud !== 'fonasa' && C({ k: "numeroFUN", l: "N° FUN Isapre (Previred)", tipo: "texto" })}
           {Lc({ k: "cargasLegales", l: "Cargas simples", tipo: "number" })}{Lc({ k: "cargasMaternales", l: "Cargas maternales", tipo: "number" })}{Lc({ k: "cargasInvalidez", l: "Cargas inválidas", tipo: "number" })}
           {S({ lre: true, k: "tramoAsignacion", l: "Tramo asignación", ops: [['', 'Automático'], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D (sin derecho)']] })}

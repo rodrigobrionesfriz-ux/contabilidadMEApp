@@ -283,7 +283,10 @@ export function calcularLiquidacion(t: Trabajador, uf: number, utm: number, asis
   const descTrabPesado = Math.round((baseAFP * tasasTP.trab) / 100);
   const aporteTrabPesado = totalTrabPesado - descTrabPesado;
   const totalPrevisional = descAFP + descSalud + descCesantia + descTrabPesado;
-  const baseTributable = totalImponible - totalPrevisional;
+  // Para el impuesto la salud (7% más adicional Isapre) se rebaja con tope del 7% del tope imponible en UF (SII).
+  const topeSaludTrib = Math.round(REM.topeAFP_UF * REM.tasaSalud * uf * factor);
+  const saludTributable = Math.min(descSalud, Math.max(saludLegal, topeSaludTrib));
+  const baseTributable = totalImponible - (totalPrevisional - descSalud + saludTributable);
   const iuscDet = calcularIUSCDetalle(baseTributable, utm, iuscTabla(P));
   const iusc = iuscDet.impuesto;
   const totalDescuentos = totalPrevisional + iusc;

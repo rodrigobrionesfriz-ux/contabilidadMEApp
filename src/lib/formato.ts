@@ -43,6 +43,16 @@ export function decimalCL(v: string | number | null | undefined): number {
   return Number.isFinite(n) ? n : 0;
 }
 
+/** Decimal chico (UF, %): el punto también es decimal ("3.516" = 3,516), nunca separador de miles. */
+export function decimalCorto(v: string | number | null | undefined): number {
+  if (typeof v === 'number') return Number.isFinite(v) ? v : 0;
+  const s = String(v ?? '').trim().replace(/[\s$]/g, '');
+  if (!s) return 0;
+  const norm = s.includes(',') ? s.replace(/\./g, '').replace(',', '.') : s;
+  const n = Number(norm);
+  return Number.isFinite(n) ? n : 0;
+}
+
 /** Muestra un decimal con coma ("41247,63"). */
 export const decimalTexto = (n: number | null | undefined) => (n ? String(n).replace('.', ',') : '');
 

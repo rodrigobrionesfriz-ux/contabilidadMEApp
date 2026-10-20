@@ -21,7 +21,9 @@ const sinNbsp = (s: string) => s.replace(/\$ /g, '$');
 describe('libro del mes (base de LRE y Previred)', () => {
   it('las líneas coinciden con el sistema actual', () => {
     const lineas = T.map((t) => lineaLibro(t, liquidacionMes(t, o.uf, o.utm, 2026, 3, ctx), '2026-03'));
-    expect(limpio(lineas)).toEqual(o.lineas);
+    // t2 (plan Isapre sobre el tope): la salud que rebaja el impuesto tiene tope (diferencia deliberada, ver calculo.test).
+    const div = { baseTributable: 4304454, iusc: 257143, totalDescuentos: 980054, liquido: 4039061 };
+    expect(limpio(lineas)).toEqual((o.lineas as { id: string }[]).map((l) => (l.id === 't2' ? { ...l, ...div } : l)));
   });
 });
 
