@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (330): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (331): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -366,8 +366,8 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 
 ## Primeros pasos de una empresa nueva (10z)
 - Al crear una empresa se abre una ventana de bienvenida (?bienvenida=1) con la guía; después queda en Inicio (tarjeta con avance y siguiente paso, mientras falte algo) y en Configuración → Primeros pasos.
-- Pasos (src/empresa/primeros-pasos.ts): 1 datos y régimen tributario (muestra régimen y tipo de contabilidad; avisa si falta el representante), 2 plan de cuentas, 3 centros de costo (opcional), 4 balance de apertura (texto según contabilidad completa o simplificada del régimen; también vale importar el respaldo), 5 indicadores UF y UTM, 6 proveedores y clientes (opcional), 7 remuneraciones (opcional), 8 usuarios (opcional).
-- Se detectan solos: centros, apertura o importación, UF del mes anterior, fichas, trabajadores, más de un usuario. El resto se marca "listo"; cualquiera se puede omitir ("No aplica" en los opcionales) y deshacer.
+- Pasos (src/empresa/primeros-pasos.ts): 1 datos y régimen tributario (muestra régimen y tipo de contabilidad; nombra los campos que faltan), 2 plan de cuentas, 3 centros de costo (opcional), 4 balance de apertura (texto según contabilidad completa o simplificada del régimen; también vale importar el respaldo), 5 indicadores UF y UTM, 6 proveedores y clientes (opcional), 7 remuneraciones (opcional), 8 usuarios (opcional).
+- Se detectan solos: datos de la empresa (10z1: giro, domicilio, comuna, representante y su RUT completos; si falta algo se nombra), centros, apertura o importación, UF del mes anterior, fichas, trabajadores, más de un usuario. El plan de cuentas se marca "listo" a mano; cualquiera se puede omitir ("No aplica" en los opcionales) y deshacer.
 
 ## Ícono e instalación (10x)
 - Ícono: hojas apiladas (multiempresa) con un gráfico de líneas al alza sobre fondo verde. Fuente en src/app/icon.svg; favicon.ico (16, 32, 48), apple-icon.png (180) y public/icons (192, 512 y maskable 512 a sangre completa para Android).

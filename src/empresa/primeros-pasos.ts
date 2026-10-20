@@ -6,6 +6,8 @@ import { regimenInfo } from '@/estados/regimenes';
 export type EstadoPaso = 'listo' | 'omitido' | 'pendiente';
 export interface DatosPasos {
   regimen: string | null; representante: string | null; tasaPpm: number | null;
+  /** Campos de la ficha de la empresa (giro, domicilio, comuna, ciudad, rut_representante...). */
+  ficha?: Record<string, string | null>;
   cuentas: number; centros: number; apertura: boolean; importado: boolean; ufMesAnterior: boolean;
   auxiliares: number; trabajadores: number; parametrosRem: boolean; miembros: number;
   marcas: Record<string, string>;
@@ -14,10 +16,14 @@ export interface Paso { id: string; n: number; titulo: string; detalle: string; 
 
 export function primerosPasos(d: DatosPasos): Paso[] {
   const r = regimenInfo(d.regimen);
+  // Ficha completa = paso 1 listo solo (el régimen siempre tiene valor, viene por defecto en 14D3).
+  const CAMPOS: [string, string][] = [['giro', 'giro'], ['domicilio', 'domicilio'], ['comuna', 'comuna'], ['representante', 'representante legal'], ['rut_representante', 'RUT del representante']];
+  const ficha: Record<string, string | null> = { ...(d.ficha ?? {}), representante: d.representante };
+  const faltan = CAMPOS.filter(([k]) => !String(ficha[k] ?? '').trim()).map(([, n]) => n);
   const base: Omit<Paso, 'n' | 'estado'>[] = [
-    { id: 'datos', titulo: 'Datos de la empresa y régimen tributario', ruta: '/empresa', opcional: false, auto: false,
+    { id: 'datos', titulo: 'Datos de la empresa y régimen tributario', ruta: '/empresa', opcional: false, auto: faltan.length === 0,
       detalle: 'Revisa razón social, giro, domicilio y representante legal. Elige el régimen tributario: define el tipo de contabilidad (completa o simplificada), la tasa de primera categoría y el PPM.',
-      nota: `Régimen actual: ${r.corto} · ${r.nm} (contabilidad ${r.contabilidad})${d.representante ? '' : ' · falta el representante legal'}` },
+      nota: `Régimen: ${r.corto} · ${r.nm} (contabilidad ${r.contabilidad})${faltan.length ? ` · falta: ${faltan.join(', ')}` : ''}` },
     { id: 'plan', titulo: 'Plan de cuentas', ruta: '/plan-cuentas', opcional: false, auto: false,
       detalle: 'La empresa parte con el plan base. Agrega las cuentas propias (bancos, activos, gastos por área), desactiva las que no uses y marca cuáles piden centro de costo o auxiliar.',
       nota: `${d.cuentas} cuentas imputables cargadas` },
