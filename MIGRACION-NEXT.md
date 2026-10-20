@@ -358,6 +358,11 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
   - Configuración: Empresas, Empresa (admin), Centros de costo, Asignar centros de costo, Plan de cuentas, Balance de apertura, Importar respaldo (admin), Exportar a Excel, Usuarios (admin), Registro de actividad (admin).
   - Búsqueda global (Ctrl+K) en la barra lateral.
 
+## Ícono e instalación (10x)
+- Ícono: hojas apiladas (multiempresa) con un gráfico de líneas al alza sobre fondo verde. Fuente en src/app/icon.svg; favicon.ico (16, 32, 48), apple-icon.png (180) y public/icons (192, 512 y maskable 512 a sangre completa para Android).
+- src/app/manifest.ts: nombre, colores e íconos para instalar la app (Chrome/Edge muestran ⊕ "Instalar"; Android, "Agregar a pantalla de inicio"). proxy.ts deja pasar /manifest.webmanifest sin sesión.
+- La barra superior y el login usan el ícono en vez del emoji 📊.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:
