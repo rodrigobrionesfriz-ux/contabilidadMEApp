@@ -53,8 +53,15 @@ export const refDocumento = (tipo: TipoRCV, d: Pick<DocRCV, 'rutCodigo' | 'tipoD
   `${tipo}:${d.rutCodigo}:${d.tipoDTE}:${d.numero}`;
 
 /** Clave para detectar duplicados contra documentos ya registrados. */
+/** Origen legible de un documento registrado (igual que documento_registrado en la base). */
+export const origenDocumento = (refOrigen: string | null, origen: string | null, tipo: string) =>
+  refOrigen ? 'respaldo del sistema anterior' : origen === 'asiento manual' ? 'asiento manual' : origen === 'manual' ? 'registro manual' : tipo === 'honorario' ? 'boleta de honorarios' : 'RCV';
+
+/** Folio comparable: sin espacios ni ceros a la izquierda (igual que folio_normalizado en la base). */
+export const folioNormalizado = (folio: string | null | undefined) => String(folio ?? '').replace(/\s/g, '').toUpperCase().replace(/^0+/, '') || '0';
+/** Clave de un documento para detectar duplicados: RUT|tipo|folio normalizados. */
 export const claveDocumento = (rut: string | null | undefined, tipoDTE: number | null | undefined, folio: string | null | undefined) =>
-  `${String(rut ?? '').replace(/[^0-9kK]/g, '').toUpperCase()}|${Number(tipoDTE) || 0}|${String(folio ?? '').trim()}`;
+  `${String(rut ?? '').replace(/[^0-9kK]/g, '').toUpperCase()}|${Number(tipoDTE) || 0}|${folioNormalizado(folio)}`;
 
 export function construirRegistro(tipo: TipoRCV, d: DocRCV, periodo: string, a: Asignacion, plan: PlanCuentas): ResultadoRegistro {
   const errores: string[] = [];

@@ -6,7 +6,8 @@ import { crearClienteServidor } from '@/lib/supabase/server';
 import { planDeEmpresa } from '@/lib/datos/maestros';
 import { saldosAuxiliar } from '@/lib/datos/auxiliares';
 import { PlanCuentas } from '@/motor/plan-cuentas';
-import { armarDocumento } from '@/rcv/documento';
+import { armarDocumento, folioNormalizado } from '@/rcv/documento';
+import { rutParse } from '@/motor/rut';
 import { construirBoleta } from '@/honorarios/boleta';
 import { docRCVDesde, rutBase, validarDocAux, TIPO_LIBRO, esTipoDoc, type DocAux, type TipoAux } from '@/asientos/documento-auxiliar';
 
@@ -82,6 +83,31 @@ export async function guardarAsientoConDocumento(entrada: z.input<typeof asiento
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/e/${p.data.empresaId}`, 'layout');
   return { ok: true, numero: (data as { numero: number }[])[0].numero };
+}
+
+export interface VerificacionDoc {
+  /** Ya está en el libro (no se puede registrar de nuevo) */
+  registrado: { origen: string; numero: number | null; fecha: string; razon: string | null } | null;
+  /** Está en un RCV guardado, aún sin registrar: al registrarlo aquí, el RCV lo verá como «En el libro» */
+  enRCV: string | null;
+}
+
+/** Validador de duplicados antes de aceptar un documento nuevo en un asiento manual. */
+export async function verificarDocumento(empresaId: string, tipo: TipoAux, rut: string, tipoDTE: number, folio: string): Promise<VerificacionDoc> {
+  const r = rutParse(rut);
+  if (!esTipoDoc(tipo) || !r.valido || !String(folio).trim() || !(tipoDTE > 0)) return { registrado: null, enRCV: null };
+  const libro = TIPO_LIBRO[tipo];
+  const supabase = await crearClienteServidor();
+  const [reg, rcv] = await Promise.all([
+    supabase.rpc('documento_registrado', { p_empresa: empresaId, p_tipo: libro, p_rut: `${r.codigo}-${r.dv}`, p_tipo_dte: tipoDTE, p_folio: String(folio) }),
+    libro === 'honorario' ? Promise.resolve({ data: [] as { periodo: string; docs: { numero: string }[] }[] })
+      : supabase.from('rcv_cargas').select('periodo,docs').eq('empresa_id', empresaId).eq('tipo', libro).contains('docs', [{ rutCodigo: r.codigo, tipoDTE }]),
+  ]);
+  const f = ((reg.data ?? []) as { asiento_numero: number | null; fecha: string; razon_social: string | null; origen: string }[])[0];
+  const fn = folioNormalizado(folio);
+  const enRCV = ((rcv.data ?? []) as { periodo: string; docs: { rutCodigo?: string; tipoDTE?: number; numero: string }[] }[])
+    .find((c) => c.docs.some((d) => d.rutCodigo === r.codigo && +(d.tipoDTE ?? 0) === tipoDTE && folioNormalizado(d.numero) === fn))?.periodo ?? null;
+  return { registrado: f ? { origen: f.origen, numero: f.asiento_numero, fecha: String(f.fecha ?? '').slice(0, 10), razon: f.razon_social } : null, enRCV };
 }
 
 export interface DocPendiente { tipo_dte: number; folio: string; saldo: number; fecha: string | null; razon: string }

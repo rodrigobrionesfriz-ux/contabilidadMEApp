@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { clp, milesInput } from '@/lib/formato';
+import { clp, milesInput, MESES } from '@/lib/formato';
 import { rutParse } from '@/motor/rut';
 import { dtesDe, totalesDoc, validarDocAux, ladoLinea, type DocAux, type TipoAux } from '@/asientos/documento-auxiliar';
-import { documentosPendientes, type DocPendiente } from '../acciones';
+import { documentosPendientes, verificarDocumento, type DocPendiente, type VerificacionDoc } from '../acciones';
+
 
 const NOMBRE: Record<TipoAux, string> = { proveedor: 'proveedor', cliente: 'cliente', honorario: 'prestador de honorarios' };
 const entero = (v: string) => Math.round(Number(v.replace(/\./g, '')) || 0);
@@ -38,6 +39,22 @@ export function VentanaDocumento({ empresaId, tipo, inicial, montoLinea, ladoAct
     return () => { vivo = false; };
   }, [empresaId, tipo, d.rut, d.modo, rutOk, fechaAsiento]);
 
+  // Validador de duplicados: un documento nuevo no puede estar ya en el libro (desde el RCV u otro registro manual)
+  const [verif, setVerif] = useState<{ clave: string; v: VerificacionDoc } | null>(null);
+  const clave = `${d.rut}|${d.tipoDTE}|${d.folio.trim()}`;
+  useEffect(() => {
+    if (!nuevo || !rutOk || !d.folio.trim()) return;
+    let vivo = true;
+    const t = setTimeout(() => {
+      verificarDocumento(empresaId, tipo, d.rut, +d.tipoDTE, d.folio).then((v) => { if (vivo) setVerif({ clave, v }); })
+        .catch(() => { if (vivo) setVerif({ clave, v: { registrado: null, enRCV: null } }); }); // la base igual rechaza un duplicado
+    }, 350);
+    return () => { vivo = false; clearTimeout(t); };
+  }, [empresaId, tipo, d.rut, d.tipoDTE, d.folio, nuevo, rutOk, clave]);
+  const v = verif?.clave === clave ? verif.v : null;
+  const duplicado = nuevo && !!v?.registrado;
+  const verificando = nuevo && rutOk && !!d.folio.trim() && !v;
+
   useEffect(() => {
     const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') onCancelar(); };
     window.addEventListener('keydown', esc);
@@ -46,7 +63,7 @@ export function VentanaDocumento({ empresaId, tipo, inicial, montoLinea, ladoAct
 
   const aceptar = (ajustar: boolean) => {
     setTocado(true);
-    if (errores.length) return;
+    if (errores.length || duplicado || verificando) return;
     onAceptar(d, ajustar && esperado != null ? esperado : null);
   };
   // Función (no componente) para que el input no se vuelva a montar en cada tecla
@@ -139,14 +156,24 @@ export function VentanaDocumento({ empresaId, tipo, inicial, montoLinea, ladoAct
             La línea debería ir con {clp(esperado)} al {lado}{tipo === 'honorario' && t.retencion ? ' (líquido: la retención va en su propia línea, cuenta 2103002)' : ''}; hoy tiene {montoLinea ? `${clp(montoLinea)} al ${ladoActual}` : 'monto vacío'}.
           </p>
         )}
+        {duplicado && v?.registrado && (
+          <div role="alert" className="space-y-2 rounded-md border border-peligro/50 bg-peligro/10 px-3 py-2 text-xs text-peligro">
+            <p>⛔ <b>Documento duplicado:</b> este {dtesDe(tipo).find((x) => x.cod === +d.tipoDTE)?.nm ?? 'documento'} N° {d.folio} ya está registrado en el libro
+              por {v.registrado.origen}{v.registrado.numero ? `, asiento N° ${v.registrado.numero}` : ''}{v.registrado.fecha ? ` (${v.registrado.fecha.split('-').reverse().join('/')})` : ''}. No se puede registrar de nuevo.</p>
+            <button type="button" className="boton-sec py-1 text-xs" onClick={() => set('modo', 'existente')}>Usarlo como documento ya registrado (pago, abono o cruce)</button>
+          </div>
+        )}
+        {nuevo && !duplicado && v?.enRCV && (
+          <p className="rounded-md border border-info/40 bg-info/10 px-3 py-2 text-xs text-info">ℹ️ Este documento está en el RCV de {MESES[+v.enRCV.slice(5, 7) - 1].toLowerCase()} {v.enRCV.slice(0, 4)} sin registrar. Si lo registras aquí, al importar ese RCV aparecerá como «En el libro» y no se duplicará.</p>
+        )}
         {tocado && errores.length > 0 && <p className="text-xs text-peligro">⛔ {errores.join(' · ')}</p>}
 
         <div className="flex flex-wrap justify-end gap-2">
           <button type="button" className="boton-sec" onClick={onCancelar}>Cancelar</button>
           {nuevo && esperado != null && esperado > 0 && (montoLinea !== esperado || (ladoActual && ladoActual !== lado)) && (
-            <button type="button" className="boton-sec" onClick={() => aceptar(true)}>Aceptar y dejar la línea en {clp(esperado)}</button>
+            <button type="button" className="boton-sec" disabled={duplicado || verificando} onClick={() => aceptar(true)}>Aceptar y dejar la línea en {clp(esperado)}</button>
           )}
-          <button type="button" className="boton" onClick={() => aceptar(false)}>Aceptar</button>
+          <button type="button" className="boton" disabled={duplicado || verificando} title={duplicado ? 'Documento ya registrado' : verificando ? 'Revisando si ya está registrado…' : ''} onClick={() => aceptar(false)}>{verificando ? 'Revisando…' : 'Aceptar'}</button>
         </div>
       </div>
     </div>

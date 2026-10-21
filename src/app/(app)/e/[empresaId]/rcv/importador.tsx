@@ -15,6 +15,8 @@ import { EditorDocumento, pesos } from './panel';
 export interface Fila {
   doc: DocRCV;
   duplicado: boolean;
+  /** Dónde quedó registrado antes (RCV, asiento manual, registro manual, respaldo) */
+  registro?: { origen: string; numero: number | null; fecha: string };
   /** Cuenta y CC sugeridos (ficha del auxiliar o último uso) */
   cuenta: string;
   cc: string;
@@ -30,6 +32,7 @@ const rutDe = (d: Pick<DocRCV, 'rutCodigo' | 'rutDV'>) => `${d.rutCodigo}-${d.ru
 /** Filas del paso 2 a partir del RCV guardado y lo ya registrado / las fichas */
 function armarFilas(tipo: TipoRCV, c: CargaRCV): Fila[] {
   const existentes = new Set(c.previos.existentes.map((k) => k.toUpperCase()));
+  const registros = c.previos.registros ?? {};
   return c.docs.map((doc) => {
     const rut = rutDe(doc);
     const ficha = c.previos.fichas[rut];
@@ -38,6 +41,7 @@ function armarFilas(tipo: TipoRCV, c: CargaRCV): Fila[] {
     return {
       doc, vence: doc.fechaVencimiento,
       duplicado: existentes.has(claveDocumento(rut, doc.tipoDTE, doc.numero).toUpperCase()),
+      registro: registros[claveDocumento(rut, doc.tipoDTE, doc.numero)],
       cuenta: ficha?.cuenta || u?.cuenta || cuentaDte, cc: ficha?.cc ?? u?.cc ?? '',
       formaPago: ((ficha?.formaPago ?? u?.formaPago) as Fila['formaPago']) ?? 'clientes',
     };
@@ -128,6 +132,8 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicia
   const nPend = filas.filter(pendiente).length;
   const nReg = filas.filter((f) => f.resultado?.ok).length;
   const nDup = filas.filter((f) => f.duplicado).length;
+  // Documentos del RCV que ya se habían registrado a mano (asiento manual, Nuevo documento, respaldo): no se importan
+  const nManual = filas.filter((f) => f.duplicado && f.registro && f.registro.origen !== 'RCV').length;
   const anio = Number(periodo.slice(0, 4)) || new Date().getFullYear();
 
   const seleccionar = (i: number) => { setSel(i); setEditando(false); };
@@ -137,7 +143,7 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicia
     const fichasNuevas = r.ficha ? { ...fichas, [rut]: r.ficha } : fichas;
     if (r.ficha) setFichas(fichasNuevas);
     const nuevas = filas.map((f, j) => {
-      if (j === i) return { ...f, resultado: r };
+      if (j === i) return !r.ok && /Documento duplicado/.test(r.error ?? '') ? { ...f, duplicado: true, resultado: r } : { ...f, resultado: r };
       if (r.ficha && rutDe(f.doc) === rut && pendiente(f) && !f.detalle) return { ...f, cuenta: r.ficha.cuenta, cc: r.ficha.cc, ...(r.ficha.formaPago ? { formaPago: r.ficha.formaPago as Fila['formaPago'] } : {}) };
       return f;
     });
@@ -208,6 +214,7 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicia
         <div className="tarjeta flex flex-wrap items-center justify-between gap-3 p-4">
           <div className="text-sm">
             <div>RCV de {nombrePeriodo(periodo)}: <b>{carga.archivo}</b></div>
+            {nManual > 0 && <div className="mt-1 text-xs text-aviso">⚠️ {nManual} {nManual === 1 ? 'documento de este RCV ya estaba registrado' : 'documentos de este RCV ya estaban registrados'} a mano: {nManual === 1 ? 'queda' : 'quedan'} «En el libro» y no se vuelven a registrar.</div>}
             <div className="text-xs text-tenue">{filas.length} documentos · {nPend} por contabilizar · {nReg + nDup} en el libro · actualizado {new Date(carga.actualizado).toLocaleString('es-CL', { dateStyle: 'short', timeStyle: 'short' })}
               {' · '}<button type="button" className="hover:text-peligro" onClick={quitar} disabled={cargando}>Quitar este RCV</button></div>
           </div>
@@ -258,7 +265,7 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicia
                   <tbody>
                     {filtrados.map(({ f, i }) => (
                       <tr key={i} onClick={() => { seleccionar(i); setVista('documento'); }} className={`cursor-pointer border-b border-borde/40 hover:bg-panel-2 ${sel === i ? 'bg-panel-2' : ''}`}>
-                        <td className="px-2 py-1.5">{f.resultado?.ok ? <span className="text-acento">✓ N° {f.resultado.numero}</span> : f.duplicado ? <span className="text-tenue">En el libro</span> : !fichas[rutDe(f.doc)] ? <span className="text-info">★ nuevo</span> : 'Por contabilizar'}</td>
+                        <td className="px-2 py-1.5">{f.resultado?.ok ? <span className="text-acento">✓ N° {f.resultado.numero}</span> : f.duplicado ? <span className={f.registro && f.registro.origen !== 'RCV' ? 'text-aviso' : 'text-tenue'} title={f.registro ? `Registrado por ${f.registro.origen}${f.registro.numero ? `, asiento N° ${f.registro.numero}` : ''}` : ''}>{f.registro && f.registro.origen !== 'RCV' ? `En el libro (${f.registro.origen === 'asiento manual' ? 'manual' : f.registro.origen.split(' ')[0]})` : 'En el libro'}</span> : !fichas[rutDe(f.doc)] ? <span className="text-info">★ nuevo</span> : 'Por contabilizar'}</td>
                         <td className="num px-2 py-1.5">{f.doc.tipoDTE}-{f.doc.numero}</td>
                         <td className="num px-2 py-1.5">{fechaCL(f.doc.fecha)}</td>
                         <td className="max-w-[280px] truncate px-2 py-1.5">{f.doc.razonSocial} <span className="num text-tenue">{rutDe(f.doc)}</span></td>
@@ -325,7 +332,12 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicia
                       <div className="text-4xl opacity-60">🧾</div>
                       <p className="text-sm font-semibold text-tenue">{actual.doc.razonSocial} · <span className="num">{actual.doc.tipoDTE}-{actual.doc.numero}</span> · {pesos(actual.doc.total)}</p>
                       {actual.resultado?.ok ? <p className="text-sm text-acento">✓ Contabilizado en el asiento N° {actual.resultado.numero}.</p>
-                        : actual.duplicado ? <p className="text-sm text-tenue">Ya está registrado en el libro de {tipo === 'compra' ? 'compras' : 'ventas'}.</p>
+                        : actual.duplicado ? (
+                          <p className={`max-w-xl text-sm ${actual.registro && actual.registro.origen !== 'RCV' ? 'rounded-md border border-aviso/40 bg-aviso/10 px-3 py-2 text-aviso' : 'text-tenue'}`}>
+                            {actual.registro && actual.registro.origen !== 'RCV' ? '⚠️ ' : ''}Ya está registrado en el libro de {tipo === 'compra' ? 'compras' : 'ventas'}
+                            {actual.registro ? ` por ${actual.registro.origen}${actual.registro.numero ? ` (asiento N° ${actual.registro.numero}` : ' ('}${actual.registro.fecha ? `${actual.registro.numero ? ', ' : ''}${actual.registro.fecha.split('-').reverse().join('/')}` : ''})` : ''}. No se vuelve a registrar.
+                          </p>
+                        )
                         : <p className="text-sm text-tenue">Toca <b className="text-texto">⬇ Importar</b> (arriba a la derecha) para editar su asiento.</p>}
                       {actual.resultado && !actual.resultado.ok && <p role="alert" className="text-sm text-peligro">{actual.resultado.error}</p>}
                       {actual.doc.registroSII?.length ? (

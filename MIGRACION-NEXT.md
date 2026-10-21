@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (339): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (344): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -132,6 +132,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 
 ### 0023 (10u)
 - guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
+
+### 0025 (10z8)
+- folio_normalizado(folio): sin espacios ni ceros a la izquierda ("000518778" = "518778").
+- documento_registrado(empresa, tipo, rut, tipo_dte, folio): documento vigente con esa clave, su asiento, fecha y origen (RCV, asiento manual, registro manual, boleta de honorarios, respaldo del sistema anterior).
+- registrar_documento: usa la clave normalizada, toma un candado por documento (dos registros simultáneos no pasan) y el error dice dónde está el anterior: "Documento duplicado: … ya está registrado (asiento manual, asiento N° 123, 05/10/2026). No se registró de nuevo."
+- rcv_resumen cuenta los pendientes con la clave normalizada. Índice documentos_clave_idx.
 
 ### 0024 (10z)
 - empresas.primeros_pasos (jsonb): pasos de la guía marcados a mano como listo u omitido.
@@ -392,6 +398,11 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - **Documento nuevo** (se registra en el libro, con los mismos datos del RCV): RUT, razón social, tipo DTE, folio, emisión, vencimiento (vacío: 30 días) y período contable (compras); exento, neto, IVA 19% editable (retenido en facturas de compra 45/46), otros impuestos y total. Honorarios: N° boleta, nombre, fecha, bruto, tipo 70/71 con la retención del año y líquido. Avisa si el monto o el lado de la línea no calza (botón para ajustarla). Uno por asiento; la glosa vacía se completa con "Tipo N°folio · razón social".
 - **Ya registrado** (pagos, abonos, cruces): RUT, tipo y folio; muestra los documentos con saldo de ese RUT a la fecha del asiento para elegirlos.
 - La línea del auxiliar se guarda con RUT, tipo y folio (antes solo RUT), así los saldos por documento cuadran. Con documento nuevo se usa registrar_documento: el documento queda en el libro ligado al asiento (compras/ventas con armarDocumento, ahora exportado; honorarios con construirBoleta), con origenRegistro "asiento manual". Lógica en src/asientos/documento-auxiliar.ts (con pruebas).
+
+## Validador de documentos duplicados (10z8)
+- Un mismo RUT + tipo + folio no entra dos veces al libro, venga del RCV, del asiento manual, de Nuevo documento o de boletas de honorarios: la base lo rechaza siempre (0025) y la interfaz avisa antes.
+- Asiento manual: al escribir RUT, tipo y folio de un documento nuevo, la ventana revisa el libro y, si ya está, muestra "⛔ Documento duplicado" con su origen y asiento, bloquea Aceptar y ofrece usarlo como documento ya registrado. Si está en un RCV guardado sin registrar, avisa que el RCV lo verá como «En el libro».
+- RCV: el cruce usa la clave normalizada (claveDocumento con folioNormalizado). Los ya registrados a mano aparecen como "En el libro (manual)" en amarillo, con origen y asiento en el detalle, y un aviso con cuántos son; no se pueden importar. Si alguien lo registra mientras el RCV está abierto, el error de la base marca la fila como duplicada.
 
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.

@@ -27,3 +27,15 @@ describe('documento de una línea de auxiliar', () => {
     expect(validarDocAux('proveedor', { ...docVacio('proveedor', '2026-10-21', 'existente'), rut: '77090370-K', folio: '1' })).toEqual([]);
   });
 });
+
+import { claveDocumento, folioNormalizado, origenDocumento } from '@/rcv/documento';
+describe('clave de documento para detectar duplicados', () => {
+  it('normaliza RUT y folio igual que la base', () => {
+    expect(folioNormalizado(' 000518 778 ')).toBe('518778');
+    expect(folioNormalizado('')).toBe('0');
+    expect(claveDocumento('77.090.370-k', 33, '0518778')).toBe(claveDocumento('77090370-K', 33, '518778'));
+    expect(origenDocumento(null, 'asiento manual', 'compra')).toBe('asiento manual');
+    expect(origenDocumento('abc', null, 'compra')).toBe('respaldo del sistema anterior');
+    expect(origenDocumento(null, 'RCV', 'compra')).toBe('RCV');
+  });
+});
