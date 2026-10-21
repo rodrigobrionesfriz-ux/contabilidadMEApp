@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (335): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (339): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -386,6 +386,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Arrastre (src/tributario/f29.ts): un F29 presentado arrastra su cód. 77 declarado mientras siga al día. Si una corrección (en ese mismo mes, 10z6, o en uno anterior) cambió su remanente (cód. 504 recalculado distinto del de la foto al presentar, o del declarado si no hay foto; tolerancia 0,2%), queda **desactualizado**: aviso "⚠ Rectificar" en la lista y en el detalle, y desde ahí se arrastra lo calculado.
 - Borradores con montos guardados en «Declarado» que ya no calzan con lo recalculado (504, 537, 77, 89): aviso para usar «Copiar calculado», porque lo digitado se presenta tal cual.
 - El loader trae la foto calculado de cada declaración. Pruebas de oro intactas (los dos campos nuevos se excluyen) y 3 pruebas nuevas de arrastre.
+
+## Asiento manual con documento del auxiliar (10z7)
+- En Comprobantes → Nuevo asiento, una línea con cuenta de proveedor, cliente u honorarios abre una ventana al salir de la casilla Debe o Haber (Tab o clic afuera). Al aceptar vuelve al asiento y la línea muestra el documento (NUEVO o REF.) con un botón para editarlo. Si se cancela, no se vuelve a abrir sola hasta cambiar el monto. Cuentas de trabajador: solo RUT, como antes.
+- **Documento nuevo** (se registra en el libro, con los mismos datos del RCV): RUT, razón social, tipo DTE, folio, emisión, vencimiento (vacío: 30 días) y período contable (compras); exento, neto, IVA 19% editable (retenido en facturas de compra 45/46), otros impuestos y total. Honorarios: N° boleta, nombre, fecha, bruto, tipo 70/71 con la retención del año y líquido. Avisa si el monto o el lado de la línea no calza (botón para ajustarla). Uno por asiento; la glosa vacía se completa con "Tipo N°folio · razón social".
+- **Ya registrado** (pagos, abonos, cruces): RUT, tipo y folio; muestra los documentos con saldo de ese RUT a la fecha del asiento para elegirlos.
+- La línea del auxiliar se guarda con RUT, tipo y folio (antes solo RUT), así los saldos por documento cuadran. Con documento nuevo se usa registrar_documento: el documento queda en el libro ligado al asiento (compras/ventas con armarDocumento, ahora exportado; honorarios con construirBoleta), con origenRegistro "asiento manual". Lógica en src/asientos/documento-auxiliar.ts (con pruebas).
 
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.

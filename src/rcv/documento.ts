@@ -104,7 +104,7 @@ export function construirRegistro(tipo: TipoRCV, d: DocRCV, periodo: string, a: 
 }
 
 /** Documento contable a partir del RCV y la asignación (sin validar). */
-function armarDocumento(tipo: TipoRCV, d: DocRCV, periodo: string, a: Asignacion): Documento {
+export function armarDocumento(tipo: TipoRCV, d: DocRCV, periodo: string, a: Asignacion): Documento {
   const lineasDetalle = a.detalle?.lineas;
   const glosa = (a.detalle?.glosa ?? a.glosa ?? '').trim();
   const base: Documento = {

@@ -1,8 +1,10 @@
 'use client';
 
-import { useMemo, useState, useTransition } from 'react';
+import { useMemo, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
-import { guardarAsiento } from '../acciones';
+import { guardarAsiento, guardarAsientoConDocumento } from '../acciones';
+import { VentanaDocumento } from './documento-modal';
+import { docVacio, esTipoDoc, totalesDoc, validarDocAux, dtesDe, rutBase, type DocAux, type TipoAux } from '@/asientos/documento-auxiliar';
 import { clp, hoyISO, milesInput, ANCHO_MONTO } from '@/lib/formato';
 import { rutParse } from '@/motor/rut';
 import { Mensaje } from '@/components/form-estado';
@@ -17,7 +19,7 @@ export interface CuentaOpcion {
   requiere_centro_costo: boolean;
 }
 
-interface Linea { cuenta: string; debe: string; haber: string; cc: string; rut: string; glosa: string }
+interface Linea { cuenta: string; debe: string; haber: string; cc: string; rut: string; glosa: string; doc?: DocAux }
 const vacia = (): Linea => ({ cuenta: '', debe: '', haber: '', cc: '', rut: '', glosa: '' });
 const monto = (s: string) => Math.round(Number(s.replace(/\./g, '').replace(',', '.')) || 0);
 
@@ -30,16 +32,30 @@ export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
   const [lineas, setLineas] = useState<Linea[]>([vacia(), vacia()]);
   const [msg, setMsg] = useState<{ error?: string; ok?: string }>({});
   const [enviando, iniciar] = useTransition();
+  // Ventana del documento (línea con cuenta de proveedor, cliente u honorarios)
+  const [ventana, setVentana] = useState<number | null>(null);
+  const tipoAux = (l: Linea): TipoAux | null => { const t = porCodigo.get(l.cuenta)?.tipo_auxiliar; return esTipoDoc(t) ? t : null; };
+  // Si se cancela la ventana, no se vuelve a abrir sola hasta que cambie el monto de esa línea
+  const cancelada = useRef(new Set<number>());
+  const abrirSiFalta = (i: number) => {
+    const l = lineas[i];
+    if (tipoAux(l) && (monto(l.debe) || monto(l.haber)) && !l.doc && !cancelada.current.has(i)) setVentana(i);
+  };
 
-  const cambiar = (i: number, campo: keyof Linea, v: string) =>
+  const cambiar = (i: number, campo: keyof Linea, v: string) => {
+    if (campo === 'debe' || campo === 'haber' || campo === 'cuenta') cancelada.current.delete(i);
     setLineas((ls) => ls.map((l, j) => {
       if (j !== i) return l;
       const n = { ...l, [campo]: campo === 'debe' || campo === 'haber' ? milesInput(v, 10).replace('-', '') : v };
-      if (campo === 'cuenta') n.cuenta = v.split(' ')[0]; // acepta "1101201 · Banco" desde la lista
+      if (campo === 'cuenta') {
+        n.cuenta = v.split(' ')[0]; // acepta "1101201 · Banco" desde la lista
+        if (porCodigo.get(n.cuenta)?.tipo_auxiliar !== porCodigo.get(l.cuenta)?.tipo_auxiliar) n.doc = undefined;
+      }
       if (campo === 'debe' && v) n.haber = '';
       if (campo === 'haber' && v) n.debe = '';
       return n;
     }));
+  };
 
   const aplicarPlantilla = (id: string) => {
     const c = plantillas.find((x) => x.id === id);
@@ -78,18 +94,30 @@ export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
     for (const [i, l] of usadas.entries()) {
       if (!porCodigo.has(l.cuenta)) return setMsg({ error: `Línea ${i + 1}: la cuenta ${l.cuenta || '(vacía)'} no existe o no es imputable` });
       if (l.rut && !rutParse(l.rut).valido) return setMsg({ error: `Línea ${i + 1}: RUT no válido` });
+      const ta = tipoAux(l);
+      if (ta) {
+        if (!l.doc) return setMsg({ error: `Línea ${i + 1}: faltan los datos del documento (RUT, tipo y folio). Haz clic en «Documento».` });
+        const e = validarDocAux(ta, l.doc);
+        if (e.length) return setMsg({ error: `Línea ${i + 1}: ${e.join(', ')}.` });
+      }
     }
+    const nuevos = usadas.map((l, i) => ({ l, i })).filter(({ l }) => tipoAux(l) && l.doc?.modo === 'nuevo');
+    if (nuevos.length > 1) return setMsg({ error: 'Un asiento puede registrar un solo documento nuevo. Deja los demás como «ya registrado» o regístralos aparte.' });
     if (!cuadra) return setMsg({ error: `El asiento no cuadra (diferencia ${clp(totalD - totalH)})` });
     iniciar(async () => {
-      const r = await guardarAsiento({
+      const base = {
         empresaId, fecha, glosa,
         lineas: usadas.map((l) => ({
           cuenta: l.cuenta, debe: monto(l.debe), haber: monto(l.haber),
-          glosa: l.glosa || undefined, centro_costo: l.cc || undefined, rut_auxiliar: l.rut || undefined,
+          glosa: l.glosa || undefined, centro_costo: l.cc || undefined,
+          rut_auxiliar: l.doc ? rutBase(l.doc.rut) : l.rut || undefined,
+          ...(l.doc ? { tipo_dte: +l.doc.tipoDTE, folio: l.doc.folio.trim() } : {}),
         })),
-      });
+      };
+      const n = nuevos[0];
+      const r = n ? await guardarAsientoConDocumento({ ...base, doc: { linea: n.i, tipo: tipoAux(n.l)!, datos: n.l.doc! } }) : await guardarAsiento(base);
       if (!r.ok) return setMsg({ error: r.error });
-      setMsg({ ok: `Asiento N° ${r.numero} registrado.` });
+      setMsg({ ok: `Asiento N° ${r.numero} registrado${n ? ' y documento anotado en el libro' : ''}.` });
       setGlosa('');
       setLineas([vacia(), vacia()]);
     });
@@ -138,11 +166,23 @@ export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
                       placeholder="Código o nombre" className="campo num" aria-label={`Cuenta línea ${i + 1}`} />
                     <div className="mt-0.5 truncate text-xs text-tenue">{c?.nombre ?? (l.cuenta ? '⚠️ cuenta no encontrada' : '')}</div>
                   </td>
-                  <td className="px-2 py-1.5"><input inputMode="numeric" maxLength={13} value={l.debe} onChange={(e) => cambiar(i, 'debe', e.target.value)} className={`campo num text-right ${ANCHO_MONTO}`} aria-label={`Debe línea ${i + 1}`} /></td>
-                  <td className="px-2 py-1.5"><input inputMode="numeric" maxLength={13} value={l.haber} onChange={(e) => cambiar(i, 'haber', e.target.value)} className={`campo num text-right ${ANCHO_MONTO}`} aria-label={`Haber línea ${i + 1}`} /></td>
+                  <td className="px-2 py-1.5"><input inputMode="numeric" maxLength={13} value={l.debe} onChange={(e) => cambiar(i, 'debe', e.target.value)} onBlur={() => abrirSiFalta(i)} className={`campo num text-right ${ANCHO_MONTO}`} aria-label={`Debe línea ${i + 1}`} /></td>
+                  <td className="px-2 py-1.5"><input inputMode="numeric" maxLength={13} value={l.haber} onChange={(e) => cambiar(i, 'haber', e.target.value)} onBlur={() => abrirSiFalta(i)} className={`campo num text-right ${ANCHO_MONTO}`} aria-label={`Haber línea ${i + 1}`} /></td>
                   <td className="space-y-1 px-2 py-1.5">
-                    {c?.tipo_auxiliar && (
+                    {c?.tipo_auxiliar && !tipoAux(l) && (
                       <input value={l.rut} onChange={(e) => cambiar(i, 'rut', e.target.value)} placeholder={`RUT ${c.tipo_auxiliar} *`} className="campo num" />
+                    )}
+                    {tipoAux(l) && (
+                      <button type="button" onClick={() => setVentana(i)}
+                        className={`flex w-full items-center gap-2 rounded-md border px-2 py-1.5 text-left text-xs ${l.doc ? 'border-borde hover:border-acento' : 'border-dashed border-aviso text-aviso hover:bg-aviso/10'}`}>
+                        {l.doc ? (<>
+                          <span className={`rounded px-1.5 text-[10px] font-semibold ${l.doc.modo === 'nuevo' ? 'bg-acento/20 text-acento' : 'bg-info/15 text-info'}`}>{l.doc.modo === 'nuevo' ? 'NUEVO' : 'REF.'}</span>
+                          <span className="num">{dtesDe(tipoAux(l)!).find((x) => x.cod === +l.doc!.tipoDTE)?.nm ?? l.doc.tipoDTE} N°{l.doc.folio}</span>
+                          <span className="min-w-0 flex-1 truncate text-tenue">{rutBase(l.doc.rut)}{l.doc.razon ? ` · ${l.doc.razon}` : ''}</span>
+                          {l.doc.modo === 'nuevo' && <span className="num">{clp(totalesDoc(tipoAux(l)!, l.doc).total)}</span>}
+                          <span className="text-tenue">✏️</span>
+                        </>) : <>📄 Documento * <span className="text-tenue">(RUT, tipo y folio{' · '}se abre al ingresar el monto)</span></>}
+                      </button>
                     )}
                     {c?.acepta_centro_costo && (
                       <select value={l.cc} onChange={(e) => cambiar(i, 'cc', e.target.value)} className="campo">
@@ -175,6 +215,31 @@ export function FormAsiento({ empresaId, cuentas, centros, plantillas = [] }: {
           </tfoot>
         </table>
       </div>
+      {ventana != null && lineas[ventana] && tipoAux(lineas[ventana]) && (() => {
+        const l = lineas[ventana];
+        const ta = tipoAux(l)!;
+        return (
+          <VentanaDocumento empresaId={empresaId} tipo={ta} fechaAsiento={fecha}
+            inicial={l.doc ?? { ...docVacio(ta, fecha), rut: l.rut }}
+            montoLinea={monto(l.debe) || monto(l.haber)} ladoActual={monto(l.debe) ? 'debe' : monto(l.haber) ? 'haber' : null}
+            otroNuevo={lineas.some((x, j) => j !== ventana && x.doc?.modo === 'nuevo' && !!tipoAux(x))}
+            onCancelar={() => { cancelada.current.add(ventana); setVentana(null); }}
+            onAceptar={(d, ajustar) => {
+              setLineas((ls) => ls.map((x, j) => {
+                if (j !== ventana) return x;
+                const n: Linea = { ...x, doc: d, rut: d.rut };
+                if (ajustar != null) {
+                  const lado = (ta === 'cliente') !== (+d.tipoDTE === 61) ? 'debe' : 'haber';
+                  n.debe = lado === 'debe' ? milesInput(ajustar) : '';
+                  n.haber = lado === 'haber' ? milesInput(ajustar) : '';
+                }
+                return n;
+              }));
+              if (!glosa.trim() && d.modo === 'nuevo') setGlosa(`${dtesDe(ta).find((x) => x.cod === +d.tipoDTE)?.nm ?? 'Documento'} N°${d.folio} · ${d.razon}`);
+              setVentana(null);
+            }} />
+        );
+      })()}
       <Mensaje {...msg} />
       <div className="flex gap-2">
         <button type="submit" className="boton" disabled={enviando || !cuadra}>{enviando ? 'Guardando…' : 'Guardar asiento'}</button>
