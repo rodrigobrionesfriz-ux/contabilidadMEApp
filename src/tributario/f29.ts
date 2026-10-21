@@ -13,7 +13,10 @@ export interface DeclaracionF29 {
   estado: 'borrador' | 'presentado' | 'cerrado' | string;
   declarado?: Record<string, number>;
   utm?: number | null;
+  /** Remanente del mes anterior (cód. 77) ingresado a mano: en enero, el de diciembre; en otro mes, una corrección. */
   remanenteInicial?: number | null;
+  /** Foto de lo calculado al presentar (para saber si una corrección anterior dejó desactualizada la declaración). */
+  calculado?: Record<string, number> | null;
 }
 
 export interface VentaF29 { tipoDTE: number; fecha: string; neto?: number; exento?: number; iva?: number; total?: number; estado?: string; excluidoAuto?: boolean }
@@ -48,6 +51,10 @@ export interface MesF29 {
   utmPeriodo: number; utmImputacion: number; remanenteUTM: number; creditoTotal: number; ivaDeterminado: number;
   ivaAPagar: number; remanente: number; basePPM: number; ppm: number; retencionHon: number; iusc: number; totalPagar: number;
   nDocsV: number; nDocsC: number; codigos: Record<number, number>;
+  /** El remanente anterior viene de una corrección ingresada en este mes. */
+  remanenteCorregido: boolean;
+  /** Presentado, pero una corrección en un mes anterior cambió su remanente: hay que rectificarlo. Desde aquí se arrastra lo calculado. */
+  desactualizado: boolean;
   detalleVentas: ReturnType<typeof detalleVentas>; detalleCompras: ReturnType<typeof detalleCompras>;
   declaracion: DeclaracionF29 | null;
 }
@@ -118,11 +125,11 @@ export function calcularF29Anual(e: EntradaF29): MesF29[] {
   const utmDeclaracion = (p: string) => utmPeriodo(periodoSiguiente(p));
 
   // Remanente inicial: cód. 77 del F29 de diciembre anterior; si no, el ingresado en enero.
-  const perDic = `${anio - 1}-12`, perEne = `${anio}-01`;
+  // (Si en enero se ingresó un remanente a mano, se toma como corrección dentro del ciclo.)
+  const perDic = `${anio - 1}-12`;
   const dic = e.anteriores[perDic] ?? null;
   let remanenteAnt = 0;
   if (dic && (esPresentado(dic) || dic.declarado?.['77'] != null)) remanenteAnt = Math.max(0, codDecl(dic, 77, 0));
-  else if (decl(perEne)?.remanenteInicial != null) remanenteAnt = Math.max(0, +(decl(perEne)!.remanenteInicial ?? 0) || 0);
   let utmRemanenteAnt = remanenteAnt > 0 ? utmDeclaracion(perDic) : 0;
 
   const tasaPPM = (+e.tasaPPM || 0) / 100;
@@ -161,6 +168,13 @@ export function calcularF29Anual(e: EntradaF29): MesF29[] {
     const iusc = Math.max(0, Math.round(e.iusc[per] ?? 0));
     const utmP = utmPeriodo(per);
     const utmImputacion = utmDeclaracion(per);
+    const d = decl(per);
+    // Corrección del remanente anterior ingresada en este mes: manda sobre el arrastre.
+    const remanenteCorregido = d?.remanenteInicial != null;
+    if (remanenteCorregido) {
+      remanenteAnt = Math.max(0, +(d!.remanenteInicial ?? 0) || 0);
+      if (m === 1) utmRemanenteAnt = remanenteAnt > 0 ? utmDeclaracion(perDic) : 0;
+    }
     const rr = reajustarRemanente(remanenteAnt, utmRemanenteAnt, utmImputacion);
     const remanenteReaj = rr.monto, remanenteUTM = rr.utm;
     const reajusteRemanente = remanenteReaj - remanenteAnt;
@@ -183,12 +197,20 @@ export function calcularF29Anual(e: EntradaF29): MesF29[] {
       504: remanenteReaj, 537: creditoTotal, 77: remanente, 89: ivaAPagar,
       563: basePPM, 62: ppm, 151: retencionHon, 48: iusc, 91: totalPagar, 39: ivaRetenido,
     };
-    const d = decl(per);
+    // Arrastre al mes siguiente: lo declarado (cód. 77) si el F29 está presentado y sigue al día; si una corrección
+    // anterior cambió su remanente (cód. 504), la declaración quedó desactualizada y se arrastra lo calculado.
+    let desactualizado = false;
+    let arrastre = remanente;
+    if (esPresentado(d)) {
+      const ref504 = d!.calculado?.['504'] ?? d!.declarado?.['504'];
+      if (ref504 != null && !remanenteCorregido && Math.abs(remanenteReaj - +ref504) > Math.max(5, Math.abs(+ref504) * 0.002)) desactualizado = true;
+      else arrastre = codDecl(d, 77, remanente);
+    }
     meses.push({ m, ventasNetas, ventasExentas, debito, ivaRetenido, debitoTotal, comprasNetas, credito, creditoActivoFijo, creditoMes,
       ivaNoRecuperable, remanenteAnt, remanenteReaj, reajusteRemanente, remanenteSinUTM, utmRemanenteAnt, utmPeriodo: utmP, utmImputacion,
       remanenteUTM, creditoTotal, ivaDeterminado, ivaAPagar, remanente, basePPM, ppm, retencionHon, iusc, totalPagar,
-      nDocsV: vs.length, nDocsC: cs.length, codigos, detalleVentas: vdet, detalleCompras: cdet, declaracion: d || null });
-    remanenteAnt = esPresentado(d) ? codDecl(d, 77, remanente) : remanente;
+      nDocsV: vs.length, nDocsC: cs.length, codigos, detalleVentas: vdet, detalleCompras: cdet, declaracion: d || null, remanenteCorregido, desactualizado });
+    remanenteAnt = arrastre;
     utmRemanenteAnt = utmImputacion;
   }
   return meses;

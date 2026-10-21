@@ -67,6 +67,11 @@ export function DetalleF29({ empresaId, anio, m, escribe, admin, esEnero, remane
         <h2 className="text-lg font-semibold">F29 {MESES[m.m - 1]} {anio} {presentado && <span className="ml-2 rounded bg-acento/20 px-2 py-0.5 text-xs text-acento">PRESENTADO</span>}</h2>
         <div className="text-xs text-tenue">{m.nDocsV} documentos de venta · {m.nDocsC} de compra</div>
       </div>
+      {m.desactualizado && <p className="rounded-md border border-aviso/40 bg-aviso/10 px-3 py-2 text-sm text-aviso">⚠️ Este F29 está presentado, pero una corrección en un mes anterior cambió su remanente (cód. 504: declarado {clp(Number(d0?.declarado?.['504'] ?? 0))}, recalculado {clp(m.remanenteReaj)}). Hay que rectificarlo: {admin ? 'reábrelo, revisa y vuelve a presentarlo' : 'pide a un administrador que lo reabra'}. Los meses siguientes ya usan lo recalculado.</p>}
+      {m.remanenteCorregido && <p className="rounded-md border border-info/40 bg-info/10 px-3 py-2 text-sm text-info">El remanente anterior de este mes viene de una corrección ingresada a mano ({clp(m.remanenteAnt)}); este mes y los siguientes se calculan con él.</p>}
+      {!presentado && d0?.declarado && ['504', '537', '77', '89'].some((c) => d0.declarado![c] != null && Math.round(Number(d0.declarado![c])) !== Math.round(m.codigos[Number(c)] ?? 0)) && (
+        <p className="rounded-md border border-aviso/40 bg-aviso/10 px-3 py-2 text-sm text-aviso">Lo guardado en «Declarado» para el remanente o el IVA ya no coincide con lo recalculado. Usa «Copiar calculado» y guarda, o lo digitado se presentará tal cual.</p>
+      )}
       {m.remanenteSinUTM && <p className="rounded-md border border-aviso/40 bg-aviso/10 px-3 py-2 text-sm text-aviso">Falta la UTM para reajustar el remanente: ingrésala en la declaración del mes correspondiente.</p>}
       <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
         <div className="tarjeta overflow-x-auto">
@@ -108,12 +113,11 @@ export function DetalleF29({ empresaId, anio, m, escribe, admin, esEnero, remane
                 <label className="etiqueta" htmlFor="utm">UTM del mes</label>
                 <input id="utm" inputMode="numeric" disabled={presentado || !escribe} value={utm} onChange={(e) => setUtm(e.target.value)} placeholder={String(m.utmPeriodo || '')} className="campo num" />
               </div>
-              {esEnero && !remanenteDesdeDic && (
-                <div>
-                  <label className="etiqueta" htmlFor="remini">Remanente de diciembre</label>
-                  <input id="remini" inputMode="numeric" disabled={presentado || !escribe} value={remIni} onChange={(e) => setRemIni(e.target.value)} className="campo num" placeholder="Cód. 77 dic." />
-                </div>
-              )}
+              <div>
+                <label className="etiqueta" htmlFor="remini">{esEnero && !remanenteDesdeDic ? 'Remanente de diciembre' : `Corregir remanente de ${MESES[(m.m + 10) % 12].toLowerCase()}`}</label>
+                <input id="remini" inputMode="numeric" disabled={presentado || !escribe} value={remIni} onChange={(e) => setRemIni(e.target.value)} className="campo num"
+                  placeholder={m.remanenteCorregido ? '' : m.remanenteAnt ? miles(m.remanenteAnt) : 'Cód. 77 del mes anterior'} title="Déjalo vacío para usar el arrastre automático. Al guardar, se recalculan este mes y todos los siguientes." />
+              </div>
             </div>
             {escribe && (
               <div className="flex flex-wrap gap-2">

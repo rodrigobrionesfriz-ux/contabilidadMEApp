@@ -17,7 +17,9 @@ describe('F29 (igual al sistema actual)', () => {
         anio: 2026, tasaPPM: c.entrada.tasaPPM, ventas: c.entrada.ventas, compras: c.entrada.compras, honorarios: c.entrada.honorarios,
         iusc, declaraciones: c.entrada.items as EntradaF29['declaraciones'], anteriores: c.entrada.anterior as EntradaF29['anteriores'],
       };
-      expect(JSON.parse(JSON.stringify(calcularF29Anual(e)))).toEqual(c.resultado);
+      // remanenteCorregido y desactualizado son de 10z5 (el sistema anterior no los tenía)
+      const r = calcularF29Anual(e).map((x) => { const y: Partial<typeof x> = { ...x }; delete y.remanenteCorregido; delete y.desactualizado; return y; });
+      expect(JSON.parse(JSON.stringify(r))).toEqual(c.resultado);
     });
   }
   it('reajuste del remanente como el SII (ej. dic-2024)', () => {
@@ -72,5 +74,34 @@ describe('F29: declarado, retenciones e impuesto único', () => {
     expect(sinBoletas.codigos[151]).toBe(76250);
     const conBoletas = calcularF29Anual({ ...base, honorarios: [{ mes: 5, bruto: 500000, retencion: 76250 }], retencionLibro: { '2026-05': 76250 } })[4];
     expect(conBoletas.codigos[151]).toBe(76250);
+  });
+});
+
+describe('F29: correcciones del remanente se arrastran a los meses siguientes', () => {
+  const base = (declaraciones: EntradaF29['declaraciones'] = {}): EntradaF29 => ({
+    anio: 2026, tasaPPM: 0, ventas: [], compras: [], honorarios: [], iusc: {}, declaraciones,
+    anteriores: { '2025-12': { periodo: '2025-12', estado: 'presentado', declarado: { '77': 1000000 } } },
+  });
+  it('una corrección en marzo cambia marzo y todo lo que sigue (borradores)', () => {
+    const sin = calcularF29Anual(base());
+    const con = calcularF29Anual(base({ '2026-03': { periodo: '2026-03', estado: 'borrador', remanenteInicial: 3000000 } }));
+    expect(con[1].remanente).toBe(sin[1].remanente);
+    expect(con[2]).toMatchObject({ remanenteAnt: 3000000, remanenteCorregido: true });
+    expect(con[11].remanente).toBeGreaterThan(sin[11].remanente + 1900000);
+  });
+  it('un mes presentado arrastra lo declarado mientras siga al día', () => {
+    const r0 = calcularF29Anual(base());
+    const feb = { periodo: '2026-02', estado: 'presentado', declarado: { '504': r0[1].remanenteReaj, '77': 1234567 }, calculado: { '504': r0[1].remanenteReaj } };
+    const r = calcularF29Anual(base({ '2026-02': feb }));
+    expect(r[1].desactualizado).toBe(false);
+    expect(r[2].remanenteAnt).toBe(1234567);
+  });
+  it('si se corrige un mes anterior, el presentado queda desactualizado y se arrastra lo calculado', () => {
+    const r0 = calcularF29Anual(base());
+    const feb = { periodo: '2026-02', estado: 'presentado', declarado: { '504': r0[1].remanenteReaj, '77': r0[1].remanente }, calculado: { '504': r0[1].remanenteReaj } };
+    const r = calcularF29Anual(base({ '2026-01': { periodo: '2026-01', estado: 'borrador', remanenteInicial: 5000000 }, '2026-02': feb }));
+    expect(r[1].desactualizado).toBe(true);
+    expect(r[2].remanenteAnt).toBe(r[1].remanente);
+    expect(r[2].remanenteAnt).toBeGreaterThan(5000000);
   });
 });

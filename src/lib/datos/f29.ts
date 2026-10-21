@@ -16,7 +16,7 @@ export async function entradaF29(empresaId: string, anio: number): Promise<Entra
     traerTodo((d, h) => supabase.from('documentos').select('total,estado,periodo,fecha,mes:datos->>mes,retencion:datos->>retencion,tasa:datos->>tasaRetencion,tipoRet:datos->>tipoRetencion')
       .eq('empresa_id', empresaId).eq('tipo', 'honorario').eq('anio', anio).range(d, h)),
     supabase.rpc('iusc_por_periodo', { p_empresa: empresaId, p_anio: anio }),
-    supabase.from('f29_declaraciones').select('periodo,estado,declarado,utm,remanente_inicial').eq('empresa_id', empresaId)
+    supabase.from('f29_declaraciones').select('periodo,estado,declarado,utm,remanente_inicial,calculado').eq('empresa_id', empresaId)
       .gte('periodo', `${anio - 1}-12`).lte('periodo', `${anio}-12`),
     // Retención de honorarios contabilizada (2103002), sin los asientos del propio F29, cierre ni apertura
     traerTodo((d, h) => supabase.from('asiento_lineas').select('debe,haber,asientos!inner(fecha,tipo,anulado,anio)')
@@ -31,7 +31,7 @@ export async function entradaF29(empresaId: string, anio: number): Promise<Entra
   const declaraciones: Record<string, DeclaracionF29> = {};
   const anteriores: Record<string, DeclaracionF29> = {};
   for (const d of decl.data) {
-    const x: DeclaracionF29 = { periodo: d.periodo, estado: d.estado, declarado: d.declarado ?? {}, utm: n(d.utm), remanenteInicial: n(d.remanente_inicial) };
+    const x: DeclaracionF29 = { periodo: d.periodo, estado: d.estado, declarado: d.declarado ?? {}, utm: n(d.utm), remanenteInicial: n(d.remanente_inicial), calculado: d.calculado ?? null };
     (d.periodo.startsWith(String(anio)) ? declaraciones : anteriores)[d.periodo] = x;
   }
   return {

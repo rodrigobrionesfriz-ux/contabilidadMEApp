@@ -53,7 +53,7 @@ export default async function F29Page({ params, searchParams }: PageProps<'/e/[e
                   <td className="px-3 py-1.5"><Link href={`?anio=${anio}&mes=${m.m}`} className="font-medium hover:text-acento">{MESES[m.m - 1]}</Link></td>
                   <td className="num px-2 py-1.5 text-right">{clp(m.debitoTotal)}</td>
                   <td className="num px-2 py-1.5 text-right">{clp(m.creditoMes)}</td>
-                  <td className="num px-2 py-1.5 text-right text-tenue">{m.remanenteReaj ? clp(m.remanenteReaj) : ''}</td>
+                  <td className="num px-2 py-1.5 text-right text-tenue" title={m.remanenteCorregido ? 'Remanente corregido a mano en este mes' : undefined}>{m.remanenteCorregido ? '✎ ' : ''}{m.remanenteReaj ? clp(m.remanenteReaj) : ''}</td>
                   <td className="num px-2 py-1.5 text-right">{m.ivaAPagar ? clp(m.ivaAPagar) : ''}</td>
                   <td className="num px-2 py-1.5 text-right text-acento">{m.remanente ? clp(m.remanente) : ''}</td>
                   <td className="num px-2 py-1.5 text-right">{m.ppm ? clp(m.ppm) : ''}</td>
@@ -61,7 +61,9 @@ export default async function F29Page({ params, searchParams }: PageProps<'/e/[e
                   <td className="num px-2 py-1.5 text-right">{m.iusc ? clp(m.iusc) : ''}</td>
                   <td className="num px-2 py-1.5 text-right font-semibold">{clp(m.totalPagar)}</td>
                   <td className="px-3 py-1.5">
-                    {m.declaracion?.estado === 'presentado'
+                    {m.desactualizado
+                      ? <span className="text-aviso" title="Una corrección anterior cambió su remanente: rectificar">⚠ Rectificar</span>
+                      : m.declaracion?.estado === 'presentado'
                       ? <span className={dif.length ? 'text-aviso' : 'text-acento'}>✓ Presentado{dif.length ? ` · ${dif.length} dif.` : ''}</span>
                       : m.declaracion ? <span className="text-tenue">Borrador</span> : ''}
                   </td>

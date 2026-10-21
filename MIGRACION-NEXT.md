@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (331): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (334): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -380,6 +380,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ## Libro diario compacto y flotante (10z4)
 - diario/tabla.tsx (cargarDiario + TablaDiario): una sola tabla de ancho acotado (1.100 px) con columnas fijas Cuenta · Nombre · Detalle · Debe · Haber; una franja por asiento (N°, fecha, glosa, Editar, Anular) y líneas compactas; el detalle largo se corta con su texto completo al pasar el mouse. La tabla se desplaza dentro de su tarjeta con los títulos fijos. Campo "Ir a N°" para saltar a un asiento.
 - "🗗 Ventana flotante" abre /v/[empresa]/diario en una ventana aparte (sin barra ni menú) que se puede mover, redimensionar y llevar a otra pantalla. Ahí los enlaces (N°, Editar) se abren en la ventana principal; Anular solo está en la principal.
+
+## F29: correcciones que se arrastran (10z5)
+- Cada mes acepta "Corregir remanente de {mes anterior}" (usa remanente_inicial, que antes solo existía en enero; en enero también puede reemplazar al de diciembre). Al guardar, ese mes y todos los siguientes se recalculan con la corrección.
+- Arrastre (src/tributario/f29.ts): un F29 presentado arrastra su cód. 77 declarado mientras siga al día. Si una corrección anterior cambió su remanente (cód. 504 recalculado distinto del de la foto al presentar, o del declarado si no hay foto; tolerancia 0,2%), queda **desactualizado**: aviso "⚠ Rectificar" en la lista y en el detalle, y desde ahí se arrastra lo calculado.
+- Borradores con montos guardados en «Declarado» que ya no calzan con lo recalculado (504, 537, 77, 89): aviso para usar «Copiar calculado», porque lo digitado se presenta tal cual.
+- El loader trae la foto calculado de cada declaración. Pruebas de oro intactas (los dos campos nuevos se excluyen) y 3 pruebas nuevas de arrastre.
 
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
