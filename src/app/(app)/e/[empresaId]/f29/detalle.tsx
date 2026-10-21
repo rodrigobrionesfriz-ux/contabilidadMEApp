@@ -109,15 +109,32 @@ export function DetalleF29({ empresaId, anio, m, escribe, admin, esEnero, remane
           <div className="tarjeta space-y-3 p-4 text-sm">
             <h3 className="font-semibold">1. Declaración</h3>
             <div className="grid grid-cols-2 gap-3">
-              <div>
+              <div className="col-span-2 sm:col-span-1">
                 <label className="etiqueta" htmlFor="utm">UTM del mes</label>
                 <input id="utm" inputMode="numeric" disabled={presentado || !escribe} value={utm} onChange={(e) => setUtm(e.target.value)} placeholder={String(m.utmPeriodo || '')} className="campo num" />
               </div>
-              <div>
-                <label className="etiqueta" htmlFor="remini">{esEnero && !remanenteDesdeDic ? 'Remanente de diciembre' : `Corregir remanente de ${MESES[(m.m + 10) % 12].toLowerCase()}`}</label>
-                <input id="remini" inputMode="numeric" disabled={presentado || !escribe} value={remIni} onChange={(e) => setRemIni(e.target.value)} className="campo num"
-                  placeholder={m.remanenteCorregido ? '' : m.remanenteAnt ? miles(m.remanenteAnt) : 'Cód. 77 del mes anterior'} title="Déjalo vacío para usar el arrastre automático. Al guardar, se recalculan este mes y todos los siguientes." />
+            </div>
+            <div className="space-y-1 rounded-md border border-borde p-3">
+              <label className="etiqueta" htmlFor="remini">{esEnero && !remanenteDesdeDic ? 'Remanente de diciembre (cód. 77)' : `Corregir remanente de ${MESES[(m.m + 10) % 12].toLowerCase()} (cód. 77)`}</label>
+              <div className="flex flex-wrap items-center gap-2">
+                <input id="remini" inputMode="numeric" disabled={presentado || !escribe} value={remIni} onChange={(e) => setRemIni(e.target.value)} className="campo num w-40"
+                  placeholder={m.remanenteAnt ? miles(m.remanenteAnt) : '0'} />
+                {escribe && !presentado && (
+                  <button type="button" className="boton py-1.5" disabled={pendiente || remIni.trim() === ''}
+                    onClick={() => ejecutar(() => guardarF29(empresaId, anio, m.m, decl, num(utm) || null, num(remIni)))}>Aplicar corrección</button>
+                )}
+                {escribe && !presentado && m.remanenteCorregido && (
+                  <button type="button" className="text-xs text-tenue hover:text-peligro" disabled={pendiente}
+                    onClick={() => { setRemIni(''); ejecutar(() => guardarF29(empresaId, anio, m.m, decl, num(utm) || null, null)); }}>Quitar corrección</button>
+                )}
               </div>
+              <p className="text-[11px] text-tenue">
+                {presentado
+                  ? `Este F29 está presentado: ${admin ? 'reábrelo' : 'pide a un administrador que lo reabra'} para corregir el remanente.`
+                  : m.remanenteCorregido
+                    ? `Corrección aplicada: ${clp(m.remanenteAnt)} (reemplaza al arrastre automático). Este mes y los siguientes ya están recalculados.`
+                    : `Arrastre automático del mes anterior: ${clp(m.remanenteAnt)}. Escribe el monto correcto y aplica: se recalculan este mes y todos los siguientes.`}
+              </p>
             </div>
             {escribe && (
               <div className="flex flex-wrap gap-2">

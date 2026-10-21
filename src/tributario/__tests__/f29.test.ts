@@ -105,3 +105,15 @@ describe('F29: correcciones del remanente se arrastran a los meses siguientes', 
     expect(r[2].remanenteAnt).toBeGreaterThan(5000000);
   });
 });
+
+describe('F29: corrección en un mes ya presentado', () => {
+  it('enero presentado con 77 viejo y remanente corregido: febrero recibe lo recalculado', () => {
+    const r = calcularF29Anual({
+      anio: 2025, tasaPPM: 0, ventas: [], compras: [], honorarios: [], iusc: {}, anteriores: {},
+      declaraciones: { '2025-01': { periodo: '2025-01', estado: 'presentado', declarado: { '504': 0, '77': 0 }, calculado: { '504': 0 }, remanenteInicial: 174964 } },
+    });
+    expect(r[0]).toMatchObject({ remanenteCorregido: true, desactualizado: true });
+    expect(r[1].remanenteAnt).toBe(r[0].remanente);
+    expect(r[1].remanenteAnt).toBeGreaterThan(170000);
+  });
+});

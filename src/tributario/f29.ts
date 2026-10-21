@@ -198,12 +198,12 @@ export function calcularF29Anual(e: EntradaF29): MesF29[] {
       563: basePPM, 62: ppm, 151: retencionHon, 48: iusc, 91: totalPagar, 39: ivaRetenido,
     };
     // Arrastre al mes siguiente: lo declarado (cód. 77) si el F29 está presentado y sigue al día; si una corrección
-    // anterior cambió su remanente (cód. 504), la declaración quedó desactualizada y se arrastra lo calculado.
+    // (en este mes o en uno anterior) cambió su remanente (cód. 504), la declaración quedó desactualizada y se arrastra lo calculado.
     let desactualizado = false;
     let arrastre = remanente;
     if (esPresentado(d)) {
       const ref504 = d!.calculado?.['504'] ?? d!.declarado?.['504'];
-      if (ref504 != null && !remanenteCorregido && Math.abs(remanenteReaj - +ref504) > Math.max(5, Math.abs(+ref504) * 0.002)) desactualizado = true;
+      if (ref504 != null && Math.abs(remanenteReaj - +ref504) > Math.max(5, Math.abs(+ref504) * 0.002)) desactualizado = true;
       else arrastre = codDecl(d, 77, remanente);
     }
     meses.push({ m, ventasNetas, ventasExentas, debito, ivaRetenido, debitoTotal, comprasNetas, credito, creditoActivoFijo, creditoMes,
