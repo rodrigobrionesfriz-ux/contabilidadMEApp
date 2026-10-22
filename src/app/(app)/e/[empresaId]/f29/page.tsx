@@ -6,13 +6,14 @@ import { cuentasDeTesoreria } from '@/lib/datos/auxiliares';
 import { calcularF29Anual, diferenciasF29 } from '@/tributario/f29';
 import { clp, param, MESES } from '@/lib/formato';
 import { DetalleF29 } from './detalle';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'F29' };
 
 export default async function F29Page({ params, searchParams }: PageProps<'/e/[empresaId]/f29'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || 0;
   const empresa = await requerirEmpresa(empresaId);
   const [entrada, asientos, tesoreria] = await Promise.all([entradaF29(empresaId, anio), asientosF29(empresaId, anio), cuentasDeTesoreria(empresaId)]);

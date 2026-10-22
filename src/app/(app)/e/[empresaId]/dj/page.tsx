@@ -8,13 +8,14 @@ import { regimenInfo } from '@/estados/regimenes';
 import { DJ_SEMILLA, resumenHonorarios, resumenSueldos, resumenRLI, resumenPresunta, resumenBalance, type DJ, type EstadoDJ, type Resumen } from '@/tributario/dj';
 import { param, hoyISO } from '@/lib/formato';
 import { Declaraciones } from './declaraciones';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Declaraciones juradas' };
 
 export default async function DJPage({ params, searchParams }: PageProps<'/e/[empresaId]/dj'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear() - 1;
+  const anio = Number(param(sp.anio)) || await anioContable() - 1;
   const at = anio + 1;
   const empresa = await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();

@@ -4,12 +4,13 @@ import { crearClienteServidor } from '@/lib/supabase/server';
 import { clp, param } from '@/lib/formato';
 import { estadoPrimerosPasos } from '@/lib/datos/primeros-pasos';
 import { VentanaPrimerosPasos } from './primeros-pasos/ventana';
+import { anioContable } from '@/lib/anio-contable';
 
 export default async function InicioEmpresa({ params, searchParams }: PageProps<'/e/[empresaId]'>) {
   const { empresaId } = await params;
   const bienvenida = param((await searchParams).bienvenida) === '1';
   const empresa = await requerirEmpresa(empresaId);
-  const anio = new Date().getFullYear();
+  const anio = await anioContable();
   const supabase = await crearClienteServidor();
   const [pp, asientos, cuentas, saldos] = await Promise.all([
     estadoPrimerosPasos(empresaId),

@@ -5,6 +5,7 @@ import { construirImposiciones, hojasImposiciones } from '@/herramientas/imposic
 import { clp, MESES, param } from '@/lib/formato';
 import { Pestanas } from '../pestanas';
 import { ExcelImposiciones } from './excel';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Imposiciones del mes' };
 
@@ -12,7 +13,7 @@ export default async function ImposicionesPage({ params, searchParams }: PagePro
   const { empresaId } = await params;
   const sp = await searchParams;
   const hoy = new Date();
-  const anio = Number(param(sp.anio)) || hoy.getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || hoy.getMonth() + 1;
   const empresa = await requerirEmpresa(empresaId);
   const d = await lineasDelMes(empresaId, anio, mes);

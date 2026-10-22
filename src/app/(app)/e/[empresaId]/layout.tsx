@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { requerirUsuario, requerirEmpresa } from '@/lib/auth';
+import { requerirUsuario, requerirEmpresa, empresasDelUsuario } from '@/lib/auth';
+import { anioContable } from '@/lib/anio-contable';
 import { NOMBRE_ROL } from '@/lib/formato';
 import { BarraUsuario } from '../../barra-usuario';
 import { Navegacion } from './navegacion';
@@ -8,7 +9,7 @@ import { Buscador } from './buscador';
 
 export default async function EmpresaLayout({ children, params }: LayoutProps<'/e/[empresaId]'>) {
   const { empresaId } = await params;
-  const [usuario, empresa] = await Promise.all([requerirUsuario(), requerirEmpresa(empresaId)]);
+  const [usuario, empresa, empresas, anio] = await Promise.all([requerirUsuario(), requerirEmpresa(empresaId), empresasDelUsuario(), anioContable()]);
   return (
     <>
       <BarraUsuario usuario={usuario}>
@@ -19,7 +20,8 @@ export default async function EmpresaLayout({ children, params }: LayoutProps<'/
       </BarraUsuario>
       <div className="flex flex-1 flex-col md:flex-row md:items-start">
         <Suspense>
-          <Navegacion base={`/e/${empresaId}`} rol={empresa.rol} empresa={empresa.razon_social} buscador={<Buscador empresaId={empresaId} />} />
+          <Navegacion base={`/e/${empresaId}`} rol={empresa.rol} empresa={empresa.razon_social} buscador={<Buscador empresaId={empresaId} />}
+            empresaId={empresaId} empresas={empresas.map((e) => ({ id: e.id, nombre: e.razon_social, rut: e.rut }))} anio={anio} />
         </Suspense>
         <main className="min-w-0 flex-1 px-4 py-6 md:px-8">{children}</main>
       </div>

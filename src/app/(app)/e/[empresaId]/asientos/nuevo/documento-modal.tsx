@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { clp, milesInput, MESES } from '@/lib/formato';
 import { rutParse } from '@/motor/rut';
 import { dtesDe, totalesDoc, validarDocAux, ladoLinea, type DocAux, type TipoAux } from '@/asientos/documento-auxiliar';
-import { documentosPendientes, verificarDocumento, type DocPendiente, type VerificacionDoc } from '../acciones';
+import { documentosPendientes, verificarDocumento, buscarAuxiliares, type DocPendiente, type VerificacionDoc, type AuxiliarEncontrado } from '../acciones';
 
 
 const NOMBRE: Record<TipoAux, string> = { proveedor: 'proveedor', cliente: 'cliente', honorario: 'prestador de honorarios' };
@@ -90,8 +90,8 @@ export function VentanaDocumento({ empresaId, tipo, inicial, montoLinea, ladoAct
         </div>
 
         <div className="grid gap-3 sm:grid-cols-[1fr_2fr]">
-          <div><label className="etiqueta" htmlFor="dm-rut">RUT *</label>
-            <input id="dm-rut" autoFocus value={d.rut} onChange={(e) => set('rut', e.target.value)} className={`campo num ${d.rut && !rutOk ? 'border-peligro' : ''}`} placeholder="12.345.678-9" /></div>
+          <BuscadorAuxiliar empresaId={empresaId} tipo={tipo} rut={d.rut} nombre={d.razon}
+            onElegir={(rut, nombre) => setD((x) => ({ ...x, rut, razon: nombre || x.razon }))} onTexto={(t) => set('rut', t)} />
           {nuevo && <div><label className="etiqueta" htmlFor="dm-razon">{tipo === 'honorario' ? 'Nombre del prestador *' : 'Razón social *'}</label>
             <input id="dm-razon" value={d.razon} onChange={(e) => set('razon', e.target.value)} className="campo" /></div>}
         </div>
@@ -176,6 +176,63 @@ export function VentanaDocumento({ empresaId, tipo, inicial, montoLinea, ladoAct
           <button type="button" className="boton" disabled={duplicado || verificando} title={duplicado ? 'Documento ya registrado' : verificando ? 'Revisando si ya está registrado…' : ''} onClick={() => aceptar(false)}>{verificando ? 'Revisando…' : 'Aceptar'}</button>
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Buscador dinámico de auxiliares por RUT o nombre. Al escribir muestra las fichas y los RUT ya usados en el libro;
+ * flechas y Enter para elegir. Si lo escrito es un RUT válido que no aparece, se usa tal cual (auxiliar nuevo).
+ */
+function BuscadorAuxiliar({ empresaId, tipo, rut, nombre, onElegir, onTexto }: {
+  empresaId: string; tipo: TipoAux; rut: string; nombre: string;
+  onElegir: (rut: string, nombre: string) => void; onTexto: (t: string) => void;
+}) {
+  const [texto, setTexto] = useState(rut);
+  const [res, setRes] = useState<AuxiliarEncontrado[]>([]);
+  const [abierto, setAbierto] = useState(false);
+  const [i, setI] = useState(0);
+  const valido = rutParse(rut).valido;
+  useEffect(() => {
+    const q = texto.trim();
+    if (q.length < 2 || !abierto) return;
+    let vivo = true;
+    const t = setTimeout(() => buscarAuxiliares(empresaId, tipo, q).then((r) => { if (vivo) { setRes(r); setI(0); } }).catch(() => {}), 250);
+    return () => { vivo = false; clearTimeout(t); };
+  }, [texto, abierto, empresaId, tipo]);
+  const elegir = (a: AuxiliarEncontrado) => { setTexto(a.rut); onElegir(a.rut, a.nombre); setAbierto(false); };
+  const lista = abierto && texto.trim().length >= 2 ? res : [];
+  return (
+    <div className="relative">
+      <label className="etiqueta" htmlFor="dm-rut">RUT o nombre *</label>
+      <input id="dm-rut" autoFocus autoComplete="off" role="combobox" aria-expanded={lista.length > 0} aria-controls="dm-rut-lista"
+        value={texto} placeholder="Escribe RUT o razón social"
+        onChange={(e) => { setTexto(e.target.value); setAbierto(true); onTexto(rutParse(e.target.value).valido ? e.target.value : ''); }}
+        onFocus={() => setAbierto(true)} onBlur={() => setTimeout(() => setAbierto(false), 150)}
+        onKeyDown={(e) => {
+          if (!lista.length) return;
+          if (e.key === 'ArrowDown') { e.preventDefault(); setI((x) => Math.min(x + 1, lista.length - 1)); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); setI((x) => Math.max(x - 1, 0)); }
+          else if (e.key === 'Enter') { e.preventDefault(); elegir(lista[i]); }
+          else if (e.key === 'Escape') { e.stopPropagation(); setAbierto(false); }
+        }}
+        className={`campo ${texto && !valido && !lista.length ? 'border-aviso' : ''}`} />
+      {valido && <div className="mt-0.5 truncate text-[11px] text-acento">✓ {rut}{nombre ? ` · ${nombre}` : ''}</div>}
+      {!valido && texto.trim().length >= 2 && !lista.length && <div className="mt-0.5 text-[11px] text-tenue">Sin coincidencias: escribe el RUT completo para un auxiliar nuevo.</div>}
+      {lista.length > 0 && (
+        <ul id="dm-rut-lista" role="listbox" className="absolute z-10 mt-1 max-h-64 w-[min(28rem,80vw)] overflow-y-auto rounded-md border border-borde bg-panel py-1 shadow-lg">
+          {lista.map((a, j) => (
+            <li key={a.rut} role="option" aria-selected={j === i}>
+              <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => elegir(a)} onMouseEnter={() => setI(j)}
+                className={`flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs ${j === i ? 'bg-panel-2' : ''}`}>
+                <span className="num w-24 shrink-0">{a.rut}</span>
+                <span className="min-w-0 flex-1 truncate">{a.nombre}</span>
+                {a.ficha && <span className="text-[10px] text-tenue">ficha</span>}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

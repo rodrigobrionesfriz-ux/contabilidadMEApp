@@ -404,6 +404,10 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Asiento manual: al escribir RUT, tipo y folio de un documento nuevo, la ventana revisa el libro y, si ya está, muestra "⛔ Documento duplicado" con su origen y asiento, bloquea Aceptar y ofrece usarlo como documento ya registrado. Si está en un RCV guardado sin registrar, avisa que el RCV lo verá como «En el libro».
 - RCV: el cruce usa la clave normalizada (claveDocumento con folioNormalizado). Los ya registrados a mano aparecen como "En el libro (manual)" en amarillo, con origen y asiento en el detalle, y un aviso con cuántos son; no se pueden importar. Si alguien lo registra mientras el RCV está abierto, el error de la base marca la fila como duplicada.
 
+## Selector de empresa y año contable, buscador de auxiliares (10z9)
+- Barra lateral, arriba: selector de **empresa** (si el usuario tiene más de una; cambia quedándose en la misma sección, sin llevar ids de la empresa anterior) y de **año contable**. El año se guarda en la cookie anio_contable (común a todas las empresas, un año) y es el año por defecto de todas las páginas con año (src/lib/anio-contable.ts, reemplaza a "año en curso" en 25 páginas). Al cambiarlo, si la página tiene ?anio= se reemplaza y se quita ?mes=. El selector de período de cada página sigue mandando para esa vista.
+- Comprobantes → ventana del documento: el RUT pasa a ser un buscador por RUT o nombre (buscarAuxiliares: fichas de proveedores/clientes y RUT ya usados en el libro del mismo tipo, hasta 12). Flechas y Enter para elegir; al elegir completa RUT y razón social. Un RUT válido que no aparece se usa tal cual (auxiliar nuevo).
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:

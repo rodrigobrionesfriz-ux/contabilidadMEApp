@@ -7,6 +7,7 @@ import { dteC, dteV } from '@/motor/dte';
 import { resumenIECV, type DocIECV, type TipoOperacion } from '@/herramientas/iecv';
 import { clp } from '@/lib/formato';
 import { DescargarIECV } from './descargar';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'XML IECV' };
 
@@ -14,7 +15,7 @@ export default async function IECVPage({ params, searchParams }: PageProps<'/e/[
   const { empresaId } = await params;
   const sp = await searchParams;
   const hoy = new Date();
-  const anio = Number(param(sp.anio)) || hoy.getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || hoy.getMonth() + 1;
   const tipo: TipoOperacion = param(sp.tipo) === 'COMPRA' ? 'COMPRA' : 'VENTA';
   const empresa = await requerirEmpresa(empresaId);

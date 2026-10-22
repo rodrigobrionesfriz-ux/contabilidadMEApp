@@ -4,6 +4,7 @@ import { requerirEmpresa, puedeEscribir } from '@/lib/auth';
 import { contextoRenta } from '@/lib/datos/renta';
 import { param } from '@/lib/formato';
 import { Renta } from './renta';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Renta anual (F22)' };
 
@@ -11,7 +12,7 @@ export default async function RentaPage({ params, searchParams }: PageProps<'/e/
   const { empresaId } = await params;
   const sp = await searchParams;
   // Por defecto, el último año comercial cerrado: la renta se declara en abril del año siguiente.
-  const anio = Number(param(sp.anio)) || new Date().getFullYear() - 1;
+  const anio = Number(param(sp.anio)) || await anioContable() - 1;
   const empresa = await requerirEmpresa(empresaId);
   const ctx = await contextoRenta(empresaId, anio);
   return (

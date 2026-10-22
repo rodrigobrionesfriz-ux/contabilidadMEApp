@@ -5,6 +5,7 @@ import { crearClienteServidor } from '@/lib/supabase/server';
 import { clp, fechaCL, param, rangoAnio, MESES } from '@/lib/formato';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { traerTodo } from '@/lib/paginar';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Libro mayor' };
 
@@ -17,7 +18,7 @@ interface LineaMayor {
 export default async function MayorPage({ params, searchParams }: PageProps<'/e/[empresaId]/mayor'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || 0;
   const cuenta = param(sp.cuenta).replace(/[^0-9]/g, '');
   await requerirEmpresa(empresaId);

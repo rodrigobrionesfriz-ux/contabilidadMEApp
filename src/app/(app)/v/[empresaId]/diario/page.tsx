@@ -4,6 +4,7 @@ import { clp, param, MESES } from '@/lib/formato';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { cargarDiario, TablaDiario } from '../../../e/[empresaId]/diario/tabla';
 import { IrANumero } from '../../../e/[empresaId]/diario/flotante';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Libro diario (ventana)' };
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = { title: 'Libro diario (ventana)' };
 export default async function DiarioFlotante({ params, searchParams }: PageProps<'/v/[empresaId]/diario'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || 0;
   const empresa = await requerirEmpresa(empresaId);
   const datos = await cargarDiario(empresaId, anio, mes);

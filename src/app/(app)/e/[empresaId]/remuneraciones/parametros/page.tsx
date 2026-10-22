@@ -8,12 +8,13 @@ import { TablaUF } from './tabla-uf';
 import { iuscTabla } from '@/remuneraciones/parametros';
 import { Pestanas } from '../pestanas';
 import { FormParametros } from './form';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Parámetros de remuneraciones' };
 
 export default async function ParametrosPage({ params, searchParams }: PageProps<'/e/[empresaId]/remuneraciones/parametros'>) {
   const { empresaId } = await params;
-  const anio = Number(param((await searchParams).anio)) || new Date().getFullYear();
+  const anio = Number(param((await searchParams).anio)) || await anioContable();
   const empresa = await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
   const [{ P }, filas, libros] = await Promise.all([

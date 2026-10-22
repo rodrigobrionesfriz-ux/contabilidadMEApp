@@ -10,13 +10,14 @@ import { saldoVacaciones } from '@/remuneraciones/vacaciones';
 import { habilesACorridos } from '@/remuneraciones/finiquito';
 import { param, hoyISO } from '@/lib/formato';
 import { Cierre, type DatosCierre } from './cierre';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Cierre del ejercicio' };
 
 export default async function CierrePage({ params, searchParams }: PageProps<'/e/[empresaId]/cierre'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const empresa = await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
   const [sal, per, ejc, cierres, apert, emp] = await Promise.all([

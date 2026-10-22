@@ -5,13 +5,14 @@ import { traerTodo } from '@/lib/paginar';
 import { cuentasDeTesoreria } from '@/lib/datos/auxiliares';
 import { param } from '@/lib/formato';
 import { Conciliacion } from './conciliacion';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Conciliación bancaria' };
 
 export default async function ConciliacionPage({ params, searchParams }: PageProps<'/e/[empresaId]/conciliacion'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const empresa = await requerirEmpresa(empresaId);
   const cuentas = await cuentasDeTesoreria(empresaId);
   const cuenta = param(sp.cuenta) || cuentas.find((c) => c.codigo === '1101201')?.codigo || cuentas[0]?.codigo || '';

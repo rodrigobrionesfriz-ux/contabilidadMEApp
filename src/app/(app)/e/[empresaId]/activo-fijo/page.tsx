@@ -5,13 +5,14 @@ import { traerTodo } from '@/lib/paginar';
 import type { Bien } from '@/activo-fijo/depreciacion';
 import { param } from '@/lib/formato';
 import { ActivoFijo, type FilaActivo, type CompraAF } from './activo-fijo';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Activo fijo' };
 
 export default async function ActivoFijoPage({ params, searchParams }: PageProps<'/e/[empresaId]/activo-fijo'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const empresa = await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
   const [activos, docs, lineas12, dep] = await Promise.all([

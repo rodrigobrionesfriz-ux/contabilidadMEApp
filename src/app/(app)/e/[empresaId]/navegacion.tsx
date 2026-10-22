@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import type { Rol } from '@/lib/auth';
 
@@ -73,7 +73,55 @@ const GRUPOS: Grupo[] = [
 
 const hrefDe = (base: string, it: Item) => (it.absoluta ? it.ruta : base + it.ruta) + (it.q ? '?' + new URLSearchParams(it.q).toString() : '');
 
-export function Navegacion({ base, rol, empresa, buscador }: { base: string; rol: Rol; empresa: string; buscador: React.ReactNode }) {
+/** Cambia el año contable (cookie común a todas las empresas) y, si la página tiene ?anio=, lo reemplaza. */
+function SelectorAnio({ anio }: { anio: number }) {
+  const router = useRouter();
+  const ruta = usePathname();
+  const sp = useSearchParams();
+  const actual = Number(sp.get('anio')) || anio;
+  const hoy = new Date().getFullYear();
+  const anios = Array.from({ length: 9 }, (_, i) => hoy + 1 - i);
+  if (!anios.includes(actual)) anios.push(actual);
+  return (
+    <select aria-label="Año contable" value={actual} className="campo num w-24 py-1 text-sm"
+      onChange={(e) => {
+        const a = e.target.value;
+        document.cookie = `anio_contable=${a}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
+        const q = new URLSearchParams(sp.toString());
+        if (q.has('anio')) q.set('anio', a);
+        q.delete('mes');
+        router.push(q.toString() ? `${ruta}?${q}` : ruta);
+        router.refresh();
+      }}>
+      {anios.sort((x, y) => y - x).map((y) => <option key={y} value={y}>{y}</option>)}
+    </select>
+  );
+}
+
+/** Cambia de empresa quedándose en la misma sección (sin ids propios de la empresa anterior). */
+function SelectorEmpresa({ empresaId, empresas }: { empresaId: string; empresas: { id: string; nombre: string; rut: string }[] }) {
+  const router = useRouter();
+  const ruta = usePathname();
+  const sp = useSearchParams();
+  return (
+    <select aria-label="Empresa" value={empresaId} className="campo w-full truncate py-1 text-sm font-medium"
+      onChange={(e) => {
+        const resto = ruta.slice(`/e/${empresaId}`.length).split('/').filter(Boolean);
+        // Sección (y subsección sin ids, p. ej. remuneraciones/parametros); un id (uuid o número) no se lleva
+        const sinId = resto.slice(0, 2).filter((x, i) => i === 0 || !/^[0-9a-f-]{8,}$|^\d+$|^nuevo$/i.test(x));
+        const q = new URLSearchParams(sp.toString());
+        ['id', 'doc', 'n'].forEach((k) => q.delete(k));
+        router.push(`/e/${e.target.value}${sinId.length ? '/' + sinId.join('/') : ''}${q.toString() ? `?${q}` : ''}`);
+      }}>
+      {empresas.map((x) => <option key={x.id} value={x.id}>{x.nombre}</option>)}
+    </select>
+  );
+}
+
+export function Navegacion({ base, rol, empresa, buscador, empresaId, empresas, anio }: {
+  base: string; rol: Rol; empresa: string; buscador: React.ReactNode;
+  empresaId: string; empresas: { id: string; nombre: string; rut: string }[]; anio: number;
+}) {
   const ruta = usePathname();
   const sp = useSearchParams();
   const [abierto, setAbierto] = useState(false);
@@ -106,9 +154,16 @@ export function Navegacion({ base, rol, empresa, buscador }: { base: string; rol
         className={`no-print fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col border-r border-borde bg-panel transition-transform md:sticky md:top-0 md:z-auto md:h-[calc(100dvh-3.5rem)] md:w-60 md:max-w-none md:translate-x-0 ${abierto ? 'translate-x-0' : '-translate-x-full'}`}
         aria-label="Menú principal">
         <div className="flex items-start justify-between gap-2 border-b border-borde px-4 py-3">
-          <div className="min-w-0">
-            <div className="text-[10px] font-semibold tracking-wider text-tenue uppercase">Empresa activa</div>
-            <div className="truncate text-sm font-medium" title={empresa}>{empresa}</div>
+          <div className="min-w-0 flex-1 space-y-2">
+            <div>
+              <div className="text-[10px] font-semibold tracking-wider text-tenue uppercase">Empresa activa</div>
+              {empresas.length > 1 ? <SelectorEmpresa empresaId={empresaId} empresas={empresas} />
+                : <div className="truncate text-sm font-medium" title={empresa}>{empresa}</div>}
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <div className="text-[10px] font-semibold tracking-wider text-tenue uppercase">Año contable</div>
+              <SelectorAnio anio={anio} />
+            </div>
           </div>
           <button type="button" className="text-lg text-tenue hover:text-texto md:hidden" onClick={cerrar} aria-label="Cerrar menú">✕</button>
         </div>

@@ -7,6 +7,7 @@ import { clp, fechaCL, param, MESES } from '@/lib/formato';
 import { dteC, dteV } from '@/motor/dte';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { AnularDocumento } from './anular';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Libro de compras y ventas' };
 
@@ -20,7 +21,7 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
   const { empresaId } = await params;
   const sp = await searchParams;
   const tipo = param(sp.tipo) === 'venta' ? 'venta' : 'compra';
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || new Date().getMonth() + 1;
   const periodo = `${anio}-${String(mes).padStart(2, '0')}`;
   const empresa = await requerirEmpresa(empresaId);

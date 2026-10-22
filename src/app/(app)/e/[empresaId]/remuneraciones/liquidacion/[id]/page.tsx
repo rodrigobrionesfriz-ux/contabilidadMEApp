@@ -9,13 +9,14 @@ import { lineaLibro, type LineaLibro } from '@/remuneraciones/libro';
 import { clp, fechaCL, param, MESES } from '@/lib/formato';
 import { numeroALetras } from '@/lib/numletras';
 import { Imprimir } from './imprimir';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Liquidación de sueldo' };
 
 export default async function LiquidacionPage({ params, searchParams }: PageProps<'/e/[empresaId]/remuneraciones/liquidacion/[id]'>) {
   const { empresaId, id } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || new Date().getMonth() + 1;
   await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();

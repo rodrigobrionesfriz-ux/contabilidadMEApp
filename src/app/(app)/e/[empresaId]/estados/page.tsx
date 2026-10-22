@@ -7,6 +7,7 @@ import { regimenInfo } from '@/estados/regimenes';
 import { clp, param, rangoAnio, MESES } from '@/lib/formato';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { BotonImprimir } from '@/components/boton-imprimir';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Estados financieros' };
 
@@ -15,7 +16,7 @@ const monto = (v: number) => (v < 0 ? `(${clp(-v)})` : clp(v));
 export default async function EstadosPage({ params, searchParams }: PageProps<'/e/[empresaId]/estados'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || 0;
   const vista = param(sp.vista) === 'resultados' ? 'resultados' : 'balance';
   const cmp = Number(param(sp.cmp)) || 0;

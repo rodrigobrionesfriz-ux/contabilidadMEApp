@@ -5,6 +5,7 @@ import { crearClienteServidor } from '@/lib/supabase/server';
 import { balance8, type SumaCuenta } from '@/lib/balance';
 import { clp, param, rangoAnio, MESES } from '@/lib/formato';
 import { SelectorPeriodo } from '@/components/selector-periodo';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Balance' };
 
@@ -15,7 +16,7 @@ const v = (n: number) => (n ? clp(n) : '');
 export default async function BalancePage({ params, searchParams }: PageProps<'/e/[empresaId]/balance'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || 0;
   const empresa = await requerirEmpresa(empresaId);
   const { desde, hasta } = rangoAnio(anio, mes || undefined);

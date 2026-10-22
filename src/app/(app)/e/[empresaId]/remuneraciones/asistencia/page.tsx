@@ -6,13 +6,14 @@ import { param, MESES } from '@/lib/formato';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { Pestanas } from '../pestanas';
 import { Asistencia } from './asistencia';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Asistencia' };
 
 export default async function AsistenciaPage({ params, searchParams }: PageProps<'/e/[empresaId]/remuneraciones/asistencia'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || new Date().getMonth() + 1;
   const empresa = await requerirEmpresa(empresaId);
   const { ctx, trabajadores, libros } = await contextoRemuneraciones(empresaId, anio);

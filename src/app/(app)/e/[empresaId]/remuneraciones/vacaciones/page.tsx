@@ -6,13 +6,14 @@ import { param, hoyISO } from '@/lib/formato';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { Pestanas } from '../pestanas';
 import { Vacaciones, type FilaVac } from './vacaciones';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Vacaciones' };
 
 export default async function VacacionesPage({ params, searchParams }: PageProps<'/e/[empresaId]/remuneraciones/vacaciones'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || new Date().getMonth() + 1;
   const empresa = await requerirEmpresa(empresaId);
   const [{ ctx, trabajadores, feriados }, vac] = await Promise.all([contextoRemuneraciones(empresaId, anio), eventosVacaciones(empresaId)]);

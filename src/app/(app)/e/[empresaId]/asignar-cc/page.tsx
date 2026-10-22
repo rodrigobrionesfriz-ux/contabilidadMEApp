@@ -4,13 +4,14 @@ import { crearClienteServidor } from '@/lib/supabase/server';
 import { traerTodo } from '@/lib/paginar';
 import { param } from '@/lib/formato';
 import { AsignarCC, type LineaCC } from './asignar';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Asignar centros de costo' };
 
 export default async function AsignarCCPage({ params, searchParams }: PageProps<'/e/[empresaId]/asignar-cc'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const empresa = await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
   const [lineas, centros, cuentas] = await Promise.all([

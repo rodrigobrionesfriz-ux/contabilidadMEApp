@@ -110,6 +110,29 @@ export async function verificarDocumento(empresaId: string, tipo: TipoAux, rut: 
   return { registrado: f ? { origen: f.origen, numero: f.asiento_numero, fecha: String(f.fecha ?? '').slice(0, 10), razon: f.razon_social } : null, enRCV };
 }
 
+export interface AuxiliarEncontrado { rut: string; nombre: string; ficha: boolean }
+
+/** Buscador de auxiliares por RUT o nombre: fichas de proveedores/clientes y RUT ya usados en el libro. */
+export async function buscarAuxiliares(empresaId: string, tipo: TipoAux, texto: string): Promise<AuxiliarEncontrado[]> {
+  const q = String(texto ?? '').trim();
+  if (!esTipoDoc(tipo) || q.length < 2) return [];
+  const digitos = q.replace(/[^0-9kK]/g, '');
+  const porRut = digitos.length >= 3 && digitos.length >= q.replace(/[\s.-]/g, '').length - 1;
+  // El RUT se guarda como 12345678-9: con 8 o más dígitos, el último puede ser el DV y se deja fuera
+  const patron = porRut ? `%${digitos.length >= 8 ? digitos.slice(0, -1) : digitos}%` : `%${q.replace(/[%_,()]/g, ' ').trim()}%`;
+  const supabase = await crearClienteServidor();
+  const fichas = tipo === 'honorario' ? Promise.resolve({ data: [] as { rut: string; razon_social: string }[] })
+    : supabase.from('auxiliares').select('rut,razon_social').eq('empresa_id', empresaId).eq('tipo', tipo)
+      .ilike(porRut ? 'rut' : 'razon_social', patron).order('razon_social').limit(15);
+  const docs = supabase.from('documentos').select('rut,razon_social').eq('empresa_id', empresaId).eq('tipo', TIPO_LIBRO[tipo])
+    .ilike(porRut ? 'rut' : 'razon_social', patron).order('fecha', { ascending: false }).limit(200);
+  const [f, d] = await Promise.all([fichas, docs]);
+  const out = new Map<string, AuxiliarEncontrado>();
+  for (const x of (f.data ?? []) as { rut: string; razon_social: string }[]) out.set(x.rut, { rut: x.rut, nombre: x.razon_social, ficha: true });
+  for (const x of (d.data ?? []) as { rut: string; razon_social: string | null }[]) if (!out.has(x.rut)) out.set(x.rut, { rut: x.rut, nombre: x.razon_social ?? '', ficha: false });
+  return [...out.values()].slice(0, 12);
+}
+
 export interface DocPendiente { tipo_dte: number; folio: string; saldo: number; fecha: string | null; razon: string }
 
 /** Documentos con saldo de un RUT (para referenciarlos en un pago o abono manual). */

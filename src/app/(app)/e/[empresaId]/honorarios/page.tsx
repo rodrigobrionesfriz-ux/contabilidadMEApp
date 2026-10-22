@@ -11,6 +11,7 @@ import { retencionHonorarios } from '@/importador/respaldo';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { AnularDocumento } from '../libro/anular';
 import { FormBoleta } from './form';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Honorarios' };
 
@@ -22,7 +23,7 @@ interface Boleta {
 export default async function HonorariosPage({ params, searchParams }: PageProps<'/e/[empresaId]/honorarios'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const mes = Number(param(sp.mes)) || new Date().getMonth() + 1;
   const periodo = `${anio}-${String(mes).padStart(2, '0')}`;
   const empresa = await requerirEmpresa(empresaId);

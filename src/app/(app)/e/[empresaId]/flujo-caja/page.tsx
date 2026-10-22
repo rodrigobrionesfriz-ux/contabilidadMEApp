@@ -7,6 +7,7 @@ import { saldosAuxiliar } from '@/lib/datos/auxiliares';
 import { flujoRealizado, flujoProyectado, esCuentaEfectivo, type Pendiente } from '@/tesoreria/flujo';
 import { clp, param, hoyISO, MESES } from '@/lib/formato';
 import { BotonImprimir } from '@/components/boton-imprimir';
+import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Flujo de caja' };
 
@@ -15,7 +16,7 @@ interface Linea { id: number; cuenta: string; fecha: string; numero: number; tip
 export default async function FlujoCajaPage({ params, searchParams }: PageProps<'/e/[empresaId]/flujo-caja'>) {
   const { empresaId } = await params;
   const sp = await searchParams;
-  const anio = Number(param(sp.anio)) || new Date().getFullYear();
+  const anio = Number(param(sp.anio)) || await anioContable();
   const vista = param(sp.vista) === 'proyectado' ? 'proyectado' : 'realizado';
   await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
