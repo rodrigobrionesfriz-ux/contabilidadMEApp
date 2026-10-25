@@ -436,6 +436,14 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ## Contraseñas en el celular (10z13)
 - Caso 25/10: la cuenta creada desde la app quedó bien (confirmada y con perfil), pero el login decía "Correo o contraseña incorrectos": la contraseña temporal tenía mayúsculas y guiones y el teclado del celular la altera. Ahora la contraseña temporal es sólo minúsculas y números (p. ej. kmpq4827xe), y los campos de correo y contraseña (login, registro, cambiar clave) no ponen mayúscula ni autocorrigen. El login tiene "Mostrar" para ver lo escrito.
 
+## Enlaces de correo y registro repetido (10z14)
+- Caso 25/10 (auth logs): registrarse con un correo que ya tenía cuenta mostraba "Cuenta creada" y no llegaba nada (Supabase no envía correo ni avisa). Ahora dice "Ese correo ya tiene una cuenta".
+- Los enlaces de recuperación llegaban "expirados" ("One-time token not found"): el antivirus de Outlook/Live abre los enlaces antes que la persona y los gasta. /auth/confirm pasó de ruta automática a página con botón ("Confirmar y entrar" / "Continuar"): el enlace se verifica recién al apretar (acción confirmarEnlace, acepta token_hash + type o code).
+- Requiere en Supabase → Authentication → Emails → Templates, que los enlaces apunten a la app con token_hash:
+  - Confirm signup: {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/empresas
+  - Reset password: {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery
+  - y en URL Configuration: Site URL = https://contabilidad-me-app.vercel.app.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:

@@ -63,6 +63,10 @@ export async function registrar(_: EstadoForm, fd: FormData): Promise<EstadoForm
     options: { data: { nombre: p.data.nombre }, emailRedirectTo: `${await urlSitio()}/auth/confirm?next=/empresas` },
   });
   if (error) return { error: traducir(error.message), valores: reponer(fd, 'nombre', 'email') };
+  // Supabase no avisa si el correo ya existía (devuelve un usuario sin identidades y no envía correo)
+  if (data.user && !data.user.identities?.length) {
+    return { error: 'Ese correo ya tiene una cuenta. Ingresa con tu contraseña o usa «¿Olvidaste tu contraseña?».', valores: reponer(fd, 'nombre', 'email') };
+  }
   if (data.session) redirect('/empresas');
   return { ok: 'Cuenta creada. Te enviamos un correo para confirmarla.' };
 }
