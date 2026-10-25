@@ -3,6 +3,7 @@ import { randomInt } from 'node:crypto';
 import { headers } from 'next/headers';
 import { createClient } from '@supabase/supabase-js';
 import { supabaseEnv } from './env';
+import { crearClienteServidor } from './server';
 
 /** Contraseña temporal fácil de dictar y de escribir en el celular: sólo minúsculas y números, sin 0/o, 1/l. */
 export function claveTemporal() {
@@ -18,8 +19,9 @@ async function urlSitio() {
 }
 
 /**
- * Crea la cuenta de otra persona con una contraseña temporal, igual que si se registrara ella misma (Supabase le
- * envía el correo de confirmación). Usa un cliente aparte, sin sesión, para no tocar la sesión de quien la crea.
+ * Crea la cuenta de otra persona con una contraseña temporal, igual que si se registrara ella misma, y la deja
+ * confirmada (confirmar_cuenta) para que no dependa del correo. Usa un cliente aparte, sin sesión, para no tocar la
+ * sesión de quien la crea.
  * El perfil y las empresas los pone la invitación registrada antes (tg_nuevo_usuario).
  */
 export async function crearCuenta(email: string, nombre: string, clave: string): Promise<{ ok: true; confirmar: boolean } | { ok: false; error: string }> {
@@ -32,5 +34,11 @@ export async function crearCuenta(email: string, nombre: string, clave: string):
   if (error) return { ok: false, error: /registered|exists/i.test(error.message) ? 'Ese correo ya tiene una cuenta.' : error.message };
   // Supabase no avisa si el correo ya existía: en ese caso devuelve un usuario sin identidades
   if (data.user && !data.user.identities?.length) return { ok: false, error: 'Ese correo ya tiene una cuenta.' };
+  // Quien la crea (administrador o dueño de la empresa) la deja confirmada: entra de inmediato con la contraseña temporal
+  if (data.user && !data.session) {
+    const yo = await crearClienteServidor();
+    const { error: e2 } = await yo.rpc('confirmar_cuenta', { p_usuario: data.user.id });
+    if (!e2) return { ok: true, confirmar: false };
+  }
   return { ok: true, confirmar: !data.session };
 }

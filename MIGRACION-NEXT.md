@@ -133,6 +133,10 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ### 0023 (10u)
 - guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
 
+### 0028 (10z15)
+- confirmar_cuenta(usuario): deja confirmada una cuenta recién creada (última hora) por el administrador o por el dueño de una empresa del usuario.
+- restablecer_clave(usuario, clave): el administrador pone una contraseña (bcrypt con extensions.crypt) y confirma el correo si faltaba.
+
 ### 0027 (10z11)
 - invitaciones (correo, perfil o empresa + rol): usuarios agregados que aún no tienen cuenta. invitar_usuario(email, perfil) sólo el administrador (si ya tiene cuenta, le asigna el perfil de inmediato). agregar_miembro ya no falla si el correo no tiene cuenta: deja la invitación a la empresa. quitar_invitacion(id). Al crearse la cuenta (tg_nuevo_usuario) recibe el perfil invitado (o el de usuarios nuevos) y las empresas invitadas, y la invitación se borra.
 
@@ -443,6 +447,13 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
   - Confirm signup: {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/empresas
   - Reset password: {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery
   - y en URL Configuration: Site URL = https://contabilidad-me-app.vercel.app.
+
+## Contraseñas sin depender del correo (10z15)
+- En el plan gratis Supabase no deja editar las plantillas sin SMTP propio. Caso 25/10: el enlace de recuperación verificaba en Supabase pero llegaba a la Site URL (o a otra dirección de Vercel) sin el verificador PKCE y terminaba en el login.
+- Cuentas creadas desde la app (administrador o dueño) quedan confirmadas al crearlas: se entra de inmediato con la contraseña temporal.
+- 🛡️ Perfiles → "🔑 Restablecer contraseña" por usuario: genera una contraseña temporal y la muestra.
+- El proxy lleva cualquier ?code= que llegue fuera de /auth a /auth/confirm; ahí, si la recuperación se pidió hace menos de una hora, se pasa a "Nueva contraseña". Mensajes claros si el enlace se abre en otro navegador o dirección.
+- Recomendado en Supabase → URL Configuration: Site URL https://contabilidad-me-app.vercel.app y en Redirect URLs https://contabilidad-me-app*.vercel.app/**.
 
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.

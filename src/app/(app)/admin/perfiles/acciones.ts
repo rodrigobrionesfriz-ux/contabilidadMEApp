@@ -54,7 +54,7 @@ export async function agregarUsuarioSistema(email: string, nombre: string, perfi
   const r = await crearCuenta(correo, nombre, clave);
   if (!r.ok) return { ok: false, error: `Quedó invitado, pero no pude crear la cuenta: ${r.error}` };
   revalidatePath('/', 'layout');
-  return { ok: true, clave, mensaje: `Cuenta creada para ${correo}. Contraseña temporal: ${clave}${r.confirmar ? ' · Debe confirmar el correo que le llegó antes de entrar.' : ''} Pídele que la cambie en "Olvidé mi contraseña".` };
+  return { ok: true, clave, mensaje: `Cuenta creada para ${correo}. Contraseña temporal: ${clave}${r.confirmar ? ' · Debe confirmar el correo que le llegó antes de entrar.' : ' · Ya puede entrar.'}` };
 }
 
 export async function quitarInvitacion(id: string): Promise<Res> {
@@ -62,4 +62,13 @@ export async function quitarInvitacion(id: string): Promise<Res> {
   const { error } = await supabase.rpc('quitar_invitacion', { p_id: id });
   if (error) return { ok: false, error: error.message };
   return listo('Invitación quitada.');
+}
+
+/** El administrador le pone una contraseña temporal a un usuario (sin depender del correo). */
+export async function restablecerClave(usuario: string): Promise<Res & { clave?: string }> {
+  const clave = claveTemporal();
+  const supabase = await crearClienteServidor();
+  const { error } = await supabase.rpc('restablecer_clave', { p_usuario: usuario, p_clave: clave });
+  if (error) return { ok: false, error: error.message };
+  return { ok: true, clave, mensaje: `Contraseña temporal: ${clave} · Entrégasela; puede cambiarla después en "¿Olvidaste tu contraseña?" o tú volver a restablecerla.` };
 }

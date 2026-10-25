@@ -34,6 +34,16 @@ export async function actualizarSesion(request: NextRequest) {
     },
   });
 
+  // Enlace de correo que llegó a otra página (si Supabase no acepta el redirect_to, manda a la Site URL con ?code=):
+  // se lleva a /auth/confirm, que lo canjea con un botón.
+  const codigo = request.nextUrl.searchParams.get('code');
+  if (codigo && !request.nextUrl.pathname.startsWith('/auth')) {
+    const destino = request.nextUrl.clone();
+    destino.pathname = '/auth/confirm';
+    destino.search = `?code=${encodeURIComponent(codigo)}`;
+    return NextResponse.redirect(destino);
+  }
+
   // getClaims valida el JWT (no confiar en getSession en el servidor).
   const { data } = await supabase.auth.getClaims();
   const autenticado = !!data?.claims?.sub;

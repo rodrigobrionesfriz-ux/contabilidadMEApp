@@ -22,7 +22,7 @@ export async function agregarUsuario(_: EstadoForm, fd: FormData): Promise<Estad
   const clave = claveTemporal();
   const r = await crearCuenta(p.data.email, p.data.nombre ?? '', clave);
   if (!r.ok) return { error: `Quedó invitado, pero no pude crear la cuenta: ${r.error}` };
-  return { ok: `Cuenta creada para ${p.data.email} con la contraseña temporal ${clave}.${r.confirmar ? ' Debe confirmar el correo que le llegó antes de entrar.' : ''} Pídele que la cambie en "Olvidé mi contraseña".` };
+  return { ok: `Cuenta creada para ${p.data.email} con la contraseña temporal ${clave}.${r.confirmar ? ' Debe confirmar el correo que le llegó antes de entrar.' : ' Ya puede entrar.'}` };
 }
 
 export async function quitarInvitacion(empresaId: string, id: string): Promise<{ error?: string }> {

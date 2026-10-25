@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { MODULOS, NOMBRE_PERMISO, type Permiso } from '@/lib/modulos';
 import { Mensaje } from '@/components/form-estado';
-import { guardarPerfil, eliminarPerfil, asignarPerfil, perfilUsuariosNuevos, agregarUsuarioSistema, quitarInvitacion } from './acciones';
+import { guardarPerfil, eliminarPerfil, asignarPerfil, perfilUsuariosNuevos, agregarUsuarioSistema, quitarInvitacion, restablecerClave } from './acciones';
 
 export interface PerfilAcceso { id: string; nombre: string; tipo: 'senior' | 'contador'; permisos: Record<string, string> }
 export interface Invitacion { id: string; email: string; perfil_acceso: string | null; rol: string | null; creado: string; empresas: { razon_social: string } | null }
@@ -128,7 +128,7 @@ export function EditorPerfiles({ yo, perfiles, usuarios, perfilNuevo, invitacion
         </div>
         <label className="flex items-start gap-2 text-xs">
           <input type="checkbox" checked={nu.crear} onChange={(e) => setNu({ ...nu, crear: e.target.checked })} className="mt-0.5" />
-          <span>Crear la cuenta ahora con una contraseña temporal (te la muestro para que se la entregues; le llegará un correo para confirmarla).
+          <span>Crear la cuenta ahora con una contraseña temporal (te la muestro para que se la entregues; queda lista para entrar, sin esperar correo).
             Sin marcar: la persona se registra sola en la pantalla de Registro con este correo y recibe el perfil.</span>
         </label>
         <button type="button" className="boton" disabled={pendiente || !nu.email.trim() || !nu.perfil}
@@ -162,7 +162,7 @@ export function EditorPerfiles({ yo, perfiles, usuarios, perfilNuevo, invitacion
         <div className="tarjeta overflow-x-auto">
           <table className="w-full min-w-[640px] text-sm">
             <thead className="text-left text-xs text-tenue uppercase">
-              <tr className="border-b border-borde"><th className="px-3 py-2">Usuario</th><th className="px-2 py-2">Perfil</th><th className="px-2 py-2 text-center">Administrador</th><th className="px-2 py-2 text-right">Empresas</th></tr>
+              <tr className="border-b border-borde"><th className="px-3 py-2">Usuario</th><th className="px-2 py-2">Perfil</th><th className="px-2 py-2 text-center">Administrador</th><th className="px-2 py-2 text-right">Empresas</th><th className="px-2 py-2" /></tr>
             </thead>
             <tbody>
               {usuarios.map((u) => (
@@ -182,6 +182,10 @@ export function EditorPerfiles({ yo, perfiles, usuarios, perfilNuevo, invitacion
                         && run(() => asignarPerfil(u.id, u.perfil_acceso, e.target.checked))} />
                   </td>
                   <td className="num px-2 py-1.5 text-right">{u.empresas}</td>
+                  <td className="px-2 py-1.5 text-right">
+                    <button type="button" className="text-xs whitespace-nowrap text-tenue hover:text-acento" disabled={pendiente}
+                      onClick={() => confirm(`¿Poner una contraseña temporal nueva a ${u.email}? La actual deja de servir.`) && run(() => restablecerClave(u.id))}>🔑 Restablecer contraseña</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
