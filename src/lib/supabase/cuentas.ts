@@ -4,11 +4,11 @@ import { headers } from 'next/headers';
 import { createClient } from '@supabase/supabase-js';
 import { supabaseEnv } from './env';
 
-/** Contraseña temporal fácil de dictar (sin 0/O, 1/l/I). */
+/** Contraseña temporal fácil de dictar y de escribir en el celular: sólo minúsculas y números, sin 0/o, 1/l. */
 export function claveTemporal() {
-  const letras = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ', nums = '23456789';
+  const letras = 'abcdefghjkmnpqrstuvwxyz', nums = '23456789';
   const t = (s: string, n: number) => Array.from({ length: n }, () => s[randomInt(s.length)]).join('');
-  return `${t(letras, 4)}-${t(nums, 4)}-${t(letras, 2)}`;
+  return `${t(letras, 4)}${t(nums, 4)}${t(letras, 2)}`;
 }
 
 async function urlSitio() {

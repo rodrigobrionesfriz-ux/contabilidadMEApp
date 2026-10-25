@@ -12,11 +12,11 @@ export default function ActualizarClavePage() {
         <h1 className="text-lg font-semibold">Nueva contraseña</h1>
         <div>
           <label className="etiqueta" htmlFor="clave">Contraseña (mín. 8)</label>
-          <input id="clave" name="clave" type="password" autoComplete="new-password" required minLength={8} className="campo" />
+          <input id="clave" name="clave" type="password" autoComplete="new-password" autoCapitalize="none" autoCorrect="off" spellCheck={false} required minLength={8} className="campo" />
         </div>
         <div>
           <label className="etiqueta" htmlFor="clave2">Repetir contraseña</label>
-          <input id="clave2" name="clave2" type="password" autoComplete="new-password" required className="campo" />
+          <input id="clave2" name="clave2" type="password" autoComplete="new-password" autoCapitalize="none" autoCorrect="off" spellCheck={false} required className="campo" />
         </div>
         <Mensaje {...estado} />
         <BotonEnviar pendiente="Guardando…">Guardar contraseña</BotonEnviar>

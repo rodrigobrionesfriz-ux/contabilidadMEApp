@@ -433,6 +433,9 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Después de iniciar sesión siempre se llega a Empresas (ya no se vuelve a la página anterior). Al elegir una empresa se entra a Comprobantes → Nuevo asiento; si el perfil no edita comprobantes, al Inicio de la empresa.
 - Cierre de sesión tras 30 minutos sin actividad: la última actividad va en la cookie cme_actividad (la renueva el proxy en cada request y el navegador al mover el mouse, teclear, tocar o desplazarse, cada 5 s como máximo; compartida entre pestañas). El navegador (src/app/(app)/inactividad.tsx, en el layout nuevo de (app)) avisa un minuto antes y cierra con salirPorInactividad; el proxy cierra la sesión si llega un request con la cookie vencida (p. ej. al volver al computador después de horas). El login muestra "Tu sesión se cerró por 30 minutos sin actividad".
 
+## Contraseñas en el celular (10z13)
+- Caso 25/10: la cuenta creada desde la app quedó bien (confirmada y con perfil), pero el login decía "Correo o contraseña incorrectos": la contraseña temporal tenía mayúsculas y guiones y el teclado del celular la altera. Ahora la contraseña temporal es sólo minúsculas y números (p. ej. kmpq4827xe), y los campos de correo y contraseña (login, registro, cambiar clave) no ponen mayúscula ni autocorrigen. El login tiene "Mostrar" para ver lo escrito.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:
