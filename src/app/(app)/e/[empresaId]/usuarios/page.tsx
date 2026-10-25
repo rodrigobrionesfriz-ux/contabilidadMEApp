@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { requerirEmpresa, requerirUsuario, miAcceso } from '@/lib/auth';
 import { crearClienteServidor } from '@/lib/supabase/server';
-import { FormAgregar, FilaMiembro, type Miembro } from './componentes';
+import { FormAgregar, FilaMiembro, Invitaciones, type Miembro } from './componentes';
 
 export const metadata: Metadata = { title: 'Usuarios' };
 
@@ -14,6 +14,7 @@ export default async function UsuariosPage({ params }: PageProps<'/e/[empresaId]
     .select('usuario_id,rol,estado,creado,perfiles(nombre,email,es_administrador,perfiles_acceso(nombre,tipo))').eq('empresa_id', empresaId).order('creado');
   if (error) throw new Error(error.message);
   const miembros = data as unknown as Miembro[];
+  const { data: invitados } = await supabase.from('invitaciones').select('id,email,rol,creado').eq('empresa_id', empresaId).order('creado');
   return (
     <div className="max-w-3xl space-y-5">
       <div>
@@ -26,6 +27,7 @@ export default async function UsuariosPage({ params }: PageProps<'/e/[empresaId]
       <div className="tarjeta divide-y divide-borde">
         {miembros.map((m) => <FilaMiembro key={m.usuario_id} empresaId={empresaId} m={m} soyYo={m.usuario_id === yo.id} admin={acceso.admin} />)}
       </div>
+      <Invitaciones empresaId={empresaId} lista={invitados ?? []} />
       <FormAgregar empresaId={empresaId} admin={acceso.admin} />
     </div>
   );

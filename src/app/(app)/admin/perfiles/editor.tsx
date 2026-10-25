@@ -4,16 +4,17 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { MODULOS, NOMBRE_PERMISO, type Permiso } from '@/lib/modulos';
 import { Mensaje } from '@/components/form-estado';
-import { guardarPerfil, eliminarPerfil, asignarPerfil, perfilUsuariosNuevos } from './acciones';
+import { guardarPerfil, eliminarPerfil, asignarPerfil, perfilUsuariosNuevos, agregarUsuarioSistema, quitarInvitacion } from './acciones';
 
 export interface PerfilAcceso { id: string; nombre: string; tipo: 'senior' | 'contador'; permisos: Record<string, string> }
+export interface Invitacion { id: string; email: string; perfil_acceso: string | null; rol: string | null; creado: string; empresas: { razon_social: string } | null }
 export interface UsuarioSistema { id: string; nombre: string | null; email: string | null; es_administrador: boolean; perfil_acceso: string | null; empresas: number; creado: string }
 
 const PERMISOS: Permiso[] = ['editar', 'ver', 'no'];
 const COLOR: Record<Permiso, string> = { editar: 'bg-acento/15 text-acento border-acento/40', ver: 'bg-info/10 text-info border-info/40', no: 'bg-panel-2 text-tenue border-borde' };
 const TIPO = { senior: '⭐ Senior', contador: '📝 Contador' };
 
-export function EditorPerfiles({ yo, perfiles, usuarios, perfilNuevo }: { yo: string; perfiles: PerfilAcceso[]; usuarios: UsuarioSistema[]; perfilNuevo: string | null }) {
+export function EditorPerfiles({ yo, perfiles, usuarios, perfilNuevo, invitaciones }: { yo: string; perfiles: PerfilAcceso[]; usuarios: UsuarioSistema[]; perfilNuevo: string | null; invitaciones: Invitacion[] }) {
   const router = useRouter();
   const [ed, setEd] = useState<PerfilAcceso | null>(null);
   const [msg, setMsg] = useState<{ ok?: string; error?: string }>({});
@@ -22,6 +23,7 @@ export function EditorPerfiles({ yo, perfiles, usuarios, perfilNuevo }: { yo: st
     const r = await f(); setMsg(r.ok ? { ok: r.mensaje } : { error: r.error }); if (r.ok) { despues?.(); router.refresh(); }
   });
   const editar = (p: PerfilAcceso) => { setEd(p); setTimeout(() => document.getElementById('pf-editor')?.scrollIntoView({ behavior: 'smooth' }), 50); };
+  const [nu, setNu] = useState({ email: '', nombre: '', perfil: perfiles.find((p) => p.tipo === 'senior')?.id ?? '', crear: true });
   const usuariosDe = (id: string) => usuarios.filter((u) => u.perfil_acceso === id).length;
   const nuevo = () => {
     const base = perfiles.find((p) => p.tipo === 'contador');
@@ -111,6 +113,40 @@ export function EditorPerfiles({ yo, perfiles, usuarios, perfilNuevo }: { yo: st
         </section>
       )}
 
+      <section className="tarjeta space-y-3 p-4 text-sm">
+        <h2 className="font-semibold">Agregar usuario</h2>
+        <p className="text-xs text-tenue">Para un usuario Senior no hace falta empresa: con su perfil entra, crea sus empresas y autoriza a sus contadores.</p>
+        <div className="grid gap-3 md:grid-cols-[2fr_2fr_1.5fr]">
+          <div><label className="etiqueta" htmlFor="nu-email">Correo *</label>
+            <input id="nu-email" type="email" value={nu.email} onChange={(e) => setNu({ ...nu, email: e.target.value })} className="campo" placeholder="correo@ejemplo.cl" /></div>
+          <div><label className="etiqueta" htmlFor="nu-nombre">Nombre</label>
+            <input id="nu-nombre" value={nu.nombre} onChange={(e) => setNu({ ...nu, nombre: e.target.value })} className="campo" /></div>
+          <div><label className="etiqueta" htmlFor="nu-perfil">Perfil *</label>
+            <select id="nu-perfil" value={nu.perfil} onChange={(e) => setNu({ ...nu, perfil: e.target.value })} className="campo">
+              {perfiles.map((p) => <option key={p.id} value={p.id}>{p.nombre} ({p.tipo === 'senior' ? 'Senior' : 'Contador'})</option>)}
+            </select></div>
+        </div>
+        <label className="flex items-start gap-2 text-xs">
+          <input type="checkbox" checked={nu.crear} onChange={(e) => setNu({ ...nu, crear: e.target.checked })} className="mt-0.5" />
+          <span>Crear la cuenta ahora con una contraseña temporal (te la muestro para que se la entregues; le llegará un correo para confirmarla).
+            Sin marcar: la persona se registra sola en la pantalla de Registro con este correo y recibe el perfil.</span>
+        </label>
+        <button type="button" className="boton" disabled={pendiente || !nu.email.trim() || !nu.perfil}
+          onClick={() => run(() => agregarUsuarioSistema(nu.email, nu.nombre, nu.perfil, nu.crear), () => setNu({ ...nu, email: '', nombre: '' }))}>Agregar usuario</button>
+        {invitaciones.length > 0 && (
+          <div className="space-y-1 pt-2">
+            <div className="etiqueta">Invitaciones pendientes (aún sin cuenta)</div>
+            {invitaciones.map((i) => (
+              <div key={i.id} className="flex flex-wrap items-center gap-2 border-b border-borde/40 py-1 text-xs">
+                <span className="font-medium">{i.email}</span>
+                <span className="text-tenue">{i.empresas ? `→ ${i.empresas.razon_social} (${i.rol === 'consulta' ? 'sólo consulta' : i.rol === 'admin' ? 'dueño' : 'trabaja'})` : `perfil ${perfiles.find((p) => p.id === i.perfil_acceso)?.nombre ?? '(de usuarios nuevos)'}`}</span>
+                <button type="button" className="ml-auto text-tenue hover:text-peligro" disabled={pendiente} onClick={() => run(() => quitarInvitacion(i.id))}>Quitar</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
       <section className="space-y-3">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <h2 className="font-semibold">Usuarios del sistema</h2>
@@ -151,7 +187,7 @@ export function EditorPerfiles({ yo, perfiles, usuarios, perfilNuevo }: { yo: st
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-tenue">Cada usuario crea su cuenta en la pantalla de registro. Después le asignas el perfil aquí, y el dueño de cada empresa (o tú) lo autoriza en Configuración → Usuarios de esa empresa.</p>
+        <p className="text-xs text-tenue">El dueño de cada empresa (o tú) autoriza a los usuarios en Configuración → Usuarios de esa empresa.</p>
       </section>
     </div>
   );

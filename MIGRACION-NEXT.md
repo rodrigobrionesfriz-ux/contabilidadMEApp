@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (352): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (355): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -132,6 +132,9 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 
 ### 0023 (10u)
 - guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
+
+### 0027 (10z11)
+- invitaciones (correo, perfil o empresa + rol): usuarios agregados que aún no tienen cuenta. invitar_usuario(email, perfil) sólo el administrador (si ya tiene cuenta, le asigna el perfil de inmediato). agregar_miembro ya no falla si el correo no tiene cuenta: deja la invitación a la empresa. quitar_invitacion(id). Al crearse la cuenta (tg_nuevo_usuario) recibe el perfil invitado (o el de usuarios nuevos) y las empresas invitadas, y la invitación se borra.
 
 ### 0026 (10z10)
 - perfiles_acceso (nombre, tipo senior|contador, permisos por módulo: editar | ver | no) con dos iniciales, Senior y Contador; ajustes_sistema.perfil_nuevo (perfil de quien se registra; parte en Contador).
@@ -420,6 +423,11 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - **Perfiles** (src/lib/modulos.ts): 13 módulos (compras y ventas, honorarios, remuneraciones, auxiliares y pagos, comprobantes, inventario, reportes, conciliación, tributario, activo fijo, cierre, configuración, usuarios de la empresa), cada uno Edita / Sólo ve / Sin acceso. Tipo **Senior**: crea empresas y autoriza usuarios en ellas; tipo **Contador**: sólo las empresas asignadas. La pantalla muestra la matriz de perfiles, edita o crea perfiles, asigna el perfil y el rol de administrador a cada usuario y elige el perfil de quien se registra.
 - **Empresas**: cada usuario ve sólo las suyas y las asignadas (el administrador, todas). "+ Nueva empresa" sólo para Senior y administrador. En cada empresa, Configuración → Usuarios: el dueño (o el administrador) autoriza a otros como 👑 Dueño (sólo el administrador), 📝 Trabaja (según su perfil) o 👁 Sólo consulta; se ve el perfil de cada uno.
 - **Aplicación del perfil**: el proxy pasa la ruta en x-ruta; requerirEmpresa toma el módulo de la página: sin acceso → vuelve al Inicio con aviso; sólo ve → la página se muestra como consulta (sin botones de edición). El menú oculta los módulos sin acceso. El proxy rechaza (403) las acciones del servidor de un módulo sin acceso. Pendiente: «sólo ve» todavía no se valida en cada función de la base (la base valida empresa y rol, no módulo).
+
+## Agregar usuarios sin cuenta (10z11)
+- 🛡️ Perfiles → **Agregar usuario**: correo, nombre y perfil (p. ej. Senior), sin empresa. Con "Crear la cuenta ahora" se crea con una contraseña temporal que se muestra para entregarla (src/lib/supabase/cuentas.ts: signUp con un cliente aparte, sin tocar la sesión del administrador; Supabase envía el correo de confirmación). Sin marcar, la persona se registra sola con ese correo. Lista de invitaciones pendientes con "Quitar".
+- Configuración → Usuarios de la empresa: el dueño (Senior) o el administrador agrega por correo; si no tiene cuenta queda invitado (lista "Invitados sin cuenta todavía") y puede crearle la cuenta con contraseña temporal. Al confirmar y entrar, ve esa empresa con los permisos de su perfil.
+- Ojo: el envío de correos de Supabase sin SMTP propio tiene un límite bajo por hora; si aparece "email rate limit exceeded", esperar o configurar SMTP en Supabase (Authentication → Emails).
 
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.

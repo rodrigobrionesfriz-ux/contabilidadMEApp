@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { requerirUsuario, miAcceso } from '@/lib/auth';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { BarraUsuario } from '../../barra-usuario';
-import { EditorPerfiles, type PerfilAcceso, type UsuarioSistema } from './editor';
+import { EditorPerfiles, type PerfilAcceso, type UsuarioSistema, type Invitacion } from './editor';
 
 export const metadata: Metadata = { title: 'Perfiles y usuarios' };
 
@@ -13,10 +13,11 @@ export default async function PerfilesPage() {
   const [usuario, acceso] = await Promise.all([requerirUsuario(), miAcceso()]);
   if (!acceso.admin) notFound();
   const supabase = await crearClienteServidor();
-  const [perfiles, usuarios, ajustes] = await Promise.all([
+  const [perfiles, usuarios, ajustes, invitaciones] = await Promise.all([
     supabase.from('perfiles_acceso').select('id,nombre,tipo,permisos').order('tipo').order('nombre'),
     supabase.rpc('usuarios_sistema'),
     supabase.from('ajustes_sistema').select('perfil_nuevo').maybeSingle(),
+    supabase.from('invitaciones').select('id,email,perfil_acceso,rol,creado,empresas(razon_social)').order('creado', { ascending: false }),
   ]);
   if (perfiles.error) throw new Error(perfiles.error.message);
   if (usuarios.error) throw new Error(usuarios.error.message);
@@ -32,7 +33,8 @@ export default async function PerfilesPage() {
             a otros usuarios en ellas. 📝 Un perfil <b>Contador</b> sólo trabaja en las empresas que le asignen. En cada perfil defines, por módulo, si edita, sólo ve o no tiene acceso.
           </p>
         </div>
-        <EditorPerfiles yo={usuario.id} perfiles={(perfiles.data ?? []) as PerfilAcceso[]} usuarios={(usuarios.data ?? []) as UsuarioSistema[]} perfilNuevo={(ajustes.data?.perfil_nuevo as string | null) ?? null} />
+        <EditorPerfiles yo={usuario.id} perfiles={(perfiles.data ?? []) as PerfilAcceso[]} usuarios={(usuarios.data ?? []) as UsuarioSistema[]} perfilNuevo={(ajustes.data?.perfil_nuevo as string | null) ?? null}
+          invitaciones={(invitaciones.data ?? []) as unknown as Invitacion[]} />
       </main>
     </>
   );
