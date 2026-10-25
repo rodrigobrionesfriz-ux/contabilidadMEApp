@@ -19,6 +19,8 @@ export async function baseDePrueba() {
   for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.sql')).sort()) {
     await db.exec(fs.readFileSync(path.join(dir, f), 'utf8'));
   }
+  // En las pruebas los usuarios nuevos son Senior (pueden crear empresas); las de permisos lo cambian.
+  await db.exec(`update ajustes_sistema set perfil_nuevo = (select id from perfiles_acceso where nombre = 'Senior')`);
   /** Ejecuta como un usuario autenticado (RLS activo). */
   async function como<T = Record<string, unknown>>(uid: string, sql: string, params: unknown[] = []) {
     await db.exec(`reset role; select set_config('request.jwt.claim.sub', '${uid}', false); set role authenticated;`);

@@ -3,12 +3,15 @@ import { requerirEmpresa, puedeEscribir } from '@/lib/auth';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { clp, param } from '@/lib/formato';
 import { estadoPrimerosPasos } from '@/lib/datos/primeros-pasos';
+import { MODULOS } from '@/lib/modulos';
 import { VentanaPrimerosPasos } from './primeros-pasos/ventana';
 import { anioContable } from '@/lib/anio-contable';
 
 export default async function InicioEmpresa({ params, searchParams }: PageProps<'/e/[empresaId]'>) {
   const { empresaId } = await params;
-  const bienvenida = param((await searchParams).bienvenida) === '1';
+  const sp = await searchParams;
+  const bienvenida = param(sp.bienvenida) === '1';
+  const sinAcceso = MODULOS.find((m) => m.k === param(sp.sin_acceso));
   const empresa = await requerirEmpresa(empresaId);
   const anio = await anioContable();
   const supabase = await crearClienteServidor();
@@ -27,6 +30,7 @@ export default async function InicioEmpresa({ params, searchParams }: PageProps<
   return (
     <div className="space-y-6">
       {bienvenida && <VentanaPrimerosPasos empresaId={empresaId} razonSocial={empresa.razon_social} pasos={pp.pasos} hechos={pp.hechos} total={pp.total} escribe={puedeEscribir(empresa.rol)} />}
+      {sinAcceso && <p role="alert" className="rounded-md border border-aviso/40 bg-aviso/10 px-3 py-2 text-sm text-aviso">🔒 Tu perfil no tiene acceso a {sinAcceso.nombre}. Si lo necesitas, pídeselo al administrador del sistema.</p>}
       <h1 className="text-xl font-semibold">{empresa.razon_social}</h1>
       {!pp.completo && (
         <Link href={`/e/${empresaId}/primeros-pasos`} className="tarjeta block space-y-2 border-acento/50 p-4 hover:border-acento">

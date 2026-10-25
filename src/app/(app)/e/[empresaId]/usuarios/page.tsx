@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { requerirEmpresa, requerirUsuario } from '@/lib/auth';
+import { requerirEmpresa, requerirUsuario, miAcceso } from '@/lib/auth';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { FormAgregar, FilaMiembro, type Miembro } from './componentes';
 
@@ -7,11 +7,11 @@ export const metadata: Metadata = { title: 'Usuarios' };
 
 export default async function UsuariosPage({ params }: PageProps<'/e/[empresaId]/usuarios'>) {
   const { empresaId } = await params;
-  const [empresa, yo] = await Promise.all([requerirEmpresa(empresaId), requerirUsuario()]);
-  if (empresa.rol !== 'admin') return <p className="text-tenue">Sólo un administrador puede gestionar usuarios.</p>;
+  const [empresa, yo, acceso] = await Promise.all([requerirEmpresa(empresaId), requerirUsuario(), miAcceso()]);
+  if (empresa.rol !== 'admin') return <p className="text-tenue">Sólo el dueño de la empresa o el administrador del sistema puede autorizar usuarios.</p>;
   const supabase = await crearClienteServidor();
   const { data, error } = await supabase.from('miembros')
-    .select('usuario_id,rol,estado,creado,perfiles(nombre,email)').eq('empresa_id', empresaId).order('creado');
+    .select('usuario_id,rol,estado,creado,perfiles(nombre,email,es_administrador,perfiles_acceso(nombre,tipo))').eq('empresa_id', empresaId).order('creado');
   if (error) throw new Error(error.message);
   const miembros = data as unknown as Miembro[];
   return (
@@ -19,13 +19,14 @@ export default async function UsuariosPage({ params }: PageProps<'/e/[empresaId]
       <div>
         <h1 className="text-xl font-semibold">Usuarios de la empresa</h1>
         <p className="text-sm text-tenue">
-          👑 Administrador: todo, incluidos usuarios e importación · 📝 Contador: registra y consulta · 👁 Consulta: sólo lectura.
+          Autoriza a otros usuarios a trabajar en esta empresa. Qué módulos ve y edita cada uno lo define su perfil de acceso, que asigna el administrador del sistema.
+          👑 Dueño: la creó y autoriza usuarios · 📝 Trabaja: según su perfil · 👁 Sólo consulta: no edita nada aunque su perfil lo permita.
         </p>
       </div>
       <div className="tarjeta divide-y divide-borde">
-        {miembros.map((m) => <FilaMiembro key={m.usuario_id} empresaId={empresaId} m={m} soyYo={m.usuario_id === yo.id} />)}
+        {miembros.map((m) => <FilaMiembro key={m.usuario_id} empresaId={empresaId} m={m} soyYo={m.usuario_id === yo.id} admin={acceso.admin} />)}
       </div>
-      <FormAgregar empresaId={empresaId} />
+      <FormAgregar empresaId={empresaId} admin={acceso.admin} />
     </div>
   );
 }

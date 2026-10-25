@@ -17,7 +17,8 @@ export const hoyISO = () => {
   return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 };
 
-export const NOMBRE_ROL = { admin: '👑 Administrador', contador: '📝 Contador', consulta: '👁 Consulta' } as const;
+/** Rol dentro de una empresa (lo que hace cada uno en ella; los módulos los define su perfil de acceso). */
+export const NOMBRE_ROL = { admin: '👑 Dueño', contador: '📝 Trabaja', consulta: '👁 Sólo consulta' } as const;
 
 export const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 

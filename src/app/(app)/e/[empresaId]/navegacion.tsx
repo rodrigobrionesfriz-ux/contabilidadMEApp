@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import type { Rol } from '@/lib/auth';
+import { moduloDeRuta, type Permiso } from '@/lib/modulos';
 
 /**
  * Barra lateral con la misma agrupación y orden que el sistema actual.
@@ -118,9 +119,11 @@ function SelectorEmpresa({ empresaId, empresas }: { empresaId: string; empresas:
   );
 }
 
-export function Navegacion({ base, rol, empresa, buscador, empresaId, empresas, anio }: {
+export function Navegacion({ base, rol, empresa, buscador, empresaId, empresas, anio, permisos }: {
   base: string; rol: Rol; empresa: string; buscador: React.ReactNode;
   empresaId: string; empresas: { id: string; nombre: string; rut: string }[]; anio: number;
+  /** Permiso por módulo del perfil de acceso: los módulos sin acceso no aparecen */
+  permisos: Record<string, Permiso>;
 }) {
   const ruta = usePathname();
   const sp = useSearchParams();
@@ -133,7 +136,8 @@ export function Navegacion({ base, rol, empresa, buscador, empresaId, empresas, 
     if (!(ruta === camino || ruta.startsWith(camino + '/'))) return false;
     return Object.entries(it.q || {}).every(([k, v]) => (sp.get(k) || it.def?.[k]) === v);
   };
-  const grupos = GRUPOS.map((g) => ({ ...g, items: g.items.filter((it) => !it.roles || it.roles.includes(rol)) })).filter((g) => g.items.length);
+  const conAcceso = (it: Item) => { const m = it.absoluta ? null : moduloDeRuta(base + it.ruta); return !m || permisos[m] !== 'no'; };
+  const grupos = GRUPOS.map((g) => ({ ...g, items: g.items.filter((it) => (!it.roles || it.roles.includes(rol)) && conAcceso(it)) })).filter((g) => g.items.length);
   const enInicio = ruta === base;
   const actual = grupos.flatMap((g) => g.items).find(esActivo);
   const cerrar = () => setAbierto(false);

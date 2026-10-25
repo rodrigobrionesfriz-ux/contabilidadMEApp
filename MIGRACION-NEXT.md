@@ -8,7 +8,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Sin cacheComponents.
 - Fuentes vía @fontsource.
 - `xlsx` 0.18.5 para leer el respaldo y el RCV en Excel (y, con su lector/escritor ZIP, leer y generar .docx sin dependencias nuevas).
-- Pruebas (344): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
+- Pruebas (352): vitest con casos de oro comparados contra el sistema actual (motor, lector RCV, validador del paso 2, F29, remuneraciones, LRE, Previred, vacaciones, finiquitos, contratos, estados financieros, depreciación, tesorería, renta anual, declaraciones juradas, inventario, asientos tipo, imposiciones y XML IECV), importador contra el mayor del sistema actual, saldos de auxiliares y SQL en PGlite.
 - CI en GitHub Actions: lint, test y build.
 
 ## Migraciones (supabase/migrations, se ejecutan una vez cada una en el SQL Editor)
@@ -132,6 +132,13 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 
 ### 0023 (10u)
 - guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
+
+### 0026 (10z10)
+- perfiles_acceso (nombre, tipo senior|contador, permisos por módulo: editar | ver | no) con dos iniciales, Senior y Contador; ajustes_sistema.perfil_nuevo (perfil de quien se registra; parte en Contador).
+- perfiles: es_administrador y perfil_acceso. Usuarios existentes: dueños de alguna empresa → Senior; el resto → Contador. Administrador del sistema: el usuario registrado más antiguo (si no había uno). Cada usuario sólo puede cambiar su nombre.
+- es_administrador(); es_miembro, puede_escribir y es_admin devuelven verdadero para el administrador en todas las empresas. mi_acceso() (perfil del usuario actual).
+- Sólo el administrador: guardar_perfil_acceso, eliminar_perfil_acceso (no si tiene usuarios o es el de nuevos), asignar_perfil (siempre queda al menos un administrador), perfil_usuarios_nuevos, usuarios_sistema().
+- Crear empresas: sólo administrador o perfil Senior (trigger en empresas). agregar_miembro: el dueño o el administrador; sólo el administrador nombra otro dueño (también al editar el rol). guardar_indicador acepta al administrador aunque no sea miembro.
 
 ### 0025 (10z8)
 - folio_normalizado(folio): sin espacios ni ceros a la izquierda ("000518778" = "518778").
@@ -407,6 +414,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ## Selector de empresa y año contable, buscador de auxiliares (10z9)
 - Barra lateral, arriba: selector de **empresa** (si el usuario tiene más de una; cambia quedándose en la misma sección, sin llevar ids de la empresa anterior) y de **año contable**. El año se guarda en la cookie anio_contable (común a todas las empresas, un año) y es el año por defecto de todas las páginas con año (src/lib/anio-contable.ts, reemplaza a "año en curso" en 25 páginas). Al cambiarlo, si la página tiene ?anio= se reemplaza y se quita ?mes=. El selector de período de cada página sigue mandando para esa vista.
 - Comprobantes → ventana del documento: el RUT pasa a ser un buscador por RUT o nombre (buscarAuxiliares: fichas de proveedores/clientes y RUT ya usados en el libro del mismo tipo, hasta 12). Flechas y Enter para elegir; al elegir completa RUT y razón social. Un RUT válido que no aparece se usa tal cual (auxiliar nuevo).
+
+## Usuarios y perfiles de acceso (10z10)
+- **Administrador del sistema** (🛡️): ve y trabaja en todas las empresas con todos los permisos; es el único que entra a **Perfiles** (botón en la barra superior, /admin/perfiles).
+- **Perfiles** (src/lib/modulos.ts): 13 módulos (compras y ventas, honorarios, remuneraciones, auxiliares y pagos, comprobantes, inventario, reportes, conciliación, tributario, activo fijo, cierre, configuración, usuarios de la empresa), cada uno Edita / Sólo ve / Sin acceso. Tipo **Senior**: crea empresas y autoriza usuarios en ellas; tipo **Contador**: sólo las empresas asignadas. La pantalla muestra la matriz de perfiles, edita o crea perfiles, asigna el perfil y el rol de administrador a cada usuario y elige el perfil de quien se registra.
+- **Empresas**: cada usuario ve sólo las suyas y las asignadas (el administrador, todas). "+ Nueva empresa" sólo para Senior y administrador. En cada empresa, Configuración → Usuarios: el dueño (o el administrador) autoriza a otros como 👑 Dueño (sólo el administrador), 📝 Trabaja (según su perfil) o 👁 Sólo consulta; se ve el perfil de cada uno.
+- **Aplicación del perfil**: el proxy pasa la ruta en x-ruta; requerirEmpresa toma el módulo de la página: sin acceso → vuelve al Inicio con aviso; sólo ve → la página se muestra como consulta (sin botones de edición). El menú oculta los módulos sin acceso. El proxy rechaza (403) las acciones del servidor de un módulo sin acceso. Pendiente: «sólo ve» todavía no se valida en cada función de la base (la base valida empresa y rol, no módulo).
 
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
