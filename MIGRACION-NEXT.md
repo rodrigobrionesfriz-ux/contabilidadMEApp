@@ -429,6 +429,10 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Configuración → Usuarios de la empresa: el dueño (Senior) o el administrador agrega por correo; si no tiene cuenta queda invitado (lista "Invitados sin cuenta todavía") y puede crearle la cuenta con contraseña temporal. Al confirmar y entrar, ve esa empresa con los permisos de su perfil.
 - Ojo: el envío de correos de Supabase sin SMTP propio tiene un límite bajo por hora; si aparece "email rate limit exceeded", esperar o configurar SMTP en Supabase (Authentication → Emails).
 
+## Ingreso y cierre por inactividad (10z12)
+- Después de iniciar sesión siempre se llega a Empresas (ya no se vuelve a la página anterior). Al elegir una empresa se entra a Comprobantes → Nuevo asiento; si el perfil no edita comprobantes, al Inicio de la empresa.
+- Cierre de sesión tras 30 minutos sin actividad: la última actividad va en la cookie cme_actividad (la renueva el proxy en cada request y el navegador al mover el mouse, teclear, tocar o desplazarse, cada 5 s como máximo; compartida entre pestañas). El navegador (src/app/(app)/inactividad.tsx, en el layout nuevo de (app)) avisa un minuto antes y cierra con salirPorInactividad; el proxy cierra la sesión si llega un request con la cookie vencida (p. ej. al volver al computador después de horas). El login muestra "Tu sesión se cerró por 30 minutos sin actividad".
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:

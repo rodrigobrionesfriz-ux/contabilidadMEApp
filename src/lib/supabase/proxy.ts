@@ -5,6 +5,11 @@ import { moduloDeRuta, permisoDe } from '@/lib/modulos';
 
 const RUTAS_PUBLICAS = ['/login', '/registro', '/recuperar', '/auth'];
 
+/** Última actividad (ms) en una cookie: la renueva cada request y el navegador al usar la app (inactividad.tsx). */
+export const COOKIE_ACTIVIDAD = 'cme_actividad';
+export const LIMITE_INACTIVIDAD = 30 * 60 * 1000;
+const opcionesActividad = { path: '/', maxAge: 60 * 60 * 24, sameSite: 'lax' as const };
+
 /** Refresca la sesión en cada navegación y protege las rutas privadas. */
 export async function actualizarSesion(request: NextRequest) {
   // La ruta viaja en x-ruta para que el servidor aplique el perfil de acceso del módulo (requerirEmpresa)
@@ -35,6 +40,22 @@ export async function actualizarSesion(request: NextRequest) {
   const ruta = request.nextUrl.pathname;
   const publica = RUTAS_PUBLICAS.some((p) => ruta === p || ruta.startsWith(p + '/'));
 
+  const ahora = Date.now();
+  const ultima = Number(request.cookies.get(COOKIE_ACTIVIDAD)?.value) || 0;
+
+  // 30 minutos sin actividad: se cierra la sesión (también si se vuelve después de horas con la sesión guardada).
+  // /auth (confirmar correo, cambiar clave) no cuenta: ahí se parte de nuevo.
+  if (autenticado && ultima && ahora - ultima > LIMITE_INACTIVIDAD && !ruta.startsWith('/auth')) {
+    await supabase.auth.signOut();
+    const destino = request.nextUrl.clone();
+    destino.pathname = '/login';
+    destino.search = '?motivo=inactividad';
+    const r = NextResponse.redirect(destino);
+    response.cookies.getAll().forEach((c) => r.cookies.set(c));
+    r.cookies.delete(COOKIE_ACTIVIDAD);
+    return r;
+  }
+
   if (!autenticado && !publica) {
     const destino = request.nextUrl.clone();
     destino.pathname = '/login';
@@ -45,8 +66,11 @@ export async function actualizarSesion(request: NextRequest) {
     const destino = request.nextUrl.clone();
     destino.pathname = '/empresas';
     destino.search = '';
-    return NextResponse.redirect(destino);
+    const r = NextResponse.redirect(destino);
+    r.cookies.set(COOKIE_ACTIVIDAD, String(ahora), opcionesActividad);
+    return r;
   }
+  if (autenticado || publica) response.cookies.set(COOKIE_ACTIVIDAD, String(ahora), opcionesActividad);
   // Acciones del servidor (POST con next-action) de un módulo sin acceso: se rechazan. Con «sólo ve» la página se
   // muestra como consulta (sin botones de edición); las acciones de lectura (exportar, buscar) siguen funcionando.
   if (autenticado && request.method === 'POST' && request.headers.get('next-action')) {

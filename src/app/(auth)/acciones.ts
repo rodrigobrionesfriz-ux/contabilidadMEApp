@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { headers } from 'next/headers';
+import { headers, cookies } from 'next/headers';
 import { z } from 'zod';
 import { crearClienteServidor } from '@/lib/supabase/server';
 
@@ -24,12 +24,6 @@ async function urlSitio() {
   return `${h.get('x-forwarded-proto') ?? 'http'}://${h.get('host')}`;
 }
 
-/** Sólo rutas internas como destino tras el login (evita redirecciones abiertas). */
-function destinoSeguro(next: FormDataEntryValue | null) {
-  const s = String(next ?? '');
-  return s.startsWith('/') && !s.startsWith('//') ? s : '/empresas';
-}
-
 function traducir(msg: string | undefined) {
   if (!msg || msg === '{}' || /fetch failed|network|ENOTFOUND|ECONNREFUSED/i.test(msg)) {
     return 'No se pudo conectar con el servidor de autenticación. Revisa tu conexión o la configuración de Supabase.';
@@ -50,7 +44,10 @@ export async function ingresar(_: EstadoForm, fd: FormData): Promise<EstadoForm>
   const supabase = await crearClienteServidor();
   const { error } = await supabase.auth.signInWithPassword({ email: p.data.email, password: p.data.clave });
   if (error) return { error: traducir(error.message), valores: reponer(fd, 'email') };
-  redirect(destinoSeguro(fd.get('next')));
+  // Sesión nueva: parte el reloj de inactividad
+  (await cookies()).set('cme_actividad', String(Date.now()), { path: '/', maxAge: 60 * 60 * 24, sameSite: 'lax' });
+  // Siempre a la pantalla de empresas: desde ahí se elige con cuál trabajar
+  redirect('/empresas');
 }
 
 export async function registrar(_: EstadoForm, fd: FormData): Promise<EstadoForm> {
@@ -97,4 +94,11 @@ export async function salir() {
   const supabase = await crearClienteServidor();
   await supabase.auth.signOut();
   redirect('/login');
+}
+
+/** Cierre de sesión por inactividad (30 minutos sin usar la app). */
+export async function salirPorInactividad() {
+  const supabase = await crearClienteServidor();
+  await supabase.auth.signOut();
+  redirect('/login?motivo=inactividad');
 }
