@@ -72,3 +72,31 @@ describe('importador del respaldo Excel', () => {
     expect(plan.problemas.filter((p) => p.nivel === 'error')).toEqual([]);
   });
 });
+
+describe('importador: asientos automáticos y celdas dañadas', () => {
+  const base = { Empresa: [['Empresa', 'Prueba'], ['RUT', '76151704-K'], ['Año', 2026]] };
+  const fila = (a: Record<string, unknown>) => ({ id: a.id, fecha: a.fecha, glosa: a.glosa, asientoJSON: JSON.stringify(a) });
+  const movs = [{ cd: '2103003', debe: 100, haber: 0 }, { cd: '2104002', debe: 0, haber: 100 }];
+
+  it('reconoce la compensación y el pago del F29 y las remuneraciones del sistema actual', () => {
+    const plan = construirPlanCarga({ ...base, Asientos: [
+      fila({ id: 'as_iva_1', numeroContable: 10, fecha: '2026-01-31', glosa: 'Compensación IVA Enero 2026 — F29', tipo: 'tributario', origenAuto: 'ivaf29', periodoIVA: '2026-01', movs }),
+      fila({ id: 'as_pagof29_1', numeroContable: 11, fecha: '2026-02-12', glosa: 'Pago F29 Enero 2026', tipo: 'tributario', origenAuto: 'pagof29', periodoIVA: '2026-01',
+        movs: [{ cd: '2104002', debe: 100 }, { cd: '1101201', haber: 100 }] }),
+      fila({ id: 'as_rem_1', numeroContable: 12, fecha: '2026-09-30', glosa: 'Remuneraciones Septiembre 2026', tipo: 'remuneraciones', periodo: '2026-09',
+        movs: [{ cd: '3201001', debe: 50 }, { cd: '2104005', haber: 50 }] }),
+      fila({ id: 'a_man', numeroContable: 13, fecha: '2026-03-01', glosa: 'Manual', tipo: 'manual', movs }),
+    ] }, pdc);
+    const origen = Object.fromEntries(plan.asientos.map((a) => [a.ref, a.origen_id]));
+    expect(origen).toEqual({ as_iva_1: 'ivaf29:2026-01', as_pagof29_1: 'pagof29:2026-01', as_rem_1: 'rem:2026-09', a_man: undefined });
+    expect(plan.problemas.filter((p) => p.nivel === 'error')).toEqual([]);
+  });
+
+  it('un asiento con el JSON cortado bloquea la importación en vez de omitirse', () => {
+    const largo = JSON.stringify({ id: 'a_pag', numeroContable: 20, fecha: '2026-09-15', glosa: 'Pago proveedores', tipo: 'pago', movs });
+    const plan = construirPlanCarga({ ...base, Asientos: [
+      { id: 'a_pag', fecha: '2026-09-15', glosa: 'Pago proveedores', asientoJSON: largo.slice(0, 40), movsJSON: JSON.stringify(movs).slice(0, 30) },
+    ] }, pdc);
+    expect(plan.problemas.some((p) => p.nivel === 'error' && p.mensaje.includes('cortado o dañado'))).toBe(true);
+  });
+});

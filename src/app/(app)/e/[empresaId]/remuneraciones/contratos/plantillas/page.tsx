@@ -18,7 +18,7 @@ export default async function PlantillasContratoPage({ params }: PageProps<'/e/[
       <Link href={`/e/${empresaId}/remuneraciones/contratos`} className="text-sm text-tenue hover:text-texto">← Contratos</Link>
       <div>
         <h1 className="text-xl font-semibold">Plantillas de contrato</h1>
-        <p className="text-sm text-tenue">Cada plantilla se puede asociar a uno o varios cargos: al abrir el contrato de un trabajador se sugiere la de su cargo. Descárgala en Word, edítala sin tocar los textos entre {'{{ }}'} (en amarillo) y vuelve a subirla: se revisa que los marcadores sigan intactos.</p>
+        <p className="text-sm text-tenue">Cada plantilla se puede asociar a uno o varios cargos: al abrir el contrato de un trabajador se sugiere la de su cargo. Edítala aquí mismo: los datos que vienen de la ficha del trabajador se ven en azul y no se pueden borrar ni modificar. También puedes bajarla a Word (ahí los datos van entre {'{{ }}'}, en amarillo) y volver a subirla: se revisa que los marcadores sigan intactos.</p>
       </div>
       <PlantillasContrato empresaId={empresaId} lista={lista} escribe={puedeEscribir(empresa.rol)} />
     </div>

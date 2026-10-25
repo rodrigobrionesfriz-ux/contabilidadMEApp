@@ -10,9 +10,13 @@ import { OPCIONALES, MARCADORES_CONTRATO } from '@/remuneraciones/contrato-traba
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const CLS = 'dato-ct rounded px-1 font-medium select-all cursor-default';
-function html(texto: string, vals: Record<string, string>) {
+function html(texto: string, vals: Record<string, string>, nombres = false) {
   return segmentos(texto).map((s) => {
     if (s.tipo === 'texto') return esc(s.v);
+    if (nombres) {
+      const cls = OPCIONALES.has(s.k) ? `${CLS} bg-info/10 text-info border border-dashed border-info/50` : `${CLS} bg-info/15 text-info`;
+      return `<span contenteditable="false" data-k="${s.k}" class="${cls}" title="Se completa con la ficha del trabajador${OPCIONALES.has(s.k) ? ' (opcional: si está vacío no aparece)' : ''}">${esc(nombreDato(s.k))}</span>`;
+    }
     const v = vals[s.k];
     const vacio = !v;
     const opc = OPCIONALES.has(s.k);
@@ -42,7 +46,8 @@ export function serializar(raiz: Node): string {
 const tocaDatoEn = (raiz: HTMLElement | null, r: Range) => [...(raiz?.querySelectorAll('[data-k]') ?? [])].some((d) => r.intersectsNode(d));
 const contar = (t: string) => (t.match(/\{\{[a-z_]+\}\}/g) || []).sort().join();
 
-export function EditorContrato({ texto, vals, onCambio }: { texto: string; vals: Record<string, string>; onCambio: (t: string) => void }) {
+/** nombres: muestra el nombre de cada dato en vez del valor (para editar plantillas, sin trabajador). */
+export function EditorContrato({ texto, vals, onCambio, nombres = false, alto = 'min-h-96' }: { texto: string; vals: Record<string, string>; onCambio: (t: string) => void; nombres?: boolean; alto?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const ultimo = useRef(texto);
 
@@ -50,10 +55,10 @@ export function EditorContrato({ texto, vals, onCambio }: { texto: string; vals:
   const datos = useMemo(() => JSON.parse(firma) as Record<string, string>, [firma]);
 
   // Pinta al abrir, si cambian los datos, o si el texto llega de afuera (otra plantilla, volver a la plantilla).
-  useEffect(() => { if (ref.current) ref.current.innerHTML = html(ultimo.current, datos); }, [datos]);
+  useEffect(() => { if (ref.current) ref.current.innerHTML = html(ultimo.current, datos, nombres); }, [datos, nombres]);
   useEffect(() => {
-    if (ref.current && texto !== ultimo.current) { ref.current.innerHTML = html(texto, datos); ultimo.current = texto; }
-  }, [texto, datos]);
+    if (ref.current && texto !== ultimo.current) { ref.current.innerHTML = html(texto, datos, nombres); ultimo.current = texto; }
+  }, [texto, datos, nombres]);
 
   const tocaDato = (r: Range) => tocaDatoEn(ref.current, r);
 
@@ -76,7 +81,7 @@ export function EditorContrato({ texto, vals, onCambio }: { texto: string; vals:
   const cambio = () => {
     if (!ref.current) return;
     const t = serializar(ref.current);
-    if (contar(t) !== contar(ultimo.current)) { ref.current.innerHTML = html(ultimo.current, datos); return; } // se perdió un dato: deshace
+    if (contar(t) !== contar(ultimo.current)) { ref.current.innerHTML = html(ultimo.current, datos, nombres); return; } // se perdió un dato: deshace
     ultimo.current = t;
     onCambio(t);
   };
@@ -92,7 +97,7 @@ export function EditorContrato({ texto, vals, onCambio }: { texto: string; vals:
   const recordar = () => { const s = window.getSelection(); if (s?.rangeCount && ref.current?.contains(s.anchorNode)) rangoGuardado.current = s.getRangeAt(0).cloneRange(); };
   const insertar = (k: string) => {
     const raiz = ref.current; if (!raiz || !k) return;
-    const plantilla = document.createElement('template'); plantilla.innerHTML = html(`{{${k}}}`, datos);
+    const plantilla = document.createElement('template'); plantilla.innerHTML = html(`{{${k}}}`, datos, nombres);
     const nodo = plantilla.content.firstChild!;
     const r = rangoGuardado.current && raiz.contains(rangoGuardado.current.startContainer) ? rangoGuardado.current : (() => { const x = document.createRange(); x.selectNodeContents(raiz); x.collapse(false); return x; })();
     if (!r.collapsed && tocaDato(r)) return;
@@ -108,11 +113,13 @@ export function EditorContrato({ texto, vals, onCambio }: { texto: string; vals:
           <option value="">＋ Insertar dato de la ficha…</option>
           {MARCADORES_CONTRATO.map(([k, d]) => <option key={k} value={k}>{d}</option>)}
         </select>
-        <span><span className="rounded bg-info/15 px-1 text-info">dato</span> viene de la ficha y no se edita aquí · <span className="rounded border border-dashed border-aviso px-1 text-aviso">[dato]</span> falta en la ficha</span>
+        {nombres
+          ? <span><span className="rounded bg-info/15 px-1 text-info">Dato</span> se completa con la ficha de cada trabajador · <span className="rounded border border-dashed border-info/50 px-1 text-info">Dato</span> opcional: si está vacío no aparece</span>
+          : <span><span className="rounded bg-info/15 px-1 text-info">dato</span> viene de la ficha y no se edita aquí · <span className="rounded border border-dashed border-aviso px-1 text-aviso">[dato]</span> falta en la ficha</span>}
       </div>
     <div ref={ref} onKeyUp={recordar} onMouseUp={recordar} onBlur={recordar} role="textbox" aria-multiline="true" aria-label="Texto del contrato" contentEditable suppressContentEditableWarning spellCheck
       onInput={cambio} onPaste={pegar} onDrop={(e) => e.preventDefault()}
-      className="min-h-96 whitespace-pre-wrap text-justify outline-none focus:ring-2 focus:ring-acento/40 rounded" />
+      className={`${alto} whitespace-pre-wrap text-justify outline-none focus:ring-2 focus:ring-acento/40 rounded`} />
     </div>
   );
 }

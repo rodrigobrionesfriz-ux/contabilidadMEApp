@@ -79,9 +79,12 @@ describe('importación del respaldo', () => {
     await expect(b.como(ADMIN, `select eliminar_importacion($1, 2026)`, [emp])).rejects.toThrow(/registrados en el sistema nuevo/);
   });
 
-  it('eliminar la importación deja el año limpio para rehacerla', async () => {
-    await b.db.exec(`delete from asientos where not importado`); // simula que no hay asientos propios
+  it('eliminar la importación deja el año limpio para rehacerla (los propios anulados no lo impiden)', async () => {
+    const [propio] = await b.como<{ id: string }>(ADMIN, `select a.id from asientos a where a.empresa_id=$1 and not importado`, [emp]);
+    await b.como(ADMIN, `select anular_asiento($1, 'Prueba del F29 en marcha blanca')`, [propio.id]);
     await b.como(ADMIN, `select eliminar_importacion($1, 2026)`, [emp]);
+    const [{ p }] = await b.como<{ p: number }>(ADMIN, `select count(*)::int p from asientos where empresa_id=$1`, [emp]);
+    expect(p).toBe(0);
     const [{ n }] = await b.como<{ n: number }>(ADMIN, `select count(*)::int n from documentos where empresa_id=$1`, [emp]);
     expect(n).toBe(0);
     await importar();

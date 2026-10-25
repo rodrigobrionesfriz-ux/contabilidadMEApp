@@ -37,7 +37,7 @@ export function Importaciones({ empresaId, filas }: { empresaId: string; filas: 
             </span>
             {borrando === f.anio ? (
               <span className="flex flex-wrap items-center gap-2">
-                <span className="text-xs text-peligro">Borra los asientos y documentos importados de {f.anio}. Escribe el año:</span>
+                <span className="text-xs text-peligro">Borra los asientos y documentos importados de {f.anio} y los asientos propios anulados de ese año. Escribe el año:</span>
                 <input value={confirma} onChange={(e) => setConfirma(e.target.value)} className="campo w-20 py-1" aria-label="Confirmar año" />
                 <button type="button" disabled={confirma !== String(f.anio) || pendiente} onClick={() => eliminar(f.anio)}
                   className="rounded-md bg-peligro px-3 py-1 text-xs font-semibold text-white disabled:opacity-50">Eliminar</button>

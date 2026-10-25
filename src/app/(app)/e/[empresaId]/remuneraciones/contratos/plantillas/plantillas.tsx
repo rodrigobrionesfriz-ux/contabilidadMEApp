@@ -2,13 +2,16 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { MARCADORES_CONTRATO, PLANTILLAS_CONTRATO_TIPO, validarPlantilla, type PlantillaContrato } from '@/remuneraciones/contrato-trabajo';
+import { PLANTILLAS_CONTRATO_TIPO, validarPlantilla, type PlantillaContrato } from '@/remuneraciones/contrato-trabajo';
 import { TIPOS_CONTRATO } from '@/remuneraciones/contrato-dt';
 import { descargarDocx } from '@/lib/docx';
 import { leerArchivoTexto } from '@/lib/leer-texto';
 import { Mensaje } from '@/components/form-estado';
 import { guardarPlantillaContrato, eliminarPlantillaContrato } from '../acciones';
 import { slug } from '../descargas';
+import { EditorContrato } from '../[id]/documento/editor';
+
+const SIN_DATOS: Record<string, string> = {};
 
 interface Edicion { uuid?: string; codigo?: string; nombre: string; cargos: string; tipoContrato: number | ''; texto: string; original: string | null; desdeWord?: string }
 
@@ -81,8 +84,9 @@ export function PlantillasContrato({ empresaId, lista, escribe }: { empresaId: s
                 <option value="">Cualquiera</option>{TIPOS_CONTRATO.map(([k, n]) => <option key={k} value={k}>{n}</option>)}
               </select></div>
           </div>
-          <textarea aria-label="Texto de la plantilla" rows={18} value={ed.texto} onChange={(e) => setEd({ ...ed, texto: e.target.value })} className="campo num w-full text-xs leading-relaxed" />
-          <p className="text-[10px] leading-relaxed text-tenue">Marcadores: {MARCADORES_CONTRATO.map(([k, d]) => <code key={k} title={d} className="mr-1 cursor-pointer hover:text-acento" onClick={() => setEd({ ...ed, texto: ed.texto + `{{${k}}}` })}>{`{{${k}}}`}</code>)}</p>
+          <div className="max-h-[70vh] overflow-y-auto rounded-lg border border-borde bg-fondo/40 p-4 text-sm leading-relaxed">
+            <EditorContrato key={`${ed.uuid ?? ed.codigo ?? 'nueva'}|${ed.desdeWord ?? ''}`} texto={ed.texto} vals={SIN_DATOS} nombres alto="min-h-64" onCambio={(t) => setEd((x) => (x ? { ...x, texto: t } : x))} />
+          </div>
           {v.errores.map((e, i) => <p key={i} className="text-xs text-peligro">⛔ {e}</p>)}
           {v.avisos.map((e, i) => <p key={i} className="text-xs text-aviso">⚠️ {e}</p>)}
           {v.ok && !v.avisos.length && <p className="text-xs text-acento">✅ Marcadores correctos.</p>}
