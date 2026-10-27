@@ -133,6 +133,9 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ### 0023 (10u)
 - guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
 
+### 0029 (10z17)
+- La cuenta 1104001 pasa a llamarse CLIENTES (era FACTURAS POR COBRAR) en la plantilla del plan y en las empresas que conservan el nombre original. La importación del respaldo no la revierte (no pisa nombres de cuentas existentes).
+
 ### 0028 (10z15)
 - confirmar_cuenta(usuario): deja confirmada una cuenta recién creada (última hora) por el administrador o por el dueño de una empresa del usuario.
 - restablecer_clave(usuario, clave): el administrador pone una contraseña (bcrypt con extensions.crypt) y confirma el correo si faltaba.
@@ -476,4 +479,6 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Reimportar La Cabaña 2026 con 10d y repetir el cuadre (script de comparación: respaldo vs PDF del Balance General).
 - Importar el resto de empresas y años, y comparar cifras con el sistema actual hasta validarlas.
 - Opcional: traer al F29 nuevo los F29 declarados del sistema actual (f29Detalle.declarado de los asientos ivaf29) como presentados, para que el remanente arrastre igual.
+- Pendiente de seguridad: validar «Sólo ve» de los perfiles también en cada función de la base (hoy se aplica en la app).
+- **Idea a futuro (25/10/2026): conexión con el SII para servicios contables a terceros.** Un solo certificado digital a nombre de Rodrigo (.pfx), y cada empresa cliente lo autoriza con su RUT (mandato digital o usuario autorizado; confirmar la vía con el SII). Orden propuesto: 1) piloto con una empresa: certificado cifrado por empresa, autenticación semilla/token y descarga automática del RCV ("Descargar RCV de todas mis empresas" al paso 2); 2) recepción de facturas de proveedores (acuse/reclamo) y boletas de honorarios; 3) emisión de facturación electrónica: desarrollo propio (CAF, XML con timbre y firma, PDF417, envío y seguimiento, intercambio; cada empresa debe certificarse en el SII) o integración con un proveedor certificado (LibreDTE u otro). Antes de ofrecerlo: contrato de servicios con cada cliente y revisar la Ley 21.719 de datos personales (vigente desde dic-2026). Desde el entorno de desarrollo no hay salida al SII: las pruebas son en la app publicada.
 - Pendientes menores: usar las fichas en las órdenes de compra (hoy salen de las compras), rechazo de gastos desde el documento de compra y asientos contables del inventario (hoy es auxiliar, igual que el sistema actual).
