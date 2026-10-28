@@ -3,7 +3,6 @@ import oro from '../__fixtures__/f10-oro.json';
 import { construirImposiciones, hojasImposiciones } from '../imposiciones';
 import { parametrosVigentes, type Patronal } from '@/remuneraciones/parametros';
 import { buscarComprobantes, lineasDesdeComprobante, repartir, resumenComprobante, prepararComprobante, repartirIgual, pideMontoDist, type ComprobanteTipo } from '../comprobantes-tipo';
-import { xmlIECV, rutSii, aLatin1, type DocIECV } from '../iecv';
 import { filasDiario, filasCaja, filasMayor, filasInventario, paginar, siguienteBloque, resumenRango, filasControl, normalizarConfig } from '../folios';
 
 const J = (x: unknown) => JSON.parse(JSON.stringify(x));
@@ -43,19 +42,6 @@ describe('comprobantes tipo (casos de oro)', () => {
     const ok = prepararComprobante({ nombre: ' Luz ', descripcion: '', glosa: '', guardaMontos: false, lineas: [{ cd: '2102001', desc: '', debe: 500, haber: 0, cc: '' }, { cd: '', desc: '', debe: 0, haber: 0, cc: '' }], distActiva: false, distBase: 9, dist: [] });
     expect(ok).toEqual({ datos: { nombre: 'Luz', descripcion: '', glosa: '', guardaMontos: false, lineas: [{ cd: '2102001', desc: '', debe: 0, haber: 0, cc: '' }], distActiva: false, distBase: 0, dist: [] } });
     expect(repartirIgual([{ cd: 'a', pct: 0, cc: '' }, { cd: '', pct: 0, cc: '' }, { cd: 'b', pct: 0, cc: '' }, { cd: 'c', pct: 0, cc: '' }]).map((d) => d.pct)).toEqual([33.33, 0, 33.33, 33.34]);
-  });
-});
-
-describe('XML IECV (casos de oro)', () => {
-  const docs = (arr: { tipoDTE: number; numero: number; fecha: string; rutCodigo: string; rutDV?: string; razonSocial: string; neto: number; exento?: number; iva: number; total: number; periodoContable?: string }[], filtro: (d: (typeof arr)[number]) => boolean): DocIECV[] =>
-    arr.filter(filtro).map((d) => ({ tipoDTE: d.tipoDTE, folio: d.numero, fecha: d.fecha, rut: d.rutCodigo ? `${d.rutCodigo}-${d.rutDV}` : null, razonSocial: d.razonSocial, neto: d.neto, exento: d.exento || 0, iva: d.iva, total: d.total }));
-  it('ventas', () => expect(xmlIECV('VENTA', '2026-05', '76.151.704-K', docs(oro.ventas, (d) => d.fecha.slice(5, 7) === '05'))).toBe(oro.xml.VENTA));
-  it('compras', () => expect(xmlIECV('COMPRA', '2026-05', '76.151.704-K', docs(oro.compras, (d) => (d.periodoContable || d.fecha.slice(0, 7)) === '2026-05'))).toBe(oro.xml.COMPRA));
-  it('RUT y codificación', () => {
-    expect(rutSii('76.151.704-k')).toBe('76151704-K');
-    expect(rutSii('761517047')).toBe('76151704-7');
-    expect(rutSii('')).toBe('0-0');
-    expect([...aLatin1('Ñ€')]).toEqual([0xD1, 0x3F]);
   });
 });
 

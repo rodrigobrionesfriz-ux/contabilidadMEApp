@@ -11,7 +11,7 @@ export const MODULOS: Modulo[] = [
   { k: 'auxiliares', nombre: 'Auxiliares y pagos', descripcion: 'Pagos y cobros, proveedores y clientes, saldos de auxiliares', secciones: ['pagos', 'fichas', 'auxiliares'] },
   { k: 'comprobantes', nombre: 'Comprobantes', descripcion: 'Asientos manuales, edición y asientos tipo', secciones: ['asientos'] },
   { k: 'inventario', nombre: 'Inventario', descripcion: 'Control de inventario', secciones: ['inventario'] },
-  { k: 'reportes', nombre: 'Reportes', descripcion: 'Libro diario, mayor, balances, estados, flujo de caja, libros IECV, hojas foliadas, exportar', secciones: ['diario', 'mayor', 'balance', 'estados', 'flujo-caja', 'iecv', 'hojas-foliadas', 'exportar'] },
+  { k: 'reportes', nombre: 'Reportes', descripcion: 'Libro diario, mayor, balances, estados, flujo de caja, hojas foliadas, exportar', secciones: ['diario', 'mayor', 'balance', 'estados', 'flujo-caja', 'hojas-foliadas', 'exportar'] },
   { k: 'conciliacion', nombre: 'Conciliación bancaria', descripcion: 'Cartolas y conciliación', secciones: ['conciliacion'] },
   { k: 'tributario', nombre: 'Tributario SII', descripcion: 'F29 y PPM, renta, declaraciones juradas', secciones: ['f29', 'renta', 'dj'] },
   { k: 'activo_fijo', nombre: 'Activo fijo', descripcion: 'Activos y depreciación', secciones: ['activo-fijo'] },

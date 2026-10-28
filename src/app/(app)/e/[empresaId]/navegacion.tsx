@@ -36,7 +36,6 @@ const GRUPOS: Grupo[] = [
   {
     id: 'reportes', titulo: 'Reportes', icono: '📚', items: [
       { ruta: '/diario', nombre: 'Libro Diario', icono: '📖' },
-      { ruta: '/iecv', nombre: 'Libros Compra y Venta', icono: '📚' },
       { ruta: '/hojas-foliadas', nombre: 'Hojas foliadas SII', icono: '🖨️' },
       { ruta: '/mayor', nombre: 'Libro Mayor', icono: '📊' },
       { ruta: '/estados', nombre: 'Balance General', icono: '⚖️', q: { vista: 'balance' }, def: { vista: 'balance' } },
