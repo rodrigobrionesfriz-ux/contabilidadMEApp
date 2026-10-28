@@ -6,6 +6,7 @@ import { decimalCL, decimalInput } from '@/lib/formato';
 import { Modal } from '@/components/modal';
 import { Mensaje } from '@/components/form-estado';
 import { entradaDesdeCompra } from './acciones';
+import { FormProductoModal, productoNuevo } from './productos';
 import { OpcionesBodega, OpcionesProducto, bodegasActivas, fechaCorta, mon, nombreProducto, type Ctx } from './comun';
 
 // Entrada de inventario desde una factura de compra ya contabilizada: trae los
@@ -31,6 +32,7 @@ export function EntradaCompra({ c, onCerrar }: { c: Ctx; onCerrar: () => void })
   const [cc, setCc] = useState('');
   const [obs, setObs] = useState('');
   const [lineas, setLineas] = useState<Linea[]>([lineaVacia()]);
+  const [nuevoProd, setNuevoProd] = useState<number | null>(null);
 
   if (!doc) {
     const t = q.toLowerCase().trim();
@@ -105,6 +107,10 @@ export function EntradaCompra({ c, onCerrar }: { c: Ctx; onCerrar: () => void })
       })}
       <div className="flex flex-wrap gap-2">
         <button type="button" className="boton-sec" onClick={() => setLineas([...lineas, lineaVacia()])}>＋ Agregar producto</button>
+        <button type="button" className="boton-sec" title="Crea un producto sin salir de la entrada" onClick={() => {
+          const i = lineas.findIndex((l) => !l.productoId);
+          if (i >= 0) setNuevoProd(i); else { setLineas([...lineas, lineaVacia()]); setNuevoProd(lineas.length); }
+        }}>🆕 Crear producto</button>
         {cu.diferencia !== 0 && ultima != null && <button type="button" className="boton-sec" title="Calcula el valor unitario de la última línea para que el total cuadre" onClick={cuadrar}>⚖️ Cuadrar con la última línea</button>}
       </div>
       <div className="flex flex-wrap justify-end gap-x-6 gap-y-1 rounded-md bg-panel-2 px-3 py-2 text-sm">
@@ -115,6 +121,8 @@ export function EntradaCompra({ c, onCerrar }: { c: Ctx; onCerrar: () => void })
         {cu.cuadra && ![32, 34].includes(doc.tipoDTE) && cu.iva !== Math.round(doc.iva) && <span className="text-tenue"> El IVA calculado ({mon(cu.iva)}) difiere del IVA del documento ({mon(doc.iva)}): revisa si algún producto es exento.</span>}
       </p>
       {conflicto.length > 0 && <p className="rounded-md border border-aviso/40 bg-aviso/10 p-2 text-xs text-aviso">{conflicto.map((l) => nombreProducto(c, l.productoId)).join(', ')} tiene una orden de compra abierta con este proveedor. Si la factura corresponde a esa orden, conviene recibirla desde Órdenes de compra.</p>}
+      {nuevoProd != null && <FormProductoModal c={c} id={null} inicial={productoNuevo(c)} flotante onCerrar={() => setNuevoProd(null)}
+        onCreado={(id) => setLineas((prev) => prev.map((l, j) => (j === nuevoProd ? { ...l, productoId: id, lote: '', fechaVencimiento: '' } : l)))} />}
       {c.msg.error && <Mensaje error={c.msg.error} />}
       <div className="flex justify-end gap-2 border-t border-borde pt-3">
         <button type="button" className="boton-sec" onClick={() => { setDoc(null); setLineas([lineaVacia()]); }}>← Otro documento</button>

@@ -23,7 +23,7 @@ export function Productos({ c }: { c: Ctx }) {
   const abrir = (p?: ProductoI) => {
     c.avisar({});
     setEd(p ? { id: p.id, minimo: decimalInput(p.stockMinimo), f: { codigo: p.codigo, ean: p.ean, descripcion: p.descripcion, tipo: p.tipo, unidad: p.unidad, grupoId: p.grupoId || '', subgrupo: p.subgrupo, stockMinimo: p.stockMinimo, cuentaCosto: p.cuentaCosto, aplicaIVA: p.aplicaIVA, manejaLotes: p.manejaLotes, inventariable: p.inventariable, activo: p.activo } }
-      : { id: null, minimo: '0', f: { codigo: siguienteCodigo(c.datos.productos.map((x) => x.codigo)), ean: '', descripcion: '', tipo: 'MERCADERÍA', unidad: 'UN', grupoId: '', subgrupo: '', stockMinimo: 0, cuentaCosto: '', aplicaIVA: true, manejaLotes: false, inventariable: true, activo: true } });
+      : { id: null, minimo: '0', f: productoNuevo(c) });
   };
   const plantilla = async () => {
     const XLSX = await import('xlsx');
@@ -68,33 +68,7 @@ export function Productos({ c }: { c: Ctx }) {
         )) : <Vacio cols={11}>Aún no hay productos.</Vacio>}</tbody>
       </table></div>
 
-      {ed && (() => {
-        const f = ed.f, set = (x: Partial<FormProducto>) => setEd({ ...ed, f: { ...f, ...x } }), g = grupo(f.grupoId || null);
-        const bloqueado = !!(ed.id && conMov.has(ed.id));
-        return (
-          <Modal titulo={ed.id ? 'Editar producto' : 'Nuevo producto'} sub="Los productos y su clasificación pertenecen a esta empresa" onCerrar={() => setEd(null)}>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div><label className="etiqueta" htmlFor="pr-c">Código interno</label><input id="pr-c" className="campo" value={f.codigo} readOnly={!!ed.id} maxLength={30} onChange={(e) => set({ codigo: e.target.value })} /></div>
-              <div><label className="etiqueta" htmlFor="pr-e">Código EAN</label><input id="pr-e" className="campo" value={f.ean} maxLength={20} onChange={(e) => set({ ean: e.target.value })} /></div>
-              <div className="sm:col-span-2"><label className="etiqueta" htmlFor="pr-d">Descripción</label><input id="pr-d" className="campo" value={f.descripcion} maxLength={180} onChange={(e) => set({ descripcion: e.target.value })} /></div>
-              <div><label className="etiqueta" htmlFor="pr-t">Tipo</label><select id="pr-t" className="campo" value={f.tipo} onChange={(e) => set({ tipo: e.target.value })}>{TIPOS.map((x) => <option key={x}>{x}</option>)}</select></div>
-              <div><label className="etiqueta" htmlFor="pr-u">Unidad</label><select id="pr-u" className="campo" value={f.unidad} onChange={(e) => set({ unidad: e.target.value })}>{UNIDADES.map((x) => <option key={x}>{x}</option>)}</select></div>
-              <div><label className="etiqueta" htmlFor="pr-g">Grupo</label><select id="pr-g" className="campo" value={f.grupoId} onChange={(e) => set({ grupoId: e.target.value, subgrupo: '' })}><option value="">Sin grupo</option>{c.datos.grupos.filter((x) => x.activo !== false).map((x) => <option key={x.id} value={x.id}>{x.nombre}</option>)}</select></div>
-              <div><label className="etiqueta" htmlFor="pr-s">Subgrupo</label><select id="pr-s" className="campo" value={f.subgrupo} onChange={(e) => set({ subgrupo: e.target.value })}><option value="">Sin subgrupo</option>{(g?.subgrupos || []).map((x) => <option key={x}>{x}</option>)}</select></div>
-              <div><label className="etiqueta" htmlFor="pr-m">Stock mínimo</label><input id="pr-m" className="campo num text-right" inputMode="decimal" value={ed.minimo} onChange={(e) => setEd({ ...ed, minimo: decimalInput(e.target.value) })} /></div>
-              <div><label className="etiqueta" htmlFor="pr-ci">Cuenta inventario</label><input id="pr-ci" className="campo text-tenue" value={CUENTA_INVENTARIO_FIJA} readOnly disabled title="Única cuenta de inventario permitida" /></div>
-              <div className="sm:col-span-2"><label className="etiqueta" htmlFor="pr-cc">Cuenta de gasto/consumo</label>
-                <select id="pr-cc" className="campo" value={f.cuentaCosto} onChange={(e) => set({ cuentaCosto: e.target.value })}><option value="">Selecciona una cuenta de gasto…</option>{c.apoyo.cuentasGasto.map((x) => <option key={x.codigo} value={x.codigo}>{x.codigo} · {x.nombre}</option>)}</select></div>
-              {([['aplicaIVA', 'Afecto a IVA'], ['manejaLotes', 'Maneja lote y vencimiento'], ['inventariable', 'Inventariable'], ['activo', 'Producto activo']] as [keyof FormProducto, string][]).map(([k, l]) => (
-                <label key={k} className="flex items-center gap-2"><input type="checkbox" checked={!!f[k]} disabled={k === 'manejaLotes' && bloqueado} onChange={(e) => set({ [k]: e.target.checked })} />{l}{k === 'manejaLotes' && bloqueado && <span className="text-[10px] text-tenue">(tiene movimientos)</span>}</label>
-              ))}
-            </div>
-            {c.msg.error && <Mensaje error={c.msg.error} />}
-            <div className="flex justify-end gap-2"><button type="button" className="boton-sec" onClick={() => setEd(null)}>Cancelar</button>
-              <button type="button" className="boton" disabled={c.pendiente} onClick={async () => { if (await c.run(() => guardarProducto(c.empresaId, ed.id, { ...f, stockMinimo: decimalCL(ed.minimo) }))) setEd(null); }}>Guardar</button></div>
-          </Modal>
-        );
-      })()}
+      {ed && <FormProductoModal c={c} id={ed.id} inicial={ed.f} minimo={ed.minimo} onCerrar={() => setEd(null)} />}
 
       {imp && (
         <Modal titulo={imp.previa ? 'Vista previa de productos' : 'Importar productos desde Excel'} sub={imp.previa ? `${imp.previa.nombre} · ${imp.previa.actualizar ? 'creación y actualización' : 'sólo productos nuevos'}` : 'La información se valida y previsualiza antes de guardar'} onCerrar={() => setImp(null)} ancho="max-w-5xl">
@@ -116,5 +90,60 @@ export function Productos({ c }: { c: Ctx }) {
         </Modal>
       )}
     </div>
+  );
+}
+
+/** Valores de un producto nuevo (código correlativo siguiente). */
+export const productoNuevo = (c: Ctx): FormProducto => ({ codigo: siguienteCodigo(c.datos.productos.map((x) => x.codigo)), ean: '', descripcion: '', tipo: 'MERCADERÍA', unidad: 'UN', grupoId: '', subgrupo: '', stockMinimo: 0, cuentaCosto: '', aplicaIVA: true, manejaLotes: false, inventariable: true, activo: true });
+
+/**
+ * Ficha del producto. Se usa en Productos y, como ventana flotante (`flotante`),
+ * desde Movimientos: al crear el producto se llama a `onCreado` con su id para
+ * elegirlo en la línea sin cerrar el movimiento.
+ */
+export function FormProductoModal({ c, id, inicial, minimo: minimo0 = '0', onCerrar, flotante = false, onCreado }: {
+  c: Ctx; id: string | null; inicial: FormProducto; minimo?: string; onCerrar: () => void; flotante?: boolean; onCreado?: (id: string) => void;
+}) {
+  const [f, setF] = useState<FormProducto>(inicial);
+  const [minimo, setMinimo] = useState(minimo0);
+  const [error, setError] = useState('');
+  const set = (x: Partial<FormProducto>) => setF({ ...f, ...x });
+  const g = c.datos.grupos.find((x) => x.id === (f.grupoId || null));
+  const conMov = new Set(c.datos.movimientos.flatMap((m) => m.lineas.map((l) => l.productoId)));
+  const bloqueado = !!(id && conMov.has(id));
+  const guardar = async () => {
+    setError('');
+    let nuevoId: string | undefined;
+    const ok = await c.run(async () => {
+      const r = await guardarProducto(c.empresaId, id, { ...f, stockMinimo: decimalCL(minimo) });
+      if (r.ok) nuevoId = r.id; else if (flotante) setError(r.error);
+      return r;
+    });
+    if (!ok) return;
+    if (flotante && nuevoId && onCreado) onCreado(nuevoId);
+    onCerrar();
+  };
+  return (
+    <Modal titulo={id ? 'Editar producto' : 'Nuevo producto'} sub={flotante ? 'Al crearlo queda elegido en la línea del movimiento' : 'Los productos y su clasificación pertenecen a esta empresa'} onCerrar={onCerrar} encima={flotante}>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div><label className="etiqueta" htmlFor="pr-c">Código interno</label><input id="pr-c" className="campo" value={f.codigo} readOnly={!!id} maxLength={30} onChange={(e) => set({ codigo: e.target.value })} /></div>
+              <div><label className="etiqueta" htmlFor="pr-e">Código EAN</label><input id="pr-e" className="campo" value={f.ean} maxLength={20} onChange={(e) => set({ ean: e.target.value })} /></div>
+              <div className="sm:col-span-2"><label className="etiqueta" htmlFor="pr-d">Descripción</label><input id="pr-d" className="campo" value={f.descripcion} maxLength={180} onChange={(e) => set({ descripcion: e.target.value })} /></div>
+              <div><label className="etiqueta" htmlFor="pr-t">Tipo</label><select id="pr-t" className="campo" value={f.tipo} onChange={(e) => set({ tipo: e.target.value })}>{TIPOS.map((x) => <option key={x}>{x}</option>)}</select></div>
+              <div><label className="etiqueta" htmlFor="pr-u">Unidad</label><select id="pr-u" className="campo" value={f.unidad} onChange={(e) => set({ unidad: e.target.value })}>{UNIDADES.map((x) => <option key={x}>{x}</option>)}</select></div>
+              <div><label className="etiqueta" htmlFor="pr-g">Grupo</label><select id="pr-g" className="campo" value={f.grupoId} onChange={(e) => set({ grupoId: e.target.value, subgrupo: '' })}><option value="">Sin grupo</option>{c.datos.grupos.filter((x) => x.activo !== false).map((x) => <option key={x.id} value={x.id}>{x.nombre}</option>)}</select></div>
+              <div><label className="etiqueta" htmlFor="pr-s">Subgrupo</label><select id="pr-s" className="campo" value={f.subgrupo} onChange={(e) => set({ subgrupo: e.target.value })}><option value="">Sin subgrupo</option>{(g?.subgrupos || []).map((x) => <option key={x}>{x}</option>)}</select></div>
+              <div><label className="etiqueta" htmlFor="pr-m">Stock mínimo</label><input id="pr-m" className="campo num text-right" inputMode="decimal" value={minimo} onChange={(e) => setMinimo(decimalInput(e.target.value))} /></div>
+              <div><label className="etiqueta" htmlFor="pr-ci">Cuenta inventario</label><input id="pr-ci" className="campo text-tenue" value={CUENTA_INVENTARIO_FIJA} readOnly disabled title="Única cuenta de inventario permitida" /></div>
+              <div className="sm:col-span-2"><label className="etiqueta" htmlFor="pr-cc">Cuenta de gasto/consumo</label>
+                <select id="pr-cc" className="campo" value={f.cuentaCosto} onChange={(e) => set({ cuentaCosto: e.target.value })}><option value="">Selecciona una cuenta de gasto…</option>{c.apoyo.cuentasGasto.map((x) => <option key={x.codigo} value={x.codigo}>{x.codigo} · {x.nombre}</option>)}</select></div>
+              {([['aplicaIVA', 'Afecto a IVA'], ['manejaLotes', 'Maneja lote y vencimiento'], ['inventariable', 'Inventariable'], ['activo', 'Producto activo']] as [keyof FormProducto, string][]).map(([k, l]) => (
+                <label key={k} className="flex items-center gap-2"><input type="checkbox" checked={!!f[k]} disabled={k === 'manejaLotes' && bloqueado} onChange={(e) => set({ [k]: e.target.checked })} />{l}{k === 'manejaLotes' && bloqueado && <span className="text-[10px] text-tenue">(tiene movimientos)</span>}</label>
+              ))}
+            </div>
+            {(flotante ? error : c.msg.error) && <Mensaje error={flotante ? error : c.msg.error} />}
+            <div className="flex justify-end gap-2"><button type="button" className="boton-sec" onClick={onCerrar}>Cancelar</button>
+              <button type="button" className="boton" disabled={c.pendiente} onClick={guardar}>{c.pendiente ? 'Guardando…' : flotante ? 'Crear y usar en la línea' : 'Guardar'}</button></div>
+    </Modal>
   );
 }

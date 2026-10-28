@@ -103,7 +103,7 @@ export async function guardarProducto(empresaId: string, id: string | null, f: F
       inventariable: !!f.inventariable, activo: !!f.activo, actualizado: ahora(),
     };
     await aplicar(empresaId, null, [{ tabla: 'inv_productos', accion: id ? 'update' : 'insert', fila }]);
-    return { ok: true, mensaje: 'Producto guardado.' };
+    return { ok: true, mensaje: id ? 'Producto guardado.' : `Producto ${codigo} creado.`, id: fila.id };
   });
 }
 

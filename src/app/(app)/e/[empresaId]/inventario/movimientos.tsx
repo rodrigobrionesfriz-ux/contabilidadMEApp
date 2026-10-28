@@ -8,6 +8,7 @@ import { Modal } from '@/components/modal';
 import { Mensaje } from '@/components/form-estado';
 import { guardarMovimiento, anularMovimiento, type BorradorMov } from './acciones';
 import { EntradaCompra, comprasDisponibles } from './entrada-compra';
+import { FormProductoModal, productoNuevo } from './productos';
 import { Badge, OpcionesBodega, OpcionesProducto, Vacio, bodegasActivas, fechaCorta, fmt, mon, nombreBodega, nombreProducto, pedirMotivo, productosDisponibles, type Ctx } from './comun';
 
 type LineaB = BorradorMov['lineas'][number] & { k: string };
@@ -98,7 +99,15 @@ export function Movimientos({ c }: { c: Ctx }) {
   );
 }
 
-function FormMovimiento({ c, b, setB, folios }: { c: Ctx; b: Borrador; setB: (b: Borrador | null) => void; folios: string[] }) {
+function FormMovimiento({ c, b, setB, folios }: { c: Ctx; b: Borrador; setB: React.Dispatch<React.SetStateAction<Borrador | null>>; folios: string[] }) {
+  // Producto nuevo en ventana flotante: índice de la línea que lo recibirá
+  const [nuevoProd, setNuevoProd] = useState<number | null>(null);
+  const abrirNuevoProducto = () => {
+    const i = b.lineas.findIndex((l) => !l.productoId);
+    if (i >= 0) { setNuevoProd(i); return; }
+    setB({ ...b, lineas: [...b.lineas, lineaVacia()] });
+    setNuevoProd(b.lineas.length);
+  };
   const set = (x: Partial<Borrador>) => setB({ ...b, ...x });
   const setL = (i: number, x: Partial<LineaB>) => setB({ ...b, lineas: b.lineas.map((l, j) => (j === i ? { ...l, ...x } : l)) });
   const esEnt = b.tipo === 'ENTRADA', esSal = b.tipo === 'SALIDA';
@@ -158,7 +167,12 @@ function FormMovimiento({ c, b, setB, folios }: { c: Ctx; b: Borrador; setB: (b:
           </div>
         );
       })}
-      <button type="button" className="boton-sec" onClick={() => set({ lineas: [...b.lineas, lineaVacia()] })}>＋ Agregar línea</button>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" className="boton-sec" onClick={() => set({ lineas: [...b.lineas, lineaVacia()] })}>＋ Agregar línea</button>
+        {esEnt && c.escribe && <button type="button" className="boton-sec" title="Crea un producto sin salir del movimiento" onClick={abrirNuevoProducto}>🆕 Crear producto</button>}
+      </div>
+      {nuevoProd != null && <FormProductoModal c={c} id={null} inicial={productoNuevo(c)} flotante onCerrar={() => setNuevoProd(null)}
+        onCreado={(id) => setB((prev) => prev && { ...prev, lineas: prev.lineas.map((l, j) => (j === nuevoProd ? { ...l, productoId: id, lote: '', fechaVencimiento: '' } : l)) })} />}
       {c.msg.error && <Mensaje error={c.msg.error} />}
       <div className="flex justify-end gap-2 border-t border-borde pt-3">
         <button type="button" className="boton-sec" onClick={() => setB(null)}>Cancelar</button>
