@@ -158,6 +158,7 @@ function documentoDe(f: Fila): Documento {
 
 export interface MovLegado {
   cd?: unknown;
+  nm?: unknown;
   debe?: unknown;
   haber?: unknown;
   desc?: unknown;
@@ -357,7 +358,14 @@ export function construirPlanCarga(h: HojasRespaldo, pdcBase: CuentaBase[]): Pla
   if (ap) {
     const movs = json<MovLegado[]>(ap.movsJSON, []);
     if (movs.length) {
-      candidatos.push({ numeroOriginal: 0, orden: orden++, fecha: fechaISO(ap.fecha) || `${anio}-01-01`,
+      // La apertura es el asiento N°0 del ejercicio: si el sistema anterior la
+      // fechó al 31-12 del año previo (saldo de cierre), se trae al 01-01.
+      let fechaAp = fechaISO(ap.fecha) || `${anio}-01-01`;
+      if (anio && +fechaAp.slice(0, 4) !== anio) {
+        aviso(`La apertura venía con fecha ${fechaAp}; se importa al ${anio}-01-01 (asiento N°0 del ejercicio).`);
+        fechaAp = `${anio}-01-01`;
+      }
+      candidatos.push({ numeroOriginal: 0, orden: orden++, fecha: fechaAp,
         glosa: txt(ap.glosa) || 'Balance de Apertura', tipo: 'apertura', ref: `apertura:${anio}`, anulado: false, movs });
     }
   }
@@ -414,6 +422,26 @@ export function construirPlanCarga(h: HojasRespaldo, pdcBase: CuentaBase[]): Pla
       motivo: txt(a.motivoAnulacion ?? a.anuladoMotivo) || (a.anulado ? 'Anulado en el sistema anterior' : undefined),
       movs: a.movs ?? [],
     });
+  }
+
+  // ── Cuentas usadas en asientos que no están en el plan del respaldo ──
+  // Pasa cuando en el sistema anterior se borró o nunca se creó una cuenta que
+  // un asiento (típicamente la apertura) igual usa. Si la línea trae el nombre
+  // y la cuenta es analítica (7 dígitos), se crea como cuenta propia con el
+  // tipo y la naturaleza de sus hermanas del mismo grupo.
+  const tipoPorDigito: Record<string, [string, string]> = { '1': ['A', 'D'], '2': ['P', 'C'], '3': ['C', 'D'], '4': ['I', 'C'] };
+  for (const c of candidatos) {
+    for (const m of c.movs || []) {
+      const cd = txt(m.cd).replace(/[^0-9]/g, '');
+      if (!cd || porCodigo.has(cd) || cd.length !== 7) continue;
+      const nm = txt(m.nm);
+      if (!nm) continue;
+      const hermana = [...porCodigo.values()].find((x) => x.cd.length === 7 && x.cd.slice(0, 4) === cd.slice(0, 4) && ['A', 'P', 'C', 'I'].includes(x.tp ?? ''));
+      const [tp, nat] = hermana ? [hermana.tp!, hermana.nat || tipoPorDigito[cd[0]]?.[1] || ''] : tipoPorDigito[cd[0]] ?? ['C', 'D'];
+      porCodigo.set(cd, { cd, nm, tp, nat });
+      cuentasNuevas.push({ codigo: cd, nombre: nm, tipo: tp, naturaleza: ['D', 'C'].includes(nat) ? nat : '' });
+      aviso(`La cuenta ${cd} "${nm}" se usa en el asiento "${c.glosa}" pero no estaba en el plan de cuentas del respaldo: se crea como cuenta propia.`);
+    }
   }
 
   // ── Numeración: originales únicos se respetan; el resto sigue desde el máximo ──

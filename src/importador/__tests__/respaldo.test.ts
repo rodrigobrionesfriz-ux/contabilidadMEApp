@@ -100,3 +100,28 @@ describe('importador: asientos automáticos y celdas dañadas', () => {
     expect(plan.problemas.some((p) => p.nivel === 'error' && p.mensaje.includes('cortado o dañado'))).toBe(true);
   });
 });
+
+describe('apertura del sistema anterior', () => {
+  const base = leerRespaldo(fs.readFileSync(path.join(FX, 'respaldo-2026.xlsx')));
+  const conApertura = (fecha: string, movs: unknown[]) => ({
+    ...base,
+    PlanDeCuentas: (base.PlanDeCuentas ?? []).filter((f) => String(f['Código']).replace(/\D/g, '') !== '2102008'),
+    Apertura: [{ fecha, glosa: 'Balance de apertura', movsJSON: JSON.stringify(movs) }],
+  });
+  const movs = [
+    { cd: '1101101', nm: 'CAJA', debe: 5500000, haber: 0 },
+    { cd: '2102008', nm: 'OTROS DOCUMENTOS POR PAGAR', debe: 0, haber: 5500000 },
+  ];
+
+  it('una apertura fechada el 31-12 del año anterior se trae al 01-01', () => {
+    const p = construirPlanCarga(conApertura('2025-12-31', movs), pdc);
+    expect(p.asientos.find((a) => a.numero === 0)?.fecha).toBe('2026-01-01');
+    expect(p.problemas.filter((x) => x.nivel === 'error')).toEqual([]);
+  });
+
+  it('una cuenta usada en la apertura y ausente del plan se crea como cuenta propia', () => {
+    const p = construirPlanCarga(conApertura('2026-01-01', movs), pdc);
+    expect(p.cuentas).toContainEqual({ codigo: '2102008', nombre: 'OTROS DOCUMENTOS POR PAGAR', tipo: 'P', naturaleza: 'C' });
+    expect(p.asientos.find((a) => a.numero === 0)?.lineas.some((l) => l.cuenta === '2102008')).toBe(true);
+  });
+});
