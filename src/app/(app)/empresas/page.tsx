@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { requerirUsuario, empresasDelUsuario, miAcceso, puedeCrearEmpresas, type EmpresaDelUsuario } from '@/lib/auth';
-import { permisoDe } from '@/lib/modulos';
 import { NOMBRE_ROL } from '@/lib/formato';
 import { BarraUsuario } from '../barra-usuario';
 
@@ -10,8 +9,8 @@ export const metadata: Metadata = { title: 'Empresas' };
 export default async function EmpresasPage({ searchParams }: PageProps<'/empresas'>) {
   const [usuario, empresas, acceso, sp] = await Promise.all([requerirUsuario(), empresasDelUsuario(), miAcceso(), searchParams]);
   const crea = puedeCrearEmpresas(acceso);
-  // Al elegir una empresa se entra directo a Comprobantes (si el perfil puede registrarlos; si no, al Inicio)
-  const destino = (id: string) => (permisoDe(acceso, 'comprobantes') === 'editar' ? `/e/${id}/asientos/nuevo` : `/e/${id}`);
+  // Al elegir una empresa se entra a su Resumen (inicio de la empresa)
+  const destino = (id: string) => `/e/${id}`;
   const propias = empresas.filter((e) => e.propia);
   const deOtros = empresas.filter((e) => !e.propia);
   const verOtras = sp.otras === '1' && deOtros.length > 0;
