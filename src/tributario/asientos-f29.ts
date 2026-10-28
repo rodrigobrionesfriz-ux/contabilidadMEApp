@@ -52,7 +52,8 @@ export type ConceptoPago = (typeof CONCEPTOS_PAGO)[number]['k'];
 export function montosSugeridos(d: MesF29): Record<ConceptoPago, number> {
   const decl = d.declaracion?.estado === 'presentado' ? d.declaracion.declarado ?? {} : {};
   const v = (cod: number, calc: number) => (decl[String(cod)] != null ? +decl[String(cod)] : calc);
-  return { iva: v(89, d.ivaAPagar), ppm: v(62, d.ppm), honorarios: v(151, d.retencionHon), iusc: v(48, d.iusc), multas: 0 };
+  // El anticipo de cambio de sujeto imputado (cód. 598) rebaja el IVA a enterar
+  return { iva: Math.max(0, v(89, d.ivaAPagar) - v(598, d.codigos[598] ?? 0)), ppm: v(62, d.ppm), honorarios: v(151, d.retencionHon), iusc: v(48, d.iusc), multas: 0 };
 }
 
 export function pagoF29(d: MesF29, anio: number, montos: Partial<Record<ConceptoPago, number>>, cuentaBanco: string, cuentas: Partial<Record<ConceptoPago, string>> = {}) {

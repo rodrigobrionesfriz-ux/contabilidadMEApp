@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { entradaF29, asientosF29 } from '@/lib/datos/f29';
-import { calcularF29Anual, CODIGOS_DECLARABLES, montoDeclarado } from '@/tributario/f29';
+import { calcularF29Anual, CODIGOS_DECLARABLES, montoDeclarado, F29_MANUALES, F29_ANTICIPO, type AjustesF29 } from '@/tributario/f29';
 import { compensacionIVA, pagoF29, CUENTA_REMANENTE, type ConceptoPago } from '@/tributario/asientos-f29';
 
 type Res = { ok: true; mensaje: string } | { ok: false; error: string };
@@ -31,13 +31,48 @@ export async function presentarF29(empresaId: string, anio: number, mes: number,
   // Lo no digitado en "Declarado" se presenta con lo calculado
   const digitado = limpiar(declarado);
   const final: Record<string, number> = { ...Object.fromEntries(CODIGOS_DECLARABLES.map((c) => [String(c), Math.round(calc.codigos[c] ?? 0)])), ...digitado };
-  // El total a pagar sigue a los componentes declarados, salvo que se haya digitado
-  if (digitado['91'] == null) final['91'] = final['89'] + final['62'] + final['151'] + final['48'];
+  // Los totales siguen a los componentes declarados, salvo que se hayan digitado:
+  // 595 = 89 + 62 + 151 + 48; 598 = anticipo imputado (tope 89); 547 = 91 = 595 − 598
+  if (digitado['595'] == null) final['595'] = final['89'] + final['62'] + final['151'] + final['48'];
+  if (digitado['598'] == null) final['598'] = Math.min(final['543'] ?? 0, final['89']);
+  if (digitado['91'] == null) final['91'] = digitado['547'] ?? final['595'] - final['598'];
+  if (digitado['547'] == null) final['547'] = final['91'];
   const supabase = await crearClienteServidor();
   const { error } = await supabase.rpc('presentar_f29', { p_empresa: empresaId, p_periodo: per(anio, mes), p_declarado: final, p_calculado: calc.codigos });
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/e/${empresaId}/f29`);
   return { ok: true, mensaje: 'F29 marcado como presentado. Ahora genera el asiento de compensación de IVA y luego registra el pago. Los meses siguientes arrastran el remanente declarado.' };
+}
+
+/** Ajustes del mes: tasa PPM manual, códigos ingresados a mano y anticipo de cambio de sujeto. Vacío = calculado. */
+export async function guardarAjustesF29(empresaId: string, anio: number, mes: number, entrada: {
+  tasaPPM: string; manual: Record<string, string>; anticipo: Record<string, string>; remanenteAnticipoInicial: string; tasaGuardada: number | null;
+}): Promise<Res> {
+  const ajustes: AjustesF29 = {};
+  const tasaTxt = String(entrada.tasaPPM ?? '').trim();
+  if (tasaTxt !== '') {
+    const t = Number(tasaTxt.replace(',', '.'));
+    if (!Number.isFinite(t) || t < 0 || t >= 100) return { ok: false, error: 'Tasa PPM no válida' };
+    ajustes.tasaPPM = Math.round(t * 1000) / 1000;
+    ajustes.tasaPPMManual = true;
+  } else if (entrada.tasaGuardada != null) {
+    ajustes.tasaPPM = entrada.tasaGuardada; // la congelada al guardar se mantiene
+  }
+  const montos = <K extends string>(claves: readonly K[], src: Record<string, string>) => {
+    const r: Partial<Record<K, number>> = {};
+    for (const k of claves) { const n = montoDeclarado(src?.[k]); if (n !== null) r[k] = Math.max(0, n); }
+    return r;
+  };
+  const manual = montos(F29_MANUALES, entrada.manual), anticipo = montos(F29_ANTICIPO, entrada.anticipo);
+  if (Object.keys(manual).length) ajustes.manual = manual;
+  if (Object.keys(anticipo).length) ajustes.anticipo = anticipo;
+  const ini = montoDeclarado(entrada.remanenteAnticipoInicial);
+  if (mes === 1 && ini !== null) ajustes.remanenteAnticipoInicial = Math.max(0, ini);
+  const supabase = await crearClienteServidor();
+  const { error } = await supabase.rpc('guardar_f29_ajustes', { p_empresa: empresaId, p_periodo: per(anio, mes), p_ajustes: ajustes });
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/e/${empresaId}/f29`);
+  return { ok: true, mensaje: 'Ajustes aplicados: el F29 de este mes y los siguientes quedaron recalculados.' };
 }
 
 export async function reabrirF29(empresaId: string, anio: number, mes: number): Promise<Res> {

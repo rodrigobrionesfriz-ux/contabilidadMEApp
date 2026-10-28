@@ -27,8 +27,8 @@ export default async function F29Page({ params, searchParams }: PageProps<'/e/[e
         <div>
           <h1 className="text-xl font-semibold">Formulario 29 · {anio}</h1>
           <p className="text-sm text-tenue">
-            Tasa PPM {String(entrada.tasaPPM).replace('.', ',')}%{entrada.tasaPPM === 0 && <> · <Link href={`/e/${empresaId}/empresa`} className="text-aviso underline">configúrala en Empresa</Link></>}
-            {' '}· Calculado desde los libros de compras, ventas, honorarios y remuneraciones.
+            Tasa PPM de la empresa {String(entrada.tasaPPM).replace('.', ',')}%{entrada.tasaPPM === 0 && <> · <Link href={`/e/${empresaId}/empresa`} className="text-aviso underline">configúrala en Empresa</Link></>}
+            {' '}(cada mes puede ajustarla y queda grabada al guardar su F29) · Calculado desde los libros de compras, ventas, honorarios y remuneraciones.
           </p>
         </div>
         <div className="flex gap-1 text-sm">

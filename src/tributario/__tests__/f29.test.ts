@@ -4,6 +4,8 @@ import { calcularF29Anual, reajustarRemanente, montoDeclarado, type EntradaF29 }
 
 interface Caso { nombre: string; entrada: Record<string, unknown> & { tasaPPM: number; anterior: object; items: object; ventas: never[]; compras: never[]; honorarios: never[]; asientos: { anulado?: boolean; tipo: string; fecha: string; periodo?: string; movs: { cd: string; debe: number; haber: number }[] }[] }; resultado: unknown[] }
 
+const NUEVOS = new Set([758, 759, 511, 115, 595, 556, 557, 558, 543, 598, 573, 547]);
+
 describe('F29 (igual al sistema actual)', () => {
   for (const c of (oro as unknown as { casos: Caso[] }).casos) {
     it(c.nombre, () => {
@@ -18,7 +20,15 @@ describe('F29 (igual al sistema actual)', () => {
         iusc, declaraciones: c.entrada.items as EntradaF29['declaraciones'], anteriores: c.entrada.anterior as EntradaF29['anteriores'],
       };
       // remanenteCorregido y desactualizado son de 10z5 (el sistema anterior no los tenía)
-      const r = calcularF29Anual(e).map((x) => { const y: Partial<typeof x> = { ...x }; delete y.remanenteCorregido; delete y.desactualizado; return y; });
+      // Los campos y códigos agregados después (tasa por mes, manuales, anticipo, 511/595/547…) se prueban aparte
+      const r = calcularF29Anual(e).map((x) => {
+        const y: Partial<typeof x> = { ...x };
+        for (const k of ['remanenteCorregido', 'desactualizado', 'tasaPPM', 'tasaPPMFuente', 'c557Fuente', 'manuales'] as const) delete y[k];
+        y.codigos = Object.fromEntries(Object.entries(x.codigos).filter(([k]) => !NUEVOS.has(+k)));
+        y.detalleVentas = { ...x.detalleVentas, comprobantes: undefined } as unknown as typeof x.detalleVentas;
+        y.detalleCompras = { ...x.detalleCompras, electronicos: undefined } as unknown as typeof x.detalleCompras;
+        return y;
+      });
       expect(JSON.parse(JSON.stringify(r))).toEqual(c.resultado);
     });
   }
@@ -115,5 +125,98 @@ describe('F29: corrección en un mes ya presentado', () => {
     expect(r[0]).toMatchObject({ remanenteCorregido: true, desactualizado: true });
     expect(r[1].remanenteAnt).toBe(r[0].remanente);
     expect(r[1].remanenteAnt).toBeGreaterThan(170000);
+  });
+});
+
+import { tasaPPMPeriodo } from '../f29';
+describe('F29: tasa PPM por mes, códigos a mano y anticipo cambio de sujeto', () => {
+  const base = (x: Partial<EntradaF29> = {}): EntradaF29 => ({
+    anio: 2026, tasaPPM: 1, ventas: [], compras: [], honorarios: [], iusc: {}, declaraciones: {}, anteriores: {}, ...x,
+  });
+  const venta = (fecha: string, neto: number, tipoDTE = 33) => ({ tipoDTE, fecha, neto, exento: 0, iva: Math.round(neto * 0.19), total: Math.round(neto * 1.19) });
+
+  it('la tasa grabada o manual de un mes manda sobre la de la empresa', () => {
+    const e = base({
+      tasaPPM: 2, ventas: [venta('2026-01-10', 1_000_000), venta('2026-02-10', 1_000_000), venta('2026-03-10', 1_000_000)],
+      declaraciones: {
+        '2026-01': { periodo: '2026-01', estado: 'presentado', ajustes: { tasaPPM: 1 } },
+        '2026-02': { periodo: '2026-02', estado: 'borrador', ajustes: { tasaPPM: 0.5, tasaPPMManual: true } },
+      },
+    });
+    const [ene, feb, mar] = calcularF29Anual(e);
+    expect([ene.ppm, ene.tasaPPMFuente]).toEqual([10_000, 'guardada']);
+    expect([feb.ppm, feb.tasaPPMFuente, feb.codigos[115]]).toEqual([5_000, 'manual', 0.5]);
+    expect([mar.ppm, mar.tasaPPMFuente]).toEqual([20_000, 'empresa']);
+    expect(tasaPPMPeriodo(null, 0.125)).toEqual({ tasa: 0.125, fuente: 'empresa' });
+  });
+
+  it('boletas y comprobantes a mano recalculan débito, base PPM y total', () => {
+    const e = base({
+      ventas: [venta('2026-01-10', 100_000, 39), venta('2026-01-11', 50_000, 48)],
+      declaraciones: { '2026-01': { periodo: '2026-01', estado: 'borrador', ajustes: { manual: { '110': 40, '111': 38_000, '758': 7, '759': 19_000 } } } },
+    });
+    const [ene] = calcularF29Anual(e);
+    expect(ene.codigos[110]).toBe(40);
+    expect(ene.codigos[111]).toBe(38_000);
+    expect(ene.codigos[758]).toBe(7);
+    expect(ene.codigos[759]).toBe(19_000);
+    expect(ene.debito).toBe(57_000);
+    expect(ene.basePPM).toBe(300_000); // 38.000/0,19 + 19.000/0,19
+    expect(ene.manuales).toEqual(['110', '111', '758', '759']);
+    expect(ene.codigos[91]).toBe(57_000 + 3_000);
+  });
+
+  it('sin ajustes, el voucher (tipo 48) alimenta 758/759', () => {
+    const [ene] = calcularF29Anual(base({ ventas: [venta('2026-01-11', 50_000, 48)] }));
+    expect([ene.codigos[758], ene.codigos[759], ene.debito]).toEqual([1, 9_500, 9_500]);
+  });
+
+  it('anticipo: 573 de diciembre reajustado por UTM pasa a 557 de enero (F29 reales dic-2025 / ene-2026)', () => {
+    const e = base({
+      tasaPPM: 0.125,
+      ventas: [venta('2026-01-10', 10_000_000)],
+      anteriores: { '2025-12': { periodo: '2025-12', estado: 'presentado', declarado: { '573': 3_703, '77': 0 }, utm: 69_542 } },
+      declaraciones: { '2026-01': { periodo: '2026-01', estado: 'borrador', utm: 69_751, ajustes: { anticipo: { '556': 910 } } } },
+      utmExtra: { '2026-02': 69_611 },
+    });
+    const [ene, feb] = calcularF29Anual(e);
+    expect(ene.codigos[557]).toBe(3_481);
+    expect(ene.c557Fuente).toBe('arrastre');
+    expect(ene.codigos[543]).toBe(4_391);
+    expect(ene.codigos[598]).toBe(4_391);
+    expect(ene.codigos[573]).toBe(0);
+    expect(ene.codigos[595]).toBe(ene.ivaAPagar + ene.ppm);
+    expect(ene.codigos[91]).toBe(ene.codigos[595] - 4_391);
+    expect(ene.codigos[547]).toBe(ene.codigos[91]);
+    expect(feb.codigos[557]).toBe(0);
+  });
+
+  it('anticipo mayor al IVA: el sobrante (573) se arrastra; 543 y 573 a mano mandan', () => {
+    const e = base({
+      ventas: [venta('2026-01-10', 10_000)],
+      declaraciones: {
+        '2026-01': { periodo: '2026-01', estado: 'borrador', ajustes: { anticipo: { '556': 5_000 }, remanenteAnticipoInicial: 0 } },
+        '2026-03': { periodo: '2026-03', estado: 'borrador', ajustes: { manual: { '543': 800, '573': 100 } } },
+      },
+    });
+    const [ene, feb, mar] = calcularF29Anual(e);
+    expect([ene.codigos[598], ene.codigos[573]]).toEqual([1_900, 3_100]);
+    expect(feb.codigos[557]).toBe(reajustarRemanente(3_100, ene.utmImputacion, feb.utmImputacion).monto); // reajustado por UTM
+    expect([mar.codigos[543], mar.codigos[598], mar.codigos[573]]).toEqual([800, 0, 100]);
+  });
+
+  it('enero sin F29 de diciembre: usa el remanente de anticipo inicial ingresado', () => {
+    const e = base({ declaraciones: { '2026-01': { periodo: '2026-01', estado: 'borrador', ajustes: { remanenteAnticipoInicial: 1_200 } } } });
+    const [ene] = calcularF29Anual(e);
+    expect(ene.codigos[557]).toBe(reajustarRemanente(1_200, ene.utmRemanenteAnt || ene.utmPeriodo, ene.utmImputacion).monto);
+    expect(ene.codigos[557]).toBeGreaterThan(0);
+  });
+});
+
+describe('pago sugerido con anticipo', () => {
+  it('el IVA a pagar se rebaja por el anticipo imputado (598)', () => {
+    const e: EntradaF29 = { anio: 2026, tasaPPM: 0, ventas: [{ tipoDTE: 33, fecha: '2026-01-10', neto: 100_000, iva: 19_000, total: 119_000 }], compras: [], honorarios: [], iusc: {},
+      declaraciones: { '2026-01': { periodo: '2026-01', estado: 'borrador', ajustes: { anticipo: { '556': 4_000 } } } }, anteriores: {} };
+    expect(montosSugeridos(calcularF29Anual(e)[0]).iva).toBe(15_000);
   });
 });
