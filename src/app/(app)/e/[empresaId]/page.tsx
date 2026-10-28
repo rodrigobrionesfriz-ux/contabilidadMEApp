@@ -67,13 +67,29 @@ export default async function InicioEmpresa({ params, searchParams }: PageProps<
   const acumulado = param(sp.acum) === '1';
   const supabase = await crearClienteServidor();
 
-  const sumasMes = Array.from({ length: 12 }, (_, i) => {
-    const r = rangoAnio(anio, i + 1, i + 1);
-    return supabase.rpc('balance_comprobacion', { p_empresa: empresaId, p_desde: r.desde, p_hasta: r.hasta });
-  });
-  const [pp, f29Entrada, ...meses] = await Promise.all([estadoPrimerosPasos(empresaId), entradaF29(empresaId, anio).catch(() => null), ...sumasMes]);
-  for (const m of meses) if (m.error) throw new Error(m.error.message);
-  const R = resumenAnual(meses.map((m) => (m.data ?? []) as SumaMes[]));
+  // Sumas por cuenta de los 12 meses en una sola consulta (balance_mensual).
+  // Si esa función todavía no está creada en la base, se piden mes a mes.
+  const sumasDelAnio = async (): Promise<SumaMes[][]> => {
+    const una = await supabase.rpc('balance_mensual', { p_empresa: empresaId, p_anio: anio });
+    if (!una.error) {
+      const meses: SumaMes[][] = Array.from({ length: 12 }, () => []);
+      for (const f of (una.data ?? []) as (SumaMes & { mes: number })[]) if (f.mes >= 1 && f.mes <= 12) meses[f.mes - 1].push(f);
+      return meses;
+    }
+    const porMes = await Promise.all(Array.from({ length: 12 }, (_, i) => {
+      const r = rangoAnio(anio, i + 1, i + 1);
+      return supabase.rpc('balance_comprobacion', { p_empresa: empresaId, p_desde: r.desde, p_hasta: r.hasta });
+    }));
+    for (const m of porMes) if (m.error) throw new Error(m.error.message);
+    return porMes.map((m) => (m.data ?? []) as SumaMes[]);
+  };
+  // Lo que no depende del mes elegido parte de inmediato, en paralelo con lo demás
+  // (las consultas de Supabase sólo se envían al pedirles el resultado: Promise.resolve las dispara ya)
+  const sinAsientoP = Promise.resolve(supabase.from('documentos').select('id', { count: 'exact', head: true }).eq('empresa_id', empresaId).eq('anio', anio)
+    .in('tipo', ['venta', 'compra']).is('asiento_id', null).neq('estado', 'anulado'));
+  const declF29P = Promise.resolve(supabase.from('f29_declaraciones').select('periodo').eq('empresa_id', empresaId).gte('periodo', `${anio}-01`).lte('periodo', `${anio}-12`));
+  const [pp, f29Entrada, meses] = await Promise.all([estadoPrimerosPasos(empresaId), entradaF29(empresaId, anio).catch(() => null), sumasDelAnio()]);
+  const R = resumenAnual(meses);
   let f29: MesF29[] = [];
   try { f29 = f29Entrada ? calcularF29Anual(f29Entrada) : []; } catch { f29 = []; }
 
@@ -89,9 +105,8 @@ export default async function InicioEmpresa({ params, searchParams }: PageProps<
     traerTodo((d, h) => supabase.from('documentos').select('tipo,tipo_dte,neto,exento,iva,estado,asiento_id')
       .eq('empresa_id', empresaId).in('tipo', ['venta', 'compra'])
       .or(`and(tipo.eq.venta,fecha.gte.${per}-01,fecha.lte.${fin}),and(tipo.eq.compra,periodo.eq.${per})`).range(d, h)) as Promise<DocMes[]>,
-    supabase.from('documentos').select('id', { count: 'exact', head: true }).eq('empresa_id', empresaId).eq('anio', anio)
-      .in('tipo', ['venta', 'compra']).is('asiento_id', null).neq('estado', 'anulado'),
-    supabase.from('f29_declaraciones').select('periodo').eq('empresa_id', empresaId).gte('periodo', `${anio}-01`).lte('periodo', `${anio}-12`),
+    sinAsientoP,
+    declF29P,
   ]);
   const vigentes = docsMes.filter((d) => d.estado !== 'anulado');
 

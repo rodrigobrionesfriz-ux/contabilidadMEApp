@@ -89,3 +89,6 @@ body {
   .hoja * { color: #000 !important; border-color: #999 !important; }
   .dato-ct { background: none !important; border: none !important; padding: 0 !important; font-weight: inherit !important; }
 }
+
+/* Barra de carga al cambiar de módulo (loading.tsx) */
+@keyframes cargando { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
