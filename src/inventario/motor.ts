@@ -304,3 +304,44 @@ export const TOMA_ESTADOS: Record<string, string> = { EN_PROCESO: 'En proceso', 
 export const OC_ESTADOS: Record<string, string> = { BORRADOR: 'Borrador', EMITIDA: 'Emitida', PARCIAL: 'Recepción parcial', RECIBIDA: 'Recibida completa', CERRADA_PARCIAL: 'Cerrada con saldo', ANULADA: 'Anulada' };
 export const TIPOS_DOC_RECEPCION: Record<string, number | null> = { 'GUÍA': 52, 'FACTURA AFECTA': 33, 'FACTURA EXENTA': 34, OTRO: null };
 export const CUENTA_INVENTARIO_FIJA = '1109007';
+
+// ── Entrada de inventario desde un documento de compra (V2.22.0 del sistema actual) ──
+// La factura ya está en el libro de compras. Los productos se ingresan línea a
+// línea (cantidad × valor unitario neto − descuento) y la suma de los netos de
+// las líneas debe ser igual al neto total del documento (neto + exento). Se
+// carga de una vez: la entrada guarda el id del documento en cada línea
+// (compraId) y ese documento deja de estar disponible mientras la entrada esté
+// vigente.
+export interface CompraEntrada { id: string; tipoDTE: number; rut: string; razonSocial: string; folio: string; fecha: string; neto: number; exento: number; iva: number; total: number }
+export interface LineaEntradaCompra { productoId: string; cantidad: number | string; precioUnitario: number | string; descuentoPct?: number | string; lote?: string; fechaVencimiento?: string }
+export const TIPOS_DTE_ENTRADA = [30, 32, 33, 34, 45, 46];
+export const netoCompra = (c: Pick<CompraEntrada, 'neto' | 'exento'>) => Math.round(n(c.neto) + n(c.exento));
+export const netoLineaCompra = (l: Pick<LineaEntradaCompra, 'cantidad' | 'precioUnitario' | 'descuentoPct'>) =>
+  Math.round(n(l.cantidad) * n(l.precioUnitario) * (1 - n(l.descuentoPct) / 100));
+export const docTipoCompra = (tipoDTE: number) => ([32, 34].includes(+tipoDTE) ? 'FACTURA EXENTA' : 'FACTURA AFECTA');
+/** Id del documento de compra del que salió una entrada (o null). */
+export const compraDeMovimiento = (m: { lineas?: LineaMov[] } | null | undefined) => (m?.lineas?.find((l) => l?.compraId)?.compraId as string | undefined) ?? null;
+
+export function cuadraturaCompra(c: Pick<CompraEntrada, 'neto' | 'exento' | 'tipoDTE'>, lineas: LineaEntradaCompra[], afecto: (productoId: string) => boolean = () => true) {
+  const netos = lineas.map(netoLineaCompra);
+  const neto = netos.reduce((s, v) => s + v, 0);
+  const exentoDoc = [32, 34].includes(+c.tipoDTE);
+  const iva = exentoDoc ? 0 : Math.round(lineas.reduce((s, l, i) => s + (afecto(l.productoId) ? netos[i] : 0), 0) * 0.19);
+  const objetivo = netoCompra(c);
+  return { netos, neto, iva, total: neto + iva, objetivo, diferencia: objetivo - neto, cuadra: neto > 0 && objetivo === neto };
+}
+
+/** Valor unitario para la línea `i` que hace cuadrar el total (el más corto en decimales que lo logra). */
+export function unitarioParaCuadrar(c: Pick<CompraEntrada, 'neto' | 'exento'>, lineas: LineaEntradaCompra[], i: number): number | null {
+  const l = lineas[i];
+  if (!l || !(n(l.cantidad) > 0)) return null;
+  const otros = lineas.reduce((s, x, j) => s + (j === i ? 0 : netoLineaCompra(x)), 0);
+  const falta = netoCompra(c) - otros, f = 1 - n(l.descuentoPct) / 100;
+  if (falta <= 0 || f <= 0) return null;
+  const exacto = falta / f / n(l.cantidad);
+  for (const dc of [0, 2, 4, 6]) {
+    const v = Math.round(exacto * 10 ** dc) / 10 ** dc;
+    if (netoLineaCompra({ ...l, precioUnitario: v }) === falta) return v;
+  }
+  return exacto;
+}

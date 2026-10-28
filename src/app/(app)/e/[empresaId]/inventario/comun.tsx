@@ -1,9 +1,9 @@
 'use client';
 
 import type { DatosInventario } from '@/lib/datos/inventario';
-import type { CalculoInv, DocCompra } from '@/inventario/motor';
+import type { CalculoInv, DocCompra, CompraEntrada } from '@/inventario/motor';
 
-export interface Apoyo { proveedores: { rut: string; nombre: string }[]; facturas: DocCompra[]; centros: { codigo: string; nombre: string }[]; cuentasGasto: { codigo: string; nombre: string }[] }
+export interface Apoyo { proveedores: { rut: string; nombre: string }[]; facturas: DocCompra[]; compras: CompraEntrada[]; centros: { codigo: string; nombre: string }[]; cuentasGasto: { codigo: string; nombre: string }[] }
 export type Resultado = { ok: true; mensaje: string; id?: string } | { ok: false; error: string };
 export interface Ctx {
   empresaId: string; datos: DatosInventario; apoyo: Apoyo; escribe: boolean; calc: CalculoInv; pendiente: boolean; hoy: string;

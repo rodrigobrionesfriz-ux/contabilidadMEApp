@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import type { MovimientoI } from '@/inventario/filas';
-import { MOTIVOS, DOC_TIPOS_MOV, DOC_TIPOS_PROVEEDOR, nuevoFolio, resumenRecepcionOC } from '@/inventario/motor';
+import { MOTIVOS, DOC_TIPOS_MOV, DOC_TIPOS_PROVEEDOR, nuevoFolio, resumenRecepcionOC, compraDeMovimiento, type Movimiento } from '@/inventario/motor';
 import { decimalCL, decimalInput } from '@/lib/formato';
 import { Modal } from '@/components/modal';
 import { Mensaje } from '@/components/form-estado';
 import { guardarMovimiento, anularMovimiento, type BorradorMov } from './acciones';
+import { EntradaCompra, comprasDisponibles } from './entrada-compra';
 import { Badge, OpcionesBodega, OpcionesProducto, Vacio, bodegasActivas, fechaCorta, fmt, mon, nombreBodega, nombreProducto, pedirMotivo, productosDisponibles, type Ctx } from './comun';
 
 type LineaB = BorradorMov['lineas'][number] & { k: string };
@@ -18,6 +19,7 @@ export function Movimientos({ c }: { c: Ctx }) {
   const [estado, setEstado] = useState('');
   const [ver, setVer] = useState<string | null>(null);
   const [b, setB] = useState<Borrador | null>(null);
+  const [desdeCompra, setDesdeCompra] = useState(false);
   let filas = c.datos.movimientos.slice().sort((x, y) => (String(y.fecha) + y.creado).localeCompare(String(x.fecha) + x.creado));
   if (estado) filas = filas.filter((m) => m.estado === estado);
   if (q) { const t = q.toLowerCase(); filas = filas.filter((m) => `${m.folio} ${m.motivo} ${m.documento} ${m.tercero}`.toLowerCase().includes(t)); }
@@ -32,7 +34,8 @@ export function Movimientos({ c }: { c: Ctx }) {
   const editar = (m: MovimientoI) => (c.avisar({}), setB({ editId: m.id, folio: m.folio, tipo: m.tipo, fecha: m.fecha, motivo: m.motivo, bodegaOrigenId: m.bodegaOrigenId || '', bodegaDestinoId: m.bodegaDestinoId || '', tercero: m.tercero, documentoTipo: m.documentoTipo || (m.documento ? 'OTRO' : 'SIN DOCUMENTO'), documentoNumero: m.documentoNumero || '', proveedorRut: m.proveedorRut, proveedorNombre: m.proveedorNombre, ordenCompraId: m.ordenCompraId || '', centroCosto: m.centroCosto, observaciones: m.observaciones,
     lineas: m.lineas.map((l) => ({ k: crypto.randomUUID(), productoId: l.productoId, cantidad: decimalInput(l.cantidad), costoUnitario: l.costoUnitario == null ? '' : decimalInput(l.costoUnitario), lote: l.lote || '', fechaVencimiento: l.fechaVencimiento || '' })) }));
   const vista = ver ? c.datos.movimientos.find((m) => m.id === ver) : null;
-  const protegido = (m: MovimientoI) => !!(m.recepcionId || m.tomaId);
+  const deCompra = (m: MovimientoI) => !!compraDeMovimiento(m as unknown as Movimiento);
+  const protegido = (m: MovimientoI) => !!(m.recepcionId || m.tomaId || deCompra(m));
 
   return (
     <div className="space-y-3">
@@ -40,6 +43,12 @@ export function Movimientos({ c }: { c: Ctx }) {
         <input className="campo max-w-xs" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Folio, documento, motivo o tercero…" aria-label="Buscar movimiento" />
         <select className="campo max-w-[12rem]" value={estado} onChange={(e) => setEstado(e.target.value)} aria-label="Estado"><option value="">Todos los estados</option><option value="VIGENTE">Vigentes</option><option value="ANULADO">Anulados</option></select>
         <span className="flex-1" />
+        {c.escribe && <button type="button" className="boton-sec" title="Ingresar productos desde una factura de compra ya contabilizada" onClick={() => {
+          c.avisar({});
+          if (!bodegasActivas(c).length) { c.avisar({ error: 'Primero crea una bodega activa.' }); return; }
+          if (!productosDisponibles(c).length) { c.avisar({ error: 'Primero crea un producto inventariable.' }); return; }
+          setDesdeCompra(true);
+        }}>📄 Entrada desde compra{comprasDisponibles(c).length ? ` (${comprasDisponibles(c).length})` : ''}</button>}
         {c.escribe && <button type="button" className="boton" onClick={nuevo}>＋ Movimiento</button>}
       </div>
       <div className="tarjeta overflow-x-auto"><table className="w-full min-w-[900px] text-xs">
@@ -61,7 +70,7 @@ export function Movimientos({ c }: { c: Ctx }) {
       {vista && (
         <Modal titulo={`Movimiento ${vista.folio}`} sub={`${fechaCorta(vista.fecha)} · ${vista.tipo} · ${vista.estado}`} onCerrar={() => setVer(null)}>
           {vista.estado === 'ANULADO' && <p className="rounded-md border border-peligro/40 bg-peligro/10 p-2 text-peligro"><strong>ANULADO:</strong> {vista.motivoAnulacion || 'Sin detalle'}</p>}
-          {vista.estado !== 'ANULADO' && protegido(vista) && <p className="rounded-md border border-borde p-2 text-xs"><strong>Movimiento protegido:</strong> {vista.recepcionId ? 'se administra desde la recepción de su orden de compra.' : 'se administra desde su toma física de inventario.'}</p>}
+          {vista.estado !== 'ANULADO' && protegido(vista) && <p className="rounded-md border border-borde p-2 text-xs"><strong>Movimiento protegido:</strong> {vista.recepcionId ? 'se administra desde la recepción de su orden de compra.' : deCompra(vista) ? 'se cargó desde una factura de compra y está cuadrada con ella. Para corregirla, anúlala y vuelve a cargar la factura.' : 'se administra desde su toma física de inventario.'}</p>}
           {vista.editado && <p className="text-xs text-tenue">✏️ Editado el {fechaCorta(vista.editado)} por {vista.editadoPor || '–'}</p>}
           <div className="grid gap-2 text-xs sm:grid-cols-4">
             {([['Motivo', vista.motivo], ['Documento', vista.documento], ['Proveedor', vista.proveedorNombre || vista.proveedorRut], ['Orden de compra', c.datos.ordenes.find((o) => o.id === vista.ordenCompraId)?.folio], ['Origen', nombreBodega(c, vista.bodegaOrigenId)], ['Destino', nombreBodega(c, vista.bodegaDestinoId)], ['Tercero', vista.tercero], ['Centro de costo', vista.centroCosto], ['Registrado por', vista.creadoPor]] as [string, string | undefined][])
@@ -84,6 +93,7 @@ export function Movimientos({ c }: { c: Ctx }) {
       )}
 
       {b && <FormMovimiento c={c} b={b} setB={setB} folios={folios} />}
+      {desdeCompra && <EntradaCompra c={c} onCerrar={() => setDesdeCompra(false)} />}
     </div>
   );
 }

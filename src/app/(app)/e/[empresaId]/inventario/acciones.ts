@@ -8,7 +8,7 @@ import { aSnake } from '@/inventario/filas';
 import {
   recalcularInventario, validarMovimiento, rebasarLineaToma, validarOrdenCompra, validarRecepcion, estadoSegunRecepciones,
   buscarCompraParaRecepcion, otrasRecepcionesMismoDocumento, FOLIO_PREFIJO, MOTIVOS, DOC_TIPOS_MOV, DOC_TIPOS_PROVEEDOR,
-  TIPOS_DOC_RECEPCION, CUENTA_INVENTARIO_FIJA, r6, type LineaMov, type LineaToma, type LineaOC, type Movimiento, type Producto,
+  TIPOS_DOC_RECEPCION, CUENTA_INVENTARIO_FIJA, r6, cuadraturaCompra, compraDeMovimiento, docTipoCompra, netoLineaCompra, type LineaEntradaCompra, type LineaMov, type LineaToma, type LineaOC, type Movimiento, type Producto,
 } from '@/inventario/motor';
 import { prepararImportacionProductos, TIPOS, UNIDADES } from '@/inventario/importador';
 
@@ -179,6 +179,7 @@ export async function guardarMovimiento(empresaId: string, version: number, edit
       if (!original || original.estado === 'ANULADO') return { ok: false, error: 'El movimiento ya no está disponible para editar.' };
       if (original.recepcionId) return { ok: false, error: 'Esta entrada proviene de una recepción de compra. Edítala desde la orden de compra.' };
       if (original.tomaId) return { ok: false, error: 'Este ajuste proviene de una toma física. No se edita directamente.' };
+      if (compraDeMovimiento(original as unknown as Movimiento)) return { ok: false, error: 'Esta entrada se cargó desde una factura de compra y está cuadrada con ella. Para corregirla, anúlala y vuelve a cargar la factura.' };
       if (original.tipo !== d.tipo) return { ok: false, error: 'El tipo de un movimiento no se puede cambiar.' };
       const m = { ...original, ...base } as unknown as Movimiento;
       const otros = movsMotor(datos).filter((x) => x.id !== editId);
@@ -212,6 +213,44 @@ export async function anularMovimiento(empresaId: string, version: number, id: s
     if (neg.length > negAntes.length) return { ok: false, error: 'No se puede anular: movimientos posteriores quedarían con stock negativo (' + neg[0].mensaje + ').' };
     await aplicar(empresaId, version, [{ tabla: 'inv_movimientos', accion: 'update', fila: { id, estado: 'ANULADO', motivo_anulacion: motivo.trim(), anulado: ahora(), anulado_por: usuario } }]);
     return { ok: true, mensaje: 'Movimiento anulado; stock reconstruido.' };
+  });
+}
+
+// ── Entrada desde un documento de compra ya contabilizado ──
+export interface BorradorEntradaCompra {
+  compraId: string; fecha: string; bodegaDestinoId: string; centroCosto: string; observaciones: string; lineas: LineaEntradaCompra[];
+}
+export async function entradaDesdeCompra(empresaId: string, version: number, d: BorradorEntradaCompra): Promise<Res> {
+  return correr(async () => {
+    const [{ usuario, datos }, apoyo] = await Promise.all([contexto(empresaId), apoyoInventario(empresaId)]);
+    const c = apoyo.compras.find((x) => x.id === d.compraId);
+    if (!c) return { ok: false, error: 'El documento ya no está disponible (anulado, sin contabilizar o de otro tipo).' };
+    if (datos.movimientos.some((m) => m.estado !== 'ANULADO' && compraDeMovimiento(m as unknown as Movimiento) === c.id)) return { ok: false, error: 'Esa factura ya está cargada en el inventario.' };
+    if (datos.recepciones.some((r) => r.estado !== 'ANULADA' && r.compraId === c.id)) return { ok: false, error: 'Esa factura ya entró al inventario por una recepción de orden de compra.' };
+    if (!esFecha(d.fecha)) return { ok: false, error: 'Falta la fecha de ingreso.' };
+    const lineas = (d.lineas || []).filter((l) => l.productoId);
+    if (!lineas.length) return { ok: false, error: 'Agrega al menos un producto.' };
+    if (lineas.some((l) => !(n(l.cantidad) > 0))) return { ok: false, error: 'Todas las líneas deben tener cantidad mayor a cero.' };
+    const cu = cuadraturaCompra(c, lineas);
+    if (!cu.cuadra) return { ok: false, error: `La suma de las líneas (${cu.neto.toLocaleString('es-CL')}) no cuadra con el neto del documento (${cu.objetivo.toLocaleString('es-CL')}).` };
+    const docTipo = docTipoCompra(c.tipoDTE), numero = MAYUS(c.folio);
+    const base = {
+      tipo: 'ENTRADA', fecha: d.fecha, motivo: 'COMPRA', bodegaOrigenId: null, bodegaDestinoId: d.bodegaDestinoId || null,
+      tercero: c.razonSocial, documentoTipo: docTipo, documentoNumero: numero, documento: `${docTipo} ${numero}`,
+      proveedorRut: c.rut, proveedorNombre: c.razonSocial, ordenCompraId: null, centroCosto: d.centroCosto || '',
+      observaciones: String(d.observaciones || '').trim() || `Cargada desde DTE ${c.tipoDTE} N° ${numero}`,
+      lineas: lineas.map((l): LineaMov => {
+        const neto = netoLineaCompra(l);
+        return { id: uid(), productoId: String(l.productoId), cantidad: n(l.cantidad), costoUnitario: neto / n(l.cantidad), lote: MAYUS(l.lote), fechaVencimiento: String(l.fechaVencimiento || ''),
+          precioUnitario: n(l.precioUnitario), descuentoPct: n(l.descuentoPct), netoLinea: neto, compraId: c.id };
+      }),
+    };
+    const claves = Object.keys(base);
+    const m = { id: uid(), estado: 'VIGENTE', creado: ahora(), ...base } as unknown as Movimiento;
+    const v = validarMovimiento(m, { productos: productosMotor(datos), bodegas: datos.bodegas, movimientos: movsMotor(datos) });
+    if (!v.ok) return { ok: false, error: v.errores[0] };
+    const r = await aplicar(empresaId, version, [{ tabla: 'inv_movimientos', accion: 'insert', folio: FOLIO_PREFIJO.ENTRADA, ref: 'm', fila: { id: m.id, ...aSnake({ ...base, lineas: v.lineas }, claves), estado: 'VIGENTE', creado: m.creado, creado_por: usuario } }]);
+    return { ok: true, mensaje: `${r.folios.m}: ${lineas.length} producto(s) ingresados desde la factura N° ${numero}.`, id: m.id };
   });
 }
 
