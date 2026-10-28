@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { decimalCL, decimalTexto } from '@/lib/formato';
+import { decimalCL, decimalTexto, decimalInput } from '@/lib/formato';
 import type { Parametros, Institucion } from '@/remuneraciones/parametros';
 import { Mensaje } from '@/components/form-estado';
 import { guardarParametros } from '../acciones';
@@ -24,8 +24,8 @@ const PAT: [string, string][] = [
 ];
 
 export function FormParametros({ empresaId, P, editable }: { empresaId: string; P: Parametros; editable: boolean }) {
-  const [ind, setInd] = useState<Record<string, string>>(Object.fromEntries(IND.map(([k]) => [k, decimalTexto(P.ind[k] as number)])));
-  const [pat, setPat] = useState<Record<string, string>>(Object.fromEntries([...PAT.map(([k]) => [k, decimalTexto(P.patronal[k] as number)]), ['mutualInstitucion', String(P.patronal.mutualInstitucion)], ['cajaInstitucion', String(P.patronal.cajaInstitucion)]]));
+  const [ind, setInd] = useState<Record<string, string>>(Object.fromEntries(IND.map(([k]) => [k, P.ind[k] ? decimalInput(P.ind[k] as number) : ''])));
+  const [pat, setPat] = useState<Record<string, string>>(Object.fromEntries([...PAT.map(([k]) => [k, P.patronal[k] ? decimalInput(P.patronal[k] as number) : '']), ['mutualInstitucion', String(P.patronal.mutualInstitucion)], ['cajaInstitucion', String(P.patronal.cajaInstitucion)]]));
   const [afps, setAfps] = useState<Institucion[]>(P.afps.map((a) => ({ ...a })));
   const [msg, setMsg] = useState<{ error?: string; ok?: string }>({});
   const [pendiente, iniciar] = useTransition();
@@ -39,7 +39,7 @@ export function FormParametros({ empresaId, P, editable }: { empresaId: string; 
   });
   const campo = (k: string, l: string, obj: Record<string, string>, set: (x: Record<string, string>) => void) => (
     <div key={k}><label className="etiqueta" htmlFor={`p-${k}`}>{l}</label>
-      <input id={`p-${k}`} disabled={!editable} value={obj[k] ?? ''} onChange={(e) => set({ ...obj, [k]: e.target.value })} className="campo num text-right" /></div>
+      <input id={`p-${k}`} disabled={!editable} value={obj[k] ?? ''} onChange={(e) => set({ ...obj, [k]: decimalInput(e.target.value) })} className="campo num text-right" /></div>
   );
   return (
     <div className="space-y-4">

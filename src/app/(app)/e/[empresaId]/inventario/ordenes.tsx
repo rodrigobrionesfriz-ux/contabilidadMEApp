@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { OrdenCompraI } from '@/inventario/filas';
 import { OC_ESTADOS, TIPOS_DOC_RECEPCION, calcularTotalesOC, comprasVinculables, resumenRecepcionOC, totalLineaOC } from '@/inventario/motor';
-import { decimalCL } from '@/lib/formato';
+import { decimalCL, decimalInput } from '@/lib/formato';
 import { Modal } from '@/components/modal';
 import { Mensaje } from '@/components/form-estado';
 import { guardarOC, cambiarEstadoOC, registrarRecepcion, anularRecepcion, vincularFactura, type BorradorOC, type BorradorRecepcion } from './acciones';
@@ -80,7 +80,7 @@ function FormOC({ c, b, setB, abrir }: { c: Ctx; b: BorradorOC; setB: (b: Borrad
       {b.lineas.map((l, i) => (
         <div key={l.id} className="grid items-end gap-2 rounded-md border border-borde p-2 sm:grid-cols-[2fr_1fr_1fr_1fr_1fr_auto]">
           <div><label className="etiqueta" htmlFor={`ocl-p-${i}`}>Producto</label><select id={`ocl-p-${i}`} className="campo" value={l.productoId} onChange={(e) => setL(i, { productoId: e.target.value })}><OpcionesProducto c={c} /></select></div>
-          <div><label className="etiqueta" htmlFor={`ocl-c-${i}`}>Cantidad</label><input id={`ocl-c-${i}`} className="campo num text-right" inputMode="decimal" value={String(l.cantidad)} onChange={(e) => setL(i, { cantidad: e.target.value })} /></div>
+          <div><label className="etiqueta" htmlFor={`ocl-c-${i}`}>Cantidad</label><input id={`ocl-c-${i}`} className="campo num text-right" inputMode="decimal" value={decimalInput(l.cantidad)} onChange={(e) => setL(i, { cantidad: decimalInput(e.target.value) })} /></div>
           <div><label className="etiqueta" htmlFor={`ocl-u-${i}`}>Precio unitario neto</label><input id={`ocl-u-${i}`} className="campo num text-right" inputMode="decimal" value={String(l.precioUnitario)} onChange={(e) => setL(i, { precioUnitario: e.target.value })} /></div>
           <div><label className="etiqueta" htmlFor={`ocl-d-${i}`}>Descuento %</label><input id={`ocl-d-${i}`} className="campo num text-right" inputMode="decimal" value={String(l.descuentoPct)} onChange={(e) => setL(i, { descuentoPct: e.target.value })} /></div>
           <div className="text-right"><div className="etiqueta">Total neto</div><div className="num font-semibold">{mon(totalLineaOC({ ...l, cantidad: decimalCL(l.cantidad), precioUnitario: decimalCL(l.precioUnitario), descuentoPct: decimalCL(l.descuentoPct) }))}</div></div>
@@ -154,7 +154,7 @@ function DetalleOC({ c, o, volver, editar }: { c: Ctx; o: OrdenCompraI; volver: 
             return (
               <div key={l.k} className="grid items-end gap-2 rounded-md border border-borde p-2 sm:grid-cols-[2fr_1fr_1fr_1fr_auto]">
                 <div><div className="font-medium">{nombreProducto(c, l.productoId)}</div><div className="text-[10px] text-tenue">Pendiente total: {fmt(l.pendiente)} {p?.unidad}</div></div>
-                <div><label className="etiqueta" htmlFor={`rc-c-${i}`}>Recibido</label><input id={`rc-c-${i}`} className="campo num text-right" inputMode="decimal" value={String(l.cantidad)} onChange={(e) => setL({ cantidad: e.target.value })} /></div>
+                <div><label className="etiqueta" htmlFor={`rc-c-${i}`}>Recibido</label><input id={`rc-c-${i}`} className="campo num text-right" inputMode="decimal" value={decimalInput(l.cantidad)} onChange={(e) => setL({ cantidad: decimalInput(e.target.value) })} /></div>
                 {p?.manejaLotes ? <>
                   <div><label className="etiqueta" htmlFor={`rc-l-${i}`}>Lote</label><input id={`rc-l-${i}`} className="campo" value={l.lote} onChange={(e) => setL({ lote: e.target.value.toUpperCase() })} /></div>
                   <div><label className="etiqueta" htmlFor={`rc-v-${i}`}>Vencimiento</label><input id={`rc-v-${i}`} type="date" className="campo" value={l.fechaVencimiento} onChange={(e) => setL({ fechaVencimiento: e.target.value })} /></div>

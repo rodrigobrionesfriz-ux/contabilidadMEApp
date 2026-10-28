@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { ProductoI } from '@/inventario/filas';
 import { CUENTA_INVENTARIO_FIJA } from '@/inventario/motor';
 import { TIPOS, UNIDADES, prepararImportacionProductos, siguienteCodigo, PLANTILLA_ENCABEZADOS, PLANTILLA_EJEMPLO, PLANTILLA_INSTRUCCIONES } from '@/inventario/importador';
-import { decimalCL } from '@/lib/formato';
+import { decimalCL, decimalInput } from '@/lib/formato';
 import { Modal } from '@/components/modal';
 import { Mensaje } from '@/components/form-estado';
 import { guardarProducto, importarProductos, type FormProducto } from './acciones';
@@ -22,7 +22,7 @@ export function Productos({ c }: { c: Ctx }) {
   const conMov = new Set(c.datos.movimientos.flatMap((m) => m.lineas.map((l) => l.productoId)));
   const abrir = (p?: ProductoI) => {
     c.avisar({});
-    setEd(p ? { id: p.id, minimo: String(p.stockMinimo), f: { codigo: p.codigo, ean: p.ean, descripcion: p.descripcion, tipo: p.tipo, unidad: p.unidad, grupoId: p.grupoId || '', subgrupo: p.subgrupo, stockMinimo: p.stockMinimo, cuentaCosto: p.cuentaCosto, aplicaIVA: p.aplicaIVA, manejaLotes: p.manejaLotes, inventariable: p.inventariable, activo: p.activo } }
+    setEd(p ? { id: p.id, minimo: decimalInput(p.stockMinimo), f: { codigo: p.codigo, ean: p.ean, descripcion: p.descripcion, tipo: p.tipo, unidad: p.unidad, grupoId: p.grupoId || '', subgrupo: p.subgrupo, stockMinimo: p.stockMinimo, cuentaCosto: p.cuentaCosto, aplicaIVA: p.aplicaIVA, manejaLotes: p.manejaLotes, inventariable: p.inventariable, activo: p.activo } }
       : { id: null, minimo: '0', f: { codigo: siguienteCodigo(c.datos.productos.map((x) => x.codigo)), ean: '', descripcion: '', tipo: 'MERCADERÍA', unidad: 'UN', grupoId: '', subgrupo: '', stockMinimo: 0, cuentaCosto: '', aplicaIVA: true, manejaLotes: false, inventariable: true, activo: true } });
   };
   const plantilla = async () => {
@@ -81,7 +81,7 @@ export function Productos({ c }: { c: Ctx }) {
               <div><label className="etiqueta" htmlFor="pr-u">Unidad</label><select id="pr-u" className="campo" value={f.unidad} onChange={(e) => set({ unidad: e.target.value })}>{UNIDADES.map((x) => <option key={x}>{x}</option>)}</select></div>
               <div><label className="etiqueta" htmlFor="pr-g">Grupo</label><select id="pr-g" className="campo" value={f.grupoId} onChange={(e) => set({ grupoId: e.target.value, subgrupo: '' })}><option value="">Sin grupo</option>{c.datos.grupos.filter((x) => x.activo !== false).map((x) => <option key={x.id} value={x.id}>{x.nombre}</option>)}</select></div>
               <div><label className="etiqueta" htmlFor="pr-s">Subgrupo</label><select id="pr-s" className="campo" value={f.subgrupo} onChange={(e) => set({ subgrupo: e.target.value })}><option value="">Sin subgrupo</option>{(g?.subgrupos || []).map((x) => <option key={x}>{x}</option>)}</select></div>
-              <div><label className="etiqueta" htmlFor="pr-m">Stock mínimo</label><input id="pr-m" className="campo num text-right" inputMode="decimal" value={ed.minimo} onChange={(e) => setEd({ ...ed, minimo: e.target.value })} /></div>
+              <div><label className="etiqueta" htmlFor="pr-m">Stock mínimo</label><input id="pr-m" className="campo num text-right" inputMode="decimal" value={ed.minimo} onChange={(e) => setEd({ ...ed, minimo: decimalInput(e.target.value) })} /></div>
               <div><label className="etiqueta" htmlFor="pr-ci">Cuenta inventario</label><input id="pr-ci" className="campo text-tenue" value={CUENTA_INVENTARIO_FIJA} readOnly disabled title="Única cuenta de inventario permitida" /></div>
               <div className="sm:col-span-2"><label className="etiqueta" htmlFor="pr-cc">Cuenta de gasto/consumo</label>
                 <select id="pr-cc" className="campo" value={f.cuentaCosto} onChange={(e) => set({ cuentaCosto: e.target.value })}><option value="">Selecciona una cuenta de gasto…</option>{c.apoyo.cuentasGasto.map((x) => <option key={x.codigo} value={x.codigo}>{x.codigo} · {x.nombre}</option>)}</select></div>

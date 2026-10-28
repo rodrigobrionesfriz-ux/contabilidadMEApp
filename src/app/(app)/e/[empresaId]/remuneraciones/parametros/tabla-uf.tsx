@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { decimalCL, MESES } from '@/lib/formato';
+import { decimalCL, decimalInput, milesInput, MESES } from '@/lib/formato';
 
 const txt = (n: number | null | undefined, dec: number) => (n ? n.toLocaleString('es-CL', { minimumFractionDigits: dec, maximumFractionDigits: dec }) : '');
 import { Mensaje } from '@/components/form-estado';
@@ -61,8 +61,8 @@ export function TablaUF({ empresaId, anio, filas, utmSII, cerrados, editable }: 
             return (
               <tr key={k} className="border-t border-borde/30">
                 <td className="py-1">{m} <span className="text-tenue">({dia}/{String(i + 1).padStart(2, '0')})</span></td>
-                <td className="py-1 text-right"><input aria-label={`UF ${m}`} disabled={!editable} value={v[k].uf} onChange={(e) => setV({ ...v, [k]: { ...v[k], uf: e.target.value } })} className={`campo num w-32 py-1 text-right text-xs ${falta ? 'border-aviso' : ''}`} /></td>
-                <td className="py-1 text-right"><input aria-label={`UTM ${m}`} disabled={!editable} value={v[k].utm} placeholder={utmSII[i] ? utmSII[i]!.toLocaleString('es-CL') : ''} onChange={(e) => setV({ ...v, [k]: { ...v[k], utm: e.target.value } })} className="campo num w-28 py-1 text-right text-xs" /></td>
+                <td className="py-1 text-right"><input aria-label={`UF ${m}`} disabled={!editable} value={v[k].uf} onChange={(e) => setV({ ...v, [k]: { ...v[k], uf: decimalInput(e.target.value, 2) } })} className={`campo num w-32 py-1 text-right text-xs ${falta ? 'border-aviso' : ''}`} /></td>
+                <td className="py-1 text-right"><input aria-label={`UTM ${m}`} disabled={!editable} value={v[k].utm} placeholder={utmSII[i] ? utmSII[i]!.toLocaleString('es-CL') : ''} onChange={(e) => setV({ ...v, [k]: { ...v[k], utm: milesInput(e.target.value) } })} className="campo num w-28 py-1 text-right text-xs" /></td>
                 <td className="py-1 pl-3 text-tenue">{cerrados.includes(k) ? '🔒 libro cerrado' : f?.uf ? `✓ ${new Date(f.actualizado).toLocaleDateString('es-CL')}` : falta ? <span className="text-aviso">falta</span> : ''}</td>
               </tr>
             );

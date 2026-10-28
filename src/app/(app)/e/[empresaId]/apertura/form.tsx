@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { clp } from '@/lib/formato';
+import { clp, milesInput } from '@/lib/formato';
 import { rutParse } from '@/motor/rut';
 import { leerPegado, montoCL, totales, lineaDiferencia } from '@/motor/apertura';
 import { Mensaje } from '@/components/form-estado';
@@ -133,8 +133,8 @@ export function FormApertura({ empresaId, anio, cuentas, iniciales, glosaInicial
                       placeholder="Código o nombre" className="campo num" aria-label={`Cuenta línea ${i + 1}`} />
                     <div className="mt-0.5 truncate text-xs text-tenue">{c?.nombre ?? (l.cuenta ? '⚠️ no es una cuenta de balance imputable' : '')}</div>
                   </td>
-                  <td className="px-2 py-1.5"><input inputMode="numeric" value={l.debe} disabled={!escribe} onChange={(e) => cambiar(i, 'debe', e.target.value)} className="campo num text-right" aria-label={`Debe línea ${i + 1}`} /></td>
-                  <td className="px-2 py-1.5"><input inputMode="numeric" value={l.haber} disabled={!escribe} onChange={(e) => cambiar(i, 'haber', e.target.value)} className="campo num text-right" aria-label={`Haber línea ${i + 1}`} /></td>
+                  <td className="px-2 py-1.5"><input inputMode="numeric" value={l.debe} disabled={!escribe} onChange={(e) => cambiar(i, 'debe', milesInput(e.target.value))} className="campo num text-right" aria-label={`Debe línea ${i + 1}`} /></td>
+                  <td className="px-2 py-1.5"><input inputMode="numeric" value={l.haber} disabled={!escribe} onChange={(e) => cambiar(i, 'haber', milesInput(e.target.value))} className="campo num text-right" aria-label={`Haber línea ${i + 1}`} /></td>
                   <td className="px-2 py-1.5">
                     {c?.tipo_auxiliar || l.rut ? (
                       <div className="grid grid-cols-[1fr_56px_80px] gap-1">

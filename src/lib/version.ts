@@ -5,9 +5,8 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Inicio ordenado para el celular, sin desbordes.',
-  'Tus empresas primero; las de otros usuarios en un enlace aparte, con su dueño.',
-  'Versión visible en el ingreso y aviso cuando hay una actualización.',
+  'Montos con separador de miles mientras se digitan (UTM, remanente, sueldos, saldos, activos, inventario y más).',
+  'Los montos en pesos van sin decimales; UF y cantidades usan coma decimal.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */

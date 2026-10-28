@@ -62,12 +62,30 @@ export const decimalTexto = (n: number | null | undefined) => (n ? String(n).rep
  * `maxDigitos` limita el largo (10 dígitos = "9.999.999.999", 13 caracteres).
  */
 export function milesInput(v: string | number | null | undefined, maxDigitos?: number): string {
-  const t = String(v ?? '').trim();
+  // Un número se redondea antes (12345.6 → "12.346"); el texto se toma dígito a dígito
+  const t = typeof v === 'number' ? (Number.isFinite(v) ? String(Math.round(v)) : '') : String(v ?? '').trim();
   const neg = t.startsWith('-');
   let dig = t.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '');
   if (maxDigitos && dig.length > maxDigitos) dig = dig.slice(0, maxDigitos);
   if (!dig) return neg ? '-' : '';
   return (neg ? '-' : '') + dig.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+/**
+ * Número con decimales mientras se digita ("41.247,63"): miles con punto y la coma como decimal.
+ * Los puntos los pone el formato; un punto que se escribe al final (sin coma aún) se toma como la coma decimal.
+ * Con un número, lo muestra a la chilena. Se lee de vuelta con decimalCL.
+ */
+export function decimalInput(v: string | number | null | undefined, maxDecimales = 6): string {
+  if (typeof v === 'number') return Number.isFinite(v) ? v.toLocaleString('es-CL', { maximumFractionDigits: maxDecimales }) : '';
+  let t = String(v ?? '').trim();
+  if (!t.includes(',') && t.endsWith('.')) t = t.slice(0, -1) + ',';
+  const neg = t.startsWith('-');
+  const [ent, ...resto] = t.split(',');
+  const dec = resto.join('').replace(/[^0-9]/g, '').slice(0, maxDecimales);
+  const e = milesInput(ent.replace('-', ''));
+  if (!e && !t.includes(',')) return neg ? '-' : '';
+  return (neg ? '-' : '') + (e || '0') + (t.includes(',') ? ',' + dec : '');
 }
 
 /** Ancho de las columnas Debe y Haber: caben 13 caracteres ("9.999.999.999") alineados a la derecha. */

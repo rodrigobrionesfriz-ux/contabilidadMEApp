@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import type { TipoAuxiliar } from '@/auxiliares/saldos';
 import { diasEntre } from '@/auxiliares/saldos';
-import { clp, fechaCL } from '@/lib/formato';
+import { clp, fechaCL, milesInput } from '@/lib/formato';
 import { Mensaje } from '@/components/form-estado';
 import { registrarPago } from './acciones';
 
@@ -98,7 +98,7 @@ export function Pagos({ empresaId, tipo, pendientes, cuentas, aFavor, hoy }: {
                     <td className="num px-2 py-1.5 text-right">{clp(p.saldo)}</td>
                     <td className="px-2 py-1.5">
                       {marcado && (
-                        <input inputMode="numeric" value={sel[p.clave] || ''} aria-label={`Monto ${p.folio}`}
+                        <input inputMode="numeric" value={sel[p.clave] ? milesInput(sel[p.clave]) : ''} aria-label={`Monto ${p.folio}`}
                           onChange={(e) => setSel((s) => ({ ...s, [p.clave]: Math.min(p.saldo, Math.round(Number(e.target.value.replace(/\./g, '')) || 0)) }))}
                           className="campo num py-1 text-right" />
                       )}

@@ -6,7 +6,7 @@ import { rutParse } from '@/motor/rut';
 import { retencionHonorarios } from '@/importador/respaldo';
 import { ListaCuentas, SelectorCC, codigoDe, type CentroOpcion } from '@/components/editor-lineas';
 import { Mensaje } from '@/components/form-estado';
-import { clp, hoyISO } from '@/lib/formato';
+import { clp, hoyISO, milesInput } from '@/lib/formato';
 import { registrarBoleta } from './acciones';
 
 export function FormBoleta({ empresaId, cuentas, centros, tesoreria }: {
@@ -44,7 +44,7 @@ export function FormBoleta({ empresaId, cuentas, centros, tesoreria }: {
         <div><label className="etiqueta" htmlFor="h-fecha">Fecha</label><input id="h-fecha" type="date" required value={b.fecha} onChange={(e) => setB({ ...b, fecha: e.target.value })} className="campo" /></div>
         <div><label className="etiqueta" htmlFor="h-rut">RUT prestador</label><input id="h-rut" required value={b.rut} onChange={(e) => setB({ ...b, rut: e.target.value })} className={`campo num ${b.rut && !rut.valido ? 'border-peligro' : ''}`} /></div>
         <div><label className="etiqueta" htmlFor="h-nom">Nombre</label><input id="h-nom" required value={b.nombre} onChange={(e) => setB({ ...b, nombre: e.target.value })} className="campo" /></div>
-        <div><label className="etiqueta" htmlFor="h-bruto">Monto bruto</label><input id="h-bruto" inputMode="numeric" required value={b.bruto || ''} onChange={(e) => setB({ ...b, bruto: Math.round(Number(e.target.value.replace(/\./g, '')) || 0) })} className="campo num text-right" /></div>
+        <div><label className="etiqueta" htmlFor="h-bruto">Monto bruto</label><input id="h-bruto" inputMode="numeric" required value={b.bruto ? milesInput(b.bruto) : ''} onChange={(e) => setB({ ...b, bruto: Math.round(Number(e.target.value.replace(/\./g, '')) || 0) })} className="campo num text-right" /></div>
         <div>
           <label className="etiqueta" htmlFor="h-ret">Retención</label>
           <select id="h-ret" value={b.conRetencion ? 'si' : 'no'} onChange={(e) => setB({ ...b, conRetencion: e.target.value === 'si' })} className="campo">

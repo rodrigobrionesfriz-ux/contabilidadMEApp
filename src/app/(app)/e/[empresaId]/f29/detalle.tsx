@@ -34,8 +34,8 @@ export function DetalleF29({ empresaId, anio, m, escribe, admin, esEnero, remane
   const d0 = m.declaracion;
   const presentado = d0?.estado === 'presentado';
   const [decl, setDecl] = useState<Record<string, string>>(Object.fromEntries(Object.entries(d0?.declarado ?? {}).map(([k, v]) => [k, miles(v as number)])));
-  const [utm, setUtm] = useState(d0?.utm ? String(d0.utm) : '');
-  const [remIni, setRemIni] = useState(d0?.remanenteInicial != null ? String(d0.remanenteInicial) : '');
+  const [utm, setUtm] = useState(d0?.utm ? miles(d0.utm) : '');
+  const [remIni, setRemIni] = useState(d0?.remanenteInicial != null ? miles(d0.remanenteInicial) : '');
   const [ppmComp, setPpmComp] = useState(false);
   // Montos del pago: lo sugerido (declarado si está presentado) más lo que se edite a mano
   const [montosEdit, setMontosEdit] = useState<Partial<Record<ConceptoPago, number>>>({});
@@ -111,13 +111,13 @@ export function DetalleF29({ empresaId, anio, m, escribe, admin, esEnero, remane
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2 sm:col-span-1">
                 <label className="etiqueta" htmlFor="utm">UTM del mes</label>
-                <input id="utm" inputMode="numeric" disabled={presentado || !escribe} value={utm} onChange={(e) => setUtm(e.target.value)} placeholder={String(m.utmPeriodo || '')} className="campo num" />
+                <input id="utm" inputMode="numeric" disabled={presentado || !escribe} value={utm} onChange={(e) => setUtm(miles(e.target.value))} placeholder={m.utmPeriodo ? miles(m.utmPeriodo) : ''} className="campo num" />
               </div>
             </div>
             <div className="space-y-1 rounded-md border border-borde p-3">
               <label className="etiqueta" htmlFor="remini">{esEnero && !remanenteDesdeDic ? 'Remanente de diciembre (cód. 77)' : `Corregir remanente de ${MESES[(m.m + 10) % 12].toLowerCase()} (cód. 77)`}</label>
               <div className="flex flex-wrap items-center gap-2">
-                <input id="remini" inputMode="numeric" disabled={presentado || !escribe} value={remIni} onChange={(e) => setRemIni(e.target.value)} className="campo num w-40"
+                <input id="remini" inputMode="numeric" disabled={presentado || !escribe} value={remIni} onChange={(e) => setRemIni(miles(e.target.value))} className="campo num w-40"
                   placeholder={m.remanenteAnt ? miles(m.remanenteAnt) : '0'} />
                 {escribe && !presentado && (
                   <button type="button" className="boton py-1.5" disabled={pendiente || remIni.trim() === ''}

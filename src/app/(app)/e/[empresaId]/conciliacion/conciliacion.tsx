@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { leerCartola, emparejarCartola, resumenConciliacion, type LineaCartola, type MovBanco } from '@/tesoreria/conciliacion';
-import { clp, decimalCL, fechaCL } from '@/lib/formato';
+import { clp, decimalCL, fechaCL, milesInput } from '@/lib/formato';
 import { Mensaje } from '@/components/form-estado';
 import { marcarLineas, guardarSaldoBanco } from './acciones';
 
@@ -12,7 +12,7 @@ export function Conciliacion({ empresaId, cuenta, anio, escribe, saldoBanco, mov
 }) {
   const router = useRouter();
   const [sel, setSel] = useState(() => new Set(marcados));
-  const [saldoTxt, setSaldoTxt] = useState(saldoBanco ? String(saldoBanco) : '');
+  const [saldoTxt, setSaldoTxt] = useState(saldoBanco ? milesInput(Math.round(saldoBanco)) : '');
   const [cartola, setCartola] = useState<LineaCartola[] | null>(null);
   const [msg, setMsg] = useState<{ ok?: string; error?: string }>({});
   const [pendiente, iniciar] = useTransition();
@@ -47,7 +47,7 @@ export function Conciliacion({ empresaId, cuenta, anio, escribe, saldoBanco, mov
       <Mensaje {...msg} />
       {escribe && (
         <div className="tarjeta flex flex-wrap items-end gap-3 p-4 text-sm">
-          <div><label className="etiqueta" htmlFor="saldo-banco">Saldo según cartola</label><input id="saldo-banco" value={saldoTxt} onChange={(e) => setSaldoTxt(e.target.value)} inputMode="numeric" className="campo num w-44" /></div>
+          <div><label className="etiqueta" htmlFor="saldo-banco">Saldo según cartola</label><input id="saldo-banco" value={saldoTxt} onChange={(e) => setSaldoTxt(milesInput(e.target.value))} inputMode="numeric" className="campo num w-44" /></div>
           <button type="button" className="boton-sec" disabled={pendiente} onClick={() => iniciar(async () => { const x = await guardarSaldoBanco(empresaId, cuenta, anio, decimalCL(saldoTxt)); setMsg(x.ok ? { ok: x.mensaje } : { error: x.error }); })}>Guardar saldo</button>
           <label className="boton-sec cursor-pointer">📤 Cargar cartola (Excel o CSV)<input type="file" accept=".xlsx,.xls,.csv" className="sr-only" onChange={(e) => { leer(e.target.files?.[0]); e.target.value = ''; }} /></label>
           <button type="button" className="text-xs text-acento hover:underline" onClick={() => aplicar(movs.filter((m) => !sel.has(m.id)).map((m) => m.id), true)}>✓ Marcar todos</button>

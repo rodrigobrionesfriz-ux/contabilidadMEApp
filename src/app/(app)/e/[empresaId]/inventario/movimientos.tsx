@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { MovimientoI } from '@/inventario/filas';
 import { MOTIVOS, DOC_TIPOS_MOV, DOC_TIPOS_PROVEEDOR, nuevoFolio, resumenRecepcionOC } from '@/inventario/motor';
-import { decimalCL } from '@/lib/formato';
+import { decimalCL, decimalInput } from '@/lib/formato';
 import { Modal } from '@/components/modal';
 import { Mensaje } from '@/components/form-estado';
 import { guardarMovimiento, anularMovimiento, type BorradorMov } from './acciones';
@@ -30,7 +30,7 @@ export function Movimientos({ c }: { c: Ctx }) {
     setB({ editId: null, folio: nuevoFolio('ENTRADA', folios), tipo: 'ENTRADA', fecha: c.hoy, motivo: 'COMPRA', bodegaOrigenId: '', bodegaDestinoId: bodegasActivas(c)[0].id, tercero: '', documentoTipo: 'SIN DOCUMENTO', documentoNumero: '', proveedorRut: '', proveedorNombre: '', ordenCompraId: '', centroCosto: '', observaciones: '', lineas: [lineaVacia()] });
   };
   const editar = (m: MovimientoI) => (c.avisar({}), setB({ editId: m.id, folio: m.folio, tipo: m.tipo, fecha: m.fecha, motivo: m.motivo, bodegaOrigenId: m.bodegaOrigenId || '', bodegaDestinoId: m.bodegaDestinoId || '', tercero: m.tercero, documentoTipo: m.documentoTipo || (m.documento ? 'OTRO' : 'SIN DOCUMENTO'), documentoNumero: m.documentoNumero || '', proveedorRut: m.proveedorRut, proveedorNombre: m.proveedorNombre, ordenCompraId: m.ordenCompraId || '', centroCosto: m.centroCosto, observaciones: m.observaciones,
-    lineas: m.lineas.map((l) => ({ k: crypto.randomUUID(), productoId: l.productoId, cantidad: String(l.cantidad), costoUnitario: String(l.costoUnitario ?? ''), lote: l.lote || '', fechaVencimiento: l.fechaVencimiento || '' })) }));
+    lineas: m.lineas.map((l) => ({ k: crypto.randomUUID(), productoId: l.productoId, cantidad: decimalInput(l.cantidad), costoUnitario: l.costoUnitario == null ? '' : decimalInput(l.costoUnitario), lote: l.lote || '', fechaVencimiento: l.fechaVencimiento || '' })) }));
   const vista = ver ? c.datos.movimientos.find((m) => m.id === ver) : null;
   const protegido = (m: MovimientoI) => !!(m.recepcionId || m.tomaId);
 
@@ -135,8 +135,8 @@ function FormMovimiento({ c, b, setB, folios }: { c: Ctx; b: Borrador; setB: (b:
           <div key={l.k} className="grid items-end gap-2 rounded-md border border-borde p-2 sm:grid-cols-[2fr_1fr_1fr_1fr_1fr_auto]">
             <div><label className="etiqueta" htmlFor={`mv-p-${i}`}>Producto</label><select id={`mv-p-${i}`} className="campo" value={l.productoId} onChange={(e) => setL(i, { productoId: e.target.value, lote: '', fechaVencimiento: '' })}><OpcionesProducto c={c} /></select>
               {p && !esEnt && <span className="text-[10px] text-tenue">Disponible: {fmt(st?.cantidad || 0)} {p.unidad}</span>}</div>
-            <div><label className="etiqueta" htmlFor={`mv-c-${i}`}>Cantidad</label><input id={`mv-c-${i}`} className="campo num text-right" inputMode="decimal" value={String(l.cantidad)} onChange={(e) => setL(i, { cantidad: e.target.value })} /></div>
-            {esEnt ? <div><label className="etiqueta" htmlFor={`mv-u-${i}`}>Costo unitario neto</label><input id={`mv-u-${i}`} className="campo num text-right" inputMode="decimal" value={String(l.costoUnitario ?? '')} onChange={(e) => setL(i, { costoUnitario: e.target.value })} /></div> : <div />}
+            <div><label className="etiqueta" htmlFor={`mv-c-${i}`}>Cantidad</label><input id={`mv-c-${i}`} className="campo num text-right" inputMode="decimal" value={decimalInput(l.cantidad)} onChange={(e) => setL(i, { cantidad: decimalInput(e.target.value) })} /></div>
+            {esEnt ? <div><label className="etiqueta" htmlFor={`mv-u-${i}`}>Costo unitario neto</label><input id={`mv-u-${i}`} className="campo num text-right" inputMode="decimal" value={decimalInput(l.costoUnitario ?? '')} onChange={(e) => setL(i, { costoUnitario: decimalInput(e.target.value) })} /></div> : <div />}
             {p?.manejaLotes ? (esEnt ? <>
               <div><label className="etiqueta" htmlFor={`mv-l-${i}`}>Lote</label><input id={`mv-l-${i}`} className="campo" value={l.lote} onChange={(e) => setL(i, { lote: e.target.value.toUpperCase() })} /></div>
               <div><label className="etiqueta" htmlFor={`mv-v-${i}`}>Vencimiento</label><input id={`mv-v-${i}`} type="date" className="campo" value={l.fechaVencimiento} onChange={(e) => setL(i, { fechaVencimiento: e.target.value })} /></div>

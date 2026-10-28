@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { TomaI } from '@/inventario/filas';
 import { TOMA_ESTADOS, rebasarLineaToma, type Movimiento, type Toma } from '@/inventario/motor';
-import { decimalCL } from '@/lib/formato';
+import { decimalCL, decimalInput } from '@/lib/formato';
 import { Modal } from '@/components/modal';
 import { Mensaje } from '@/components/form-estado';
 import { crearToma, contarToma, agregarLineaToma, cambiarEstadoToma, autorizarToma } from './acciones';
@@ -102,11 +102,11 @@ function DetalleToma({ c, t, volver }: { c: Ctx; t: TomaI; volver: () => void })
               <td className="num p-2">{p?.codigo}</td><td className="font-medium">{p?.descripcion || l.productoId} <span className="text-tenue">{p?.unidad}</span></td>
               <td className="num">{l.lote || '–'} <span className="text-tenue">{l.fechaVencimiento ? fechaCorta(l.fechaVencimiento) : ''}</span></td>
               <td className="num text-right">{fmt(l.teoricoBase)}</td>
-              <td className="text-right">{editable ? <input key={String(l.fisico)} aria-label={`Físico de ${p?.codigo} ${l.lote}`} className="campo num w-24 !py-1 text-right" inputMode="decimal" defaultValue={l.contado ? String(l.fisico) : ''}
+              <td className="text-right">{editable ? <input key={String(l.fisico)} aria-label={`Físico de ${p?.codigo} ${l.lote}`} className="campo num w-24 !py-1 text-right" inputMode="decimal" defaultValue={l.contado ? decimalInput(Number(l.fisico)) : ''}
                 onBlur={(e) => { const s = e.target.value.trim(); const v = s === '' ? null : decimalCL(s); if (v !== (l.contado ? l.fisico : null)) contar(l.id, v, null); }} /> : l.contado ? <strong className="num">{fmt(l.fisico)}</strong> : '–'}</td>
               <td className="num text-right">{r ? fmt(r.posteriores) : '–'}</td><td className="num text-right">{r ? fmt(r.objetivo) : '–'}</td>
               <td className={`num text-right font-semibold ${dif > 0 ? 'text-acento' : dif < 0 ? 'text-peligro' : ''}`}>{r ? (dif > 0 ? '+' : '') + fmt(dif) : '–'}</td>
-              <td className="pr-2 text-right">{editable && Number(l.costoBase) <= 0 ? <input key={String(l.costoConteo)} aria-label={`Costo de ${p?.codigo}`} className="campo num w-24 !py-1 text-right" inputMode="decimal" placeholder="$" defaultValue={l.costoConteo ? String(l.costoConteo) : ''}
+              <td className="pr-2 text-right">{editable && Number(l.costoBase) <= 0 ? <input key={String(l.costoConteo)} aria-label={`Costo de ${p?.codigo}`} className="campo num w-24 !py-1 text-right" inputMode="decimal" placeholder="$" defaultValue={l.costoConteo ? decimalInput(Number(l.costoConteo)) : ''}
                 onBlur={(e) => { const v = decimalCL(e.target.value); if (v !== Number(l.costoConteo || 0)) contar(l.id, null, v); }} /> : <span className="num">{mon(l.costoConteo || l.costoBase)}</span>}</td>
             </tr>
           );
@@ -136,8 +136,8 @@ function AgregarLinea({ c, t, cerrar }: { c: Ctx; t: TomaI; cerrar: () => void }
           <div><label className="etiqueta" htmlFor="tl-l">Lote</label><input id="tl-l" className="campo" value={f.lote} onChange={(e) => setF({ ...f, lote: e.target.value.toUpperCase() })} /></div>
           <div><label className="etiqueta" htmlFor="tl-v">Vencimiento</label><input id="tl-v" type="date" className="campo" value={f.fechaVencimiento} onChange={(e) => setF({ ...f, fechaVencimiento: e.target.value })} /></div>
         </>}
-        <div><label className="etiqueta" htmlFor="tl-f">Cantidad física</label><input id="tl-f" className="campo num text-right" inputMode="decimal" value={f.fisico} onChange={(e) => setF({ ...f, fisico: e.target.value })} /></div>
-        <div><label className="etiqueta" htmlFor="tl-c">Costo unitario si no existe PPP</label><input id="tl-c" className="campo num text-right" inputMode="decimal" value={f.costo} onChange={(e) => setF({ ...f, costo: e.target.value })} /></div>
+        <div><label className="etiqueta" htmlFor="tl-f">Cantidad física</label><input id="tl-f" className="campo num text-right" inputMode="decimal" value={f.fisico} onChange={(e) => setF({ ...f, fisico: decimalInput(e.target.value) })} /></div>
+        <div><label className="etiqueta" htmlFor="tl-c">Costo unitario si no existe PPP</label><input id="tl-c" className="campo num text-right" inputMode="decimal" value={f.costo} onChange={(e) => setF({ ...f, costo: decimalInput(e.target.value) })} /></div>
       </div>
       {c.msg.error && <Mensaje error={c.msg.error} />}
       <div className="flex justify-end gap-2"><button type="button" className="boton-sec" onClick={cerrar}>Cancelar</button>

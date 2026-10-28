@@ -10,7 +10,7 @@ import { sumarDiasFechaISO } from '@/rcv/leer';
 import { validarDetalleRCV, type LineaDetalle } from '@/rcv/detalle';
 import { EditorLineas, ListaCuentas, type CentroOpcion } from '@/components/editor-lineas';
 import { Mensaje } from '@/components/form-estado';
-import { hoyISO, MESES } from '@/lib/formato';
+import { hoyISO, MESES, milesInput } from '@/lib/formato';
 import { registrarDocumentos } from '../../rcv/acciones';
 
 const entero = (v: string) => Math.round(Number(v.replace(/\./g, '')) || 0);
@@ -64,7 +64,7 @@ export function FormDocumento({ empresaId, tipo, cuentas, centros }: { empresaId
   const campo = (k: 'exento' | 'neto' | 'otros', etiqueta: string) => (
     <div>
       <label className="etiqueta" htmlFor={k}>{etiqueta}</label>
-      <input id={k} inputMode="numeric" value={h[k] || ''} onChange={(e) => setH({ ...h, [k]: entero(e.target.value) })} className="campo num text-right" />
+      <input id={k} inputMode="numeric" value={h[k] ? milesInput(h[k]) : ''} onChange={(e) => setH({ ...h, [k]: entero(e.target.value) })} className="campo num text-right" />
     </div>
   );
 
@@ -97,7 +97,7 @@ export function FormDocumento({ empresaId, tipo, cuentas, centros }: { empresaId
         {campo('neto', 'Neto')}
         <div>
           <label className="etiqueta" htmlFor="iva">IVA {h.ivaManual ? '(manual)' : '(19%)'}</label>
-          <input id="iva" inputMode="numeric" value={iva || ''} onChange={(e) => setH({ ...h, iva: entero(e.target.value), ivaManual: true })} className="campo num text-right" />
+          <input id="iva" inputMode="numeric" value={iva ? milesInput(iva) : ''} onChange={(e) => setH({ ...h, iva: entero(e.target.value), ivaManual: true })} className="campo num text-right" />
         </div>
         {tipo === 'compra' ? campo('otros', 'Otros impuestos') : <div />}
         <div className="sm:col-span-2">

@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { liquidacionMes, CONTRATOS_AFC, type Trabajador, type ContextoRem } from '@/remuneraciones/calculo';
 import { rutParse } from '@/motor/rut';
-import { clp, MESES, decimalCL, decimalCorto, decimalTexto } from '@/lib/formato';
+import { clp, MESES, decimalCL, decimalCorto, decimalTexto, milesInput } from '@/lib/formato';
 import { Mensaje } from '@/components/form-estado';
 import { guardarTrabajador } from '../../acciones';
 
@@ -47,7 +47,7 @@ export function FormTrabajador({ empresaId, trabajador, ctx, uf, utm, anio, mes,
     <div>
       <label className="etiqueta" htmlFor={`f-${String(k)}`}>{l}</label>
       <input id={`f-${String(k)}`} disabled={disabled || !escribe} inputMode={tipo === 'texto' ? undefined : 'decimal'}
-        value={tipo === 'texto' ? String(f[k] ?? '') : tipo === 'dec' || tipo === 'uf' ? (txt[k] ?? decimalTexto(f[k] as number)) : (f[k] as number) || ''}
+        value={tipo === 'texto' ? String(f[k] ?? '') : tipo === 'dec' || tipo === 'uf' ? (txt[k] ?? decimalTexto(f[k] as number)) : (f[k] as number) ? milesInput(f[k] as number) : ''}
         onChange={(e) => set(k, tipo === 'texto' ? e.target.value : tipo === 'dec' || tipo === 'uf' ? (setTxt((x) => ({ ...x, [k]: e.target.value })), (tipo === 'uf' ? decimalCorto : decimalCL)(e.target.value)) : num(e.target.value))}
         className={`campo ${tipo !== 'texto' ? 'num text-right' : ''}`} />
     </div>

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import type { Trabajador } from '@/remuneraciones/calculo';
-import { clp, fechaCL, hoyISO, MESES } from '@/lib/formato';
+import { clp, fechaCL, hoyISO, MESES, milesInput } from '@/lib/formato';
 import { Mensaje } from '@/components/form-estado';
 import { guardarAnticipo, borrarAnticipo } from '../../acciones';
 
@@ -43,7 +43,7 @@ export function Anticipos({ empresaId, trabajador, cerrados, tesoreria, escribe 
       {escribe && (
         <div className="grid gap-2 sm:grid-cols-[150px_130px_1fr_150px_auto] sm:items-end">
           <div><label className="etiqueta" htmlFor="a-fecha">Fecha</label><input id="a-fecha" type="date" value={a.fecha} onChange={(e) => setA({ ...a, fecha: e.target.value, mes_desc: e.target.value.slice(0, 7) })} className="campo" /></div>
-          <div><label className="etiqueta" htmlFor="a-monto">Monto</label><input id="a-monto" inputMode="numeric" value={a.monto || ''} onChange={(e) => setA({ ...a, monto: Math.round(Number(e.target.value.replace(/\./g, '')) || 0) })} className="campo num text-right" /></div>
+          <div><label className="etiqueta" htmlFor="a-monto">Monto</label><input id="a-monto" inputMode="numeric" value={a.monto ? milesInput(a.monto) : ''} onChange={(e) => setA({ ...a, monto: Math.round(Number(e.target.value.replace(/\./g, '')) || 0) })} className="campo num text-right" /></div>
           <div><label className="etiqueta" htmlFor="a-motivo">Motivo</label><input id="a-motivo" value={a.motivo} onChange={(e) => setA({ ...a, motivo: e.target.value })} className="campo" /></div>
           <div><label className="etiqueta" htmlFor="a-mes">Descontar en</label><input id="a-mes" type="month" value={a.mes_desc} onChange={(e) => setA({ ...a, mes_desc: e.target.value })} className="campo" /></div>
           <button type="button" className="boton" disabled={pendiente || !a.monto} onClick={() => run(() => guardarAnticipo(empresaId, { ...a, trabajador_id: trabajador.id }, pagar ? { cuenta } : undefined))}>Agregar</button>

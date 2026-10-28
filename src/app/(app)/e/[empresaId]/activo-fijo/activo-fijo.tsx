@@ -3,7 +3,7 @@
 import { Fragment, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { AF_CATEGORIAS, afCat, calcularDepreciacionContable, calcularDepreciacionTributaria, type Bien } from '@/activo-fijo/depreciacion';
-import { clp, decimalCL, hoyISO } from '@/lib/formato';
+import { clp, decimalCL, hoyISO, milesInput } from '@/lib/formato';
 import { Mensaje } from '@/components/form-estado';
 import { guardarActivo, eliminarActivo, contabilizarDepreciacion, type FormActivo } from './acciones';
 
@@ -46,21 +46,21 @@ export function ActivoFijo({ empresaId, anio, filas, compras, escribe, depreciac
     const b = f.ficha;
     setEd({ id: f.id, f: { descripcion: f.descripcion, categoria: f.categoria, fecha: f.fecha, documentoId: f.documentoId, metodoContable: b.metodoContable || 'lineal', metodoTributario: b.metodoTributario || b.metodo || 'lineal',
       fechaInicioDepContable: b.fechaInicioDepContable || `${+f.fecha.slice(0, 4) + 1}-01-01`, fechaInicioDepTributaria: b.fechaInicioDepTributaria || `${+f.fecha.slice(0, 4) + 1}-01-01`,
-      txt: { valor: String(b.valorContable ?? b.valor ?? ''), residual: String(b.residualContable ?? b.residual ?? 0), vidaContable: String(b.vidaContable || b.vida || afCat(f.categoria).vida),
-        valorTributario: String(b.valorTributario ?? b.valor ?? ''), residualTributario: String(b.residualTributario ?? 0), vidaTributaria: String(b.vidaTributaria || b.vida || afCat(f.categoria).vida) } } });
+      txt: { valor: milesInput(b.valorContable ?? b.valor ?? ''), residual: milesInput(b.residualContable ?? b.residual ?? 0), vidaContable: String(b.vidaContable || b.vida || afCat(f.categoria).vida),
+        valorTributario: milesInput(b.valorTributario ?? b.valor ?? ''), residualTributario: milesInput(b.residualTributario ?? 0), vidaTributaria: String(b.vidaTributaria || b.vida || afCat(f.categoria).vida) } } });
   };
   const elegirCompra = (id: string) => {
     const d = compras.find((x) => x.id === id);
     if (!d) { set({ documentoId: null }); return; }
     setEd((e) => e ? { ...e, f: { ...e.f, documentoId: id, fecha: d.fecha, fechaInicioDepContable: d.fecha, fechaInicioDepTributaria: d.fecha, descripcion: e.f.descripcion || d.rotulo.split(' · ').slice(1).join(' · '),
-      txt: { ...e.f.txt, valor: String(d.base), valorTributario: String(d.base) } } } : e);
+      txt: { ...e.f.txt, valor: milesInput(d.base), valorTributario: milesInput(d.base) } } } : e);
   };
   const guardar = () => form && run(() => guardarActivo(empresaId, ed!.id, {
     descripcion: form.descripcion, categoria: form.categoria, fecha: form.fecha, documentoId: form.documentoId,
     valor: decimalCL(form.txt.valor), residual: decimalCL(form.txt.residual), vidaContable: decimalCL(form.txt.vidaContable), metodoContable: form.metodoContable, fechaInicioDepContable: form.fechaInicioDepContable,
     valorTributario: decimalCL(form.txt.valorTributario), residualTributario: decimalCL(form.txt.residualTributario), vidaTributaria: decimalCL(form.txt.vidaTributaria), metodoTributario: form.metodoTributario, fechaInicioDepTributaria: form.fechaInicioDepTributaria,
   }), true);
-  const num = (k: keyof Txt, l: string) => <div><label className="etiqueta" htmlFor={`af-${k}`}>{l}</label><input id={`af-${k}`} inputMode="decimal" value={form!.txt[k]} onChange={(e) => setT(k, e.target.value)} className="campo num text-right" /></div>;
+  const num = (k: keyof Txt, l: string) => <div><label className="etiqueta" htmlFor={`af-${k}`}>{l}</label><input id={`af-${k}`} inputMode="decimal" value={form!.txt[k]} onChange={(e) => setT(k, k.startsWith('vida') ? e.target.value : milesInput(e.target.value))} className="campo num text-right" /></div>;
   const metodo = (k: 'metodoContable' | 'metodoTributario', l: string) => (
     <div><label className="etiqueta" htmlFor={`af-${k}`}>{l}</label><select id={`af-${k}`} value={form![k]} onChange={(e) => set({ [k]: e.target.value })} className="campo"><option value="lineal">Lineal (vida normal)</option><option value="acelerada">Acelerada (1/3 de la vida)</option></select></div>
   );

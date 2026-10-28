@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { clp, MESES, decimalCL } from '@/lib/formato';
+import { clp, MESES, decimalCL, milesInput } from '@/lib/formato';
 import { Mensaje } from '@/components/form-estado';
 import { cambiarMes, provisionIncobrables, provisionFeriado, cerrarEjercicio, reabrirEjercicio, generarApertura } from './acciones';
 
@@ -26,7 +26,7 @@ export function Cierre({ empresaId, d, escribe, admin }: { empresaId: string; d:
   const [pct, setPct] = useState('2');
   const sugerido = d.vacaciones.reduce((s, v) => s + v.monto, 0);
   const ajusteSugerido = Math.max(0, sugerido - d.provVacaciones);
-  const [fer, setFer] = useState(ajusteSugerido ? String(ajusteSugerido) : '');
+  const [fer, setFer] = useState(ajusteSugerido ? milesInput(Math.round(ajusteSugerido)) : '');
   const [factor, setFactor] = useState('');
   const [motivo, setMotivo] = useState('');
   const cerrado = !!d.cierre;
@@ -81,7 +81,7 @@ export function Cierre({ empresaId, d, escribe, admin }: { empresaId: string; d:
               </table>
             ) : <p className="text-xs text-tenue">Sin trabajadores con saldo de vacaciones.</p>}
             <div className="flex items-end gap-2">
-              <div><label className="etiqueta" htmlFor="prov-fer">Monto a provisionar</label><input id="prov-fer" value={fer} onChange={(e) => setFer(e.target.value)} className="campo num w-40" inputMode="numeric" placeholder="0" /></div>
+              <div><label className="etiqueta" htmlFor="prov-fer">Monto a provisionar</label><input id="prov-fer" value={fer} onChange={(e) => setFer(milesInput(e.target.value))} className="campo num w-40" inputMode="numeric" placeholder="0" /></div>
               {escribe && <button type="button" className="boton-sec" disabled={pendiente || cerrado || !(decimalCL(fer) > 0)} onClick={() => run(() => provisionFeriado(empresaId, d.anio, decimalCL(fer)), `¿Generar la provisión de feriado por ${clp(decimalCL(fer))} al 31-12-${d.anio}?`)}>Generar provisión</button>}
             </div>
             {ajusteSugerido > 0 && <p className="text-[10px] text-tenue">Sugerido: {clp(ajusteSugerido)} (requerido menos lo ya provisionado).</p>}

@@ -465,6 +465,11 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Aviso de actualización: /api/version (fuera del proxy, no renueva la sesión ni la actividad) entrega versión, build y novedades. El componente AvisoVersion (layout raíz) lo consulta cada 5 minutos y al volver a la pestaña; si el build cambió muestra "Hay una nueva versión" con las novedades y "Actualizar ahora" / "Más tarde".
 - En cada entrega: subir "version" en package.json y anotar las novedades en src/lib/version.ts.
 
+## Montos con separador de miles (10z19, versión 1.19.0)
+- Todos los campos de monto se formatean mientras se digita: pesos con milesInput (sin decimales, un número se redondea) y valores con decimales (UF, cantidades, costos unitarios, parámetros) con decimalInput (miles con punto, coma decimal; un punto escrito al final se toma como coma). Ambos se leen de vuelta con decimalCL/montoCL.
+- Aplicado en F29 (UTM y remanente), conciliación, honorarios, documentos, anticipos, finiquitos (montos y UF), pagos, apertura, comprobantes tipo, cierre, activo fijo, inventario (productos, movimientos, órdenes, tomas), parámetros, tabla UF/UTM y ficha del trabajador. Porcentajes, horas y días quedan como estaban.
+- Test: src/lib/__tests__/formato-input.test.ts.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:

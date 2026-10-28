@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Trabajador } from '@/remuneraciones/calculo';
 import { calcularFiniquito, CAUSALES, NUMERALES_160, MARCADORES, causalInfo, textoFiniquito, type FormFiniquito, type FilaExtra } from '@/remuneraciones/finiquito';
-import { clp, fechaCL, decimalCL, decimalTexto } from '@/lib/formato';
+import { clp, fechaCL, decimalCL, milesInput, decimalInput } from '@/lib/formato';
 import { leerArchivoTexto } from '@/lib/leer-texto';
 import { Mensaje } from '@/components/form-estado';
 import { guardarFiniquito } from './acciones';
@@ -18,7 +18,7 @@ export function FormularioFiniquito({ empresaId, id, datos, trabajadores, inicia
 }) {
   const router = useRouter();
   const [f, setF] = useState<FormFiniquito>(inicial);
-  const [ufTxt, setUfTxt] = useState(decimalTexto(+inicial.uf));
+  const [ufTxt, setUfTxt] = useState(+inicial.uf ? decimalInput(+inicial.uf, 2) : '');
   const [texto, setTexto] = useState(textoInicial);
   const [editTexto, setEditTexto] = useState(false);
   const [msg, setMsg] = useState<{ ok?: string; error?: string }>({});
@@ -53,7 +53,7 @@ export function FormularioFiniquito({ empresaId, id, datos, trabajadores, inicia
         {arr.map((x, i) => (
           <div key={i} className="mb-1 flex gap-2">
             <input aria-label={`${titulo} descripción ${i + 1}`} value={x.d} onChange={(e) => upd(i, { d: e.target.value })} placeholder="Descripción" className="campo flex-[2]" />
-            <input aria-label={`${titulo} monto ${i + 1}`} value={String(x.m)} onChange={(e) => upd(i, { m: e.target.value })} placeholder="Monto" inputMode="numeric" className="campo num flex-1 text-right" />
+            <input aria-label={`${titulo} monto ${i + 1}`} value={milesInput(typeof x.m === 'number' ? Math.round(x.m) : x.m)} onChange={(e) => upd(i, { m: milesInput(e.target.value) })} placeholder="Monto" inputMode="numeric" className="campo num flex-1 text-right" />
             <button type="button" className="text-tenue hover:text-peligro" onClick={() => set({ [k]: arr.filter((_, j) => j !== i) } as Partial<FormFiniquito>)}>✕</button>
           </div>
         ))}
@@ -105,7 +105,7 @@ export function FormularioFiniquito({ empresaId, id, datos, trabajadores, inicia
           {campo('fecha', 'Fecha del finiquito', { tipo: 'date' })}
           {campo('ciudad', 'Ciudad de firma', { tipo: 'text' })}
           {campo('formaPago', 'Forma de pago', { tipo: 'text', ph: 'transferencia, cheque N°…, vale vista…' })}
-          <div><label className="etiqueta" htmlFor="fin-uf">UF a la fecha de término</label><input id="fin-uf" inputMode="decimal" value={ufTxt} onChange={(e) => setUfTxt(e.target.value)} className="campo num" /></div>
+          <div><label className="etiqueta" htmlFor="fin-uf">UF a la fecha de término</label><input id="fin-uf" inputMode="decimal" value={ufTxt} onChange={(e) => setUfTxt(decimalInput(e.target.value, 2))} className="campo num" /></div>
         </section>
 
         <section className="tarjeta space-y-3 p-4 text-sm">
