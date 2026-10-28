@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { BotonTema } from '@/components/tema';
+import { VERSION, fechaCompilacion } from '@/lib/version';
 
 export default function AuthLayout({ children }: LayoutProps<'/'>) {
   return (
@@ -11,6 +12,7 @@ export default function AuthLayout({ children }: LayoutProps<'/'>) {
           <div className="text-sm text-tenue">Sistema contable multiempresa</div>
         </div>
         <div className="tarjeta p-6">{children}</div>
+        <p className="mt-4 text-center text-xs text-tenue">Versión {VERSION}{fechaCompilacion() && ` · ${fechaCompilacion()}`}</p>
       </div>
     </main>
   );

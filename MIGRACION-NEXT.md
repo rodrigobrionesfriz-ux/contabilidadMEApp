@@ -458,6 +458,13 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - El proxy lleva cualquier ?code= que llegue fuera de /auth a /auth/confirm; ahí, si la recuperación se pidió hace menos de una hora, se pasa a "Nueva contraseña". Mensajes claros si el enlace se abre en otro navegador o dirección.
 - Recomendado en Supabase → URL Configuration: Site URL https://contabilidad-me-app.vercel.app y en Redirect URLs https://contabilidad-me-app*.vercel.app/**.
 
+## Inicio en el celular, empresas propias y versión (10z18)
+- Barra superior compacta en el celular (sólo el ícono, "🛡️" sin texto); tarjetas de empresa más bajas, con el nombre completo y el giro en una línea. Sin desborde a lo ancho.
+- Empresas: se listan sólo las propias (donde el usuario es miembro). El administrador del sistema ve abajo "🛡️ Empresas de otros usuarios (n)" → /empresas?otras=1, con el dueño de cada una (miembros con rol admin; si no hay, quien la creó). Sin migración: el administrador ya lee miembros y perfiles.
+- Versión: "version" de package.json (hoy 1.18.0) se muestra al pie del login con la fecha de compilación. next.config.ts publica NEXT_PUBLIC_APP_VERSION, NEXT_PUBLIC_BUILD_ID (commit de Vercel) y NEXT_PUBLIC_BUILD_FECHA.
+- Aviso de actualización: /api/version (fuera del proxy, no renueva la sesión ni la actividad) entrega versión, build y novedades. El componente AvisoVersion (layout raíz) lo consulta cada 5 minutos y al volver a la pestaña; si el build cambió muestra "Hay una nueva versión" con las novedades y "Actualizar ahora" / "Más tarde".
+- En cada entrega: subir "version" en package.json y anotar las novedades en src/lib/version.ts.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:

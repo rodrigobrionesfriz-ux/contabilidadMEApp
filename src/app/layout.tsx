@@ -5,6 +5,7 @@ import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/600.css';
 import './globals.css';
 import { SCRIPT_TEMA } from '@/lib/tema';
+import { AvisoVersion } from '@/components/aviso-version';
 
 export const metadata: Metadata = {
   title: { default: 'Contabilidad ME', template: '%s · Contabilidad ME' },
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA }} />
       </head>
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">{children}<AvisoVersion /></body>
     </html>
   );
 }

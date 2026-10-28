@@ -19,6 +19,10 @@ export interface EmpresaDelUsuario {
   razon_social: string;
   giro: string | null;
   rol: Rol;
+  /** El usuario es miembro de la empresa (para el administrador del sistema, las que no son suyas vienen con false). */
+  propia: boolean;
+  /** Dueños de la empresa (sólo se calcula para el administrador, en las empresas de otros usuarios). */
+  duenos?: string[];
 }
 
 /** Usuario actual validado (o redirección a /login). Memoizado por request. */
@@ -58,11 +62,25 @@ export const empresasDelUsuario = cache(async (): Promise<EmpresaDelUsuario[]> =
   const supabase = await crearClienteServidor();
   const acceso = await miAcceso();
   if (acceso.admin) {
-    const { data: todas, error: e1 } = await supabase.from('empresas').select('id, rut, razon_social, giro');
+    const [{ data: todas, error: e1 }, { data: miembros, error: e2 }] = await Promise.all([
+      supabase.from('empresas').select('id, rut, razon_social, giro, creada_por'),
+      supabase.from('miembros').select('empresa_id, usuario_id, rol').eq('estado', 'activo'),
+    ]);
     if (e1) throw new Error(e1.message);
-    // El administrador del sistema trabaja como dueño en todas
-    return ((todas ?? []) as Omit<EmpresaDelUsuario, 'rol'>[]).map((e) => ({ ...e, rol: 'admin' as Rol }))
-      .sort((a, b) => a.razon_social.localeCompare(b.razon_social, 'es'));
+    if (e2) throw new Error(e2.message);
+    type E = Omit<EmpresaDelUsuario, 'rol' | 'propia' | 'duenos'> & { creada_por: string | null };
+    type M = { empresa_id: string; usuario_id: string; rol: Rol };
+    const ms = (miembros ?? []) as M[];
+    const ids = [...new Set([...ms.map((m) => m.usuario_id), ...((todas ?? []) as E[]).map((e) => e.creada_por).filter((x): x is string => !!x)])];
+    const { data: perfiles } = ids.length ? await supabase.from('perfiles').select('id, nombre, email').in('id', ids) : { data: [] };
+    const nombre = new Map(((perfiles ?? []) as { id: string; nombre: string | null; email: string | null }[]).map((p) => [p.id, p.nombre || p.email || 'Usuario']));
+    // El administrador del sistema trabaja como dueño en todas; «propias» son aquellas donde además es miembro
+    return ((todas ?? []) as E[]).map(({ creada_por, ...e }) => {
+      const propia = ms.some((m) => m.empresa_id === e.id && m.usuario_id === u.id);
+      const duenosIds = ms.filter((m) => m.empresa_id === e.id && m.rol === 'admin').map((m) => m.usuario_id);
+      const duenos = (duenosIds.length ? duenosIds : creada_por ? [creada_por] : []).map((id) => nombre.get(id) ?? 'Usuario');
+      return { ...e, rol: 'admin' as Rol, propia, duenos };
+    }).sort((a, b) => a.razon_social.localeCompare(b.razon_social, 'es'));
   }
   const { data, error } = await supabase
     .from('miembros')
@@ -72,7 +90,7 @@ export const empresasDelUsuario = cache(async (): Promise<EmpresaDelUsuario[]> =
   if (error) throw new Error(error.message);
   type Fila = { rol: Rol; empresas: { id: string; rut: string; razon_social: string; giro: string | null } };
   return ((data ?? []) as unknown as Fila[])
-    .map((f) => ({ ...f.empresas, rol: f.rol }))
+    .map((f) => ({ ...f.empresas, rol: f.rol, propia: true }))
     .sort((a, b) => a.razon_social.localeCompare(b.razon_social, 'es'));
 });
 
