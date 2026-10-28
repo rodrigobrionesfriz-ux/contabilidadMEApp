@@ -20,6 +20,7 @@ export default async function AsientosTipoPage({ params }: PageProps<'/e/[empres
   return (
     <div className="space-y-4">
       <div>
+        <Link href={`/e/${empresaId}/asientos/nuevo`} className="text-sm text-acento hover:underline">← Comprobantes</Link>
         <h1 className="text-xl font-semibold">Asientos tipo</h1>
         <p className="text-sm text-tenue">Plantillas con la estructura de asientos recurrentes (cuentas, glosa, centros y, si quieres, montos), incluida la distribución de un gasto por porcentaje. Se aplican en <Link className="text-acento hover:underline" href={`/e/${empresaId}/asientos/nuevo`}>Nuevo asiento</Link>.</p>
       </div>

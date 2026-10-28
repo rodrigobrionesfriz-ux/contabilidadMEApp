@@ -12,37 +12,42 @@ import { moduloDeRuta, type Permiso } from '@/lib/modulos';
  * (ventas y compras, balance y resultados); `def` es su valor por defecto.
  * Una ruta que parte con «/» y sin base (absoluta) sale de la empresa.
  */
-interface Item { ruta: string; nombre: string; icono: string; roles?: Rol[]; q?: Record<string, string>; def?: Record<string, string>; absoluta?: boolean }
+interface Item { ruta: string; nombre: string; icono: string; roles?: Rol[]; q?: Record<string, string>; def?: Record<string, string>; absoluta?: boolean; tambien?: string[] }
 interface Grupo { id: string; titulo: string; icono: string; items: Item[] }
 
 const ESCRIBE: Rol[] = ['admin', 'contador'];
 const GRUPOS: Grupo[] = [
   {
     id: 'registros', titulo: 'Registros', icono: '🗂️', items: [
+      { ruta: '/rcv', nombre: 'Importador RCV', icono: '📥', roles: ESCRIBE },
       { ruta: '/libro', nombre: 'Libro de Ventas', icono: '🛒', q: { tipo: 'venta' }, def: { tipo: 'compra' } },
       { ruta: '/libro', nombre: 'Libro de Compras', icono: '🧾', q: { tipo: 'compra' }, def: { tipo: 'compra' } },
-      { ruta: '/rcv', nombre: 'Importar RCV', icono: '📥', roles: ESCRIBE },
       { ruta: '/documentos/nuevo', nombre: 'Nuevo documento', icono: '➕', roles: ESCRIBE },
       { ruta: '/honorarios', nombre: 'Honorarios', icono: '📝' },
-      { ruta: '/remuneraciones', nombre: 'Remuneraciones', icono: '👷' },
       { ruta: '/pagos', nombre: 'Pagos y Cobros', icono: '💳', roles: ESCRIBE },
+      // Los asientos tipo se administran desde Comprobantes (queda marcado al estar en ellos)
+      { ruta: '/asientos/nuevo', nombre: 'Comprobantes', icono: '📔', roles: ESCRIBE, tambien: ['/asientos/tipo'] },
+      { ruta: '/asignar-cc', nombre: 'Asignar Centros de Costo', icono: '🎯' },
+    ],
+  },
+  {
+    id: 'mantenedores', titulo: 'Mantenedores', icono: '🗃️', items: [
       { ruta: '/fichas', nombre: 'Proveedores y Clientes', icono: '📇' },
       { ruta: '/auxiliares', nombre: 'Auxiliares', icono: '📒' },
-      { ruta: '/asientos/nuevo', nombre: 'Comprobantes', icono: '📔', roles: ESCRIBE },
-      { ruta: '/asientos/tipo', nombre: 'Asientos tipo', icono: '📋' },
     ],
   },
   { id: 'inventario', titulo: 'Inventario', icono: '📦', items: [{ ruta: '/inventario', nombre: 'Control de Inventario', icono: '📦' }] },
+  { id: 'remuneraciones', titulo: 'Remuneraciones', icono: '👷', items: [{ ruta: '/remuneraciones', nombre: 'Remuneraciones', icono: '👷' }] },
   {
     id: 'reportes', titulo: 'Reportes', icono: '📚', items: [
       { ruta: '/diario', nombre: 'Libro Diario', icono: '📖' },
-      { ruta: '/hojas-foliadas', nombre: 'Hojas foliadas SII', icono: '🖨️' },
       { ruta: '/mayor', nombre: 'Libro Mayor', icono: '📊' },
       { ruta: '/estados', nombre: 'Balance General', icono: '⚖️', q: { vista: 'balance' }, def: { vista: 'balance' } },
-      { ruta: '/estados', nombre: 'Resultados', icono: '📈', q: { vista: 'resultados' }, def: { vista: 'balance' } },
       { ruta: '/balance', nombre: 'Balance 8 columnas', icono: '📋' },
+      { ruta: '/estados', nombre: 'Resultados', icono: '📈', q: { vista: 'resultados' }, def: { vista: 'balance' } },
       { ruta: '/flujo-caja', nombre: 'Flujo de Caja', icono: '💵' },
       { ruta: '/conciliacion', nombre: 'Conciliación Bancaria', icono: '🏦' },
+      { ruta: '/hojas-foliadas', nombre: 'Hojas foliadas SII', icono: '🖨️' },
     ],
   },
   {
@@ -60,7 +65,6 @@ const GRUPOS: Grupo[] = [
       { ruta: '/primeros-pasos', nombre: 'Primeros pasos', icono: '🚀' },
       { ruta: '/empresa', nombre: 'Empresa', icono: '🏢', roles: ['admin'] },
       { ruta: '/centros-costo', nombre: 'Centros de Costo', icono: '📊' },
-      { ruta: '/asignar-cc', nombre: 'Asignar Centros de Costo', icono: '🎯' },
       { ruta: '/plan-cuentas', nombre: 'Plan de Cuentas', icono: '📋' },
       { ruta: '/apertura', nombre: 'Balance de Apertura', icono: '🏁' },
       { ruta: '/importar', nombre: 'Importar respaldo', icono: '📥', roles: ['admin'] },
@@ -132,7 +136,9 @@ export function Navegacion({ base, rol, empresa, buscador, empresaId, empresas, 
 
   const esActivo = (it: Item) => {
     const camino = it.absoluta ? it.ruta : base + it.ruta;
-    if (!(ruta === camino || ruta.startsWith(camino + '/'))) return false;
+    const dentro = (c: string) => ruta === c || ruta.startsWith(c + '/');
+    if ((it.tambien || []).some((t) => dentro(base + t))) return true;
+    if (!dentro(camino)) return false;
     return Object.entries(it.q || {}).every(([k, v]) => (sp.get(k) || it.def?.[k]) === v);
   };
   const conAcceso = (it: Item) => { const m = it.absoluta ? null : moduloDeRuta(base + it.ruta); return !m || permisos[m] !== 'no'; };

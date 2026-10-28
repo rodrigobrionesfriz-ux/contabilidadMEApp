@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { requerirEmpresa, puedeEscribir } from '@/lib/auth';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { FormAsiento, type CuentaOpcion } from './form';
@@ -22,7 +23,10 @@ export default async function NuevoAsientoPage({ params }: PageProps<'/e/[empres
   if (cuentas.error) throw new Error(cuentas.error.message);
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Nuevo asiento manual</h1>
+      <div className="flex flex-wrap items-end justify-between gap-2">
+        <h1 className="text-xl font-semibold">Nuevo asiento manual</h1>
+        <Link href={`/e/${empresaId}/asientos/tipo`} className="boton-sec">📋 Asientos tipo</Link>
+      </div>
       <FormAsiento empresaId={empresaId} cuentas={cuentas.data as CuentaOpcion[]} centros={ccs.data ?? []} plantillas={plantillas} />
     </div>
   );
