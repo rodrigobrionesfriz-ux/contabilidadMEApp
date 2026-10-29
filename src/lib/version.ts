@@ -5,7 +5,8 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'RCV paso 2: columnas de centro de costo, debe y haber más anchas y con letra más chica, para que se lean completas.',
+  'Comprobantes: nueva pestaña "Buscar comprobantes" con búsqueda al escribir por N°, monto o texto (glosa, cuenta, RUT, folio).',
+  'Filtro por rango de fechas, con atajos "Este mes" y el año contable.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */

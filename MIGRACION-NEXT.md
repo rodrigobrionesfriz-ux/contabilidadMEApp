@@ -479,6 +479,11 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ## RCV paso 2: columnas legibles (10z21, versión 1.20.1)
 - Tabla de líneas en letra chica (text-xs) y con menos relleno interno; Centro de costo w-48, Tipo w-36, Debe y Haber w-32 (caben 13 caracteres, "9.999.999.999"); Cuenta 220 px. El selector de centro muestra el nombre completo al pasar el mouse.
 
+## Buscar comprobantes (10z22, versión 1.21.0)
+- Nueva página /e/[id]/asientos ("🔎 Buscar comprobantes"), con pestañas compartidas con Nuevo asiento (asientos/pestanas.tsx) y entrada propia en el menú Registros (visible también para perfiles de consulta).
+- Rango de fechas en la URL (?desde=&hasta=, por defecto el año contable): el servidor trae los asientos del rango con sus líneas. La búsqueda es en el navegador mientras se escribe (src/lib/buscar-asientos.ts): cada palabra debe aparecer; una palabra numérica busca el N° (exacto primero), montos de las líneas y el total (con o sin puntos; desde 3 dígitos también parcial), RUT, folios y códigos; el texto ignora tildes y mayúsculas y mira glosa, glosas de línea, cuenta, nombre de cuenta y centro de costo.
+- Resultados: N°, fecha, tipo, glosa (con la línea que calza), total y Editar si corresponde; máximo 300 filas a la vista.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:
