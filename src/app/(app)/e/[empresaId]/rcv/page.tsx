@@ -21,5 +21,5 @@ export default async function RcvPage({ params, searchParams }: PageProps<'/e/[e
     : resumen.find((r) => r.pendientes > 0)?.periodo ?? resumen[0]?.periodo ?? `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}`;
   const carga = await abrirCarga(empresaId, tipo, periodo);
   return <ImportadorRCV key={`${tipo}-${periodo}`} empresaId={empresaId} tipo={tipo} cuentas={plan} centros={centros}
-    resumenInicial={resumen} periodoInicial={periodo} cargaInicial={carga} />;
+    resumenInicial={resumen} periodoInicial={periodo} cargaInicial={carga} rutEmpresa={empresa.rut} />;
 }

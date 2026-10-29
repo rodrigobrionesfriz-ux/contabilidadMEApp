@@ -1,5 +1,6 @@
 'use server';
 
+import { errorArchivoRCV } from '@/rcv/archivo';
 import { revalidatePath } from 'next/cache';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { planDeEmpresa } from '@/lib/datos/maestros';
@@ -144,6 +145,10 @@ export async function guardarCarga(empresaId: string, tipo: TipoRCV, periodo: st
   if (!periodoOk(periodo)) return { ok: false, error: 'Período no válido' };
   if (!Array.isArray(docs) || docs.length > 5000) return { ok: false, error: 'El archivo tiene demasiados documentos' };
   const supabase = await crearClienteServidor();
+  // El RCV debe ser de esta empresa (el SII pone su RUT en el nombre del archivo)
+  const { data: emp } = await supabase.from('empresas').select('rut').eq('id', empresaId).maybeSingle();
+  const errArchivo = errorArchivoRCV(archivo, tipo, emp?.rut ?? '');
+  if (errArchivo) return { ok: false, error: errArchivo };
   const { data: previa, error: e1 } = await supabase.from('rcv_cargas').select('docs').eq('empresa_id', empresaId).eq('tipo', tipo).eq('periodo', periodo).maybeSingle();
   if (e1) return { ok: false, error: e1.message };
   const porClave = new Map<string, DocRCV>(((previa?.docs ?? []) as DocRCV[]).map((d) => [refDocumento(tipo, d), d]));
