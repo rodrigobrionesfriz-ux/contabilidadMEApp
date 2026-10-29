@@ -476,6 +476,9 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Siguen bloqueando: líneas afectas/exentas/otros impuestos que no suman lo del RCV (son el reparto que hace el usuario), y en facturas de compra con retención una diferencia de total mayor a $1.
 - La tabla de control muestra en IVA el valor del RCV. Fixture detalle-oro.json actualizado; tests nuevos en rcv.test.ts y documento.test.ts.
 
+## RCV paso 2: columnas legibles (10z21, versión 1.20.1)
+- Tabla de líneas en letra chica (text-xs) y con menos relleno interno; Centro de costo w-48, Tipo w-36, Debe y Haber w-32 (caben 13 caracteres, "9.999.999.999"); Cuenta 220 px. El selector de centro muestra el nombre completo al pasar el mouse.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:

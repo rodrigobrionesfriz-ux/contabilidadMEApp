@@ -196,12 +196,12 @@ export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centr
       {/* Asiento editable */}
       <datalist id="cuentas-asiento">{cuentas.filter((c) => plan.regla(c.cd)?.aceptaMovimientos && plan.regla(c.cd)?.activa).map((c) => <option key={c.cd} value={`${c.cd} – ${c.nm}`} />)}</datalist>
       <div className="overflow-x-auto rounded-lg border border-borde">
-        <table className="w-full min-w-[1020px] table-fixed text-sm">
+        <table className="w-full min-w-[1020px] table-fixed text-xs">
           <thead className="bg-panel-2 text-left text-[11px] font-semibold tracking-wide text-tenue uppercase">
             <tr className="border-b border-borde">
-              <th className="w-8 px-2 py-2 text-center">#</th><th className="w-[250px] px-2 py-2">Cuenta</th><th className="px-2 py-2">Descripción</th>
-              <th className="w-40 px-2 py-2">Centro de costo</th><th className="w-32 px-2 py-2">Tipo</th>
-              <th className="w-28 px-2 py-2 text-right">Debe</th><th className="w-28 px-2 py-2 text-right">Haber</th><th className="w-20" />
+              <th className="w-8 px-2 py-2 text-center">#</th><th className="w-[220px] px-2 py-2">Cuenta</th><th className="px-2 py-2">Descripción</th>
+              <th className="w-48 px-2 py-2">Centro de costo</th><th className="w-36 px-2 py-2">Tipo</th>
+              <th className="w-32 px-2 py-2 text-right">Debe</th><th className="w-32 px-2 py-2 text-right">Haber</th><th className="w-20" />
             </tr>
           </thead>
           <tbody>
@@ -210,7 +210,7 @@ export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centr
               const ld = lado(i);
               const input = (
                 <input inputMode="numeric" maxLength={13} value={miles(l.monto)} onChange={(e) => set(i, { monto: Math.round(Number(e.target.value.replace(/[^0-9]/g, '').slice(0, 10)) || 0) })}
-                  className="campo num w-full py-1 text-right" aria-label={`Monto línea ${i + 1}`} />
+                  className="campo num w-full !px-2 py-1 text-right text-xs" aria-label={`Monto línea ${i + 1}`} />
               );
               return (
                 <tr key={i} className="border-b border-borde/50 align-top">
@@ -218,12 +218,12 @@ export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centr
                   <td className="px-2 py-1.5">
                     <input list="cuentas-asiento" value={regla ? `${l.cuenta} – ${plan.nombre(l.cuenta)}` : l.cuenta}
                       onChange={(e) => set(i, { cuenta: (e.target.value.match(/^\d+/) ?? [''])[0] || e.target.value })}
-                      onFocus={(e) => e.target.select()} placeholder="Cuenta" className="campo num py-1" aria-label={`Cuenta línea ${i + 1}`} />
+                      onFocus={(e) => e.target.select()} placeholder="Cuenta" className="campo num !px-2 py-1 text-xs" aria-label={`Cuenta línea ${i + 1}`} />
                     {l.cuenta && !regla && <div className="mt-0.5 text-[11px] text-aviso">⚠️ cuenta no encontrada</div>}
                   </td>
                   <td className="px-2 py-1.5">
                     <input value={l.desc ?? ''} onChange={(e) => set(i, { desc: e.target.value })} placeholder={l.otroImp ? 'Descripción' : `¿A qué corresponde ${queEs}?`}
-                      className={`campo py-1 ${!l.otroImp && !(l.desc ?? '').trim() ? 'border-aviso/60' : ''}`} aria-label={`Descripción línea ${i + 1}`} />
+                      className={`campo !px-2 py-1 text-xs ${!l.otroImp && !(l.desc ?? '').trim() ? 'border-aviso/60' : ''}`} aria-label={`Descripción línea ${i + 1}`} />
                   </td>
                   <td className="px-2 py-1.5">
                     <SelectorCC valor={l.cc ?? ''} onChange={(v) => set(i, { cc: v })} centros={centros}
@@ -231,7 +231,7 @@ export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centr
                   </td>
                   <td className="px-2 py-1.5">
                     <select value={tipoLinea(l)} onChange={(e) => set(i, { afecto: e.target.value === 'afecto', otroImp: e.target.value === 'otro' || undefined })}
-                      className="campo py-1 text-xs" aria-label={`Tipo línea ${i + 1}`}>
+                      className="campo !px-2 py-1 text-xs" aria-label={`Tipo línea ${i + 1}`}>
                       <option value="afecto">Afecto</option><option value="exento">Exento</option>
                       {tipo === 'compra' && <option value="otro">Otro impuesto</option>}
                     </select>

@@ -23,7 +23,7 @@ export function SelectorCC({ valor, onChange, centros, deshabilitado, requerido,
 }) {
   const principales = centros.filter((c) => c.nivel === 1);
   return (
-    <select value={valor} disabled={deshabilitado} onChange={(e) => onChange(e.target.value)} className="campo py-1 text-xs" aria-label={etiqueta ?? 'Centro de costo'}>
+    <select value={valor} disabled={deshabilitado} onChange={(e) => onChange(e.target.value)} className="campo !px-2 py-1 text-xs" title={centros.find((c) => c.codigo === valor)?.nombre} aria-label={etiqueta ?? 'Centro de costo'}>
       <option value="">{deshabilitado ? 'No admite CC' : requerido ? 'Centro de costo *' : 'Sin centro de costo'}</option>
       {/* Un valor que no está en la lista (p. ej. un id del sistema anterior) se muestra en vez de esconderse */}
       {valor && !centros.some((c) => c.codigo === valor) && <option value={valor}>⚠️ {valor} (no existe)</option>}
