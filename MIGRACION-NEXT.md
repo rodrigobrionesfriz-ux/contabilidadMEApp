@@ -493,6 +493,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Marca de agua (src/components/marca-agua.tsx, en el layout de (app)): public/marca-agua.svg (texto en trazos con Sora 800) usado como máscara y pintado con el color del texto del tema al 4,5%, fijo al centro, detrás del contenido, sin clics y oculto al imprimir.
 - Los colores de la interfaz (botones y enlaces verdes) no cambiaron.
 
+## RCV de otra empresa (10z25, versión 1.22.1)
+- Caso 29/10: en Pipa Gourmet SpA (78.238.896-7) se subió RCV_COMPRA_REGISTRO_77684700-3_202607.csv, el RCV de La Cabaña. El contenido del RCV sólo trae los RUT de proveedores o clientes, no el de la empresa; el SII sí lo pone en el nombre del archivo.
+- src/rcv/archivo.ts: datosDelNombre (RUT con DV válido, tipo RCV_COMPRA/RCV_VENTA y período AAAAMM) y errorArchivoRCV (RUT distinto al de la empresa activa, o compras en ventas y al revés). Se valida en el navegador antes de leer y en guardarCarga (servidor, con el RUT de la empresa desde la base). Si el nombre no trae RUT (archivo renombrado), se acepta como antes.
+- Un RCV ya guardado con el RUT de otra empresa muestra "⛔ Este RCV guardado no corresponde a la empresa" y deshabilita el paso 2; se saca con "Quitar este RCV".
+- Tests: src/rcv/__tests__/archivo.test.ts.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:

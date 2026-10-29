@@ -1,5 +1,6 @@
 'use client';
 
+import { errorArchivoRCV } from '@/rcv/archivo';
 import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { PlanCuentas, type CuentaBase } from '@/motor/plan-cuentas';
@@ -49,9 +50,9 @@ function armarFilas(tipo: TipoRCV, c: CargaRCV): Fila[] {
 }
 const nombrePeriodo = (p: string) => (p ? `${MESES[Number(p.slice(5, 7)) - 1]} ${p.slice(0, 4)}` : '');
 
-export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicial, periodoInicial, cargaInicial }: {
+export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicial, periodoInicial, cargaInicial, rutEmpresa }: {
   empresaId: string; tipo: TipoRCV; cuentas: CuentaBase[]; centros: CentroOpcion[];
-  resumenInicial: ResumenCarga[]; periodoInicial: string; cargaInicial: CargaRCV | null;
+  resumenInicial: ResumenCarga[]; periodoInicial: string; cargaInicial: CargaRCV | null; rutEmpresa: string;
 }) {
   const plan = useMemo(() => new PlanCuentas(cuentas), [cuentas]);
   const [carga, setCarga] = useState<{ archivo: string; actualizado: string } | null>(cargaInicial ? { archivo: cargaInicial.archivo, actualizado: cargaInicial.actualizado } : null);
@@ -71,6 +72,8 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicia
   const [abierto, setAbierto] = useState(false);
   const [vista, setVista] = useState<'documento' | 'tabla'>('documento');
   const aux = tipo === 'compra' ? 'proveedor' : 'cliente';
+  // RCV ya guardado de otra empresa (cargado antes de esta validación): no se deja contabilizar
+  const ajena = carga ? errorArchivoRCV(carga.archivo, tipo, rutEmpresa) : null;
   const signo = (d: DocRCV) => ((tipo === 'compra' ? dteC(d.tipoDTE) : dteV(d.tipoDTE))?.signo ?? 1);
 
   function mostrar(c: CargaRCV | null) {
@@ -95,6 +98,8 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicia
     setError(''); setInfo('');
     iniciarCarga(async () => {
       try {
+        const errArchivo = errorArchivoRCV(f.name, tipo, rutEmpresa);
+        if (errArchivo) throw new Error(errArchivo);
         const { leerArchivoRCV } = await import('@/rcv/leer');
         const r = await leerArchivoRCV(f.name, await f.arrayBuffer(), tipo);
         if (!r.docs.length) throw new Error('El archivo no tiene documentos válidos.');
@@ -210,6 +215,11 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicia
       {error && <p role="alert" className="rounded-md border border-peligro/40 bg-peligro/10 px-3 py-2 text-sm text-peligro">{error}</p>}
       {info && <p className="text-sm text-tenue">{info}</p>}
 
+      {carga && ajena && (
+        <div role="alert" className="rounded-md border border-peligro/40 bg-peligro/10 px-3 py-2 text-sm text-peligro">
+          ⛔ Este RCV guardado no corresponde a la empresa: {ajena} Quítalo con «Quitar este RCV» y sube el de esta empresa.
+        </div>
+      )}
       {carga ? (
         <div className="tarjeta flex flex-wrap items-center justify-between gap-3 p-4">
           <div className="text-sm">
@@ -218,14 +228,14 @@ export function ImportadorRCV({ empresaId, tipo, cuentas, centros, resumenInicia
             <div className="text-xs text-tenue">{filas.length} documentos · {nPend} por contabilizar · {nReg + nDup} en el libro · actualizado {new Date(carga.actualizado).toLocaleString('es-CL', { dateStyle: 'short', timeStyle: 'short' })}
               {' · '}<button type="button" className="hover:text-peligro" onClick={quitar} disabled={cargando}>Quitar este RCV</button></div>
           </div>
-          <button type="button" className="boton" disabled={cargando} onClick={() => setAbierto(true)}>{nPend ? `Paso 2: contabilizar ${nPend} documento${nPend === 1 ? '' : 's'} →` : 'Ver el registro →'}</button>
+          <button type="button" className="boton" disabled={cargando || !!ajena} onClick={() => setAbierto(true)}>{nPend ? `Paso 2: contabilizar ${nPend} documento${nPend === 1 ? '' : 's'} →` : 'Ver el registro →'}</button>
         </div>
       ) : !cargando && (
         <div className="tarjeta p-6 text-center text-sm text-tenue">No hay un RCV de {tipo === 'compra' ? 'compras' : 'ventas'} guardado para {nombrePeriodo(periodo)}. Sube el archivo del SII para empezar.</div>
       )}
 
       {/* ─────────── Paso 2 (pantalla completa, como el sistema actual) ─────────── */}
-      {abierto && carga && (
+      {abierto && carga && !ajena && (
         <div className="fixed inset-0 z-40 flex items-stretch justify-center bg-velo p-2 sm:p-4" role="dialog" aria-modal="true" aria-label="Paso 2 del RCV">
           <div className="flex w-full max-w-[1600px] flex-col overflow-hidden rounded-lg border border-borde bg-fondo shadow-2xl">
             {/* Cabecera */}
