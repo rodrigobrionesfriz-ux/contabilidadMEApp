@@ -83,18 +83,24 @@ export function validarDetalleRCV(
     if (otros > 0 && !sumOtros) errores.push(`El RCV informa otros impuestos por ${fmtC(otros)}: agrega una línea de tipo "Otro impuesto" con su cuenta (costo/gasto, o 1108006 si es recuperable).`);
     else errores.push(`Las líneas de otros impuestos suman ${fmtC(sumOtros)} y el RCV informa ${fmtC(otros)} (diferencia ${fmtC(difOtros)}).`);
   }
-  if (difIva && !redondeoOk(difIva))
-    errores.push(`IVA calculado ${fmtC(ivaCalc)} (19% de ${fmtC(sumAfecto)}) distinto del IVA del RCV ${fmtC(iva)} (diferencia ${fmtC(difIva)}).${Math.abs(difIva) <= 1 ? ' Si es redondeo del emisor, marca "Aceptar diferencia de $1".' : ''}`);
+  // Manda el RCV del SII: el asiento lleva el IVA y el total informados (el motor ajusta el redondeo en la última
+  // línea de costo). Por eso el IVA calculado distinto y un total del RCV que no suma no impiden contabilizar: sólo avisan.
+  if (difIva && !difNeto) avisos.push(`IVA calculado ${fmtC(ivaCalc)} (19% de ${fmtC(sumAfecto)}) distinto del IVA del RCV ${fmtC(iva)} (diferencia ${fmtC(difIva)}): se contabiliza el IVA del RCV.`);
   const base = sumAfecto + sumExento;
-  let totalCalc = base + ivaCalc + otrosLineas;
+  let totalCalc = base + iva + otrosLineas;
   let difTotal = totalCalc - total;
   const facturaCompra = tipo === 'compra' && (+doc.tipoDTE === 45 || +doc.tipoDTE === 46 || doc.ivaRetenido != null);
   if (facturaCompra) {
     const sinRet = base + otrosLineas;
     if (Math.abs(sinRet - total) < Math.abs(difTotal)) { totalCalc = sinRet; difTotal = sinRet - total; }
   }
-  if (difTotal && !redondeoOk(difTotal))
-    errores.push(`Líneas + IVA calculado + otros impuestos = ${fmtC(totalCalc)} y el total del RCV es ${fmtC(total)} (diferencia ${fmtC(difTotal)}).`);
+  // Con las líneas cuadradas contra el RCV, una diferencia de total es del propio RCV: se respeta su total.
+  // (Facturas de compra con retención: el motor sólo absorbe $1, así que ahí la diferencia sigue bloqueando.)
+  const lineasCuadran = !difNeto && !difExento && !(difOtros && !redondeoOk(difOtros));
+  if (difTotal && !redondeoOk(difTotal) && facturaCompra)
+    errores.push(`Líneas + IVA + otros impuestos = ${fmtC(totalCalc)} y el total del RCV es ${fmtC(total)} (diferencia ${fmtC(difTotal)}).`);
+  else if (difTotal && !redondeoOk(difTotal) && lineasCuadran)
+    avisos.push(`Neto + exento + IVA + otros impuestos del RCV = ${fmtC(totalCalc)} y su total es ${fmtC(total)} (diferencia ${fmtC(difTotal)}): se contabiliza el total del RCV.`);
   return {
     ok: errores.length === 0, errores, avisos,
     resumen: { sumAfecto, sumExento, sumOtros, difOtros, cruzaOtros, ivaCalc, totalCalc, difNeto, difExento, difIva, difTotal, neto, exento, iva, otros, total },

@@ -63,6 +63,19 @@ describe('registro de documentos RCV', () => {
     expect(cuadra(l)).toBe(0);
   });
 
+  it('paso 2: con IVA del RCV distinto del 19% calculado se registra con los valores del RCV', () => {
+    const base = por('584509');
+    const d = { ...base, neto: 1100264, exento: 0, iva: 209048, otrosImpuestos: 423243, total: 1732555, otrosImpuestosDetalle: [{ tipo: '35', monto: 358176 }, { tipo: '28', monto: 65067 }] };
+    const lineas = lineasIniciales('compra', { ...d, cuenta: '3202010' }).map((l) => ({ ...l, desc: l.desc || 'Diesel' }));
+    const r = construirRegistro('compra', d, '2026-03', { detalle: { lineas, glosa: 'Combustible' } }, plan);
+    expect(r.ok, r.ok ? '' : r.errores.join(' ')).toBe(true);
+    if (!r.ok) return;
+    const l = r.registro.asiento.lineas;
+    expect(l.find((x) => x.cuenta === '1108002')?.debe).toBe(209048);
+    expect(l.find((x) => x.cuenta === '2102001')?.haber).toBe(1732555);
+    expect(cuadra(l)).toBe(0);
+  });
+
   it('paso 2 inválido no se registra', () => {
     const r = construirRegistro('compra', por('100'), '2026-03', { detalle: { lineas: [{ cuenta: '3202010', monto: 1, afecto: true }] } }, plan);
     expect(r.ok).toBe(false);

@@ -5,8 +5,8 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Montos con separador de miles mientras se digitan (UTM, remanente, sueldos, saldos, activos, inventario y más).',
-  'Los montos en pesos van sin decimales; UF y cantidades usan coma decimal.',
+  'RCV paso 2: manda el RCV del SII. Si el IVA calculado (19%) difiere del IVA del RCV, se avisa y se contabiliza con el valor del RCV.',
+  'Si el total del RCV no suma, se respeta su total y el redondeo va a la última línea de costo.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */

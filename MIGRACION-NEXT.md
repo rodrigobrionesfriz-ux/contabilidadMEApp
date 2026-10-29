@@ -470,6 +470,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Aplicado en F29 (UTM y remanente), conciliación, honorarios, documentos, anticipos, finiquitos (montos y UF), pagos, apertura, comprobantes tipo, cierre, activo fijo, inventario (productos, movimientos, órdenes, tomas), parámetros, tabla UF/UTM y ficha del trabajador. Porcentajes, horas y días quedan como estaban.
 - Test: src/lib/__tests__/formato-input.test.ts.
 
+## RCV: manda el SII (10z20, versión 1.20.0)
+- Caso 29/10: factura con neto $1.100.264 e IVA RCV $209.048 (19% = $209.050) no se dejaba contabilizar.
+- validarDetalleRCV: el IVA calculado distinto del IVA del RCV pasa de error a aviso ("se contabiliza el IVA del RCV"), y el total se controla con el IVA del RCV. Si las líneas cuadran y el propio RCV no suma su total, también es aviso: el motor (contable.ts) ya armaba el asiento con el IVA y el total informados y lleva la diferencia a la última línea de costo.
+- Siguen bloqueando: líneas afectas/exentas/otros impuestos que no suman lo del RCV (son el reparto que hace el usuario), y en facturas de compra con retención una diferencia de total mayor a $1.
+- La tabla de control muestra en IVA el valor del RCV. Fixture detalle-oro.json actualizado; tests nuevos en rcv.test.ts y documento.test.ts.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:

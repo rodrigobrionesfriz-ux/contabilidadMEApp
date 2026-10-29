@@ -52,6 +52,23 @@ describe('validador del paso 2 (igual al sistema actual)', () => {
   for (const c of oro.lineas) {
     it(`líneas iniciales: ${c.nombre}`, () => expect(lineasIniciales(c.tipo, c.d)).toEqual(c.resultado));
   }
+  it('manda el RCV: IVA del SII distinto del 19% calculado no impide contabilizar', () => {
+    // Caso real 29/10: neto 1.100.264, IVA RCV 209.048 (19% = 209.050), otros 423.243, total 1.732.555
+    const doc = { tipoDTE: 33, neto: 1100264, exento: 0, iva: 209048, otrosImpuestos: 423243, total: 1732555 };
+    const ls: LineaDetalle[] = [
+      { cuenta: '3202010', desc: 'Diesel', monto: 1100264, afecto: true },
+      { cuenta: '3202010', desc: 'Otro impuesto cód. 35', monto: 358176, afecto: false, otroImp: true },
+      { cuenta: '3202010', desc: 'Otro impuesto cód. 28', monto: 65067, afecto: false, otroImp: true },
+    ];
+    const r = validarDetalleRCV('compra', doc, ls, plan);
+    expect(r.errores).toEqual([]);
+    expect(r.avisos[0]).toMatch(/se contabiliza el IVA del RCV/);
+  });
+  it('manda el RCV: si su total no suma, se avisa y se respeta el total', () => {
+    const r = validarDetalleRCV('compra', { tipoDTE: 33, neto: 100000, exento: 0, iva: 19000, total: 119005 }, [{ cuenta: '3202010', monto: 100000, afecto: true }], plan);
+    expect(r.ok).toBe(true);
+    expect(r.avisos.join(' ')).toMatch(/se contabiliza el total del RCV/);
+  });
   it('completar línea', () => {
     const d = { tipoDTE: 33, neto: 100000, exento: 0 };
     const ls: LineaDetalle[] = [{ cuenta: 'a', monto: 60000, afecto: true }, { cuenta: 'b', monto: 0, afecto: true }];

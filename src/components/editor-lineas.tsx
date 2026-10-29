@@ -103,7 +103,7 @@ export function EditorLineas({ tipo, doc, lineas, onChange, plan, centros, lista
         <div className="num flex flex-wrap gap-x-4 text-tenue">
           <span>Afecto {clp(r.sumAfecto)} / {clp(r.neto)}</span>
           <span>Exento {clp(r.sumExento)} / {clp(r.exento)}</span>
-          <span>IVA {clp(r.ivaCalc)} / {clp(r.iva)}</span>
+          <span>IVA {clp(r.iva)}{r.ivaCalc !== r.iva ? ` (19%: ${clp(r.ivaCalc)})` : ''}</span>
           {tipo === 'compra' && <span>Otros {clp(r.sumOtros)} / {clp(r.otros)}</span>}
           <span>Total {clp(r.totalCalc)} / {clp(r.total)}</span>
         </div>

@@ -148,7 +148,8 @@ export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centr
   const ctrl: [string, number, number][] = [
     [`Neto (líneas afectas)`, r.sumAfecto, r.neto],
     [`Exento (líneas exentas)`, r.sumExento, r.exento],
-    [`IVA (línea del asiento)`, r.ivaCalc, r.iva],
+    // El asiento lleva el IVA del RCV (el 19% calculado sólo se informa como aviso si difiere)
+    [`IVA (línea del asiento)`, r.iva, r.iva],
     ...(tipo === 'compra' ? [[`Otros impuestos (líneas)`, r.sumOtros, r.otros] as [string, number, number]] : []),
     [`Total`, r.totalCalc, r.total],
   ];
