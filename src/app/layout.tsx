@@ -8,7 +8,7 @@ import { SCRIPT_TEMA } from '@/lib/tema';
 import { AvisoVersion } from '@/components/aviso-version';
 
 export const metadata: Metadata = {
-  title: { default: 'Contabilidad ME', template: '%s · Contabilidad ME' },
+  title: { default: 'asent_IA', template: '%s · asent_IA' },
   description: 'Sistema contable multiempresa',
 };
 

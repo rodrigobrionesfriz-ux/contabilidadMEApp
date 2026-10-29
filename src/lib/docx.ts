@@ -46,7 +46,7 @@ const CONTENT_TYPES=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 const RELS=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>`;
 const core = (titulo: string, asunto: string) =>`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>${x(titulo)}</dc:title><dc:subject>${x(asunto||'')}</dc:subject><dc:creator>Contabilidad ME</dc:creator></cp:coreProperties>`;
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>${x(titulo)}</dc:title><dc:subject>${x(asunto||'')}</dc:subject><dc:creator>asent_IA</dc:creator></cp:coreProperties>`;
 
 
 export async function crearDocx(texto: string, { titulo = 'Documento', asunto = '', firmas: f = null }: { titulo?: string; asunto?: string; firmas?: string[][] | null } = {}) {

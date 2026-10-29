@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { Marca } from '@/components/marca';
 import { BotonTema } from '@/components/tema';
 import { VERSION, fechaCompilacion } from '@/lib/version';
 
@@ -8,7 +8,7 @@ export default function AuthLayout({ children }: LayoutProps<'/'>) {
       <BotonTema className="absolute top-4 right-4" />
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
-          <div className="flex items-center justify-center gap-2 text-2xl font-bold"><Image src="/icons/icon-192.png" alt="" width={36} height={36} priority />Contabilidad ME</div>
+          <div className="flex justify-center text-3xl"><Marca tamano={40} /></div>
           <div className="text-sm text-tenue">Sistema contable multiempresa</div>
         </div>
         <div className="tarjeta p-6">{children}</div>

@@ -5,7 +5,7 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Buscar comprobantes: la lista aparece sólo al escribir un N°, monto o texto.',
+  'Nuevo nombre e imagen: la app pasa a llamarse asent_IA, con ícono azul y marca de agua de fondo.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */

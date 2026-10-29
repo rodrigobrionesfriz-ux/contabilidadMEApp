@@ -485,6 +485,14 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Resultados: N°, fecha, tipo, glosa (con la línea que calza), total y Editar si corresponde; máximo 300 filas a la vista.
 - 10z23 (1.21.1): sin texto en el buscador no se lista nada (sólo el conteo del rango). La marca ANULADO pasó a la columna glosa (se encimaba con el tipo).
 
+## Nombre e imagen: asent_IA (10z24, versión 1.22.0)
+- La app pasa a llamarse **asent_IA** (de "asiento" y "asentar", con IA). Se revisó que no hubiera software contable con ese nombre en Chile; falta confirmar la marca en INAPI (clases 9, 35 y 42) y el dominio.
+- Paleta: azul marino #14284b (fondo del ícono, theme_color del manifest), turquesa #2ec4b6 (barra más alta e "IA"), verde #22c55e (tic y guion bajo).
+- Ícono: barras al alza sobre dos líneas de libro y un tic verde en la esquina. src/app/icon.svg, favicon.ico (16, 32, 48), apple-icon.png (180, fondo completo) y public/icons (192, 512 y maskable 512 con el dibujo en la zona segura).
+- src/components/marca.tsx: NOMBRE_APP, Logotipo ("asent" en el color del texto, "_" verde, "IA" turquesa) y Marca (ícono + logotipo). Se usa en la barra superior (en el celular, sólo el ícono) y en las pantallas de acceso. Título del navegador, manifest, documentos Word y textos pasaron de "Contabilidad ME" a asent_IA.
+- Marca de agua (src/components/marca-agua.tsx, en el layout de (app)): public/marca-agua.svg (texto en trazos con Sora 800) usado como máscara y pintado con el color del texto del tema al 4,5%, fijo al centro, detrás del contenido, sin clics y oculto al imprimir.
+- Los colores de la interfaz (botones y enlaces verdes) no cambiaron.
+
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
 - Usuarios registrados antes de la migración 0001 no tienen fila en `perfiles` y `crear_empresa` falla con `miembros_perfil_fk`. Se corrige una vez con:

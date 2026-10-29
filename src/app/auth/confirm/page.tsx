@@ -17,7 +17,7 @@ export default async function ConfirmarPage({ searchParams }: { searchParams: Pr
       <form action={confirmarEnlace} className="tarjeta w-full max-w-sm space-y-4 p-6 text-center">
         <h1 className="text-lg font-semibold">{recuperar ? 'Crear una nueva contraseña' : 'Confirmar tu cuenta'}</h1>
         {valido ? (<>
-          <p className="text-sm text-tenue">{recuperar ? 'Toca el botón para continuar y elegir tu nueva contraseña.' : 'Toca el botón para confirmar tu correo y entrar a Contabilidad ME.'}</p>
+          <p className="text-sm text-tenue">{recuperar ? 'Toca el botón para continuar y elegir tu nueva contraseña.' : 'Toca el botón para confirmar tu correo y entrar a asent_IA.'}</p>
           <input type="hidden" name="token_hash" value={token_hash} />
           <input type="hidden" name="type" value={type} />
           <input type="hidden" name="code" value={code} />

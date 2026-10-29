@@ -90,7 +90,7 @@ export function serieUTMdeSII(anio: number, html: string): SerieAPI {
 /** Lee UF y UTM del año desde sii.cl (sólo en el servidor: el SII no permite consultas desde otras páginas). */
 export async function leerIndicadoresSII(anio: number, ms = 15000): Promise<IndicadorAPI[]> {
   const leer = async (url: string) => {
-    const r = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(ms), headers: { 'user-agent': 'Mozilla/5.0 (ContabilidadME)' } });
+    const r = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(ms), headers: { 'user-agent': 'Mozilla/5.0 (asentIA)' } });
     if (!r.ok) throw new Error(`sii.cl respondió ${r.status}`);
     return new TextDecoder('latin1').decode(await r.arrayBuffer());
   };
