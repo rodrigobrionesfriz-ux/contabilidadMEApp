@@ -21,9 +21,11 @@ export function BuscadorComprobantes({ empresaId, asientos, cuentas, cerrados, d
   const cerr = useMemo(() => new Set(cerrados), [cerrados]);
   const indices = useMemo(() => asientos.map((a) => ({ a, ix: indiceAsiento(a, (c) => cuentas[c]) })), [asientos, cuentas]);
   const resultado = useMemo(() => {
+    // Sin nada escrito no se lista nada (no es el libro diario)
+    if (!consulta.trim()) return [];
     const r = indices.map((x) => ({ ...x, p: puntaje(x.ix, consulta) })).filter((x) => x.p > 0);
-    // Con búsqueda, primero lo más parecido (N° exacto, monto exacto); sin búsqueda, lo más reciente
-    if (consulta.trim()) r.sort((x, y) => y.p - x.p || y.a.fecha.localeCompare(x.a.fecha) || y.a.numero - x.a.numero);
+    // Primero lo más parecido (N° exacto, monto exacto), luego lo más reciente
+    r.sort((x, y) => y.p - x.p || y.a.fecha.localeCompare(x.a.fecha) || y.a.numero - x.a.numero);
     return r;
   }, [indices, consulta]);
 
@@ -59,16 +61,18 @@ export function BuscadorComprobantes({ empresaId, asientos, cuentas, cerrados, d
       </div>
 
       <p className="text-xs text-tenue">
-        {resultado.length === asientos.length ? `${asientos.length} comprobantes` : `${resultado.length} de ${asientos.length} comprobantes`} entre el {fechaCL(desde)} y el {fechaCL(hasta)}
+        {consulta.trim() ? `${resultado.length} de ${asientos.length} comprobantes` : `${asientos.length} comprobantes`} entre el {fechaCL(desde)} y el {fechaCL(hasta)}
         {resultado.length > MAX && ` · se muestran los primeros ${MAX}, afina la búsqueda`}
       </p>
 
-      {resultado.length === 0 ? (
+      {!consulta.trim() ? (
+        <div className="tarjeta p-8 text-center text-sm text-tenue">🔎 Escribe un N° de comprobante, un monto o un texto para buscar.</div>
+      ) : resultado.length === 0 ? (
         <div className="tarjeta p-8 text-center text-tenue">{asientos.length ? 'Ningún comprobante coincide con la búsqueda.' : 'Sin comprobantes en el rango de fechas.'}</div>
       ) : (
         <div className="tarjeta max-h-[calc(100dvh-17rem)] overflow-auto">
           <table className="w-full min-w-[720px] table-fixed text-[13px]">
-            <colgroup><col className="w-[70px]" /><col className="w-[92px]" /><col className="w-[110px]" /><col /><col className="w-[120px]" /><col className="w-[90px]" /></colgroup>
+            <colgroup><col className="w-[70px]" /><col className="w-[92px]" /><col className="w-[120px]" /><col /><col className="w-[120px]" /><col className="w-[90px]" /></colgroup>
             <thead className="sticky top-0 z-10 bg-panel text-left text-[10px] text-tenue uppercase shadow-[0_1px_0_var(--borde)]">
               <tr><th className="px-2 py-1.5">N°</th><th className="px-2 py-1.5">Fecha</th><th className="px-2 py-1.5">Tipo</th><th className="px-2 py-1.5">Glosa</th><th className="px-2 py-1.5 text-right">Total</th><th /></tr>
             </thead>
@@ -80,9 +84,12 @@ export function BuscadorComprobantes({ empresaId, asientos, cuentas, cerrados, d
                   <tr key={a.id} className={`border-t border-borde/40 align-top hover:bg-panel-2/50 ${a.anulado ? 'opacity-50' : ''}`}>
                     <td className="px-2 py-1.5"><Link href={`/e/${empresaId}/asientos/${a.id}`} className="num font-semibold hover:text-acento">{a.numero}</Link></td>
                     <td className="num px-2 py-1.5 text-tenue">{fechaCL(a.fecha)}</td>
-                    <td className="px-2 py-1.5 text-xs text-tenue">{TIPO[a.tipo] ?? a.tipo}{a.anulado && <span className="ml-1 rounded bg-peligro/20 px-1 text-[10px] font-semibold text-peligro">ANULADO</span>}</td>
+                    <td className="truncate px-2 py-1.5 text-xs text-tenue" title={TIPO[a.tipo] ?? a.tipo}>{TIPO[a.tipo] ?? a.tipo}</td>
                     <td className="px-2 py-1.5">
-                      <Link href={`/e/${empresaId}/asientos/${a.id}`} className="block truncate hover:text-acento" title={a.glosa}>{a.glosa}</Link>
+                      <div className="flex min-w-0 items-center gap-1.5">
+                        {a.anulado && <span className="shrink-0 rounded bg-peligro/20 px-1 text-[10px] font-semibold text-peligro">ANULADO</span>}
+                        <Link href={`/e/${empresaId}/asientos/${a.id}`} className="min-w-0 truncate hover:text-acento" title={a.glosa}>{a.glosa}</Link>
+                      </div>
                       {det && <div className="truncate text-xs text-tenue" title={det}>{det}</div>}
                     </td>
                     <td className="num px-2 py-1.5 text-right whitespace-nowrap">{clp(totalAsiento(a))}</td>

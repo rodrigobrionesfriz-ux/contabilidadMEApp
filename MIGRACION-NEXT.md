@@ -483,6 +483,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Nueva página /e/[id]/asientos ("🔎 Buscar comprobantes"), con pestañas compartidas con Nuevo asiento (asientos/pestanas.tsx) y entrada propia en el menú Registros (visible también para perfiles de consulta).
 - Rango de fechas en la URL (?desde=&hasta=, por defecto el año contable): el servidor trae los asientos del rango con sus líneas. La búsqueda es en el navegador mientras se escribe (src/lib/buscar-asientos.ts): cada palabra debe aparecer; una palabra numérica busca el N° (exacto primero), montos de las líneas y el total (con o sin puntos; desde 3 dígitos también parcial), RUT, folios y códigos; el texto ignora tildes y mayúsculas y mira glosa, glosas de línea, cuenta, nombre de cuenta y centro de costo.
 - Resultados: N°, fecha, tipo, glosa (con la línea que calza), total y Editar si corresponde; máximo 300 filas a la vista.
+- 10z23 (1.21.1): sin texto en el buscador no se lista nada (sólo el conteo del rango). La marca ANULADO pasó a la columna glosa (se encimaba con el tipo).
 
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
