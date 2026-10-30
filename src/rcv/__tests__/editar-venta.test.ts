@@ -44,3 +44,27 @@ describe('editar una venta registrada', () => {
     expect(!r.ok && r.errores.join(' ')).toMatch(/RUT.*no es válido.*no es de ventas.*no existe/);
   });
 });
+
+describe('editar un resumen de boletas o vouchers', () => {
+  const filaR = { fecha: '2026-10-02', tipo_dte: 48, folio: 'R20261002', rut: '66666666-6', razon_social: 'Ventas con comprobante de pago electrónico', neto: 42017, exento: 0, iva: 7983 };
+  const datosR = { tipoDTE: 48, numero: 'R20261002', fecha: '2026-10-02', rutCodigo: '66666666', rutDV: '6', razonSocial: filaR.razon_social,
+    neto: 42017, exento: 0, iva: 7983, total: 50000, formaPago: 'tarjetas', cuentaIngreso: '4101002', cantidad: 12, origenRegistro: 'manual' } as Partial<Documento>;
+  it('carga y cambia la cantidad de documentos; el asiento sigue cuadrando', () => {
+    const c = cambiosDesde(datosR, filaR);
+    expect(c.cantidad).toBe(12);
+    const r = editarVenta(datosR, { ...c, cantidad: 15, neto: 50420, iva: 9580 }, plan);
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.documento.datos.cantidad).toBe(15);
+    expect(r.documento.total).toBe(60000);
+    expect(r.asiento.lineas.find((l) => l.debe > 0)?.cuenta).toBe('1107004');
+    expect(cuadra(r.asiento.lineas)).toBe(0);
+  });
+  it('exige la cantidad en un resumen y la quita si pasa a factura', () => {
+    const c = cambiosDesde(datosR, filaR);
+    expect(editarVenta(datosR, { ...c, cantidad: 0 }, plan).ok).toBe(false);
+    const r = editarVenta(datosR, { ...c, tipoDTE: 33, numero: '99', rut: '77987955-0' }, plan);
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.documento.datos.cantidad).toBeUndefined();
+  });
+});
