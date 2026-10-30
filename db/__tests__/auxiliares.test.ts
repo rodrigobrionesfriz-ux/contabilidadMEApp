@@ -57,6 +57,29 @@ describe('auxiliares y pagos en la base', () => {
     expect((await saldos('proveedor'))[0].saldo).toBe(0);
   });
 
+  it('cliente: una factura anulada y vuelta a registrar cuenta una sola vez; contado y tarjetas no quedan por cobrar', async () => {
+    const venta = (numero: string, total: number): DocRCV => ({ fecha: '2026-03-02', fechaVencimiento: '2026-04-01', fechaVencimientoOrigen: 'estimado30d', fechaRecepcionSII: '', fechaAcuseSII: '',
+      tipoDTE: 33, numero, rutCodigo: '81389900', rutDV: '0', razonSocial: 'SOC DE FOMENTO AGRICOLA SOFO', neto: Math.round(total / 1.19), exento: 0, iva: total - Math.round(total / 1.19),
+      tratamientoIVA: 'recuperable', otrosImpuestos: 0, tratamientoOtrosImpuestos: 'costo', otrosImpuestosDetalle: [], total, netoAF: 0 });
+    const registrar = async (d: DocRCV, formaPago: 'clientes' | 'banco' | 'tarjetas') => {
+      const r = construirRegistro('venta', d, '2026-03', { cuenta: '4101002', formaPago }, plan);
+      if (!r.ok) throw new Error(r.errores.join());
+      await b.como(ADMIN, `select * from registrar_documento($1, $2, $3)`, [emp, j(r.registro.documento), j(r.registro.asiento)]);
+      return (await b.como<{ id: string }>(ADMIN, `select id from documentos where empresa_id=$1 and tipo='venta' and folio=$2 and coalesce(estado,'') <> 'anulado'`, [emp, d.numero]))[0];
+    };
+    // La factura N° 8 se registra, se anula y se vuelve a registrar varias veces (como al editar o reimportar)
+    for (let k = 0; k < 5; k++) {
+      const d = await registrar(venta('8', 380800), 'clientes');
+      await b.como(ADMIN, `select anular_documento($1, 'reimportada')`, [d.id]);
+    }
+    await registrar(venta('8', 380800), 'clientes');
+    await registrar(venta('20', 119000), 'banco');
+    await registrar(venta('21', 59500), 'tarjetas');
+    const sofo = (await saldos('cliente')).find((x) => x.rut === '81389900-0');
+    expect(sofo?.saldo).toBe(380800);
+    expect(sofo?.items.filter((i) => i.saldo > 0).map((i) => i.folio)).toEqual(['8']);
+  });
+
   it('el gasto de honorarios no se mezcla con la deuda', async () => {
     const filas = await b.como<{ cuenta: string }>(ADMIN, `select distinct cuenta from movimientos_auxiliar($1, 'honorario', '2026-01-01', '2026-12-31')`, [emp]);
     expect(filas.map((f) => f.cuenta)).toEqual(['2102006']);
