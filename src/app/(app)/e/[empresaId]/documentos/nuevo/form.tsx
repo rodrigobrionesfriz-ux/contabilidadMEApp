@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { PlanCuentas, type CuentaBase } from '@/motor/plan-cuentas';
-import { DTE_COMPRAS, DTE_VENTAS, IVA } from '@/motor/dte';
+import { DTE_COMPRAS, DTE_VENTAS, IVA, TIPOS_RESUMEN_VENTA } from '@/motor/dte';
 import { rutParse } from '@/motor/rut';
 import type { DocRCV, TipoRCV } from '@/rcv/leer';
 import { sumarDiasFechaISO } from '@/rcv/leer';
@@ -14,13 +14,15 @@ import { hoyISO, MESES, milesInput } from '@/lib/formato';
 import { registrarDocumentos } from '../../rcv/acciones';
 
 const entero = (v: string) => Math.round(Number(v.replace(/\./g, '')) || 0);
-/** Boletas (35/39/41) y comprobantes de pago electrónico (48): se registran como resumen del día o del mes. */
-export const TIPOS_RESUMEN = [35, 39, 41, 48];
-const esResumen = (t: number) => TIPOS_RESUMEN.includes(t);
+const esResumen = (t: number) => TIPOS_RESUMEN_VENTA.includes(t);
 const RUT_PUBLICO = '66.666.666-6';
 const razonResumen = (t: number) => (t === 48 ? 'Ventas con comprobante de pago electrónico' : 'Ventas con boleta');
 
-export function FormDocumento({ empresaId, tipo, cuentas, centros, resumen }: { empresaId: string; tipo: TipoRCV; cuentas: CuentaBase[]; centros: CentroOpcion[]; resumen?: number }) {
+export function FormDocumento({ empresaId, tipo, cuentas, centros, resumen, cuentaVentas }: {
+  empresaId: string; tipo: TipoRCV; cuentas: CuentaBase[]; centros: CentroOpcion[]; resumen?: number;
+  /** Cuenta de ingreso de las demás ventas de la empresa: también se propone para boletas y vouchers. */
+  cuentaVentas?: string;
+}) {
   const plan = useMemo(() => new PlanCuentas(cuentas), [cuentas]);
   const dtes = (tipo === 'compra' ? DTE_COMPRAS : DTE_VENTAS).filter((d) => !d.honorario);
   const inicioResumen = tipo === 'venta' && resumen && esResumen(resumen) ? resumen : 0;
@@ -47,7 +49,7 @@ export function FormDocumento({ empresaId, tipo, cuentas, centros, resumen }: { 
   const [periodo, setPeriodo] = useState(hoyISO().slice(0, 7));
   const [glosa, setGlosa] = useState('');
   const [redondeo, setRedondeo] = useState(false);
-  const cuentaDefecto = tipo === 'venta' ? (DTE_VENTAS.find((d) => d.cod === (resumen && esResumen(resumen) ? resumen : 33))?.cuenta ?? '') : '';
+  const cuentaDefecto = tipo === 'venta' ? (cuentaVentas || DTE_VENTAS.find((d) => d.cod === 33)?.cuenta || '') : '';
   const [lineas, setLineas] = useState<LineaDetalle[]>([{ cuenta: cuentaDefecto, desc: '', monto: 0, cc: '', afecto: true }]);
   const [msg, setMsg] = useState<{ error?: string; ok?: string }>({});
   const [pendiente, iniciar] = useTransition();

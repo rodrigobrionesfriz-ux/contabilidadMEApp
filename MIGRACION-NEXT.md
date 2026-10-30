@@ -506,7 +506,7 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Tests: src/rcv/__tests__/archivo.test.ts.
 
 ## Ventas con boleta y con medios de pago electrónico (versión 1.24.0)
-- Libro de ventas: botones "🧾 Ventas con boleta" y "💳 Medios electrónicos" → documentos/nuevo?tipo=venta&resumen=39|48. Tipos 35/39/41/48 se registran como resumen (día o mes): cantidad de documentos, total con IVA (neto = total ÷ 1,19), folios desde-hasta opcionales (sin folio: referencia R+fecha), RUT genérico 66.666.666-6; los vouchers proponen forma de pago Tarjetas.
+- Libro de ventas: botones "🧾 Ventas con boleta" y "💳 Medios electrónicos" → documentos/nuevo?tipo=venta&resumen=39|48. Tipos 35/39/41/48 se registran como resumen (día o mes): cantidad de documentos, total con IVA (neto = total ÷ 1,19), folios desde-hasta opcionales (sin folio: referencia R+fecha), RUT genérico 66.666.666-6; los vouchers proponen forma de pago Tarjetas. La cuenta de ingreso propuesta es la que usan las demás ventas de la empresa (la más frecuente en las últimas 300, sin boletas ni vouchers; si no hay, la de la factura 33), tanto para resúmenes como para documentos nuevos.
 - La cantidad se guarda en documentos.datos.cantidad (DocRCV.cantidad → armarDocumento). Sin migración.
 - F29 (tributario/f29.ts): detalleVentas cuenta la cantidad del resumen en 110 (39/35), 758 (48) y 586 (41); lo digitado a mano en ajustes.manual sigue mandando. lib/datos/f29.ts lee datos->>cantidad.
 - El libro muestra "× N docs" bajo el folio de los resúmenes.
