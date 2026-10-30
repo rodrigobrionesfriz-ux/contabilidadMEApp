@@ -3,6 +3,7 @@ import { baseDePrueba } from './helpers';
 import { construirBoleta } from '@/honorarios/boleta';
 import { construirRegistro, cuentasDesdeBase } from '@/rcv/documento';
 import { construirPago } from '@/auxiliares/pago';
+import { construirAbonoTarjetas } from '@/auxiliares/abono-tarjetas';
 import { calcularSaldos, type LineaAux, type TipoAuxiliar } from '@/auxiliares/saldos';
 import { PlanCuentas } from '@/motor/plan-cuentas';
 import type { DocRCV } from '@/rcv/leer';
@@ -78,6 +79,17 @@ describe('auxiliares y pagos en la base', () => {
     const sofo = (await saldos('cliente')).find((x) => x.rut === '81389900-0');
     expect(sofo?.saldo).toBe(380800);
     expect(sofo?.items.filter((i) => i.saldo > 0).map((i) => i.folio)).toEqual(['8']);
+  });
+
+  it('abono de tarjetas: 1107004 queda en cero y la comisión queda a favor del operador hasta registrar su factura', async () => {
+    const ab = construirAbonoTarjetas({ banco: '1101201', depositado: 58310, comision: 1190, trato: 'proveedor', rut: '96689310-9', razon: 'Transbank S.A.' });
+    if (!ab.ok) throw new Error(ab.errores.join());
+    await b.como(ADMIN, `select * from crear_asiento($1, '2026-03-10', $2, $3, 'pago', 'tarjetas:1')`, [emp, ab.glosa, j(ab.lineas)]);
+    const [t] = await b.como<{ s: string }>(ADMIN, `select sum(l.debe - l.haber) s from asiento_lineas l join asientos a on a.id = l.asiento_id
+      where l.empresa_id = $1 and l.cuenta = '1107004' and not a.anulado`, [emp]);
+    expect(Number(t.s)).toBe(0); // la venta N° 21 con tarjeta ($59.500) quedó abonada
+    const tb = (await saldos('proveedor')).find((x) => x.rut === '96689310-9');
+    expect(tb?.aFavor).toBe(-1190);
   });
 
   it('el gasto de honorarios no se mezcla con la deuda', async () => {

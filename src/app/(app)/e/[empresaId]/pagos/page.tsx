@@ -5,6 +5,8 @@ import { hoyISO, param } from '@/lib/formato';
 import type { TipoAuxiliar } from '@/auxiliares/saldos';
 import { Pagos, type Pendiente } from './pagos';
 import { HistorialPagos, type FilaHistorial } from './historial';
+import { AbonoTarjetas } from './tarjetas';
+import { CUENTA_TARJETAS } from '@/motor/contable';
 import { crearClienteServidor } from '@/lib/supabase/server';
 import { traerTodo } from '@/lib/paginar';
 import { anioContable } from '@/lib/anio-contable';
@@ -16,6 +18,11 @@ export default async function PagosPage({ params, searchParams }: PageProps<'/e/
   const t = param((await searchParams).tipo);
   const empresa = await requerirEmpresa(empresaId);
   if (!puedeEscribir(empresa.rol)) return <p className="text-tenue">Tu rol no permite registrar pagos.</p>;
+  if (t === 'tarjetas') {
+    const anio = await anioContable();
+    const [datos, bancos] = await Promise.all([datosTarjetas(empresaId, anio), cuentasDeTesoreria(empresaId)]);
+    return <AbonoTarjetas empresaId={empresaId} hoy={hoyISO()} bancos={bancos} {...datos} />;
+  }
   if (t === 'historial') {
     const anio = await anioContable();
     return <HistorialPagos empresaId={empresaId} anio={anio} filas={await historialPagos(empresaId, anio)} />;
@@ -35,9 +42,9 @@ type LineaPago = { asiento_id: string; cuenta: string; debe: number; haber: numb
 /** Comprobantes de pago y cobro del año (asientos tipo 'pago') con sus auxiliares, folios, cuenta de banco y monto. */
 async function historialPagos(empresaId: string, anio: number): Promise<FilaHistorial[]> {
   const supabase = await crearClienteServidor();
-  const asientos = await traerTodo((d, h) => supabase.from('asientos').select('id,numero,fecha,glosa,anulado')
+  const asientos = await traerTodo((d, h) => supabase.from('asientos').select('id,numero,fecha,glosa,anulado,origen_id')
     .eq('empresa_id', empresaId).eq('tipo', 'pago').eq('anio', anio).order('fecha', { ascending: false }).order('numero', { ascending: false }).range(d, h)) as
-    { id: string; numero: number; fecha: string; glosa: string | null; anulado: boolean }[];
+    { id: string; numero: number; fecha: string; glosa: string | null; anulado: boolean; origen_id: string | null }[];
   if (!asientos.length) return [];
   const lineas = await traerTodo((d, h) => supabase.from('asiento_lineas').select('asiento_id,cuenta,debe,haber,rut_auxiliar,folio,asientos!inner(tipo,anio)')
     .eq('empresa_id', empresaId).eq('asientos.tipo', 'pago').eq('asientos.anio', anio).order('orden').range(d, h)) as unknown as LineaPago[];
@@ -58,7 +65,7 @@ async function historialPagos(empresaId: string, anio: number): Promise<FilaHist
     const aux = ls.filter((l) => cta.get(l.cuenta)?.tipo_auxiliar);
     const banco = ls.filter((l) => l.cuenta.startsWith('1101'));
     const ta = cta.get(aux[0]?.cuenta ?? '')?.tipo_auxiliar;
-    const tipo: FilaHistorial['tipo'] = ta === 'cliente' ? 'cliente' : ta === 'honorario' ? 'honorario' : 'proveedor';
+    const tipo: FilaHistorial['tipo'] = a.origen_id?.startsWith('tarjetas:') ? 'tarjetas' : ta === 'cliente' ? 'cliente' : ta === 'honorario' ? 'honorario' : 'proveedor';
     const rutsA = [...new Set(aux.map((l) => l.rut_auxiliar).filter(Boolean))] as string[];
     const monto = banco.length ? banco.reduce((s, l) => s + Number(l.debe) + Number(l.haber), 0) : ls.reduce((s, l) => s + Number(l.debe), 0);
     return {
@@ -67,4 +74,23 @@ async function historialPagos(empresaId: string, anio: number): Promise<FilaHist
       cuenta: banco[0] ? `${banco[0].cuenta} · ${cta.get(banco[0].cuenta)?.nombre ?? ''}` : '', monto,
     };
   });
+}
+
+/** Saldo de ventas con tarjeta por cobrar (1107004) en el año, cuentas de gasto y proveedores conocidos. */
+async function datosTarjetas(empresaId: string, anio: number) {
+  const supabase = await crearClienteServidor();
+  const [lineas, gastos, provs, existe] = await Promise.all([
+    traerTodo((d, h) => supabase.from('asiento_lineas').select('debe,haber,asientos!inner(anio,anulado)')
+      .eq('empresa_id', empresaId).eq('cuenta', CUENTA_TARJETAS).eq('asientos.anio', anio).eq('asientos.anulado', false).range(d, h)),
+    traerTodo((d, h) => supabase.from('cuentas').select('codigo,nombre').eq('empresa_id', empresaId).eq('tipo', 'C')
+      .eq('acepta_movimientos', true).eq('activa', true).order('codigo').range(d, h)),
+    traerTodo((d, h) => supabase.from('auxiliares').select('rut,razon_social').eq('empresa_id', empresaId).eq('tipo', 'proveedor').order('razon_social').range(d, h)),
+    supabase.from('cuentas').select('codigo').eq('empresa_id', empresaId).eq('codigo', CUENTA_TARJETAS).maybeSingle(),
+  ]);
+  const saldo = (lineas as { debe: number; haber: number }[]).reduce((s, l) => s + Number(l.debe) - Number(l.haber), 0);
+  return {
+    saldo, faltaCuenta: !existe.data,
+    gastos: gastos as { codigo: string; nombre: string }[],
+    proveedores: (provs as { rut: string; razon_social: string }[]).map((p) => ({ rut: p.rut, razon: p.razon_social })),
+  };
 }
