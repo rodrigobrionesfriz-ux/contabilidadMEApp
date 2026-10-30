@@ -30,7 +30,10 @@ export default async function AsientoPage({ params }: PageProps<'/e/[empresaId]/
   return (
     <div className="space-y-4">
       <div className="no-print flex flex-wrap items-center justify-between gap-2">
-        <Link href={`/e/${empresaId}/diario?anio=${String(x.fecha).slice(0, 4)}&mes=${Number(String(x.fecha).slice(5, 7))}`} className="boton-sec">← Libro diario</Link>
+        <div className="flex gap-2">
+          <Link href={`/e/${empresaId}/diario?anio=${String(x.fecha).slice(0, 4)}&mes=${Number(String(x.fecha).slice(5, 7))}`} className="boton-sec">← Libro diario</Link>
+          {x.tipo === 'pago' && <Link href={`/e/${empresaId}/pagos?tipo=historial`} className="boton-sec">📜 Historial de pagos</Link>}
+        </div>
         <div className="flex gap-2">
           {editable && (x.tipo === 'apertura'
             ? <Link href={`/e/${empresaId}/apertura?anio=${String(x.fecha).slice(0, 4)}`} className="boton-sec">✏️ Editar apertura</Link>

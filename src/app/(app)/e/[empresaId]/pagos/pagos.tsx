@@ -1,12 +1,12 @@
 'use client';
 
 import { useMemo, useState, useTransition } from 'react';
-import Link from 'next/link';
 import type { TipoAuxiliar } from '@/auxiliares/saldos';
 import { diasEntre } from '@/auxiliares/saldos';
 import { clp, fechaCL, milesInput } from '@/lib/formato';
 import { Mensaje } from '@/components/form-estado';
 import { registrarPago } from './acciones';
+import { PestanasPagos } from './pestanas';
 
 export interface Pendiente { clave: string; rut: string; razon: string; tipo_dte: number | null; folio: string; fecha: string; vence: string; saldo: number }
 
@@ -51,13 +51,7 @@ export function Pagos({ empresaId, tipo, pendientes, cuentas, aFavor, hoy }: {
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <h1 className="text-xl font-semibold">{TITULO[tipo]}</h1>
-        <div className="flex gap-1 rounded-md border border-borde p-1 text-sm">
-          {(['proveedor', 'honorario', 'cliente'] as const).map((t) => (
-            <Link key={t} href={`?tipo=${t}`} className={`rounded px-3 py-1 ${tipo === t ? 'bg-panel-2 text-acento' : 'text-tenue'}`}>
-              {t === 'proveedor' ? 'Proveedores' : t === 'honorario' ? 'Honorarios' : 'Clientes'}
-            </Link>
-          ))}
-        </div>
+        <PestanasPagos actual={tipo} />
       </div>
       {aFavor.length > 0 && (
         <p className="rounded-md border border-aviso/40 bg-aviso/10 px-3 py-2 text-sm text-aviso">

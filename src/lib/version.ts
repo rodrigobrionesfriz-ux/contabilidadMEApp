@@ -5,7 +5,8 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Libro de ventas: los resúmenes de boletas y de medios de pago electrónico se editan con ✏️ Editar (cantidad, total, fecha, forma de pago, cuenta) y se eliminan con 🗑 Eliminar; el F29 se recalcula solo.',
+  'Pagos y cobros: nueva pestaña 📜 Historial con todos los pagos a proveedores, cobros a clientes y pagos de honorarios del año, con filtros por tipo y mes y búsqueda por N°, RUT, nombre, folio, glosa o monto.',
+  'Cada fila abre su asiento contable para corregirlo; el comprobante mantiene su N° y el cambio queda en el registro de actividad.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */
