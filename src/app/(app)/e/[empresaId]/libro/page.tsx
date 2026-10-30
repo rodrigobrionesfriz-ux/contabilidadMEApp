@@ -7,6 +7,9 @@ import { clp, fechaCL, param, MESES } from '@/lib/formato';
 import { dteC, dteV } from '@/motor/dte';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { AnularDocumento } from './anular';
+import { EditarVenta } from './editar-venta';
+import { nombreFormaCobro } from '@/rcv/editar-venta';
+import { planDeEmpresa } from '@/lib/datos/maestros';
 import { anioContable } from '@/lib/anio-contable';
 
 export const metadata: Metadata = { title: 'Libro de compras y ventas' };
@@ -14,7 +17,7 @@ export const metadata: Metadata = { title: 'Libro de compras y ventas' };
 interface DocLibro {
   id: string; tipo_dte: number; folio: string; fecha: string; rut: string; razon_social: string | null;
   neto: number; exento: number; iva: number; total: number; estado: string | null; otros: string | null;
-  motivo_anulacion: string | null; asientos: { numero: number; fecha: string; anulado: boolean } | null;
+  motivo_anulacion: string | null; fp: string | null; asientos: { numero: number; fecha: string; anulado: boolean } | null;
 }
 
 export default async function LibroPage({ params, searchParams }: PageProps<'/e/[empresaId]/libro'>) {
@@ -27,7 +30,7 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
   const empresa = await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
   const docs = await traerTodo((d, h) => supabase.from('documentos')
-    .select('id,tipo_dte,folio,fecha,rut,razon_social,neto,exento,iva,total,estado,motivo_anulacion,otros:datos->>otrosImpuestos,asientos(numero,fecha,anulado)')
+    .select('id,tipo_dte,folio,fecha,rut,razon_social,neto,exento,iva,total,estado,motivo_anulacion,otros:datos->>otrosImpuestos,fp:datos->>formaPago,asientos(numero,fecha,anulado)')
     .eq('empresa_id', empresaId).eq('tipo', tipo).eq('periodo', periodo)
     .order('fecha').order('folio').range(d, h)) as unknown as DocLibro[];
   const info = (c: number) => (tipo === 'compra' ? dteC(c) : dteV(c));
@@ -44,6 +47,10 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
     { n: 0, exento: 0, neto: 0, iva: 0, otros: 0, total: 0 });
   const escribe = puedeEscribir(empresa.rol);
   const titulo = tipo === 'compra' ? 'compras' : 'ventas';
+  // Ventas: cuentas de ingreso (grupo 4, imputables y activas) para el editor
+  const cuentasIngreso: [string, string][] = tipo === 'venta' && escribe
+    ? (await planDeEmpresa(empresaId)).filter((c) => c.cd.startsWith('4') && c.aceptaMovimientos && c.activa !== false).map((c) => [c.cd, c.nm])
+    : [];
 
   return (
     <div className="space-y-4">
@@ -100,7 +107,7 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
                 <th className="px-3 py-2">Fecha</th><th className="px-2 py-2">Documento</th><th className="px-2 py-2">{tipo === 'compra' ? 'Proveedor' : 'Cliente'}</th>
                 <th className="px-2 py-2 text-right">Exento</th><th className="px-2 py-2 text-right">Neto</th><th className="px-2 py-2 text-right">IVA</th>
                 {tipo === 'compra' && <th className="px-2 py-2 text-right">Otros</th>}
-                <th className="px-2 py-2 text-right">Total</th><th className="px-2 py-2">Asiento</th><th className="px-3 py-2" />
+                <th className="px-2 py-2 text-right">Total</th>{tipo === 'venta' && <th className="px-2 py-2">Forma de pago</th>}<th className="px-2 py-2">Asiento</th><th className="px-3 py-2" />
               </tr>
             </thead>
             <tbody>
@@ -117,6 +124,7 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
                     <td className="num px-2 py-1 text-right">{clp(d.iva)}</td>
                     {tipo === 'compra' && <td className="num px-2 py-1 text-right">{Number(d.otros) ? clp(d.otros) : ''}</td>}
                     <td className="num px-2 py-1 text-right font-semibold">{clp(d.total)}</td>
+                    {tipo === 'venta' && <td className="px-2 py-1 whitespace-nowrap">{nombreFormaCobro(d.fp)}</td>}
                     <td className="px-2 py-1">
                       {d.asientos ? (
                         <Link className="num hover:text-acento" href={`/e/${empresaId}/diario?anio=${d.asientos.fecha.slice(0, 4)}&mes=${Number(d.asientos.fecha.slice(5, 7))}#n${d.asientos.numero}`}>
@@ -126,7 +134,12 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
                     </td>
                     <td className="px-3 py-1 text-right">
                       {anulado ? <span className="rounded bg-peligro/20 px-1.5 py-0.5 text-[10px] font-semibold text-peligro" title={d.motivo_anulacion ?? ''}>ANULADO</span>
-                        : escribe && <AnularDocumento empresaId={empresaId} id={d.id} etiqueta={`${d.tipo_dte} N° ${d.folio}`} />}
+                        : escribe && (
+                          <div className="flex items-center justify-end gap-3">
+                            {tipo === 'venta' && d.asientos && !d.asientos.anulado && <EditarVenta empresaId={empresaId} id={d.id} etiqueta={`${d.tipo_dte} N° ${d.folio}`} cuentasIngreso={cuentasIngreso} />}
+                            <AnularDocumento empresaId={empresaId} id={d.id} etiqueta={`${d.tipo_dte} N° ${d.folio}`} />
+                          </div>
+                        )}
                     </td>
                   </tr>
                 );

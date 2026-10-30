@@ -133,6 +133,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ### 0023 (10u)
 - guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
 
+### 0033 (10z26)
+- editar_documento(id, doc, asiento, motivo): edita una venta (o compra) registrada. Revisa permisos, que no esté anulada y que tenga asiento; si cambia RUT, tipo o folio, que no choque con otro documento vigente (misma clave normalizada y candado). Rehace el asiento con editar_asiento (mismo número, mismo año, meses abiertos, versión anterior en auditoría) y actualiza el documento; datos se combina con lo guardado (se conservan registro SII, detalle y origen). Auditoría editar_documento con antes y después.
+
+### 0032 (ventas con tarjeta)
+- Cuenta 1107004 TARJETAS POR COBRAR (DÉBITO Y CRÉDITO) en la plantilla y en las empresas; la forma de pago de la ficha del cliente admite 'tarjetas'.
+
 ### 0029 (10z17)
 - La cuenta 1104001 pasa a llamarse CLIENTES (era FACTURAS POR COBRAR) en la plantilla del plan y en las empresas que conservan el nombre original. La importación del respaldo no la revierte (no pisa nombres de cuentas existentes).
 
@@ -498,6 +504,13 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - src/rcv/archivo.ts: datosDelNombre (RUT con DV válido, tipo RCV_COMPRA/RCV_VENTA y período AAAAMM) y errorArchivoRCV (RUT distinto al de la empresa activa, o compras en ventas y al revés). Se valida en el navegador antes de leer y en guardarCarga (servidor, con el RUT de la empresa desde la base). Si el nombre no trae RUT (archivo renombrado), se acepta como antes.
 - Un RCV ya guardado con el RUT de otra empresa muestra "⛔ Este RCV guardado no corresponde a la empresa" y deshabilita el paso 2; se saca con "Quitar este RCV".
 - Tests: src/rcv/__tests__/archivo.test.ts.
+
+## Editar ventas desde el libro (10z26, versión 1.23.0)
+- Libro de ventas: columna "Forma de pago" (Crédito (cliente), Contado (banco), Tarjetas, Deudores varios) y "✏️ Editar" en cada venta vigente con asiento vigente (admin y contador), como en el sistema anterior.
+- Ventana de edición (libro/editar-venta.tsx): fecha de emisión y vencimiento, tipo DTE de ventas, N°, RUT y razón social, neto, exento, IVA (sigue al 19% del neto mientras no se escriba a mano), otros impuestos, total calculado, forma de pago/destino, cuenta de ingreso (grupo 4) y motivo opcional.
+- src/rcv/editar-venta.ts (con pruebas): valida, rehace el documento contable conservando lo demás y recalcula el asiento con asientoVenta. Si el ingreso estaba repartido en varias líneas (centros de costo), un cambio de monto se prorratea y el cambio de cuenta se aplica a esas líneas.
+- La acción del servidor (libro/acciones.ts) recalcula con el plan de la base y llama a editar_documento (migración 0033). Prueba en PGlite: db/__tests__/editar-documento.test.ts.
+- Pendiente: lo mismo para compras (tienen el reparto del paso 2 y otros impuestos).
 
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.
