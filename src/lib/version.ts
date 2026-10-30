@@ -5,8 +5,8 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Importar respaldo: trae las declaraciones F29 del sistema anterior (declarado, presentado, códigos a mano, anticipo y tasa PPM por mes) y la tasa PPM de la empresa (respaldos desde V2.22.13).',
-  'Si el respaldo es anterior y no trae F29, se conservan las declaraciones F29 que ya están en este sistema.',
+  'Importar respaldo trae todo el sistema anterior: F29 y tasa PPM, configuración de la empresa y parámetros previsionales, trabajadores con sus anticipos, asistencia y libros de remuneraciones cerrados, finiquitos y contratos con sus plantillas.',
+  'También las fichas de clientes y proveedores, comprobantes tipo, renta, declaraciones juradas, activo fijo e inventario (este último sólo si aquí aún no hay inventario).',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */
