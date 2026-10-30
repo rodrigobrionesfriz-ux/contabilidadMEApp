@@ -133,6 +133,11 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ### 0023 (10u)
 - guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
 
+### 0034 (importar reemplaza el año)
+- vaciar_anio(empresa, año) (sólo la llama importar_iniciar; sin permiso directo): borra lo contable del año: documentos del año o con asiento del año (suelta antes las recepciones de inventario que los enlazan), libros de remuneraciones, anticipos (mes de descuento), F29, RCV cargados, saldos de conciliación, ejercicio cerrado, asientos (líneas y marcas de conciliación en cascada), meses cerrados, correlativo e importaciones del año. Auditoría reemplazar_anio_importacion con lo borrado.
+- resumen_anio(empresa, año): cuántos asientos (importados y propios vigentes), documentos, F29, RCV, libros de remuneraciones, anticipos y meses cerrados tiene el año (sólo administrador).
+- importar_iniciar ya no se niega si el año tiene asientos: llama a vaciar_anio y carga.
+
 ### 0033 (10z26)
 - editar_documento(id, doc, asiento, motivo): edita una venta (o compra) registrada. Revisa permisos, que no esté anulada y que tenga asiento; si cambia RUT, tipo o folio, que no choque con otro documento vigente (misma clave normalizada y candado). Rehace el asiento con editar_asiento (mismo número, mismo año, meses abiertos, versión anterior en auditoría) y actualiza el documento; datos se combina con lo guardado (se conservan registro SII, detalle y origen). Auditoría editar_documento con antes y después.
 
@@ -529,6 +534,11 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - src/rcv/editar-venta.ts (con pruebas): valida, rehace el documento contable conservando lo demás y recalcula el asiento con asientoVenta. Si el ingreso estaba repartido en varias líneas (centros de costo), un cambio de monto se prorratea y el cambio de cuenta se aplica a esas líneas.
 - La acción del servidor (libro/acciones.ts) recalcula con el plan de la base y llama a editar_documento (migración 0033). Prueba en PGlite: db/__tests__/editar-documento.test.ts.
 - Pendiente: lo mismo para compras (tienen el reparto del paso 2 y otros impuestos).
+
+## Importar respaldo reemplaza el año (versión 1.27.0)
+- Para migrar las empresas tal como están en el sistema anterior (se trabajó en paralelo para pruebas): importar el respaldo de un año borra todo lo contable de ese año en la empresa y carga el respaldo. Los otros años, el plan de cuentas, centros, fichas, trabajadores y activos fijos se conservan.
+- Al elegir el archivo, el importador consulta resumen_anio y muestra en rojo lo que se borrará (asientos importados y registrados en la app, documentos, F29, RCV, libros de remuneraciones, anticipos, meses cerrados, conciliación y cierre); el botón "Reemplazar el año AAAA con el respaldo" exige marcar "Entiendo que se borra…". Si la carga se corta, basta volver a importar.
+- Prueba en PGlite: db/__tests__/importar-reemplaza.test.ts.
 
 ## Notas técnicas
 - PostgREST devuelve como máximo 1.000 filas por consulta; se usa `traerTodo` (src/lib/paginar.ts) para leer por páginas.

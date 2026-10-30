@@ -74,12 +74,15 @@ describe('importación del respaldo', () => {
     expect(r.numero).toBe(max + 1);
   });
 
-  it('no permite reimportar un año con datos ni borrar si hay asientos propios', async () => {
-    await expect(importar()).rejects.toThrow(/ya tiene asientos/);
+  it('eliminar la importación se niega con asientos propios; reimportar reemplaza el año completo (también los propios)', async () => {
     await expect(b.como(ADMIN, `select eliminar_importacion($1, 2026)`, [emp])).rejects.toThrow(/registrados en el sistema nuevo/);
+    await importar();
+    const [{ m, propios }] = await b.como<{ m: number; propios: number }>(ADMIN, `select count(*)::int m, count(*) filter (where not importado)::int propios from asientos where empresa_id=$1`, [emp]);
+    expect({ m, propios }).toEqual({ m: plan.asientos.length, propios: 0 });
   });
 
   it('eliminar la importación deja el año limpio para rehacerla (los propios anulados no lo impiden)', async () => {
+    await b.como(ADMIN, `select * from crear_asiento($1, '2026-04-01', 'Prueba', $2)`, [emp, j([{ cuenta: '1101201', debe: 10 }, { cuenta: '2301001', haber: 10 }])]);
     const [propio] = await b.como<{ id: string }>(ADMIN, `select a.id from asientos a where a.empresa_id=$1 and not importado`, [emp]);
     await b.como(ADMIN, `select anular_asiento($1, 'Prueba del F29 en marcha blanca')`, [propio.id]);
     await b.como(ADMIN, `select eliminar_importacion($1, 2026)`, [emp]);

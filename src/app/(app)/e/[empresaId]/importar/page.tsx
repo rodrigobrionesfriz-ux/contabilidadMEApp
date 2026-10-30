@@ -25,7 +25,7 @@ export default async function ImportarPage({ params }: PageProps<'/e/[empresaId]
         <p className="mt-1 text-sm text-tenue">
           En el sistema anterior, abre la empresa y el año, entra a <b className="text-texto">⚙️ Sistema y Respaldos</b> y usa{' '}
           <b className="text-texto">📥 Exportar Excel</b>. Sube ese archivo aquí.
-          Se carga un año por archivo. El sistema anterior no se modifica.
+          Se carga un año por archivo y <b className="text-texto">reemplaza ese año completo</b> en esta empresa (lo importado antes y lo registrado aquí), para dejarla igual que en el sistema anterior. Los otros años no se tocan y el sistema anterior no se modifica.
         </p>
       </div>
       <Importador empresaId={empresaId} rutEmpresa={empresa.rut} pdc={pdc} />
