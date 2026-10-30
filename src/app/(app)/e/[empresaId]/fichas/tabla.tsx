@@ -14,7 +14,7 @@ interface Form { rut: string; razonSocial: string; cuenta: string; cc: string; f
 const vacio: Form = { rut: '', razonSocial: '', cuenta: '', cc: '', formaPago: '', giro: '', email: '', telefono: '', direccion: '', activo: true };
 const deFila = (f: FichaFila): Form => ({ rut: f.rut, razonSocial: f.razon_social, cuenta: f.cuenta ?? '', cc: f.centro_costo ?? '', formaPago: f.forma_pago ?? '',
   giro: f.giro ?? '', email: f.email ?? '', telefono: f.telefono ?? '', direccion: f.direccion ?? '', activo: f.activo });
-const FP: Record<string, string> = { clientes: 'Por cobrar', banco: 'Contado (banco)', deudores: 'Deudores varios' };
+const FP: Record<string, string> = { clientes: 'Por cobrar', banco: 'Contado (banco)', deudores: 'Deudores varios', tarjetas: 'Tarjetas' };
 
 export function TablaFichas({ empresaId, tipo, filas, cuentas, centros, escribe }: {
   empresaId: string; tipo: 'proveedor' | 'cliente'; filas: FichaFila[]; cuentas: CuentaOp[]; centros: CentroOpcion[]; escribe: boolean;
@@ -58,7 +58,7 @@ export function TablaFichas({ empresaId, tipo, filas, cuentas, centros, escribe 
         {tipo === 'cliente' && (
           <div><label className="etiqueta" htmlFor="f-fp">Forma de cobro</label>
             <select id="f-fp" value={form.formaPago} onChange={(e) => setForm({ ...form, formaPago: e.target.value })} className="campo">
-              <option value="">Por cobrar (clientes)</option><option value="banco">Contado (banco)</option><option value="deudores">Deudores varios</option>
+              <option value="">Por cobrar (clientes)</option><option value="banco">Contado (banco)</option><option value="tarjetas">Tarjetas débito o crédito</option><option value="deudores">Deudores varios</option>
             </select></div>
         )}
       </div>

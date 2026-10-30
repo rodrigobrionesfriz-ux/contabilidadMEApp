@@ -18,7 +18,7 @@ const entero = (v: string) => Math.round(Number(v.replace(/\./g, '')) || 0);
 export function FormDocumento({ empresaId, tipo, cuentas, centros }: { empresaId: string; tipo: TipoRCV; cuentas: CuentaBase[]; centros: CentroOpcion[] }) {
   const plan = useMemo(() => new PlanCuentas(cuentas), [cuentas]);
   const dtes = (tipo === 'compra' ? DTE_COMPRAS : DTE_VENTAS).filter((d) => !d.honorario);
-  const [h, setH] = useState({ tipoDTE: 33, folio: '', fecha: hoyISO(), vence: '', rut: '', razon: '', exento: 0, neto: 0, iva: 0, otros: 0, ivaManual: false, formaPago: 'clientes' as 'clientes' | 'banco' | 'deudores' });
+  const [h, setH] = useState({ tipoDTE: 33, folio: '', fecha: hoyISO(), vence: '', rut: '', razon: '', exento: 0, neto: 0, iva: 0, otros: 0, ivaManual: false, formaPago: 'clientes' as 'clientes' | 'banco' | 'deudores' | 'tarjetas' });
   const [periodo, setPeriodo] = useState(hoyISO().slice(0, 7));
   const [glosa, setGlosa] = useState('');
   const [redondeo, setRedondeo] = useState(false);
@@ -119,7 +119,7 @@ export function FormDocumento({ empresaId, tipo, cuentas, centros }: { empresaId
           <div className="sm:col-span-2">
             <label className="etiqueta" htmlFor="fp">Forma de cobro</label>
             <select id="fp" value={h.formaPago} onChange={(e) => setH({ ...h, formaPago: e.target.value as typeof h.formaPago })} className="campo">
-              <option value="clientes">Por cobrar (clientes)</option><option value="banco">Pagada (banco)</option><option value="deudores">Deudores varios</option>
+              <option value="clientes">Por cobrar (clientes)</option><option value="banco">Pagada (banco)</option><option value="tarjetas">Tarjetas débito o crédito</option><option value="deudores">Deudores varios</option>
             </select>
           </div>
         )}

@@ -11,7 +11,7 @@ const ficha = z.object({
   razonSocial: z.string().trim().min(1, 'Ingresa la razón social').max(200),
   cuenta: z.string().trim().max(20).optional(),
   cc: z.string().trim().max(40).optional(),
-  formaPago: z.enum(['clientes', 'banco', 'deudores', '']).optional(),
+  formaPago: z.enum(['clientes', 'banco', 'deudores', 'tarjetas', '']).optional(),
   giro: z.string().trim().max(200).optional(),
   email: z.string().trim().max(200).optional(),
   telefono: z.string().trim().max(50).optional(),

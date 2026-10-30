@@ -21,7 +21,7 @@ export interface Fila {
   /** Cuenta y CC sugeridos (ficha del auxiliar o último uso) */
   cuenta: string;
   cc: string;
-  formaPago: 'clientes' | 'banco' | 'deudores';
+  formaPago: 'clientes' | 'banco' | 'deudores' | 'tarjetas';
   detalle?: { lineas: LineaDetalle[]; glosa: string; aceptaRedondeo: boolean };
   vence: string;
   resultado?: { ok: boolean; numero?: number; error?: string };

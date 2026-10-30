@@ -46,7 +46,7 @@ describe('administrador, perfiles Senior y Contador', () => {
   it('el administrador ve y trabaja en todas las empresas', async () => {
     expect(await b.como(ADM, `select razon_social from empresas order by 1`)).toEqual([{ razon_social: 'Agrícola Senior' }, { razon_social: 'Empresa del Admin' }]);
     expect(await b.como(ADM, `select puede_escribir($1) w, es_admin($1) a`, [empSen])).toEqual([{ w: true, a: true }]);
-    expect((await b.como(ADM, `select count(*)::int n from cuentas where empresa_id = $1`, [empSen]))[0]).toEqual({ n: 295 });
+    expect((await b.como(ADM, `select count(*)::int n from cuentas where empresa_id = $1`, [empSen]))[0]).toEqual({ n: 296 });
   });
 
   it('edición de perfiles: sólo el administrador, con permisos válidos, y siempre queda un administrador', async () => {
