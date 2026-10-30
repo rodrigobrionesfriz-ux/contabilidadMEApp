@@ -9,6 +9,9 @@ import { dteC, dteV } from './dte';
 import { PlanCuentas } from './plan-cuentas';
 import { rutPartes } from './rut';
 
+/** Ventas pagadas con tarjeta de débito o crédito, por cobrar al operador de pagos. */
+export const CUENTA_TARJETAS = '1107004';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Extra = Record<string, any>;
 
@@ -135,7 +138,8 @@ export function asientoVenta(d: Documento, plan: PlanCuentas) {
   // del Total, el asiento absorbe la diferencia en resultado.
   const ingresoInformado = neto + exento + otros;
   const ingreso = total ? total - iva : ingresoInformado;
-  const cuentaDeb = d.formaPago === 'banco' ? '1101201' : d.formaPago === 'deudores' ? '1107003' : '1104001';
+  // 'tarjetas': pagada con tarjeta de débito o crédito; queda por cobrar al operador (Transbank, Getnet…) hasta su abono.
+  const cuentaDeb = d.formaPago === 'banco' ? '1101201' : d.formaPago === 'deudores' ? '1107003' : d.formaPago === 'tarjetas' ? CUENTA_TARJETAS : '1104001';
   const aux = {
     desc: `${d.razonSocial || ''} · ${nombreDoc} N°${d.numero}`.trim(),
     rutCodigo: d.rutCodigo,

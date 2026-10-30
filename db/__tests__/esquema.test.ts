@@ -33,7 +33,7 @@ describe('esquema base', () => {
     emp1 = (await como<{ id: string }>(U1, `select crear_empresa('76.151.704-K', 'Agrícola Uno SpA') id`))[0].id;
     emp2 = (await como<{ id: string }>(U2, `select crear_empresa('77684700-3', 'Comercial Dos Ltda') id`))[0].id;
     const c = await como<{ n: number }>(U1, `select count(*)::int n from cuentas where empresa_id = $1`, [emp1]);
-    expect(c[0].n).toBe(295);
+    expect(c[0].n).toBe(296);
     const aux = await como(U1, `select codigo, tipo_auxiliar, acepta_movimientos from cuentas where empresa_id=$1 and codigo in ('1','1104001') order by codigo`, [emp1]);
     expect(aux).toEqual([
       { codigo: '1', tipo_auxiliar: null, acepta_movimientos: false },

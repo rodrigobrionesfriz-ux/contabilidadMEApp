@@ -19,8 +19,8 @@ export interface Asignacion {
   cc?: string;
   /** Paso 2: líneas revisadas */
   detalle?: { lineas: LineaDetalle[]; glosa?: string; aceptaRedondeo?: boolean };
-  /** Ventas: clientes (por cobrar) | banco | deudores */
-  formaPago?: 'clientes' | 'banco' | 'deudores';
+  /** Ventas: clientes (por cobrar) | banco | deudores | tarjetas (débito o crédito, por cobrar al operador) */
+  formaPago?: 'clientes' | 'banco' | 'deudores' | 'tarjetas';
   fechaVencimiento?: string;
   glosa?: string;
   origen?: 'RCV' | 'manual';

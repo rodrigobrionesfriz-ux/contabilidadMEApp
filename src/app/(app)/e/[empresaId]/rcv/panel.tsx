@@ -189,7 +189,7 @@ export function EditorDocumento({ empresaId, tipo, periodo, plan, cuentas, centr
       {tipo === 'venta' && (
         <div className="w-64"><label className="etiqueta" htmlFor="fpago">Forma de cobro</label>
           <select id="fpago" value={formaPago} onChange={(e) => setFormaPago(e.target.value as Fila['formaPago'])} className="campo">
-            <option value="clientes">Por cobrar (clientes)</option><option value="banco">Pagada (banco)</option><option value="deudores">Deudores varios</option>
+            <option value="clientes">Por cobrar (clientes)</option><option value="banco">Pagada (banco)</option><option value="tarjetas">Tarjetas débito o crédito</option><option value="deudores">Deudores varios</option>
           </select></div>
       )}
 

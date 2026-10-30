@@ -97,4 +97,14 @@ describe('registro de documentos RCV', () => {
     expect(banco.registro.asiento.lineas[0]).toMatchObject({ cuenta: '1101201', debe: 61615 });
     expect(cuadra(banco.registro.asiento.lineas)).toBe(0);
   });
+
+  it('ventas con tarjeta: cargo a 1107004 (por cobrar al operador), sin auxiliar de cliente', () => {
+    const planT = new PlanCuentas([...(pdc as never[]), { cd: '1107004', nm: 'TARJETAS POR COBRAR (DÉBITO Y CRÉDITO)', tp: 'A', nat: 'D' } as never]);
+    const t = construirRegistro('venta', ventas[3], '2026-03', { cuenta: '4101002', formaPago: 'tarjetas' }, planT);
+    expect(t.ok).toBe(true);
+    if (!t.ok) return;
+    expect(t.registro.asiento.lineas[0]).toMatchObject({ cuenta: '1107004', debe: 61615 });
+    expect(t.registro.asiento.lineas[0].rut ?? null).toBeNull();
+    expect(cuadra(t.registro.asiento.lineas)).toBe(0);
+  });
 });
