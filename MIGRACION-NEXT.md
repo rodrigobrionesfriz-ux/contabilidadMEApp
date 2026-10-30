@@ -505,6 +505,10 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Un RCV ya guardado con el RUT de otra empresa muestra "⛔ Este RCV guardado no corresponde a la empresa" y deshabilita el paso 2; se saca con "Quitar este RCV".
 - Tests: src/rcv/__tests__/archivo.test.ts.
 
+## Editar y eliminar resúmenes de boletas y vouchers (versión 1.24.1)
+- ✏️ Editar del libro de ventas (libro/editar-venta.tsx) muestra para los tipos 35/39/41/48 la cantidad de documentos y el total del período (calcula neto e IVA). rcv/editar-venta.ts carga y guarda datos.cantidad, la exige en resúmenes y la quita si el documento pasa a otro tipo.
+- En esos resúmenes el botón Anular se muestra como 🗑 Eliminar con motivo opcional (anular_documento: se anulan documento y asiento y queda la traza; el mismo resumen se puede volver a registrar). Sin migración.
+
 ## Ventas con boleta y con medios de pago electrónico (versión 1.24.0)
 - Libro de ventas: botones "🧾 Ventas con boleta" y "💳 Medios electrónicos" → documentos/nuevo?tipo=venta&resumen=39|48. Tipos 35/39/41/48 se registran como resumen (día o mes): cantidad de documentos, total con IVA (neto = total ÷ 1,19), folios desde-hasta opcionales (sin folio: referencia R+fecha), RUT genérico 66.666.666-6; los vouchers proponen forma de pago Tarjetas. La cuenta de ingreso propuesta es la que usan las demás ventas de la empresa (la más frecuente en las últimas 300, sin boletas ni vouchers; si no hay, la de la factura 33), tanto para resúmenes como para documentos nuevos.
 - La cantidad se guarda en documentos.datos.cantidad (DocRCV.cantidad → armarDocumento). Sin migración.

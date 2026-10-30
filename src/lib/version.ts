@@ -5,8 +5,7 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Libro de ventas: botones 🧾 Ventas con boleta y 💳 Medios electrónicos para registrar el resumen del día o del mes con la cantidad de documentos y el total (neto e IVA se calculan solos). Usan la misma cuenta de ingreso que las demás ventas.',
-  'F29: los códigos 110 y 111 (boletas), 758 y 759 (comprobantes de pago electrónico) y 586 (boletas exentas) se llenan solos desde esos resúmenes; ingresarlos a mano sigue disponible.',
+  'Libro de ventas: los resúmenes de boletas y de medios de pago electrónico se editan con ✏️ Editar (cantidad, total, fecha, forma de pago, cuenta) y se eliminan con 🗑 Eliminar; el F29 se recalcula solo.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */

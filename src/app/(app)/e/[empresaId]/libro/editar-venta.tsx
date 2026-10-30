@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Modal } from '@/components/modal';
 import { Mensaje } from '@/components/form-estado';
-import { DTE_VENTAS, IVA } from '@/motor/dte';
+import { DTE_VENTAS, IVA, TIPOS_RESUMEN_VENTA } from '@/motor/dte';
 import { milesInput } from '@/lib/formato';
 import { FORMAS_COBRO, totalVenta, type CambiosVenta, type FormaCobro } from '@/rcv/editar-venta';
 import { datosVenta, guardarVenta } from './acciones';
@@ -44,6 +44,16 @@ export function EditarVenta({ empresaId, id, etiqueta, cuentasIngreso }: { empre
     setAbierto(false); router.refresh();
   });
 
+  const resumen = !!c && TIPOS_RESUMEN_VENTA.includes(c.tipoDTE);
+  /** Resumen: el total con IVA calcula neto e IVA (o exento en boletas exentas). */
+  const fijarTotal = (t: number) => {
+    if (!c) return;
+    if (c.tipoDTE === 41) return set({ exento: t, neto: 0, iva: 0, otrosImpuestos: 0 });
+    const neto = Math.round(t / (1 + IVA));
+    setIvaManual(true);
+    setC({ ...c, neto, iva: t - neto, exento: 0, otrosImpuestos: 0 });
+  };
+
   const monto = (k: 'neto' | 'exento' | 'iva' | 'otrosImpuestos', l: string) => (
     <div><label className="etiqueta" htmlFor={`ev-${k}`}>{l}</label>
       <input id={`ev-${k}`} inputMode="numeric" value={c && c[k] ? milesInput(c[k]) : ''} placeholder="0"
@@ -52,7 +62,7 @@ export function EditarVenta({ empresaId, id, etiqueta, cuentasIngreso }: { empre
 
   if (!abierto) return <button type="button" className="text-tenue hover:text-acento" onClick={abrir} title={`Editar ${etiqueta}`}>✏️ Editar</button>;
   return (
-    <Modal titulo={`Editar venta ${etiqueta}`} sub={info.asiento ? `Se rehace el asiento N° ${info.asiento} con el mismo número.` : undefined} onCerrar={() => setAbierto(false)} ancho="max-w-4xl">
+    <Modal titulo={`Editar ${resumen ? 'resumen' : 'venta'} ${etiqueta}`} sub={info.asiento ? `Se rehace el asiento N° ${info.asiento} con el mismo número.` : undefined} onCerrar={() => setAbierto(false)} ancho="max-w-4xl">
       {!c ? <p className="text-tenue">{pendiente ? 'Cargando…' : ''}</p> : (
         <div className="space-y-3 text-left">
           <div className="grid gap-3 sm:grid-cols-4">
@@ -68,6 +78,15 @@ export function EditarVenta({ empresaId, id, etiqueta, cuentasIngreso }: { empre
             <div><label className="etiqueta" htmlFor="ev-r">RUT cliente</label><input id="ev-r" value={c.rut} onChange={(e) => set({ rut: e.target.value })} className="campo num" autoCapitalize="none" /></div>
             <div><label className="etiqueta" htmlFor="ev-rs">Razón social</label><input id="ev-rs" value={c.razonSocial} onChange={(e) => set({ razonSocial: e.target.value })} className="campo" /></div>
           </div>
+          {resumen && (
+            <div className="grid gap-3 rounded-md border border-info/40 bg-info/5 p-3 sm:grid-cols-[160px_200px_1fr]">
+              <div><label className="etiqueta" htmlFor="ev-cant">Cantidad de documentos</label>
+                <input id="ev-cant" inputMode="numeric" value={c.cantidad ? milesInput(c.cantidad) : ''} onChange={(e) => set({ cantidad: entero(e.target.value) })} className="campo num text-right" /></div>
+              <div><label className="etiqueta" htmlFor="ev-tot">Total del período{c.tipoDTE === 41 ? ' (exento)' : ' (con IVA)'}</label>
+                <input id="ev-tot" inputMode="numeric" value={milesInput(totalVenta(c)) || ''} onChange={(e) => fijarTotal(entero(e.target.value))} className="campo num text-right" /></div>
+              <p className="self-end text-xs text-tenue">Resumen de {c.tipoDTE === 48 ? 'comprobantes de pago electrónico (F29 758 y 759)' : c.tipoDTE === 41 ? 'boletas exentas (F29 586 y 142)' : 'boletas (F29 110 y 111)'}. Ingresa el total y el neto e IVA se recalculan.</p>
+            </div>
+          )}
           <div className="grid gap-3 sm:grid-cols-5">
             {monto('neto', 'Neto')}{monto('exento', 'Exento')}{monto('iva', 'IVA 19%')}{monto('otrosImpuestos', 'Otros imp.')}
             <div><div className="etiqueta">Total</div><div className="campo num bg-panel text-right font-semibold">{milesInput(totalVenta(c)) || '0'}</div></div>

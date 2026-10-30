@@ -7,6 +7,7 @@ import { clp, fechaCL, param, MESES } from '@/lib/formato';
 import { dteC, dteV } from '@/motor/dte';
 import { SelectorPeriodo } from '@/components/selector-periodo';
 import { AnularDocumento } from './anular';
+import { TIPOS_RESUMEN_VENTA } from '@/motor/dte';
 import { EditarVenta } from './editar-venta';
 import { nombreFormaCobro } from '@/rcv/editar-venta';
 import { planDeEmpresa } from '@/lib/datos/maestros';
@@ -139,7 +140,7 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
                         : escribe && (
                           <div className="flex items-center justify-end gap-3">
                             {tipo === 'venta' && d.asientos && !d.asientos.anulado && <EditarVenta empresaId={empresaId} id={d.id} etiqueta={`${d.tipo_dte} N° ${d.folio}`} cuentasIngreso={cuentasIngreso} />}
-                            <AnularDocumento empresaId={empresaId} id={d.id} etiqueta={`${d.tipo_dte} N° ${d.folio}`} />
+                            <AnularDocumento empresaId={empresaId} id={d.id} etiqueta={`${d.tipo_dte} N° ${d.folio}`} eliminar={tipo === 'venta' && TIPOS_RESUMEN_VENTA.includes(+d.tipo_dte)} />
                           </div>
                         )}
                     </td>

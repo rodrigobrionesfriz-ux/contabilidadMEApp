@@ -4,7 +4,7 @@
 
 import { asientoVenta, type Documento, type LineaDist } from '@/motor/contable';
 import type { PlanCuentas } from '@/motor/plan-cuentas';
-import { dteV } from '@/motor/dte';
+import { dteV, TIPOS_RESUMEN_VENTA } from '@/motor/dte';
 import { rutParse } from '@/motor/rut';
 import { lineasDe, redondear, type LineaImport, type MovLegado } from '@/importador/respaldo';
 import { esCuentaImpuesto } from './documento';
@@ -19,6 +19,8 @@ export const nombreFormaCobro = (f: string | null | undefined) => ({ clientes: '
 export interface CambiosVenta {
   fecha: string; fechaVencimiento: string; tipoDTE: number; numero: string; rut: string; razonSocial: string;
   neto: number; exento: number; iva: number; otrosImpuestos: number; formaPago: FormaCobro; cuentaIngreso: string;
+  /** Resumen de boletas o comprobantes de pago electrónico: cantidad de documentos que agrupa. */
+  cantidad?: number;
 }
 
 /** Valores del formulario a partir del documento guardado. */
@@ -29,6 +31,7 @@ export function cambiosDesde(datos: Partial<Documento>, fila: { fecha: string; t
     rut: fila.rut, razonSocial: fila.razon_social ?? '', neto: Number(fila.neto), exento: Number(fila.exento), iva: Number(fila.iva),
     otrosImpuestos: Math.round(Number(datos.otrosImpuestos) || 0), formaPago: ((datos.formaPago as FormaCobro) || 'clientes'),
     cuentaIngreso: String(datos.cuentaIngreso || dist[0]?.cuenta || dteV(fila.tipo_dte)?.cuenta || ''),
+    ...(Number(datos.cantidad) > 0 ? { cantidad: Math.round(Number(datos.cantidad)) } : {}),
   };
 }
 
@@ -65,6 +68,8 @@ export function editarVenta(anterior: Partial<Documento>, c: CambiosVenta, plan:
   const total = totalVenta(c);
   if (!(total > 0)) errores.push('El total debe ser mayor que cero.');
   if (!['clientes', 'banco', 'tarjetas', 'deudores'].includes(c.formaPago)) errores.push('Forma de cobro no válida.');
+  const resumen = TIPOS_RESUMEN_VENTA.includes(Number(c.tipoDTE));
+  if (resumen && !(Number(c.cantidad) >= 1)) errores.push('Indica la cantidad de documentos del resumen.');
   const regla = plan.regla(c.cuentaIngreso);
   if (!regla) errores.push(`La cuenta de ingreso ${c.cuentaIngreso || '(vacía)'} no existe en el plan de cuentas.`);
   else if (!regla.aceptaMovimientos || regla.activa === false) errores.push(`La cuenta de ingreso ${c.cuentaIngreso} no acepta movimientos o está inactiva.`);
@@ -85,6 +90,9 @@ export function editarVenta(anterior: Partial<Documento>, c: CambiosVenta, plan:
     ...(vence !== anterior.fechaVencimiento ? { fechaVencimientoOrigen: 'manual' } : {}),
     ...(dist ? { dist } : {}),
   };
+  // Cantidad de documentos: sólo en resúmenes de boletas o vouchers (alimenta el F29)
+  if (resumen) datos.cantidad = Math.round(Number(c.cantidad));
+  else delete datos.cantidad;
   // Al cambiar el monto, el reparto del paso 2 ya no aplica tal cual: queda el nuevo (dist)
   if ((anterior as { detalleRCV?: unknown }).detalleRCV && base !== Math.round(+(anterior.neto ?? 0)) + Math.round(+(anterior.exento ?? 0)))
     delete (datos as { detalleRCV?: unknown }).detalleRCV;
