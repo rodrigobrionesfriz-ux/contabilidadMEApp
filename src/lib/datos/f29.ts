@@ -9,7 +9,7 @@ export async function entradaF29(empresaId: string, anio: number): Promise<Entra
   const supabase = await crearClienteServidor();
   const [emp, ventas, compras, honorarios, iusc, decl, retLibro] = await Promise.all([
     supabase.from('empresas').select('tasa_ppm').eq('id', empresaId).single(),
-    traerTodo((d, h) => supabase.from('documentos').select('tipo_dte,fecha,neto,exento,iva,total,estado')
+    traerTodo((d, h) => supabase.from('documentos').select('tipo_dte,fecha,neto,exento,iva,total,estado,cantidad:datos->>cantidad')
       .eq('empresa_id', empresaId).eq('tipo', 'venta').gte('fecha', `${anio}-01-01`).lte('fecha', `${anio}-12-31`).order('fecha').range(d, h)),
     traerTodo((d, h) => supabase.from('documentos').select('datos,estado,periodo')
       .eq('empresa_id', empresaId).eq('tipo', 'compra').gte('periodo', `${anio}-01`).lte('periodo', `${anio}-12`).order('fecha').range(d, h)),
@@ -37,8 +37,8 @@ export async function entradaF29(empresaId: string, anio: number): Promise<Entra
   return {
     anio,
     tasaPPM: Number(emp.data.tasa_ppm) || 0,
-    ventas: (ventas as { tipo_dte: number; fecha: string; neto: number; exento: number; iva: number; total: number; estado: string | null }[])
-      .map((v): VentaF29 => ({ tipoDTE: v.tipo_dte, fecha: v.fecha, neto: Number(v.neto), exento: Number(v.exento), iva: Number(v.iva), total: Number(v.total), estado: v.estado ?? undefined })),
+    ventas: (ventas as { tipo_dte: number; fecha: string; neto: number; exento: number; iva: number; total: number; estado: string | null; cantidad: string | null }[])
+      .map((v): VentaF29 => ({ tipoDTE: v.tipo_dte, fecha: v.fecha, neto: Number(v.neto), exento: Number(v.exento), iva: Number(v.iva), total: Number(v.total), estado: v.estado ?? undefined, ...(n(v.cantidad) ? { cantidad: n(v.cantidad)! } : {}) })),
     compras: (compras as { datos: Documento; estado: string | null; periodo: string }[])
       .map((c) => ({ ...c.datos, periodoContable: c.periodo, estado: c.estado === 'anulado' ? 'anulado' : c.datos.estado })),
     honorarios: (honorarios as { total: number; estado: string | null; periodo: string | null; fecha: string | null; mes: string | null; retencion: string | null; tasa: string | null; tipoRet: string | null }[])

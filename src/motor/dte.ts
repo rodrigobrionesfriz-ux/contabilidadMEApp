@@ -22,6 +22,9 @@ export const DTE_VENTAS: DteInfo[] = [
   { cod: 61, nm: 'Nota de Crédito', afecto: true, cuenta: '4101002', signo: -1 },
 ];
 
+/** Boletas (35/39/41) y comprobantes de pago electrónico (48): en ventas se registran como resumen del día o del mes. */
+export const TIPOS_RESUMEN_VENTA = [35, 39, 41, 48];
+
 export const DTE_COMPRAS: DteInfo[] = [
   { cod: 30, nm: 'Factura', afecto: true },
   { cod: 32, nm: 'Factura Exenta', afecto: false },
