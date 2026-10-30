@@ -505,6 +505,10 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Un RCV ya guardado con el RUT de otra empresa muestra "⛔ Este RCV guardado no corresponde a la empresa" y deshabilita el paso 2; se saca con "Quitar este RCV".
 - Tests: src/rcv/__tests__/archivo.test.ts.
 
+## Historial de pagos y cobros (versión 1.25.0)
+- pagos?tipo=historial (pagos/historial.tsx + historialPagos en pagos/page.tsx): asientos tipo 'pago' del año contable con sus líneas; el tipo (pago proveedor, cobro cliente, pago honorarios) sale del tipo_auxiliar de la cuenta, los nombres de auxiliares (fichas y documentos), los folios, la cuenta 1101xxx y el monto (líneas de banco). Filtros por tipo y mes y búsqueda en el cliente.
+- Cada fila abre asientos/[id]/editar (anulados: la vista del comprobante). Pestañas compartidas en pagos/pestanas.tsx. El comprobante de un pago tiene el enlace "📜 Historial de pagos". Sin migración.
+
 ## Editar y eliminar resúmenes de boletas y vouchers (versión 1.24.1)
 - ✏️ Editar del libro de ventas (libro/editar-venta.tsx) muestra para los tipos 35/39/41/48 la cantidad de documentos y el total del período (calcula neto e IVA). rcv/editar-venta.ts carga y guarda datos.cantidad, la exige en resúmenes y la quita si el documento pasa a otro tipo.
 - En esos resúmenes el botón Anular se muestra como 🗑 Eliminar con motivo opcional (anular_documento: se anulan documento y asiento y queda la traza; el mismo resumen se puede volver a registrar). Sin migración.
