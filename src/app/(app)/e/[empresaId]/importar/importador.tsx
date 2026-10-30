@@ -49,12 +49,21 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
     const sb = crearClienteNavegador();
     const lotesA = enLotes(plan.asientos, 200);
     const lotesD = enLotes(plan.documentos, 300);
-    const total = 2 + lotesA.length + lotesD.length;
+    const total = 3 + lotesA.length + lotesD.length;
     let hecho = 0;
     const paso = (texto: string) => setAvance({ hecho: ++hecho, total, texto });
     setEtapa('cargando'); setError('');
     try {
       setAvance({ hecho: 0, total, texto: 'Preparando cuentas y centros de costo…' });
+      // El año se reemplaza completo (también el F29). Si el respaldo no trae la hoja Datos (sistema anterior
+      // antes de V2.22.13), se guardan las declaraciones F29 que ya hay aquí para devolverlas después.
+      let f29: unknown[] | null = plan.f29;
+      if (!f29) {
+        const prev = await sb.from('f29_declaraciones').select('periodo,estado,declarado,utm,remanente_inicial,calculado,ajustes,presentado_en')
+          .eq('empresa_id', empresaId).like('periodo', `${plan.anio}-%`);
+        if (prev.error) throw prev.error;
+        f29 = prev.data ?? [];
+      }
       const ini = await sb.rpc('importar_iniciar', { p_empresa: empresaId, p_anio: plan.anio, p_archivo: archivo, p_cuentas: plan.cuentas, p_centros: plan.centros });
       if (ini.error) throw ini.error;
       const id = ini.data as string;
@@ -71,6 +80,11 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
       }
       const fin = await sb.rpc('importar_finalizar', { p_importacion: id, p_cierres: plan.cierres, p_resumen: plan.resumen });
       if (fin.error) throw fin.error;
+      if (f29?.length || plan.tasaPPM != null) {
+        paso('Cargando declaraciones F29…');
+        const r = await sb.rpc('importar_f29', { p_empresa: empresaId, p_items: f29 ?? [], p_tasa_ppm: plan.tasaPPM });
+        if (r.error) throw r.error;
+      }
       paso('Verificando…');
       const bal = await sb.rpc('balance_comprobacion', { p_empresa: empresaId, p_desde: `${plan.anio}-01-01`, p_hasta: `${plan.anio}-12-31` });
       if (bal.error) throw bal.error;
@@ -147,7 +161,7 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
               <div className="font-semibold text-peligro">⚠️ El respaldo reemplaza el año {plan.anio} completo. Antes de cargarlo se borrará lo que esta empresa tiene en {plan.anio}:</div>
               <ul className="list-disc pl-5">
                 <li>{existente.asientos} asientos ({existente.importados} importados antes{existente.propios ? <>, <b>{existente.propios} registrados en esta app</b></> : ''}) y {existente.documentos} documentos de compras, ventas y honorarios.</li>
-                {(existente.f29 > 0 || existente.rcv > 0) && <li>{existente.f29} F29 guardados y {existente.rcv} RCV cargados.</li>}
+                {(existente.f29 > 0 || existente.rcv > 0) && <li>{existente.f29} F29 guardados {plan.f29 ? <>(se reemplazan por los {plan.f29.length} del respaldo)</> : <b>(se conservan: el respaldo no trae F29)</b>} y {existente.rcv} RCV cargados.</li>}
                 {(existente.libros_rem > 0 || existente.anticipos > 0) && <li>{existente.libros_rem} libros de remuneraciones cerrados y {existente.anticipos} anticipos.</li>}
                 {existente.meses_cerrados > 0 && <li>{existente.meses_cerrados} meses cerrados (quedan como vengan en el respaldo).</li>}
                 <li>También la conciliación bancaria y el cierre del ejercicio {plan.anio}.</li>

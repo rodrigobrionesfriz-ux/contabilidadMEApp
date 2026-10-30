@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx';
 import type { HojasRespaldo, Fila } from './respaldo';
 
-const CON_ENCABEZADO = ['Ventas', 'Compras', 'Honorarios', 'Asientos', 'Apertura', 'CierresContables', 'CentrosCosto', 'PlanDeCuentas'] as const;
+const CON_ENCABEZADO = ['Ventas', 'Compras', 'Honorarios', 'Asientos', 'Apertura', 'CierresContables', 'CentrosCosto', 'PlanDeCuentas', 'Datos'] as const;
 
 /**
  * Excel no admite más de 32.767 caracteres por celda: el sistema actual reparte los

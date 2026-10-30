@@ -5,8 +5,8 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Importar respaldo: el respaldo reemplaza el año completo de la empresa (borra lo importado antes y lo registrado aquí) para dejarla igual que en el sistema anterior.',
-  'Antes de importar se muestra lo que se va a borrar y hay que confirmarlo.',
+  'Importar respaldo: trae las declaraciones F29 del sistema anterior (declarado, presentado, códigos a mano, anticipo y tasa PPM por mes) y la tasa PPM de la empresa (respaldos desde V2.22.13).',
+  'Si el respaldo es anterior y no trae F29, se conservan las declaraciones F29 que ya están en este sistema.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */

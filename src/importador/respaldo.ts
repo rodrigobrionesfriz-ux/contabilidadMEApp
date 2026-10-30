@@ -20,6 +20,20 @@ export interface HojasRespaldo {
   CierresContables?: Fila[];
   CentrosCosto?: Fila[];
   PlanDeCuentas?: Fila[];
+  /** V2.22.13 del sistema anterior: el resto de los datos, clave por clave (F29, configuración de la empresa...) */
+  Datos?: Fila[];
+}
+
+/** Declaración F29 lista para f29_declaraciones (importar_f29). */
+export interface F29Import {
+  periodo: string;
+  estado: 'borrador' | 'presentado';
+  declarado: Record<string, number>;
+  utm: number | null;
+  remanente_inicial: number | null;
+  calculado: Record<string, number> | null;
+  ajustes: Record<string, unknown>;
+  presentado_en: string | null;
 }
 
 export interface LineaImport {
@@ -88,6 +102,10 @@ export interface PlanCarga {
   asientos: AsientoImport[];
   documentos: DocumentoImport[];
   cierres: string[];
+  /** Declaraciones F29 del año (y diciembre anterior) desde la hoja Datos; null si el respaldo no la trae */
+  f29: F29Import[] | null;
+  /** Tasa PPM de la empresa (%) según el respaldo */
+  tasaPPM: number | null;
   /** Sumas por cuenta de los asientos vigentes, para cuadrar contra la base tras importar */
   totales: Record<string, { debe: number; haber: number }>;
   resumen: {
@@ -522,9 +540,22 @@ export function construirPlanCarga(h: HojasRespaldo, pdcBase: CuentaBase[]): Pla
     .filter((f) => txt(f.estado) === 'cerrado' && /^\d{4}-\d{2}$/.test(txt(f.periodo)))
     .map((f) => txt(f.periodo));
 
+  // ── Hoja Datos: F29 y tasa PPM ──
+  const datos = new Map((h.Datos ?? []).filter((f) => txt(f.clave)).map((f) => [txt(f.clave), txt(f.valorJSON)]));
+  const f29 = datos.size ? f29DesdeDatos(datos, anio) : null;
+  let tasaPPM: number | null = null;
+  try {
+    const emp = JSON.parse(datos.get('empresa') || 'null') as { tasaPPM?: unknown } | null;
+    if (emp && emp.tasaPPM != null && emp.tasaPPM !== '' && Number.isFinite(Number(emp.tasaPPM))) tasaPPM = Number(emp.tasaPPM);
+  } catch { /* sin configuración */ }
+  if (!datos.size) aviso('El respaldo no trae la hoja "Datos" (sistema anterior antes de V2.22.13): no incluye las declaraciones F29 ni la tasa PPM. Se conservan las que ya estén en este sistema.');
+  else if (f29) aviso(`Se cargan ${f29.length} declaraciones F29 del respaldo (con códigos manuales, anticipo y tasa PPM por mes).`);
+
   return {
     anio,
     empresa,
+    f29,
+    tasaPPM,
     cuentas: cuentasNuevas,
     centros,
     asientos,
@@ -567,4 +598,50 @@ export function enLotes<T>(arr: T[], tam: number): T[][] {
   const out: T[][] = [];
   for (let i = 0; i < arr.length; i += tam) out.push(arr.slice(i, i + tam));
   return out;
+}
+
+const CODIGO = /^\d{1,4}$/;
+const numeros = (o: unknown): Record<string, number> => {
+  const r: Record<string, number> = {};
+  if (o && typeof o === 'object') for (const [k, v] of Object.entries(o as Record<string, unknown>)) {
+    if (CODIGO.test(k) && v !== '' && v != null && Number.isFinite(Number(v))) r[k] = Math.round(Number(v) * 1000) / 1000;
+  }
+  return r;
+};
+
+/**
+ * Declaraciones F29 del sistema anterior (claves f29-declaraciones-AAAA) al formato de f29_declaraciones:
+ * todo el año del respaldo y diciembre del año anterior (de ahí salen el remanente y el anticipo de enero).
+ */
+export function f29DesdeDatos(datos: Map<string, string>, anio: number): F29Import[] {
+  const out: F29Import[] = [];
+  for (const a of [anio - 1, anio]) {
+    let items: Record<string, Record<string, unknown>> = {};
+    try { items = JSON.parse(datos.get(`f29-declaraciones-${a}`) || '{}') ?? {}; } catch { continue; }
+    for (const [per, d] of Object.entries(items)) {
+      if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(per) || !d || typeof d !== 'object') continue;
+      if (a === anio - 1 && per !== `${a}-12`) continue;
+      const presentado = d.estado === 'presentado' || d.estado === 'cerrado';
+      const n = (v: unknown) => (v === '' || v == null || !Number.isFinite(Number(v)) ? null : Math.round(Number(v)));
+      const ajustes: Record<string, unknown> = {};
+      if (d.tasaPPM != null && Number.isFinite(Number(d.tasaPPM))) ajustes.tasaPPM = Number(d.tasaPPM);
+      if (d.tasaPPMManual) ajustes.tasaPPMManual = true;
+      const manual = numeros(d.manual), anticipo = numeros(d.anticipo);
+      if (Object.keys(manual).length) ajustes.manual = manual;
+      if (Object.keys(anticipo).length) ajustes.anticipo = anticipo;
+      if (n(d.remanenteAnticipoInicial) != null) ajustes.remanenteAnticipoInicial = n(d.remanenteAnticipoInicial);
+      const calc = numeros(d.calculadoAlPresentar ?? d.calculadoAlGuardar);
+      out.push({
+        periodo: per,
+        estado: presentado ? 'presentado' : 'borrador',
+        declarado: numeros(d.declarado),
+        utm: n(d.utm) || null,
+        remanente_inicial: n(d.remanenteInicial),
+        calculado: Object.keys(calc).length ? calc : null,
+        ajustes,
+        presentado_en: presentado ? (txt(d.presentadoEn) || (txt(d.fechaPresentacion) ? `${txt(d.fechaPresentacion)}T12:00:00Z` : null)) : null,
+      });
+    }
+  }
+  return out.sort((x, y) => x.periodo.localeCompare(y.periodo));
 }
