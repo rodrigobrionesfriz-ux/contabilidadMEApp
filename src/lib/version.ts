@@ -5,8 +5,8 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Pagos y cobros: nueva pestaña 💳 Abono tarjetas para traspasar al banco las ventas con tarjeta (1107004), rebajando la comisión del operador contra su factura de proveedor o directo a gasto.',
-  'Los abonos de tarjetas aparecen en el Historial y se corrigen abriendo su asiento.',
+  'Importar respaldo: el respaldo reemplaza el año completo de la empresa (borra lo importado antes y lo registrado aquí) para dejarla igual que en el sistema anterior.',
+  'Antes de importar se muestra lo que se va a borrar y hay que confirmarlo.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */

@@ -10,6 +10,7 @@ import { clp } from '@/lib/formato';
 import { rutParse } from '@/motor/rut';
 
 type Etapa = 'inicio' | 'revisar' | 'cargando' | 'listo';
+interface Existente { asientos: number; importados: number; propios: number; documentos: number; f29: number; rcv: number; libros_rem: number; anticipos: number; meses_cerrados: number }
 interface Verificacion { ok: boolean; diferencias: { cuenta: string; esperado: number; base: number }[] }
 
 const mismoRut = (a: string, b: string) => rutParse(a).raw === rutParse(b).raw;
@@ -22,13 +23,21 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
   const [error, setError] = useState('');
   const [avance, setAvance] = useState({ hecho: 0, total: 1, texto: '' });
   const [verif, setVerif] = useState<Verificacion | null>(null);
+  // Lo que ya tiene el año en esta empresa: se borra al importar (el respaldo reemplaza el año)
+  const [existente, setExistente] = useState<Existente | null>(null);
+  const [acepto, setAcepto] = useState(false);
 
   async function leer(f: File) {
-    setError(''); setPlan(null); setVerif(null);
+    setError(''); setPlan(null); setVerif(null); setExistente(null); setAcepto(false);
     try {
       const [{ leerRespaldo }, { construirPlanCarga }] = await Promise.all([import('@/importador/leer-excel'), import('@/importador/respaldo')]);
       const p = construirPlanCarga(leerRespaldo(new Uint8Array(await f.arrayBuffer())), pdc);
       setArchivo(f.name); setPlan(p); setEtapa('revisar');
+      if (p.anio) {
+        const r = await crearClienteNavegador().rpc('resumen_anio', { p_empresa: empresaId, p_anio: p.anio });
+        if (r.error) throw r.error;
+        setExistente(r.data as Existente);
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     }
@@ -76,7 +85,7 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
       router.refresh();
     } catch (e) {
       const msg = (e as { message?: string }).message ?? String(e);
-      setError(`${msg.replace(/\.$/, '')}. Si la carga quedó a medias, usa "Eliminar importación" del año ${plan.anio} y vuelve a intentar.`);
+      setError(`${msg.replace(/\.$/, '')}. Si la carga quedó a medias, vuelve a importar el respaldo: se reemplaza el año ${plan.anio} completo.`);
       setEtapa('revisar');
       router.refresh();
     }
@@ -133,8 +142,24 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
               <ul className="mt-2 max-h-48 list-disc space-y-0.5 overflow-y-auto pl-5 text-tenue">{avisos.map((p, i) => <li key={i}>{p.mensaje}</li>)}</ul>
             </details>
           )}
-          <button type="button" className="boton" disabled={errores.length > 0 || !plan.asientos.length} onClick={importar}>
-            Importar año {plan.anio}
+          {existente && (existente.asientos > 0 || existente.documentos > 0 || existente.f29 > 0 || existente.rcv > 0 || existente.libros_rem > 0) ? (
+            <div className="space-y-2 rounded-md border border-peligro/40 bg-peligro/10 p-3 text-sm">
+              <div className="font-semibold text-peligro">⚠️ El respaldo reemplaza el año {plan.anio} completo. Antes de cargarlo se borrará lo que esta empresa tiene en {plan.anio}:</div>
+              <ul className="list-disc pl-5">
+                <li>{existente.asientos} asientos ({existente.importados} importados antes{existente.propios ? <>, <b>{existente.propios} registrados en esta app</b></> : ''}) y {existente.documentos} documentos de compras, ventas y honorarios.</li>
+                {(existente.f29 > 0 || existente.rcv > 0) && <li>{existente.f29} F29 guardados y {existente.rcv} RCV cargados.</li>}
+                {(existente.libros_rem > 0 || existente.anticipos > 0) && <li>{existente.libros_rem} libros de remuneraciones cerrados y {existente.anticipos} anticipos.</li>}
+                {existente.meses_cerrados > 0 && <li>{existente.meses_cerrados} meses cerrados (quedan como vengan en el respaldo).</li>}
+                <li>También la conciliación bancaria y el cierre del ejercicio {plan.anio}.</li>
+              </ul>
+              <p className="text-tenue">Se conservan los otros años, el plan de cuentas, los centros de costo, las fichas de proveedores y clientes, los trabajadores y los activos fijos. No se puede deshacer: si hace falta, primero exporta a Excel.</p>
+              <label className="flex items-start gap-2"><input type="checkbox" className="mt-1" checked={acepto} onChange={(e) => setAcepto(e.target.checked)} />
+                <span>Entiendo que se borra todo lo del año {plan.anio} en esta empresa y se reemplaza por el respaldo.</span></label>
+            </div>
+          ) : existente && <p className="text-sm text-tenue">El año {plan.anio} está vacío en esta empresa.</p>}
+          <button type="button" className="boton" onClick={importar}
+            disabled={errores.length > 0 || !plan.asientos.length || !existente || (!acepto && (existente.asientos > 0 || existente.documentos > 0 || existente.f29 > 0 || existente.rcv > 0 || existente.libros_rem > 0))}>
+            {existente && existente.asientos > 0 ? `Reemplazar el año ${plan.anio} con el respaldo` : `Importar año ${plan.anio}`}
           </button>
         </div>
       )}
