@@ -505,6 +505,10 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Un RCV ya guardado con el RUT de otra empresa muestra "⛔ Este RCV guardado no corresponde a la empresa" y deshabilita el paso 2; se saca con "Quitar este RCV".
 - Tests: src/rcv/__tests__/archivo.test.ts.
 
+## Abono de tarjetas (versión 1.26.0)
+- pagos?tipo=tarjetas (pagos/tarjetas.tsx): fecha, banco, monto depositado y comisión (con IVA). La comisión va contra el proveedor del servicio (2102001 con RUT del operador: queda a favor hasta registrar su factura de comisión en Compras, que lo salda) o a una cuenta de gasto. src/auxiliares/abono-tarjetas.ts arma el asiento (Debe banco + proveedor/gasto / Haber 1107004 por el bruto), con pruebas unitarias y en PGlite.
+- registrarAbonoTarjetas (pagos/acciones.ts) llama a crear_asiento con tipo 'pago' y origen_id 'tarjetas:…'; el Historial lo muestra como "Abono tarjetas". Muestra el saldo de 1107004 del año y avisa si el abono lo supera. Sin migración (requiere la 0032 con la cuenta 1107004).
+
 ## Historial de pagos y cobros (versión 1.25.0)
 - pagos?tipo=historial (pagos/historial.tsx + historialPagos en pagos/page.tsx): asientos tipo 'pago' del año contable con sus líneas; el tipo (pago proveedor, cobro cliente, pago honorarios) sale del tipo_auxiliar de la cuenta, los nombres de auxiliares (fichas y documentos), los folios, la cuenta 1101xxx y el monto (líneas de banco). Filtros por tipo y mes y búsqueda en el cliente.
 - Cada fila abre asientos/[id]/editar (anulados: la vista del comprobante). Pestañas compartidas en pagos/pestanas.tsx. El comprobante de un pago tiene el enlace "📜 Historial de pagos". Sin migración.

@@ -7,12 +7,13 @@ import { PestanasPagos } from './pestanas';
 
 export interface FilaHistorial {
   id: string; numero: number; fecha: string; glosa: string; anulado: boolean;
-  tipo: 'proveedor' | 'cliente' | 'honorario'; nombres: string[]; ruts: string[]; folios: string[]; cuenta: string; monto: number;
+  tipo: 'proveedor' | 'cliente' | 'honorario' | 'tarjetas'; nombres: string[]; ruts: string[]; folios: string[]; cuenta: string; monto: number;
 }
 const TIPO: Record<FilaHistorial['tipo'], { lbl: string; ic: string; cls: string }> = {
   proveedor: { lbl: 'Pago proveedor', ic: '🏭', cls: 'bg-aviso/15 text-aviso' },
   cliente: { lbl: 'Cobro cliente', ic: '📇', cls: 'bg-info/15 text-info' },
   honorario: { lbl: 'Pago honorarios', ic: '📝', cls: 'bg-acento/15 text-acento' },
+  tarjetas: { lbl: 'Abono tarjetas', ic: '💳', cls: 'bg-acento/15 text-acento' },
 };
 
 /** Historial de pagos y cobros: cada fila abre el asiento para revisarlo y editarlo. */
@@ -41,7 +42,7 @@ export function HistorialPagos({ empresaId, anio, filas }: { empresaId: string; 
       <div className="flex flex-wrap items-center gap-2">
         <select value={tipo} onChange={(e) => setTipo(e.target.value)} className="campo w-56" aria-label="Tipo">
           <option value="">Pagos y cobros</option><option value="proveedor">🏭 Pagos a proveedores</option>
-          <option value="cliente">📇 Cobros a clientes</option><option value="honorario">📝 Pagos de honorarios</option>
+          <option value="cliente">📇 Cobros a clientes</option><option value="honorario">📝 Pagos de honorarios</option><option value="tarjetas">💳 Abonos de tarjetas</option>
         </select>
         <select value={mes} onChange={(e) => setMes(e.target.value)} className="campo w-44" aria-label="Mes">
           <option value="">Todos los meses</option>{MESES.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}

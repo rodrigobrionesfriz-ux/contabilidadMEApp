@@ -5,8 +5,8 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Pagos y cobros: nueva pestaña 📜 Historial con todos los pagos a proveedores, cobros a clientes y pagos de honorarios del año, con filtros por tipo y mes y búsqueda por N°, RUT, nombre, folio, glosa o monto.',
-  'Cada fila abre su asiento contable para corregirlo; el comprobante mantiene su N° y el cambio queda en el registro de actividad.',
+  'Pagos y cobros: nueva pestaña 💳 Abono tarjetas para traspasar al banco las ventas con tarjeta (1107004), rebajando la comisión del operador contra su factura de proveedor o directo a gasto.',
+  'Los abonos de tarjetas aparecen en el Historial y se corrigen abriendo su asiento.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */

@@ -6,6 +6,7 @@ import { saldosAuxiliar } from '@/lib/datos/auxiliares';
 import { construirPago } from '@/auxiliares/pago';
 import { claveDoc, type TipoAuxiliar } from '@/auxiliares/saldos';
 import { hoyISO } from '@/lib/formato';
+import { construirAbonoTarjetas, type DatosAbonoTarjetas } from '@/auxiliares/abono-tarjetas';
 
 export interface PedidoPago { rut: string; tipo_dte: number | null; folio: string; monto: number }
 
@@ -29,4 +30,18 @@ export async function registrarPago(empresaId: string, tipo: TipoAuxiliar, fecha
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/e/${empresaId}`, 'layout');
   return { ok: true, numero: (data as { numero: number }[])[0].numero, total: pg.total };
+}
+
+/** Abono del operador de tarjetas: traspasa a banco lo depositado y rebaja la comisión (proveedor o gasto). */
+export async function registrarAbonoTarjetas(empresaId: string, fecha: string, datos: DatosAbonoTarjetas):
+  Promise<{ ok: true; numero: number; total: number } | { ok: false; error: string }> {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return { ok: false, error: 'Fecha no válida' };
+  const ab = construirAbonoTarjetas(datos);
+  if (!ab.ok) return { ok: false, error: ab.errores.join(' ') };
+  const supabase = await crearClienteServidor();
+  // Validación contable definitiva (permisos, período, cuentas, auxiliar, cuadratura) en la base
+  const { data, error } = await supabase.rpc('crear_asiento', { p_empresa: empresaId, p_fecha: fecha, p_glosa: ab.glosa, p_lineas: ab.lineas, p_tipo: 'pago', p_origen_id: `tarjetas:${Date.now()}` });
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/e/${empresaId}`, 'layout');
+  return { ok: true, numero: (data as { numero: number }[])[0].numero, total: ab.total };
 }
