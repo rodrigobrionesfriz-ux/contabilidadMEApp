@@ -5,8 +5,8 @@ export const BUILD_ID = process.env.NEXT_PUBLIC_BUILD_ID ?? 'dev';
 export const BUILD_FECHA = process.env.NEXT_PUBLIC_BUILD_FECHA ?? '';
 
 export const NOVEDADES: string[] = [
-  'Importar RCV: se rechaza el archivo de otra empresa (el SII pone el RUT en el nombre del archivo) o del otro libro (compras/ventas).',
-  'Un RCV de otra empresa ya guardado queda marcado y no se deja contabilizar: quítalo y sube el correcto.',
+  'Libro de ventas: columna Forma de pago y botón ✏️ Editar en cada venta (fechas, tipo, N°, cliente, montos, forma de pago y cuenta de ingreso).',
+  'Al guardar se rehace el asiento con el mismo número; el cambio queda en el registro de actividad.',
 ];
 
 /** "27-10-2026 22:30" en hora de Chile. */
