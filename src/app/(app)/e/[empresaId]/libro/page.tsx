@@ -17,7 +17,7 @@ export const metadata: Metadata = { title: 'Libro de compras y ventas' };
 interface DocLibro {
   id: string; tipo_dte: number; folio: string; fecha: string; rut: string; razon_social: string | null;
   neto: number; exento: number; iva: number; total: number; estado: string | null; otros: string | null;
-  motivo_anulacion: string | null; fp: string | null; asientos: { numero: number; fecha: string; anulado: boolean } | null;
+  motivo_anulacion: string | null; fp: string | null; cant: string | null; asientos: { numero: number; fecha: string; anulado: boolean } | null;
 }
 
 export default async function LibroPage({ params, searchParams }: PageProps<'/e/[empresaId]/libro'>) {
@@ -30,7 +30,7 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
   const empresa = await requerirEmpresa(empresaId);
   const supabase = await crearClienteServidor();
   const docs = await traerTodo((d, h) => supabase.from('documentos')
-    .select('id,tipo_dte,folio,fecha,rut,razon_social,neto,exento,iva,total,estado,motivo_anulacion,otros:datos->>otrosImpuestos,fp:datos->>formaPago,asientos(numero,fecha,anulado)')
+    .select('id,tipo_dte,folio,fecha,rut,razon_social,neto,exento,iva,total,estado,motivo_anulacion,otros:datos->>otrosImpuestos,fp:datos->>formaPago,cant:datos->>cantidad,asientos(numero,fecha,anulado)')
     .eq('empresa_id', empresaId).eq('tipo', tipo).eq('periodo', periodo)
     .order('fecha').order('folio').range(d, h)) as unknown as DocLibro[];
   const info = (c: number) => (tipo === 'compra' ? dteC(c) : dteV(c));
@@ -65,6 +65,8 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
         <div className="flex flex-wrap items-end gap-2">
           <SelectorPeriodo anio={anio} mes={mes} etiquetaMes="Mes" extra={{ tipo }} conAnioCompleto={false} />
           {escribe && <Link href={`/e/${empresaId}/rcv?tipo=${tipo}`} className="boton-sec">📥 Importar RCV</Link>}
+          {escribe && tipo === 'venta' && <Link href={`/e/${empresaId}/documentos/nuevo?tipo=venta&resumen=39`} className="boton-sec" title="Total de boletas del día o del mes (F29 códigos 110 y 111)">🧾 Ventas con boleta</Link>}
+          {escribe && tipo === 'venta' && <Link href={`/e/${empresaId}/documentos/nuevo?tipo=venta&resumen=48`} className="boton-sec" title="Total de comprobantes de pago electrónico del día o del mes (F29 códigos 758 y 759)">💳 Medios electrónicos</Link>}
           {escribe && <Link href={`/e/${empresaId}/documentos/nuevo?tipo=${tipo}`} className="boton">+ Documento</Link>}
         </div>
       </div>
@@ -117,7 +119,7 @@ export default async function LibroPage({ params, searchParams }: PageProps<'/e/
                 return (
                   <tr key={d.id} className={`border-b border-borde/40 ${anulado ? 'opacity-50' : ''}`}>
                     <td className="num px-3 py-1">{fechaCL(d.fecha)}</td>
-                    <td className="px-2 py-1"><span className="num">{d.tipo_dte} N° {d.folio}</span>{nc && <span className="ml-1 text-aviso">NC</span>}</td>
+                    <td className="px-2 py-1"><span className="num">{d.tipo_dte} N° {d.folio}</span>{nc && <span className="ml-1 text-aviso">NC</span>}{d.cant && <span className="ml-1 text-info" title="Resumen: cantidad de documentos">× {Number(d.cant).toLocaleString('es-CL')} docs</span>}</td>
                     <td className="max-w-[260px] px-2 py-1"><div className="truncate">{d.razon_social}</div><div className="num text-tenue">{d.rut}</div></td>
                     <td className="num px-2 py-1 text-right">{Number(d.exento) ? clp(d.exento) : ''}</td>
                     <td className="num px-2 py-1 text-right">{clp(d.neto)}</td>

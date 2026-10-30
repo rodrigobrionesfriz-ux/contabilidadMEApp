@@ -31,6 +31,8 @@ export interface DocRCV {
   tratamientoOtrosImpuestos: string;
   otrosImpuestosDetalle: OtroImpuestoDetalle[];
   total: number;
+  /** Resumen de boletas (35/39/41) o comprobantes de pago electrónico (48): cantidad de documentos que agrupa. */
+  cantidad?: number;
   impuestoSinDerechoCredito?: number;
   ivaRetenido?: number;
   totalSII?: number;

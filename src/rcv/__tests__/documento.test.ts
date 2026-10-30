@@ -108,3 +108,14 @@ describe('registro de documentos RCV', () => {
     expect(cuadra(t.registro.asiento.lineas)).toBe(0);
   });
 });
+
+describe('resumen de boletas', () => {
+  it('guarda la cantidad de documentos en el documento contable', () => {
+    const d = { ...ventas[3], tipoDTE: 39, numero: 'R20260315', rutCodigo: '66666666', rutDV: '6', razonSocial: 'Ventas con boleta', cantidad: 350 };
+    const r = construirRegistro('venta', d, '2026-03', { cuenta: '4101003', formaPago: 'banco' }, plan);
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect((r.registro.documento.datos as { cantidad?: number }).cantidad).toBe(350);
+    expect(r.registro.documento.folio).toBe('R20260315');
+  });
+});

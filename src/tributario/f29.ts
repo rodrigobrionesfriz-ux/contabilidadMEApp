@@ -34,7 +34,9 @@ export interface AjustesF29 {
   remanenteAnticipoInicial?: number | null;
 }
 
-export interface VentaF29 { tipoDTE: number; fecha: string; neto?: number; exento?: number; iva?: number; total?: number; estado?: string; excluidoAuto?: boolean }
+export interface VentaF29 { tipoDTE: number; fecha: string; neto?: number; exento?: number; iva?: number; total?: number; estado?: string; excluidoAuto?: boolean;
+  /** Resumen de boletas o comprobantes de pago electrónico: cantidad de documentos que agrupa (por defecto 1). */
+  cantidad?: number }
 export interface HonorarioF29 { mes?: number; bruto?: number; retencion?: number | null; tasaRetencion?: number | null; tipoRetencion?: string; estado?: string }
 
 export interface EntradaF29 {
@@ -118,12 +120,14 @@ function detalleVentas(vs: VentaF29[]) {
   const r = { facturas: { n: 0, iva: 0 }, boletas: { n: 0, iva: 0 }, comprobantes: { n: 0, iva: 0 }, nd: { n: 0, iva: 0 }, nc: { n: 0, iva: 0 }, exentas: { n: 0, monto: 0 } };
   for (const d of vs) {
     const t = +d.tipoDTE, iva = Math.abs(+(d.iva ?? 0) || 0), ex = Math.abs(+(d.exento ?? 0) || 0);
+    // Un resumen de boletas o vouchers cuenta por la cantidad de documentos que agrupa
+    const cant = Math.max(1, Math.round(+(d.cantidad ?? 1) || 1));
     if (t === 33) { r.facturas.n++; r.facturas.iva += iva; }
-    else if (t === 39 || t === 35) { r.boletas.n++; r.boletas.iva += iva; }
-    else if (t === 48) { r.comprobantes.n++; r.comprobantes.iva += iva; }
+    else if (t === 39 || t === 35) { r.boletas.n += cant; r.boletas.iva += iva; }
+    else if (t === 48) { r.comprobantes.n += cant; r.comprobantes.iva += iva; }
     else if (t === 56) { r.nd.n++; r.nd.iva += iva; }
     else if (t === 61) { r.nc.n++; r.nc.iva += iva; }
-    else if (t === 34 || t === 41) { r.exentas.n++; r.exentas.monto += ex || Math.abs(+(d.total ?? 0) || 0); }
+    else if (t === 34 || t === 41) { r.exentas.n += t === 41 ? cant : 1; r.exentas.monto += ex || Math.abs(+(d.total ?? 0) || 0); }
   }
   return r;
 }

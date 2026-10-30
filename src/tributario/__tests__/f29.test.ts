@@ -220,3 +220,21 @@ describe('pago sugerido con anticipo', () => {
     expect(montosSugeridos(calcularF29Anual(e)[0]).iva).toBe(15_000);
   });
 });
+
+describe('F29: resúmenes de boletas y comprobantes de pago electrónico', () => {
+  it('110/111, 758/759 y 586 cuentan la cantidad de documentos del resumen', () => {
+    const e: EntradaF29 = { anio: 2026, tasaPPM: 0, compras: [], honorarios: [], iusc: {}, declaraciones: {}, anteriores: {},
+      ventas: [
+        { tipoDTE: 39, fecha: '2026-10-01', neto: 84034, iva: 15966, total: 100000, cantidad: 350 },
+        { tipoDTE: 39, fecha: '2026-10-02', neto: 8403, iva: 1597, total: 10000, cantidad: 20 },
+        { tipoDTE: 48, fecha: '2026-10-02', neto: 42017, iva: 7983, total: 50000, cantidad: 12 },
+        { tipoDTE: 41, fecha: '2026-10-03', exento: 3000, total: 3000, cantidad: 4 },
+        { tipoDTE: 39, fecha: '2026-10-04', neto: 840, iva: 160, total: 1000 }, // boleta suelta: cuenta 1
+      ] };
+    const oct = calcularF29Anual(e)[9];
+    expect([oct.codigos[110], oct.codigos[111]]).toEqual([371, 17723]);
+    expect([oct.codigos[758], oct.codigos[759]]).toEqual([12, 7983]);
+    expect([oct.codigos[586], oct.codigos[142]]).toEqual([4, 3000]);
+    expect(oct.codigos[538]).toBe(17723 + 7983);
+  });
+});

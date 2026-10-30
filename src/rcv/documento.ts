@@ -122,6 +122,7 @@ export function armarDocumento(tipo: TipoRCV, d: DocRCV, periodo: string, a: Asi
     tipoDTE: d.tipoDTE, numero: d.numero, rutCodigo: d.rutCodigo, rutDV: d.rutDV, razonSocial: d.razonSocial,
     neto: d.neto, exento: d.exento, iva: d.iva, total: d.total,
     origenRegistro: a.origen ?? 'RCV', estado: 'activo',
+    ...(d.cantidad && d.cantidad > 0 ? { cantidad: Math.round(d.cantidad) } : {}),
     ...(glosa ? { glosa } : {}),
     ...(lineasDetalle?.length ? { detalleRCV: { v: 2, lineas: lineasDetalle, glosa, aceptaRedondeo: !!a.detalle?.aceptaRedondeo, revisado: true } } : {}),
     // Registro completo del SII tal como venía en el archivo (todas las columnas)

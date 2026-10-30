@@ -505,6 +505,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - Un RCV ya guardado con el RUT de otra empresa muestra "⛔ Este RCV guardado no corresponde a la empresa" y deshabilita el paso 2; se saca con "Quitar este RCV".
 - Tests: src/rcv/__tests__/archivo.test.ts.
 
+## Ventas con boleta y con medios de pago electrónico (versión 1.24.0)
+- Libro de ventas: botones "🧾 Ventas con boleta" y "💳 Medios electrónicos" → documentos/nuevo?tipo=venta&resumen=39|48. Tipos 35/39/41/48 se registran como resumen (día o mes): cantidad de documentos, total con IVA (neto = total ÷ 1,19), folios desde-hasta opcionales (sin folio: referencia R+fecha), RUT genérico 66.666.666-6; los vouchers proponen forma de pago Tarjetas.
+- La cantidad se guarda en documentos.datos.cantidad (DocRCV.cantidad → armarDocumento). Sin migración.
+- F29 (tributario/f29.ts): detalleVentas cuenta la cantidad del resumen en 110 (39/35), 758 (48) y 586 (41); lo digitado a mano en ajustes.manual sigue mandando. lib/datos/f29.ts lee datos->>cantidad.
+- El libro muestra "× N docs" bajo el folio de los resúmenes.
+
 ## Editar ventas desde el libro (10z26, versión 1.23.0)
 - Libro de ventas: columna "Forma de pago" (Crédito (cliente), Contado (banco), Tarjetas, Deudores varios) y "✏️ Editar" en cada venta vigente con asiento vigente (admin y contador), como en el sistema anterior.
 - Ventana de edición (libro/editar-venta.tsx): fecha de emisión y vencimiento, tipo DTE de ventas, N°, RUT y razón social, neto, exento, IVA (sigue al 19% del neto mientras no se escriba a mano), otros impuestos, total calculado, forma de pago/destino, cuenta de ingreso (grupo 4) y motivo opcional.
