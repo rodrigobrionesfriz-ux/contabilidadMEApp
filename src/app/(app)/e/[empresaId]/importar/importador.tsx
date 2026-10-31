@@ -26,9 +26,10 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
   // Lo que ya tiene el año en esta empresa: se borra al importar (el respaldo reemplaza el año)
   const [existente, setExistente] = useState<Existente | null>(null);
   const [acepto, setAcepto] = useState(false);
+  const [avisoExtra, setAvisoExtra] = useState('');
 
   async function leer(f: File) {
-    setError(''); setPlan(null); setVerif(null); setExistente(null); setAcepto(false);
+    setError(''); setPlan(null); setVerif(null); setExistente(null); setAcepto(false); setAvisoExtra('');
     try {
       const [{ leerRespaldo }, { construirPlanCarga }] = await Promise.all([import('@/importador/leer-excel'), import('@/importador/respaldo')]);
       const p = construirPlanCarga(leerRespaldo(new Uint8Array(await f.arrayBuffer())), pdc);
@@ -49,12 +50,21 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
     const sb = crearClienteNavegador();
     const lotesA = enLotes(plan.asientos, 200);
     const lotesD = enLotes(plan.documentos, 300);
-    const total = 2 + lotesA.length + lotesD.length;
+    const total = 5 + lotesA.length + lotesD.length;
     let hecho = 0;
     const paso = (texto: string) => setAvance({ hecho: ++hecho, total, texto });
     setEtapa('cargando'); setError('');
     try {
       setAvance({ hecho: 0, total, texto: 'Preparando cuentas y centros de costo…' });
+      // El año se reemplaza completo (también el F29). Si el respaldo no trae la hoja Datos (sistema anterior
+      // antes de V2.22.13), se guardan las declaraciones F29 que ya hay aquí para devolverlas después.
+      let f29: unknown[] | null = plan.f29;
+      if (!f29) {
+        const prev = await sb.from('f29_declaraciones').select('periodo,estado,declarado,utm,remanente_inicial,calculado,ajustes,presentado_en')
+          .eq('empresa_id', empresaId).like('periodo', `${plan.anio}-%`);
+        if (prev.error) throw prev.error;
+        f29 = prev.data ?? [];
+      }
       const ini = await sb.rpc('importar_iniciar', { p_empresa: empresaId, p_anio: plan.anio, p_archivo: archivo, p_cuentas: plan.cuentas, p_centros: plan.centros });
       if (ini.error) throw ini.error;
       const id = ini.data as string;
@@ -71,6 +81,35 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
       }
       const fin = await sb.rpc('importar_finalizar', { p_importacion: id, p_cierres: plan.cierres, p_resumen: plan.resumen });
       if (fin.error) throw fin.error;
+      if (f29?.length || plan.tasaPPM != null) {
+        paso('Cargando declaraciones F29…');
+        const r = await sb.rpc('importar_f29', { p_empresa: empresaId, p_items: f29 ?? [], p_tasa_ppm: plan.tasaPPM });
+        if (r.error) throw r.error;
+      }
+      if (plan.extras) {
+        paso('Cargando remuneraciones, fichas, renta y activo fijo…');
+        const { inventario } = plan.extras;
+        const r = await sb.rpc('importar_datos', { p_empresa: empresaId, p_anio: plan.anio, p_d: { ...plan.extras, inventario: null, resumen: null } });
+        if (r.error) throw r.error;
+        const omitidos = ((r.data as { libros_omitidos?: string[] } | null)?.libros_omitidos ?? []);
+        if (omitidos.length) setAvisoExtra(`Libros de remuneraciones no cargados (la UF del mes en Indicadores es otra): ${omitidos.join(', ')}.`);
+        // Inventario: sólo si este sistema aún no tiene inventario (no se mezclan ni se duplican movimientos)
+        if (inventario?.ops.length) {
+          const [p, m] = await Promise.all([
+            sb.from('inv_productos').select('id', { count: 'exact', head: true }).eq('empresa_id', empresaId),
+            sb.from('inv_movimientos').select('id', { count: 'exact', head: true }).eq('empresa_id', empresaId),
+          ]);
+          if ((p.count ?? 0) === 0 && (m.count ?? 0) === 0) {
+            paso('Cargando inventario…');
+            for (let i = 0; i < inventario.ops.length; i += 250) {
+              const ri = await sb.rpc('inv_aplicar', { p_empresa: empresaId, p_version: null, p_ops: inventario.ops.slice(i, i + 250) });
+              if (ri.error) throw ri.error;
+            }
+          } else {
+            setAvisoExtra((a) => `${a ? a + ' ' : ''}El inventario no se cargó: este sistema ya tiene productos o movimientos.`);
+          }
+        }
+      }
       paso('Verificando…');
       const bal = await sb.rpc('balance_comprobacion', { p_empresa: empresaId, p_desde: `${plan.anio}-01-01`, p_hasta: `${plan.anio}-12-31` });
       if (bal.error) throw bal.error;
@@ -147,7 +186,7 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
               <div className="font-semibold text-peligro">⚠️ El respaldo reemplaza el año {plan.anio} completo. Antes de cargarlo se borrará lo que esta empresa tiene en {plan.anio}:</div>
               <ul className="list-disc pl-5">
                 <li>{existente.asientos} asientos ({existente.importados} importados antes{existente.propios ? <>, <b>{existente.propios} registrados en esta app</b></> : ''}) y {existente.documentos} documentos de compras, ventas y honorarios.</li>
-                {(existente.f29 > 0 || existente.rcv > 0) && <li>{existente.f29} F29 guardados y {existente.rcv} RCV cargados.</li>}
+                {(existente.f29 > 0 || existente.rcv > 0) && <li>{existente.f29} F29 guardados {plan.f29 ? <>(se reemplazan por los {plan.f29.length} del respaldo)</> : <b>(se conservan: el respaldo no trae F29)</b>} y {existente.rcv} RCV cargados.</li>}
                 {(existente.libros_rem > 0 || existente.anticipos > 0) && <li>{existente.libros_rem} libros de remuneraciones cerrados y {existente.anticipos} anticipos.</li>}
                 {existente.meses_cerrados > 0 && <li>{existente.meses_cerrados} meses cerrados (quedan como vengan en el respaldo).</li>}
                 <li>También la conciliación bancaria y el cierre del ejercicio {plan.anio}.</li>
@@ -186,6 +225,10 @@ export function Importador({ empresaId, rutEmpresa, pdc }: { empresaId: string; 
               <ul className="mt-1 list-disc pl-5">{verif.diferencias.map((d) => <li key={d.cuenta} className="num">{d.cuenta}: respaldo {clp(d.esperado)} · base {clp(d.base)}</li>)}</ul>
             </div>
           )}
+          {plan.extras && <p className="text-sm text-tenue">Además: {[plan.f29?.length && `${plan.f29.length} declaraciones F29`, plan.extras.resumen.trabajadores && `${plan.extras.resumen.trabajadores} trabajadores`,
+            plan.extras.resumen.libros && `${plan.extras.resumen.libros} libros de remuneraciones`, plan.extras.resumen.fichas && `${plan.extras.resumen.fichas} fichas`,
+            plan.extras.resumen.activos && `${plan.extras.resumen.activos} activos fijos`, plan.extras.resumen.inventario && 'inventario'].filter(Boolean).join(', ') || 'configuración de la empresa'}.</p>}
+          {avisoExtra && <p className="rounded-md border border-aviso/40 bg-aviso/10 px-3 py-2 text-sm text-aviso">{avisoExtra}</p>}
           <div className="flex gap-2">
             <Link href={`/e/${empresaId}/balance?anio=${plan.anio}`} className="boton">Ver balance {plan.anio}</Link>
             <button type="button" className="boton-sec" onClick={() => { setEtapa('inicio'); setPlan(null); setArchivo(''); }}>Importar otro año</button>

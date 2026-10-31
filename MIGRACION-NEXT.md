@@ -133,6 +133,12 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 ### 0023 (10u)
 - guardar_indicador acepta solo la UTM (UF nula) y conserva la UF existente; exige al menos una de las dos.
 
+### 0036 (importar el resto de los datos)
+- importar_datos(empresa, año, datos): sólo administradores, en una transacción. Empresa (giro, domicilio, representante, régimen, tasa renta), empresa_parametros (indicadores, previsional, feriados, previred), contrato_config; trabajadores por RUT (ficha completa, ref_origen = id anterior); del año: anticipos, eventos de asistencia, horas y libros cerrados (líneas con el id nuevo del trabajador; registra la UF del libro en indicadores si falta, y omite el mes si la UF es otra); finiquitos, contratos y plantillas; fichas de clientes/proveedores (cuenta y centro inexistentes quedan vacíos); comprobantes tipo y activos fijos que no estén; renta y DJ por año. Volver a importar no duplica. Auditoría importar_datos.
+
+### 0035 (importar F29)
+- importar_f29(empresa, items, tasa_ppm): sólo administradores. Inserta o reemplaza por período las declaraciones F29 (estado, declarado, utm, remanente_inicial, calculado, ajustes, presentado_en) y, si viene, fija empresas.tasa_ppm. Auditoría importar_f29.
+
 ### 0034 (importar reemplaza el año)
 - vaciar_anio(empresa, año) (sólo la llama importar_iniciar; sin permiso directo): borra lo contable del año: documentos del año o con asiento del año (suelta antes las recepciones de inventario que los enlazan), libros de remuneraciones, anticipos (mes de descuento), F29, RCV cargados, saldos de conciliación, ejercicio cerrado, asientos (líneas y marcas de conciliación en cascada), meses cerrados, correlativo e importaciones del año. Auditoría reemplazar_anio_importacion con lo borrado.
 - resumen_anio(empresa, año): cuántos asientos (importados y propios vigentes), documentos, F29, RCV, libros de remuneraciones, anticipos y meses cerrados tiene el año (sólo administrador).
@@ -534,6 +540,14 @@ Proyecto nuevo e independiente: `contabilidadme-next`. Está en GitHub y se publ
 - src/rcv/editar-venta.ts (con pruebas): valida, rehace el documento contable conservando lo demás y recalcula el asiento con asientoVenta. Si el ingreso estaba repartido en varias líneas (centros de costo), un cambio de monto se prorratea y el cambio de cuenta se aplica a esas líneas.
 - La acción del servidor (libro/acciones.ts) recalcula con el plan de la base y llama a editar_documento (migración 0033). Prueba en PGlite: db/__tests__/editar-documento.test.ts.
 - Pendiente: lo mismo para compras (tienen el reparto del paso 2 y otros impuestos).
+
+## Respaldo completo (versión 1.28.0)
+- src/importador/datos-extra.ts (extrasDesdeDatos, con prueba en PGlite db/__tests__/importar-datos.test.ts) convierte la hoja Datos y las hojas Inv* al formato de las tablas. El importador llama a importar_datos (0036) y, si este sistema no tiene productos ni movimientos de inventario, carga el inventario con inv_aplicar (ids nuevos y referencias reemplazadas).
+- Pendiente: el inventario no se mezcla con uno ya cargado aquí; los RCV cargados y los saldos de conciliación bancaria del año no vienen en el respaldo.
+
+## Respaldo con F29 (versión 1.27.1)
+- El sistema anterior (V2.22.13) agrega al respaldo la hoja "Datos" (clave, valorJSON) con todo lo que no va en las otras hojas: f29-declaraciones del año y del anterior, empresa (tasaPPM, régimen...), plan de cuentas completo, honorarios y trabajadores completos, libro de remuneraciones, contratos, finiquitos, fichas, comprobantes tipo, renta, DJ, folios.
+- leer-excel lee "Datos"; respaldo.ts (f29DesdeDatos, con pruebas) arma plan.f29 (todo el año y diciembre anterior) y plan.tasaPPM. El importador llama a importar_f29 (0035) después de importar_finalizar. Si el respaldo no trae "Datos", guarda antes las declaraciones F29 del año que hay en la base y las devuelve después de vaciar_anio.
 
 ## Importar respaldo reemplaza el año (versión 1.27.0)
 - Para migrar las empresas tal como están en el sistema anterior (se trabajó en paralelo para pruebas): importar el respaldo de un año borra todo lo contable de ese año en la empresa y carga el respaldo. Los otros años, el plan de cuentas, centros, fichas, trabajadores y activos fijos se conservan.

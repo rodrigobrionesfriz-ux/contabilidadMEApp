@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { baseDePrueba } from './helpers';
+import { f29DesdeDatos } from '@/importador/respaldo';
 
 const ADMIN = '11111111-1111-1111-1111-111111111111';
 
@@ -39,6 +40,30 @@ describe('importar un respaldo reemplaza el año', () => {
     expect(await b.como(ADMIN, `select count(*)::int n from f29_declaraciones where empresa_id=$1`, [emp])).toEqual([{ n: 0 }]);
     expect(await b.como(ADMIN, `select count(*)::int n from importaciones where empresa_id=$1 and anio=2026`, [emp])).toEqual([{ n: 1 }]);
     expect(await b.como(ADMIN, `select count(*)::int n from auditoria where accion='reemplazar_anio_importacion'`)).toEqual([{ n: 1 }]);
+  });
+
+  it('importar_f29 devuelve las declaraciones del respaldo (estado, declarado, ajustes) y la tasa PPM', async () => {
+    const items = f29DesdeDatos(new Map([
+      ['f29-declaraciones-2026', JSON.stringify({
+        '2026-01': { periodo: '2026-01', estado: 'presentado', declarado: { 89: 871530, 91: 1373, 504: 871530, 573: 0 }, utm: 69751, presentadoEn: '2026-02-12T15:00:00Z',
+          tasaPPM: 0.125, manual: { 111: 45000, 758: 7 }, anticipo: { 556: 910 }, remanenteAnticipoInicial: 3703, calculadoAlPresentar: { 89: 871530 } },
+        '2026-02': { periodo: '2026-02', estado: 'borrador', declarado: {}, tasaPPM: 0.2, tasaPPMManual: true },
+      })],
+      ['f29-declaraciones-2025', JSON.stringify({ '2025-11': { estado: 'presentado', declarado: { 77: 1 } }, '2025-12': { estado: 'presentado', declarado: { 77: 0, 573: 3703 } } })],
+    ]), 2026);
+    expect(items.map((x) => x.periodo)).toEqual(['2025-12', '2026-01', '2026-02']);
+    const [{ n }] = await b.como<{ n: number }>(ADMIN, `select importar_f29($1, $2, 0.125) n`, [emp, j(items)]);
+    expect(n).toBe(3);
+    const [ene] = await b.como<{ estado: string; declarado: Record<string, number>; utm: string; ajustes: Record<string, unknown>; calculado: Record<string, number> }>(ADMIN,
+      `select estado, declarado, utm, ajustes, calculado from f29_declaraciones where empresa_id=$1 and periodo='2026-01'`, [emp]);
+    expect(ene.estado).toBe('presentado');
+    expect(ene.declarado).toMatchObject({ '89': 871530, '91': 1373, '573': 0 });
+    expect(Number(ene.utm)).toBe(69751);
+    expect(ene.ajustes).toEqual({ tasaPPM: 0.125, manual: { '111': 45000, '758': 7 }, anticipo: { '556': 910 }, remanenteAnticipoInicial: 3703 });
+    expect(ene.calculado).toEqual({ '89': 871530 });
+    const [feb] = await b.como<{ estado: string; ajustes: Record<string, unknown> }>(ADMIN, `select estado, ajustes from f29_declaraciones where empresa_id=$1 and periodo='2026-02'`, [emp]);
+    expect(feb).toEqual({ estado: 'borrador', ajustes: { tasaPPM: 0.2, tasaPPMManual: true } });
+    expect(await b.como(ADMIN, `select tasa_ppm::float n from empresas where id=$1`, [emp])).toEqual([{ n: 0.125 }]);
   });
 
   it('nadie llama a vaciar_anio directamente', async () => {
